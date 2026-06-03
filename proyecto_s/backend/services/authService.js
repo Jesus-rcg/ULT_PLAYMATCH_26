@@ -22,12 +22,10 @@ export const registrarUsuarioService = async (data) => {
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const defaultRol = 3;
 
   await createUsuario({
     ...data,
     password: hashedPassword,
-    id_rol: defaultRol,
   });
 };
 
