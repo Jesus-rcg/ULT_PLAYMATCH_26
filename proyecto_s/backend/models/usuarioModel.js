@@ -1,5 +1,33 @@
 import db from "../config/db.js";
 
+//Crear usario
+export const createUsuario = async (data) => {
+  const {
+    id_rol,
+    nombre_usuario,
+    apellido_usuario,
+    fecha_nacimiento,
+    telefono,
+    email,
+    password,
+  } = data;
+
+  return await db.query(
+    `INSERT INTO usuarios 
+    (id_rol, nombre_usuario, apellido_usuario, fecha_nacimiento, telefono, email, password)
+    VALUES (?, ?, ?, ?, ?, ?, ?)`,
+    [
+      id_rol,
+      nombre_usuario,
+      apellido_usuario,
+      fecha_nacimiento,
+      telefono,
+      email,
+      password,
+    ],
+  );
+};
+
 //Buscar por ID
 export const findUsuarioById = async (id) => {
   const [rows] = await db.query(

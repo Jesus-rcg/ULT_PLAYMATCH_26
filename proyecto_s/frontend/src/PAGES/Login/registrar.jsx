@@ -82,7 +82,7 @@ const Registrar = () => {
           telefono: "",
           email: "",
           password: "",
-          id_rol: 3,
+          id_rol: 0,
         });
 
         navigate("/login");
