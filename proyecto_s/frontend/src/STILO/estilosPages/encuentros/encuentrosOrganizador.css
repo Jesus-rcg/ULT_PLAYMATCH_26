@@ -1,0 +1,47 @@
+.header-tabla {
+  margin-bottom: 10px;
+}
+
+.encuentro-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  border: 1px solid rgb(1, 84, 77);
+  color: black;
+  border-radius: 10px;
+  padding: 5px;
+  margin-bottom: 10px;
+  background-color: rgb(1, 84, 77);
+}
+
+.fecha {
+  width: 120px;
+  text-align: left;
+}
+
+.contenido {
+  flex: 1;
+  text-align: center;
+}
+
+.partido {
+  text-align: center;
+}
+
+.name-equipo {
+  color: black;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.lugar {
+  color: rgba(0, 0, 0, 0.642);
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.hora {
+  width: 120px;
+  text-align: right;
+}
