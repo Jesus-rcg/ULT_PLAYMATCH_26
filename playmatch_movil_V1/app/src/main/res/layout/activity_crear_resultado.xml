@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#F5F5F5">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+        <TextView
+                android:text="Crear Resultado"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <EditText
+                android:id="@+id/etIdEncuentro"
+                android:hint="ID Encuentro *"
+                android:inputType="number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"/>
+
+        <EditText
+                android:id="@+id/etGolesLocal"
+                android:hint="Goles Local"
+                android:inputType="number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"/>
+
+        <EditText
+                android:id="@+id/etGolesVisitante"
+                android:hint="Goles Visitante"
+                android:inputType="number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"/>
+
+        <EditText
+                android:id="@+id/etFaltasLocal"
+                android:hint="Faltas Local"
+                android:inputType="number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"/>
+
+        <EditText
+                android:id="@+id/etFaltasVisitante"
+                android:hint="Faltas Visitante"
+                android:inputType="number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"/>
+
+        <EditText
+                android:id="@+id/etTarjetasAmarillas"
+                android:hint="Tarjetas Amarillas (ej: 5,10)"
+                android:inputType="text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"/>
+
+        <EditText
+                android:id="@+id/etTarjetasRojas"
+                android:hint="Tarjetas Rojas (ej: 3)"
+                android:inputType="text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"/>
+
+        <EditText
+                android:id="@+id/etObservaciones"
+                android:hint="Observaciones"
+                android:inputType="textMultiLine"
+                android:minLines="3"
+                android:gravity="top"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"/>
+
+        <Button
+                android:id="@+id/btnGuardar"
+                android:text="Guardar Resultado"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:backgroundTint="#3F51B5"/>
+
+    </LinearLayout>
+</ScrollView>
