@@ -10,7 +10,7 @@ export default function EncuentrosCrear() {
   const { id_torneo } = useParams();
 
   const [form, setForm] = useState({
-    id_torneo: id_torneo,
+    id_torneo,
     id_equipo_local: "",
     id_equipo_visitante: "",
     jornada: "",
@@ -33,82 +33,106 @@ export default function EncuentrosCrear() {
     try {
       await createEncuentro(form);
 
-      navigate(`/torneo/${id_torneo}`);
+      navigate(`/encuentros/${id_torneo}`);
     } catch (error) {
       console.error(error);
     }
   };
 
   return (
-    <div className="form-container">
-      <h2>Crear Encuentro</h2>
+    <div className="login-container">
+      <div className="card-box-usuario">
+        <h2 className="titulo">Crear Encuentro</h2>
 
-      <form onSubmit={handleSubmit}>
-        <p>
-          <strong>Torneo:</strong> {id_torneo}
-        </p>
+        <form className="form-usuarios" onSubmit={handleSubmit}>
+          <label className="form-label">Torneo</label>
 
-        <input
-          type="number"
-          name="id_equipo_local"
-          placeholder="Equipo Local"
-          value={form.id_equipo_local}
-          onChange={handleChange}
-          required
-        />
+          <input value={id_torneo || ""} disabled />
 
-        <input
-          type="number"
-          name="id_equipo_visitante"
-          placeholder="Equipo Visitante"
-          value={form.id_equipo_visitante}
-          onChange={handleChange}
-          required
-        />
+          <label className="form-label">Equipo Local</label>
 
-        <input
-          type="number"
-          name="jornada"
-          placeholder="Jornada"
-          value={form.jornada}
-          onChange={handleChange}
-          required
-        />
+          <input
+            type="number"
+            name="id_equipo_local"
+            value={form.id_equipo_local}
+            onChange={handleChange}
+            required
+          />
 
-        <input
-          type="text"
-          name="lugar"
-          placeholder="Lugar"
-          value={form.lugar}
-          onChange={handleChange}
-          required
-        />
+          <label className="form-label">Equipo Visitante</label>
 
-        <input
-          type="date"
-          name="fecha"
-          value={form.fecha}
-          onChange={handleChange}
-          required
-        />
+          <input
+            type="number"
+            name="id_equipo_visitante"
+            value={form.id_equipo_visitante}
+            onChange={handleChange}
+            required
+          />
 
-        <input
-          type="time"
-          name="hora"
-          value={form.hora}
-          onChange={handleChange}
-          required
-        />
+          <label className="form-label">Jornada</label>
 
-        <select name="estado" value={form.estado} onChange={handleChange}>
-          <option value="Pendiente">Pendiente</option>
-          <option value="Jugando">Jugando</option>
-          <option value="Finalizado">Finalizado</option>
-          <option value="Aplazado">Aplazado</option>
-        </select>
+          <input
+            type="number"
+            name="jornada"
+            value={form.jornada}
+            onChange={handleChange}
+            required
+          />
 
-        <button type="submit">Crear</button>
-      </form>
+          <label className="form-label">Lugar</label>
+
+          <input
+            type="text"
+            name="lugar"
+            value={form.lugar}
+            onChange={handleChange}
+            required
+          />
+
+          <label className="form-label">Fecha</label>
+
+          <input
+            type="date"
+            name="fecha"
+            value={form.fecha}
+            onChange={handleChange}
+            required
+          />
+
+          <label className="form-label">Hora</label>
+
+          <input
+            type="time"
+            name="hora"
+            value={form.hora}
+            onChange={handleChange}
+            required
+          />
+
+          <label className="form-label">Estado</label>
+
+          <select
+            className="opciones_rol"
+            name="estado"
+            value={form.estado}
+            onChange={handleChange}
+          >
+            <option value="Pendiente">Pendiente</option>
+            <option value="Jugando">Jugando</option>
+            <option value="Finalizado">Finalizado</option>
+            <option value="Aplazado">Aplazado</option>
+          </select>
+
+          <button type="submit">Crear</button>
+
+          <button
+            type="button"
+            onClick={() => navigate(`/encuentros/${id_torneo}`)}
+          >
+            Cancelar
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

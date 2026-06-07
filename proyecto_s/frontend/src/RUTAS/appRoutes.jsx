@@ -54,6 +54,7 @@ import JugadorEliminar from "../PAGES/Jugadores/JugadorEliminar";
 
 //Encuentros
 import Encuentros from "../PAGES/Encuentros/Encuentros";
+import EncuentrosAdmin from "../PAGES/Encuentros/EncuentrosAdmin";
 import EncuentrosCrear from "../PAGES/Encuentros/EncuentrosCrear";
 import EncuentrosEditar from "../PAGES/Encuentros/EncuentrosEditar";
 import EncuentrosEliminar from "../PAGES/Encuentros/EncuentrosEliminar";
@@ -196,6 +197,7 @@ export default function AppRoutes() {
             />
             //---------------------Encuentros---------------------------------------------
             <Route path="/encuentros/:id_torneo" element={<Encuentros />} />
+            <Route path="/encuentros" element={<EncuentrosAdmin />} />
             <Route
               path="/encuentros/Crear/:id_torneo"
               element={<EncuentrosCrear />}

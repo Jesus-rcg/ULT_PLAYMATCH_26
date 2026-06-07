@@ -129,7 +129,7 @@ export default function Encuentros() {
                   </button>
 
                   <button
-                    onClick={() => {
+                    onClick={(e) => {
                       e.stopPropagation();
                       eliminarEncuentro(encuentro.id_encuentro);
                     }}
