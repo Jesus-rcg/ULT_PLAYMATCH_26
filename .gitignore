@@ -1,12 +1,1 @@
-# Dependencias Node.js
-node_modules/
-
-# Variables de entorno
-.env
-
-# Carpetas de compilación
-dist/
-build/
-
-# Logs
-*.log
+proyecto_s/backend/.env
