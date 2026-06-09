@@ -5,8 +5,10 @@ import android.graphics.Color
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import com.example.ventas.MenuActivity
 import com.example.ventas.R
 import com.example.ventas.api.ApiClient
+import com.example.ventas.api.ApiService
 import com.example.ventas.model.LoginRequest
 import com.example.ventas.model.LoginResponse
 import retrofit2.Call
@@ -17,7 +19,7 @@ class LoginActivity2 : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        setContentView(R.layout.activity_login2)
 
         val etEmail = findViewById<EditText>(R.id.etEmail)
         val etPassword = findViewById<EditText>(R.id.etPassword)
