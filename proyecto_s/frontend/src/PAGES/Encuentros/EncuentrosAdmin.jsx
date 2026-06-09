@@ -9,16 +9,12 @@ import {
 
 import "../../STILO/estilosPages/usuarios/usuario.css";
 
-export default function Encuentros() {
+export default function EncuentrosAdmin() {
   const navigate = useNavigate();
 
   const [encuentros, setEncuentros] = useState([]);
 
   const [loading, setLoading] = useState(false);
-
-  // ======================================================
-  // CARGAR ENCUENTROS
-  // ======================================================
 
   const cargarEncuentros = async () => {
     try {
@@ -33,10 +29,6 @@ export default function Encuentros() {
   useEffect(() => {
     cargarEncuentros();
   }, []);
-
-  // ======================================================
-  // GENERAR FIXTURE AUTOMÁTICO
-  // ======================================================
 
   const handleGenerarFixture = async () => {
     try {
