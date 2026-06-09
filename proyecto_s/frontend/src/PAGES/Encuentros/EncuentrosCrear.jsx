@@ -119,7 +119,7 @@ export default function EncuentrosCrear() {
           >
             <option value="Pendiente">Pendiente</option>
             <option value="Jugando">Jugando</option>
-            <option value="Finalizado">Finalizado</option>
+            <option value="Finalizado">Finalizados</option>
             <option value="Aplazado">Aplazado</option>
           </select>
 
