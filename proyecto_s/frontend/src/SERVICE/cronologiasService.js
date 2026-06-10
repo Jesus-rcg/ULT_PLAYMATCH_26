@@ -70,7 +70,7 @@ export const deleteCronologia = async (id) => {
   return await response.json();
 };
 
-// Jugador por encuentro
+// Jugadores por encuentro
 export const getJugadoresByEncuentro = async (id_encuentro) => {
   const response = await fetch(
     `${API_BASE}/cronologias/encuentro/${id_encuentro}/jugadores`,
@@ -78,6 +78,29 @@ export const getJugadoresByEncuentro = async (id_encuentro) => {
 
   if (!response.ok) {
     throw new Error("Error al obtener jugadores del encuentro");
+  }
+
+  return await response.json();
+};
+
+// DETALLE DEL ENCUENTRO
+export const getEncuentroDetalle = async (id) => {
+  const response = await fetch(`${API_BASE}/encuentros/detalle/${id}`);
+
+  if (!response.ok) {
+    throw new Error("Error al obtener detalle del encuentro");
+  }
+
+  return await response.json();
+};
+
+export const getJugadoresByEquipo = async (id_equipo) => {
+  const response = await fetch(
+    `${API_BASE}/inscripcionJugadores/equipo/${id_equipo}`,
+  );
+
+  if (!response.ok) {
+    throw new Error("Error al obtener jugadores");
   }
 
   return await response.json();

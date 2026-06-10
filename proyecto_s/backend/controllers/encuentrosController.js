@@ -1,11 +1,12 @@
 import {
   getEncuentrosService,
   getEncuentroByIdService,
+  getEncuentroDetalleByIdService,
   createEncuentroService,
   updateEncuentroService,
   deleteEncuentroService,
   generarEncuentrosAutomaticosService,
-  getEncuentrosByTorneoService, // ✅ ESTE ES EL CORRECTO
+  getEncuentrosByTorneoService,
 } from "../SERVICES/encuentrosService.js";
 
 //Obtener todas
@@ -143,6 +144,26 @@ export const generarEncuentrosAutomaticos = async (req, res) => {
 
     res.status(500).json({
       message: error.message,
+    });
+  }
+};
+
+export const getEncuentroDetalleById = async (req, res) => {
+  try {
+    const encuentro = await getEncuentroDetalleByIdService(req.params.id);
+
+    if (!encuentro) {
+      return res.status(404).json({
+        message: "Encuentro no encontrado",
+      });
+    }
+
+    res.json(encuentro);
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      message: "Error al obtener encuentro",
     });
   }
 };

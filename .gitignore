@@ -1,1 +1,12 @@
 proyecto_s/backend/.env
+# Variables de entorno
+proyecto_s/backend/.env
+proyecto_s/frontend/.env
+
+# Node modules
+node_modules/
+**/node_modules/
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
