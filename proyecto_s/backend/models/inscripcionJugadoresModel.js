@@ -38,16 +38,27 @@ export const getByEquipo = async (id_equipo) => {
   const [rows] = await db.query(
     `
     SELECT 
-      ij.*,
-      e.nombre_equipo,
+      j.id_jugador,
+      u.nombre_usuario,
+      u.apellido_usuario,
       j.posicion,
       j.numero_camiseta,
-      u.nombre_usuario AS nombre
+      ij.id_equipo
+
     FROM inscripcionesjugadores ij
-    INNER JOIN equipos e ON ij.id_equipo = e.id_equipo
-    INNER JOIN jugadores j ON ij.id_jugador = j.id_jugador
-    INNER JOIN usuarios u ON j.id_usuario = u.id_usuario
+
+    INNER JOIN jugadores j
+      ON ij.id_jugador = j.id_jugador
+
+    INNER JOIN usuarios u
+      ON j.id_usuario = u.id_usuario
+
     WHERE ij.id_equipo = ?
+      AND ij.estado = 'Inscrito'
+      AND ij.activo = 1
+      AND j.activo = 1
+
+    ORDER BY j.numero_camiseta ASC
     `,
     [id_equipo],
   );

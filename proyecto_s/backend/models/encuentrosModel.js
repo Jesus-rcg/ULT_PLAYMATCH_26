@@ -544,3 +544,36 @@ export const generarEncuentrosAutomaticosModel = async (id_torneo) => {
 
   throw new Error("Tipo torneo inválido");
 };
+
+export const getEncuentroDetalleByIdModel = async (id) => {
+  const [rows] = await pool.query(
+    `
+    SELECT
+      en.id_encuentro,
+
+      en.id_equipo_local,
+      el.nombre_equipo AS equipo_local,
+
+      en.id_equipo_visitante,
+      ev.nombre_equipo AS equipo_visitante,
+
+      en.fecha,
+      en.hora,
+      en.estado
+
+    FROM encuentros en
+
+    INNER JOIN equipos el
+      ON en.id_equipo_local = el.id_equipo
+
+    INNER JOIN equipos ev
+      ON en.id_equipo_visitante = ev.id_equipo
+
+    WHERE en.id_encuentro = ?
+      AND en.activo = 1
+    `,
+    [id],
+  );
+
+  return rows[0];
+};

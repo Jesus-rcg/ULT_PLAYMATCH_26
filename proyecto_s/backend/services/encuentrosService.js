@@ -1,6 +1,7 @@
 import {
   getEncuentrosModel,
   getEncuentroByIdModel,
+  getEncuentroDetalleByIdModel,
   createEncuentroModel,
   updateEncuentroModel,
   deleteEncuentroModel,
@@ -40,4 +41,8 @@ export const deleteEncuentroService = async (id) => {
 //Generar encuentro automaticamente
 export const generarEncuentrosAutomaticosService = async (id_torneo) => {
   return await generarEncuentrosAutomaticosModel(id_torneo);
+};
+
+export const getEncuentroDetalleByIdService = async (id) => {
+  return await getEncuentroDetalleByIdModel(id);
 };
