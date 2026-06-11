@@ -2,22 +2,27 @@
   margin-bottom: 10px;
 }
 
+.titulo-jornada {
+  color: black;
+}
+
 .encuentro-card {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
+  gap: 30px;
   border: 1px solid rgb(1, 84, 77);
   color: black;
   border-radius: 10px;
   padding: 5px;
   margin-bottom: 10px;
-  background-color: rgb(1, 84, 77);
+  background: linear-gradient(to right, rgb(0, 61, 0), rgb(0, 165, 0));
 }
 
 .fecha {
   width: 120px;
   text-align: left;
+  margin-left: 60px;
 }
 
 .contenido {
@@ -26,6 +31,7 @@
 }
 
 .partido {
+  width: 400px;
   text-align: center;
 }
 
@@ -44,4 +50,67 @@
 .hora {
   width: 120px;
   text-align: right;
+}
+
+.contenedor-card-encuentro {
+  display: flex;
+  flex-direction: row;
+  background-color: aliceblue;
+}
+
+.btn-crear-e {
+  width: 110px;
+  height: 30px;
+  color: white;
+  border-radius: 7px;
+  border-color: green;
+  background-color: green;
+}
+
+.btn-crear-e:hover {
+  transform: translateY(-1px);
+  box-shadow: 3px 3px 0 rgba(6, 6, 6, 0.9);
+}
+
+.btn-crear-auto {
+  width: 150px;
+  height: 30px;
+  color: white;
+  margin-right: 10px;
+  border-radius: 7px;
+  border-color: rgb(2, 70, 64);
+  background-color: rgb(118, 19, 2);
+}
+
+.btn-crear-auto:hover {
+  transform: translateY(-1px);
+  box-shadow: 3px 3px 0 rgba(6, 6, 6, 0.9);
+}
+
+.btn-editar-e {
+  width: 80px;
+  height: 30px;
+  color: white;
+  border-radius: 7px;
+  border-color: rgb(57, 57, 255);
+  background-color: rgb(57, 57, 255);
+}
+
+.btn-editar-e:hover {
+  transform: translateY(-1px);
+  box-shadow: 3px 3px 0 rgba(6, 6, 6, 0.9);
+}
+
+.btn-eliminar-e {
+  width: 80px;
+  height: 30px;
+  color: white;
+  border-radius: 7px;
+  border-color: red;
+  background-color: red;
+}
+
+.btn-eliminar-e:hover {
+  transform: translateY(-1px);
+  box-shadow: 3px 3px 0 rgba(6, 6, 6, 0.9);
 }
