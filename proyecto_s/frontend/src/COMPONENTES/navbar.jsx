@@ -3,7 +3,7 @@ import { useState, useEffect, useContext } from "react";
 import { FaHome, FaBell, FaStar } from "react-icons/fa";
 import { AuthContext } from "../CONTEXT/AuthContext";
 import "../STILO/estilosComponents/navbar.css";
-import logo from "../ASSETS/logo2.png";
+import logo from "../ASSETS/logo1.png";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -44,19 +44,14 @@ export default function Navbar() {
     // ❌ NO navigate aquí porque logout ya redirige
   };
 
-  // 🔥 NORMALIZAR NOMBRE (evita undefined)
-  const nombreUsuario =
-    `${user?.nombre_usuario ?? ""} ${user?.apellido_usuario ?? ""}`.trim() ||
-    "Usuario";
-
   return (
     <nav className="navbar">
       {/* LOGO */}
       <Link to="/home" className="navbar-logo">
-        <div className="logoName">
-          <div>
+        <div>
+          <div className="logoName">
             <img src={logo} alt="Logo" className="logo" />
-            PLAYMATCH
+            <div className="titulo-logo">PLAYMATCH</div>
           </div>
         </div>
       </Link>
@@ -75,20 +70,6 @@ export default function Navbar() {
         {/* MENÚ */}
         {isAuthenticated && (
           <ul className="navbar-menu">
-            <li>
-              <Link to="/home" className="navbar-link icon-link">
-                <FaHome />
-                <span>Inicio</span>
-              </Link>
-            </li>
-
-            <li>
-              <Link to="/favoritos" className="navbar-link icon-link">
-                <FaStar />
-                <span>Favoritos</span>
-              </Link>
-            </li>
-
             <li>
               <Link to="/novedades" className="navbar-link icon-link">
                 <FaBell />
@@ -110,7 +91,11 @@ export default function Navbar() {
             </div>
           ) : (
             <div className="navbar-user">
-              <span className="user-name">{nombreUsuario}</span>
+              <div className="user-name">
+                <span>{user.nombre_usuario}</span>
+                <br />
+                <span>{user.apellido_usuario}</span>
+              </div>
 
               <button className="logout-btn" onClick={handleLogout}>
                 Cerrar sesión

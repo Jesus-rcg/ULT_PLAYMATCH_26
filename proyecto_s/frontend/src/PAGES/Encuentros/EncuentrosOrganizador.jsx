@@ -78,11 +78,18 @@ export default function Encuentros() {
   return (
     <div>
       <div className="header-tabla">
-        <button onClick={handleGenerarFixture} disabled={loading}>
+        <button
+          className="btn-crear-auto"
+          onClick={handleGenerarFixture}
+          disabled={loading}
+        >
           {loading ? "Generando..." : "Generar Encuentros"}
         </button>
 
-        <button onClick={() => navigate(`/encuentros/Crear/${id}`)}>
+        <button
+          className="btn-crear-e"
+          onClick={() => navigate(`/encuentros/Crear/${id}`)}
+        >
           Crear Encuentro
         </button>
       </div>
@@ -91,7 +98,7 @@ export default function Encuentros() {
         <p>No hay encuentros registrados</p>
       ) : (
         Object.entries(encuentrosPorJornada).map(([jornada, partidos]) => (
-          <div key={jornada}>
+          <div className="contenedor-encuentro-card" key={jornada}>
             <h2 className="titulo-jornada">Jornada {jornada}</h2>
 
             {partidos.map((encuentro) => (
@@ -120,6 +127,7 @@ export default function Encuentros() {
 
                 <div className="encuentro-acciones">
                   <button
+                    className="btn-editar-e"
                     onClick={(e) => {
                       e.stopPropagation();
                       editarEncuentro(encuentro.id_encuentro);
@@ -129,6 +137,7 @@ export default function Encuentros() {
                   </button>
 
                   <button
+                    className="btn-eliminar-e"
                     onClick={(e) => {
                       e.stopPropagation();
                       eliminarEncuentro(encuentro.id_encuentro);
