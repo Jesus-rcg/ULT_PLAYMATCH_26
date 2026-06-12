@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F5F5F5"
+        android:fillViewport="true">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:layout_marginTop="40dp">
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp">
+
+            <ImageButton
+                    android:id="@+id/btnVolver"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@android:drawable/ic_menu_revert"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Volver" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Volver a Posiciones"
+                    android:textColor="#534AB7"
+                    android:textSize="13sp"
+                    android:layout_marginStart="4dp" />
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="10dp"
+                android:paddingEnd="12dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:layout_marginBottom="12dp">
+
+            <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    app:srcCompat="@mipmap/guardar"
+                    android:contentDescription=""
+                    android:layout_marginEnd="5dp"
+            />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Guardar cambios"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:textColor="#3C3489" />
+        </LinearLayout>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Editar Posición"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#1A1A2E"
+                android:layout_marginBottom="4dp" />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Modifica los datos"
+                android:textSize="13sp"
+                android:textColor="#888780"
+                android:layout_marginBottom="20dp" />
+
+        <!-- ID POSICION (oculto o solo lectura) -->
+        <TextView
+                android:id="@+id/txtIdPosicion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ID: #0"
+                android:textSize="11sp"
+                android:textColor="#888780"
+                android:layout_marginBottom="12dp" />
+
+        <!-- Spinner Torneo (solo lectura en edición) -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Torneo"
+                android:textSize="11sp"
+                android:textColor="#888780"
+                android:layout_marginBottom="4dp" />
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:layout_marginBottom="12dp">
+
+            <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    app:srcCompat="@mipmap/torneo"
+                    android:contentDescription=""
+                    android:layout_marginEnd="8dp" />
+
+            <TextView
+                    android:id="@+id/txtTorneo"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:gravity="center_vertical"
+                    android:textSize="13sp"
+                    android:textColor="#1A1A2E" />
+        </LinearLayout>
+
+        <!-- Spinner Equipo (solo lectura en edición) -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Equipo"
+                android:textSize="11sp"
+                android:textColor="#888780"
+                android:layout_marginBottom="4dp" />
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:layout_marginBottom="12dp">
+
+            <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    app:srcCompat="@mipmap/equipos"
+                    android:contentDescription=""
+                    android:layout_marginEnd="8dp" />
+
+            <TextView
+                    android:id="@+id/txtEquipo"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:gravity="center_vertical"
+                    android:textSize="13sp"
+                    android:textColor="#1A1A2E" />
+        </LinearLayout>
+
+        <!-- Estadísticas (editables) -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Estadísticas"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:textColor="#1A1A2E"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="12dp" />
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:layout_marginBottom="12dp">
+
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Jugados"
+                        android:textSize="10sp"
+                        android:textColor="#888780" />
+                <EditText
+                        android:id="@+id/etJugados"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:hint="0"
+                        android:inputType="number"
+                        android:textSize="13sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ganados"
+                        android:textSize="10sp"
+                        android:textColor="#888780" />
+                <EditText
+                        android:id="@+id/etGanados"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:hint="0"
+                        android:inputType="number"
+                        android:textSize="13sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Empatados"
+                        android:textSize="10sp"
+                        android:textColor="#888780" />
+                <EditText
+                        android:id="@+id/etEmpatados"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:hint="0"
+                        android:inputType="number"
+                        android:textSize="13sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                android:layout_marginBottom="12dp">
+
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Perdidos"
+                        android:textSize="10sp"
+                        android:textColor="#888780" />
+                <EditText
+                        android:id="@+id/etPerdidos"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:hint="0"
+                        android:inputType="number"
+                        android:textSize="13sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="GF"
+                        android:textSize="10sp"
+                        android:textColor="#888780" />
+                <EditText
+                        android:id="@+id/etGF"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:hint="0"
+                        android:inputType="number"
+                        android:textSize="13sp" />
+            </LinearLayout>
+
+            <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="GC"
+                        android:textSize="10sp"
+                        android:textColor="#888780" />
+                <EditText
+                        android:id="@+id/etGC"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:hint="0"
+                        android:inputType="number"
+                        android:textSize="13sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+                android:id="@+id/btnGuardar"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="Actualizar posición"
+                android:textColor="#EEEDFE"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:backgroundTint="#534AB7"
+                android:stateListAnimator="@null"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp" />
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="La posición, puntos y diferencia de gol se calcula automáticamente"
+                android:textSize="11sp"
+                android:textColor="#BDBCB8"
+                android:gravity="center"
+                android:layout_marginBottom="20dp" />
+
+    </LinearLayout>
+</ScrollView>
