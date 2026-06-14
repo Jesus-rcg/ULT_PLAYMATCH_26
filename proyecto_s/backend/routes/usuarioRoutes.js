@@ -4,6 +4,7 @@ import {
   getUsuarioById,
   updateUsuario,
   deleteUsuario,
+  createUsuario,
 } from "../controllers/usuarioController.js";
 
 import { findUsuarioByEmail } from "../models/usuarioModel.js";
@@ -31,6 +32,7 @@ router.get("/email/:email", async (req, res) => {
 });
 
 // CRUD
+router.post("/", createUsuario);
 router.get("/", getUsuarios);
 router.get("/:id", getUsuarioById);
 router.put("/:id", updateUsuario);
