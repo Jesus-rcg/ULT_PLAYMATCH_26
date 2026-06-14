@@ -10,6 +10,7 @@ import retrofit2.http.Query
 import com.example.ventas.api.ApiClient
 import com.example.ventas.model.Posicion
 import com.example.ventas.model.PosicionRequest
+import com.example.ventas.model.UsuarioResponse
 
 import retrofit2.Call
 import retrofit2.Response
@@ -33,7 +34,7 @@ interface ApiService {
 
     // ================= USUARIOS =================
 
-    @POST("usuarios")
+    @POST("/api/usuarios")
     fun createUsuario(
 
         @Header("Authorization")
@@ -45,16 +46,16 @@ interface ApiService {
     ): Call<Usuario>
 
 
-    @GET("usuarios")
+    @GET("/api/usuarios")
     fun getUsuarios(
 
         @Header("Authorization")
         token: String
 
-    ): Call<List<Usuario>>
+    ): Call<UsuarioResponse>
 
 
-    @GET("usuarios/{id}")
+    @GET("/api/usuarios/{id}")
     fun getUsuario(
 
         @Header("Authorization")
@@ -66,7 +67,7 @@ interface ApiService {
     ): Call<Usuario>
 
 
-    @PUT("usuarios/{id}")
+    @PUT("/api/usuarios/{id}")
     fun updateUsuario(
 
         @Header("Authorization")
@@ -81,7 +82,7 @@ interface ApiService {
     ): Call<Void>
 
 
-    @DELETE("usuarios/{id}")
+    @DELETE("/api/usuarios/{id}")
     fun deleteUsuario(
 
         @Header("Authorization")
