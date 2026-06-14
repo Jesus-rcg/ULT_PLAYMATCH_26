@@ -1,15 +1,11 @@
 package com.example.ventas
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ventas.api.ApiClient
 import com.example.ventas.model.Usuario
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,32 +16,42 @@ class CrearUsuarioActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_crear_usuario)
 
-        val btnVolver = findViewById<ImageButton>(R.id.btnVolver)
+        findViewById<ImageButton>(R.id.btnVolver).setOnClickListener { finish() }
 
-        btnVolver.setOnClickListener {
-            val intent = Intent(this, UsuariosActivity::class.java)
-            startActivity(intent)
-        }
-
-        val seleccionRol = findViewById<Spinner>(R.id.seleccionRol)
-        val roles = listOf("Seleccionar rol", "admin", "arbitro", "entrenador", "consultor")
-        seleccionRol.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, roles)
-
-        val seleccionEstado = findViewById<Spinner>(R.id.seleccionEstado)
-        val estados = listOf("Seleccionar estado", "Activo", "Inactivo")
-        seleccionEstado.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, estados)
+        val spinnerRol = findViewById<Spinner>(R.id.seleccionRol)
+        val rolesTexto = listOf("Seleccionar rol", "Administrador", "Organizador", "Usuario")
+        val rolesId = listOf(0, 1, 2, 3)
+        spinnerRol.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, rolesTexto)
 
         findViewById<Button>(R.id.btnGuardar).setOnClickListener {
             val nombre   = findViewById<EditText>(R.id.etNombre).text.toString().trim()
+            val apellido  = findViewById<EditText>(R.id.etApellido).text.toString().trim()
+            val telefono  = findViewById<EditText>(R.id.etTelefono).text.toString().trim()
+            val fechaNac  = findViewById<EditText>(R.id.etFechaNacimiento).text.toString().trim()
             val email    = findViewById<EditText>(R.id.etEmail).text.toString().trim()
             val password = findViewById<EditText>(R.id.etPassword).text.toString().trim()
-            val rol      = seleccionRol.selectedItem.toString()
-            val estado   = seleccionEstado.selectedItem.toString()
+            val rolIndex      = spinnerRol.selectedItemPosition
 
             if (nombre.isEmpty()) {
                 Toast.makeText(this, "El nombre es obligatorio", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+
+            if (apellido.isEmpty()) {
+                Toast.makeText(this, "El apellido es obligatorio", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (telefono.isEmpty()) {
+                Toast.makeText(this, "El teléfono es obligatorio", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
+            if (fechaNac.isEmpty()) {
+                Toast.makeText(this, "La fecha de nacimiento es obligatoria", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
 
             if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 Toast.makeText(this, "Ingresa un email válido", Toast.LENGTH_SHORT).show()
@@ -55,25 +61,20 @@ class CrearUsuarioActivity : AppCompatActivity() {
                 Toast.makeText(this, "La contraseña debe tener al menos 6 caracteres", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            if (rol == "Seleccionar rol") {
+
+            if (rolIndex == 0) {
                 Toast.makeText(this, "Selecciona un rol", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
-            if (estado == "Seleccionar estado") {
-                Toast.makeText(this, "Selecciona un estado", Toast.LENGTH_SHORT).show()
-                return@setOnClickListener
-            }
-
-            val fecha = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date())
 
             val usuario = Usuario(
-                id_usuario = null,
-                nombre = nombre,
+                id_rol = rolesId[rolIndex],
+                nombre_usuario = nombre,
+                apellido_usuario = apellido,
+                fecha_nacimiento = fechaNac,
+                telefono         = telefono,
                 email = email,
-                password = password,
-                rol = rol,
-                estado = estado,
-                fecha_actualizado = fecha
+                password = password
             )
 
             val token = getSharedPreferences("app", MODE_PRIVATE)
@@ -89,15 +90,10 @@ class CrearUsuarioActivity : AppCompatActivity() {
                     if(response.isSuccessful){
                         Toast.makeText(
                             this@CrearUsuarioActivity,
-                            "Usuario guardado correctamente",
+                            "Usuario creado correctamente",
                             Toast.LENGTH_LONG
                         ).show()
-
-                        findViewById<EditText>(R.id.etNombre).text.clear()
-                        findViewById<EditText>(R.id.etEmail).text.clear()
-                        findViewById<EditText>(R.id.etPassword).text.clear()
-                        seleccionRol.setSelection(0)
-                        seleccionEstado.setSelection(0)
+                        setResult(RESULT_OK)
 
                     } else {
                         Toast.makeText(

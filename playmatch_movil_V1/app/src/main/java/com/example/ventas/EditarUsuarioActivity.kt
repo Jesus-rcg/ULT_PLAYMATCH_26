@@ -9,9 +9,6 @@ import com.example.ventas.model.Usuario
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 class EditarUsuarioActivity : AppCompatActivity() {
 
@@ -26,43 +23,33 @@ class EditarUsuarioActivity : AppCompatActivity() {
             finish()
             return
         }
-         val nombre = intent.getStringExtra("NOMBRE") ?: ""
+        val nombre = intent.getStringExtra("NOMBRE") ?: ""
+        val apellido = intent.getStringExtra("APELLIDO") ?: ""
         val email = intent.getStringExtra("EMAIL") ?: ""
-        val rol = intent.getStringExtra("ROL") ?: ""
-        val estado = intent.getStringExtra("ESTADO") ?: ""
+        val telefono = intent.getStringExtra("TELEFONO") ?: ""
 
         findViewById<ImageButton>(R.id.btnVolver).setOnClickListener {
             finish()
         }
 
         val etNombre = findViewById<EditText>(R.id.etNombre)
+        val etApellido = findViewById<EditText>(R.id.etApellido)
         val etEmail = findViewById<EditText>(R.id.etEmail)
-        val etPassword = findViewById<EditText>(R.id.etPassword)
+        val etTelefono = findViewById<EditText>(R.id.etTelefono)
 
         //Carga los datos actuales del usuario.
         etNombre.setText(nombre)
+        etApellido.setText(apellido)
         etEmail.setText(email)
-
-        //Selecciona el estado y rol actual del usuario.
-
-        val spinnerRol = findViewById<Spinner>(R.id.seleccionRol)
-        val roles = listOf("admin", "arbitro", "entrenador", "consultor")
-        spinnerRol.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item,roles)
-        spinnerRol.setSelection(roles.indexOf(rol).takeIf { it >= 0 } ?: 0 )
-
-        val spinnerEstado = findViewById<Spinner>(R.id.seleccionEstado)
-        val estados = listOf("Activo", "Inactivo")
-        spinnerEstado.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item,estados)
-        spinnerEstado.setSelection(estados.indexOfFirst { it.lowercase() == estado.lowercase() }.takeIf { it >= 0 } ?: 0)
+        etTelefono.setText(telefono)
 
         //Boton guardar cambios
 
         findViewById<Button>(R.id.btnGuardar).setOnClickListener {
             val nuevoNombre = etNombre.text.toString().trim()
+            val nuevoApellido = etApellido.text.toString().trim()
             val nuevoEmail = etEmail.text.toString().trim()
-            val nuevoPassword = etPassword.text.toString().trim()
-            val nuevoRol = spinnerRol.selectedItem.toString()
-            val nuevoEstado = spinnerEstado.selectedItem.toString()
+            val nuevoTelefono = etTelefono.text.toString().trim()
 
             //Hacemos validaciones para que no hayan errores.
 
@@ -70,23 +57,30 @@ class EditarUsuarioActivity : AppCompatActivity() {
                 Toast.makeText(this, "El nombre es obligatorio", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+
+            if (nuevoApellido.isEmpty()) {
+                Toast.makeText(this, "El apellido es obligatorio", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             if (nuevoEmail.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(nuevoEmail).matches()) {
                 Toast.makeText(this, "Ingrese un email valido", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
-            val fecha = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(Date())
-
+            if (nuevoTelefono.isEmpty()) {
+                Toast.makeText(this, "El teléfono es obligatorio", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             //Cuando no escriben contraseña, se manda vacía (sin cambios).
 
             val usuario = Usuario(
-                id_usuario = id,
-                nombre = nuevoNombre,
+                nombre_usuario = nuevoNombre,
+                apellido_usuario = nuevoApellido,
                 email = nuevoEmail,
-                password = nuevoPassword,
-                rol = nuevoRol,
-                estado = nuevoEstado,
-                fecha_actualizado = fecha
+                telefono = nuevoTelefono,
+                fecha_nacimiento = "",   // no se edita
+                password = null  // no se edita
             )
 
             //Token y conectamos con la api para que se realicen los cambios.

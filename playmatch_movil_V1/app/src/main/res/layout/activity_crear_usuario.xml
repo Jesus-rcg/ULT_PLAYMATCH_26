@@ -14,6 +14,7 @@
             android:padding="20dp"
             android:layout_marginTop="40dp">
 
+        <!-- Volver -->
         <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -38,6 +39,7 @@
                     android:layout_marginStart="4dp" />
         </LinearLayout>
 
+        <!-- Badge -->
         <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -54,8 +56,7 @@
                     android:layout_height="14dp"
                     app:srcCompat="@mipmap/guardar"
                     android:contentDescription=""
-                    android:layout_marginEnd="5dp"
-            />
+                    android:layout_marginEnd="5dp" />
 
             <TextView
                     android:layout_width="wrap_content"
@@ -83,6 +84,7 @@
                 android:textColor="#888780"
                 android:layout_marginBottom="20dp" />
 
+        <!-- Nombre -->
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -110,24 +112,134 @@
                     android:id="@+id/etNombre"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:hint="Sebastian Alvarez"
+                    android:hint="Sebastian"
                     android:textSize="13sp"
                     android:textColor="#1A1A2E"
                     android:textColorHint="#BDBCB8"
                     android:background="@null"
                     android:inputType="textPersonName"
-                    android:padding="0dp"
-                    android:ems="10"/>
+                    android:padding="0dp" />
         </LinearLayout>
 
+        <!-- Apellido -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Apellido"
+                android:textSize="11sp"
+                android:textColor="#888780"
+                android:layout_marginBottom="4dp" />
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:layout_marginBottom="12dp">
+
+            <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    app:srcCompat="@mipmap/nombre"
+                    android:contentDescription=""
+                    android:layout_marginEnd="8dp" />
+
+            <EditText
+                    android:id="@+id/etApellido"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:hint="Álvarez"
+                    android:textSize="13sp"
+                    android:textColor="#1A1A2E"
+                    android:textColorHint="#BDBCB8"
+                    android:background="@null"
+                    android:inputType="textPersonName"
+                    android:padding="0dp" />
+        </LinearLayout>
+
+        <!-- Teléfono -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Teléfono"
+                android:textSize="11sp"
+                android:textColor="#888780"
+                android:layout_marginBottom="4dp" />
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:layout_marginBottom="12dp">
+
+            <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@android:drawable/ic_menu_call"
+                    android:contentDescription=""
+                    android:layout_marginEnd="8dp" />
+
+            <EditText
+                    android:id="@+id/etTelefono"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:hint="3001234567"
+                    android:textSize="13sp"
+                    android:textColor="#1A1A2E"
+                    android:textColorHint="#BDBCB8"
+                    android:background="@null"
+                    android:inputType="phone"
+                    android:padding="0dp" />
+        </LinearLayout>
+
+        <!-- Fecha de nacimiento -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Fecha de nacimiento"
+                android:textSize="11sp"
+                android:textColor="#888780"
+                android:layout_marginBottom="4dp" />
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:layout_marginBottom="12dp">
+
+            <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@android:drawable/ic_menu_today"
+                    android:contentDescription=""
+                    android:layout_marginEnd="8dp" />
+
+            <EditText
+                    android:id="@+id/etFechaNacimiento"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:hint="2000-01-31"
+                    android:textSize="13sp"
+                    android:textColor="#1A1A2E"
+                    android:textColorHint="#BDBCB8"
+                    android:background="@null"
+                    android:inputType="date"
+                    android:padding="0dp" />
+        </LinearLayout>
+
+        <!-- Email -->
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Email"
                 android:textSize="11sp"
                 android:textColor="#888780"
-                android:layout_marginBottom="4dp"
-        />
+                android:layout_marginBottom="4dp" />
 
         <LinearLayout
                 android:layout_width="match_parent"
@@ -154,10 +266,10 @@
                     android:textColorHint="#BDBCB8"
                     android:background="@null"
                     android:inputType="textEmailAddress"
-                    android:padding="0dp"
-            />
+                    android:padding="0dp" />
         </LinearLayout>
 
+        <!-- Contraseña -->
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -191,10 +303,10 @@
                     android:textColorHint="#BDBCB8"
                     android:background="@null"
                     android:inputType="textPassword"
-                    android:padding="0dp"
-            />
+                    android:padding="0dp" />
         </LinearLayout>
 
+        <!-- Rol -->
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -209,7 +321,7 @@
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 android:padding="10dp"
-                android:layout_marginBottom="12dp">
+                android:layout_marginBottom="20dp">
 
             <ImageView
                     android:layout_width="18dp"
@@ -223,41 +335,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:background="@null"
-                    android:textSize="13sp"
-            />
-        </LinearLayout>
-
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Estado"
-                android:textSize="11sp"
-                android:textColor="#888780"
-                android:layout_marginBottom="4dp" />
-
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:padding="10dp"
-                android:layout_marginBottom="12dp">
-
-            <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    app:srcCompat="@mipmap/estado"
-                    android:contentDescription=""
-                    android:layout_marginEnd="8dp" />
-
-            <Spinner
-                    android:id="@+id/seleccionEstado"
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:background="@null"
                     android:textSize="13sp" />
         </LinearLayout>
-
 
         <Button
                 android:id="@+id/btnGuardar"
@@ -274,7 +353,7 @@
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="El id_usuario y fecha de actualización se generan automáticamente"
+                android:text="El id_usuario se genera automáticamente"
                 android:textSize="11sp"
                 android:textColor="#BDBCB8"
                 android:gravity="center"

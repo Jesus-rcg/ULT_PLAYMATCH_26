@@ -10,3 +10,4 @@ node_modules/
 # Archivos de sistema
 .DS_Store
 Thumbs.db
+proyecto_s/backend/.env
