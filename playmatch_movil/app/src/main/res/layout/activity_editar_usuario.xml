@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F5F5F5"
+        android:fillViewport="true">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:layout_marginTop="40dp">
+
+        <!-- Volver -->
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp">
+
+            <ImageButton
+                    android:id="@+id/btnVolver"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@android:drawable/ic_menu_revert"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Volver" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Volver a Usuarios"
+                    android:textColor="#534AB7"
+                    android:textSize="13sp"
+                    android:layout_marginStart="4dp" />
+        </LinearLayout>
+
+        <!-- Badge -->
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="10dp"
+                android:paddingEnd="12dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:layout_marginBottom="12dp">
+
+            <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    app:srcCompat="@mipmap/editar"
+                    android:contentDescription=""
+                    android:layout_marginEnd="5dp" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Editar"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:textColor="#633806" />
+        </LinearLayout>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Editar usuario"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#1A1A2E"
+                android:layout_marginBottom="4dp" />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Modifica los campos que necesites"
+                android:textSize="13sp"
+                android:textColor="#888780"
+                android:layout_marginBottom="20dp" />
+
+        <!-- Nombre -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombre"
+                android:textSize="11sp"
+                android:textColor="#888780"
+                android:layout_marginBottom="4dp" />
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:layout_marginBottom="12dp">
+
+            <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    app:srcCompat="@mipmap/nombre"
+                    android:contentDescription=""
+                    android:layout_marginEnd="8dp" />
+
+            <EditText
+                    android:id="@+id/etNombre"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:textColor="#1A1A2E"
+                    android:textColorHint="#BDBCB8"
+                    android:background="@null"
+                    android:inputType="textPersonName"
+                    android:minHeight="48dp"
+                    android:padding="0dp" />
+        </LinearLayout>
+
+        <!-- Apellido -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Apellido"
+                android:textSize="11sp"
+                android:textColor="#888780"
+                android:layout_marginBottom="4dp" />
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:layout_marginBottom="12dp">
+
+            <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    app:srcCompat="@mipmap/nombre"
+                    android:contentDescription=""
+                    android:layout_marginEnd="8dp" />
+
+            <EditText
+                    android:id="@+id/etApellido"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:textColor="#1A1A2E"
+                    android:textColorHint="#BDBCB8"
+                    android:background="@null"
+                    android:inputType="textPersonName"
+                    android:minHeight="48dp"
+                    android:padding="0dp" />
+        </LinearLayout>
+
+        <!-- Email -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email"
+                android:textSize="11sp"
+                android:textColor="#888780"
+                android:layout_marginBottom="4dp" />
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:layout_marginBottom="12dp">
+
+            <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    app:srcCompat="@mipmap/gmail"
+                    android:contentDescription=""
+                    android:layout_marginEnd="8dp" />
+
+            <EditText
+                    android:id="@+id/etEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:textColor="#1A1A2E"
+                    android:textColorHint="#BDBCB8"
+                    android:background="@null"
+                    android:inputType="textEmailAddress"
+                    android:minHeight="48dp"
+                    android:padding="0dp" />
+        </LinearLayout>
+
+        <!-- Teléfono -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Teléfono"
+                android:textSize="11sp"
+                android:textColor="#888780"
+                android:layout_marginBottom="4dp" />
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:layout_marginBottom="20dp">
+
+            <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@android:drawable/ic_menu_call"
+                    android:contentDescription=""
+                    android:layout_marginEnd="8dp" />
+
+            <EditText
+                    android:id="@+id/etTelefono"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="13sp"
+                    android:textColor="#1A1A2E"
+                    android:textColorHint="#BDBCB8"
+                    android:background="@null"
+                    android:inputType="phone"
+                    android:minHeight="48dp"
+                    android:padding="0dp" />
+        </LinearLayout>
+
+        <Button
+                android:id="@+id/btnGuardar"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:text="Guardar cambios"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:backgroundTint="#E67E22"
+                android:stateListAnimator="@null"
+                android:layout_marginBottom="8dp" />
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Solo se pueden editar nombre, apellido, email y teléfono"
+                android:textSize="11sp"
+                android:textColor="#BDBCB8"
+                android:gravity="center"
+                android:layout_marginBottom="20dp" />
+
+    </LinearLayout>
+</ScrollView>
