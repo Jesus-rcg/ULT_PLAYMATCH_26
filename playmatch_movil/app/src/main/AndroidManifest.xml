@@ -42,12 +42,6 @@
         <activity
                 android:name=".EliminarJugadorActivity"
                 android:exported="true"/>
-        <activity
-                android:name=".EditarJugadorActivity"
-                android:exported="true"/>
-
-
-
 
         <activity
                 android:name=".CrearUsuarioActivity"
