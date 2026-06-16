@@ -28,7 +28,7 @@ class MenuActivity : AppCompatActivity() {
         }
 
         findViewById<ImageButton>(R.id.btnJugadores).setOnClickListener {
-            abrirOperaciones("Jugadores")
+            abrirJugadores("Jugadores")
         }
 
         findViewById<ImageButton>(R.id.btnTorneo).setOnClickListener {
@@ -43,6 +43,12 @@ class MenuActivity : AppCompatActivity() {
 
     private fun abrirUsuarios(modulo: String){
         val intent = Intent(this, UsuariosActivity::class.java)
+        intent.putExtra("MODULO", modulo)
+        startActivity(intent)
+    }
+
+    private fun abrirJugadores(modulo: String){
+        val intent = Intent(this, ListarJugadoresActivity::class.java)
         intent.putExtra("MODULO", modulo)
         startActivity(intent)
     }

@@ -72,11 +72,9 @@ class CrearUsuarioActivity : AppCompatActivity() {
                 nombre_usuario = nombre,
                 apellido_usuario = apellido,
                 fecha_nacimiento = fechaNac,
-                telefono = telefono,
+                telefono         = telefono,
                 email = email,
                 password = password
-
-
             )
 
             val token = getSharedPreferences("app", MODE_PRIVATE)

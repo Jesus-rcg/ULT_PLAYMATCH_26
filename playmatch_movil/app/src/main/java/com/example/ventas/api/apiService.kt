@@ -18,22 +18,28 @@ interface ApiService {
 
     @POST("/api/usuarios")
     fun createUsuario(
+
         @Header("Authorization")
         token: String,
 
         @Body
-        usuario: UsuarioResponse
+        usuario: Usuario
 
     ): Call<Usuario>
+
 
     @GET("/api/usuarios")
     fun getUsuarios(
+
         @Header("Authorization")
         token: String
-    ): Call<Usuario>
+
+    ): Call<UsuarioResponse>
+
 
     @GET("/api/usuarios/{id}")
     fun getUsuario(
+
         @Header("Authorization")
         token: String,
 
@@ -42,8 +48,10 @@ interface ApiService {
 
     ): Call<Usuario>
 
+
     @PUT("/api/usuarios/{id}")
     fun updateUsuario(
+
         @Header("Authorization")
         token: String,
 
@@ -55,8 +63,10 @@ interface ApiService {
 
     ): Call<Void>
 
+
     @DELETE("/api/usuarios/{id}")
     fun deleteUsuario(
+
         @Header("Authorization")
         token: String,
 
