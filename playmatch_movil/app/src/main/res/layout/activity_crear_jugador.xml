@@ -45,71 +45,43 @@
                 android:textColor="#1A1A2E"
                 android:layout_marginBottom="20dp"/>
 
-        <!-- ID EQUIPO -->
-
-        <Spinner
-                android:id="@+id/spEquipos"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"/>
-
-        <!-- NOMBRE -->
+        <!-- ID USUARIO -->
 
         <EditText
-                android:id="@+id/txtNombre"
+                android:id="@+id/txtIdUsuario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Nombre"
-                android:inputType="textPersonName"
-                android:padding="12dp"
-                android:background="@android:drawable/edit_text"
-                android:layout_marginBottom="12dp"/>
-
-        <!-- APELLIDO -->
-
-        <EditText
-                android:id="@+id/txtApellido"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Apellido"
-                android:inputType="textPersonName"
-                android:padding="12dp"
-                android:background="@android:drawable/edit_text"
-                android:layout_marginBottom="12dp"/>
-
-        <!-- DOCUMENTO -->
-
-        <EditText
-                android:id="@+id/txtDocumento"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Documento"
+                android:hint="ID Usuario"
                 android:inputType="number"
-                android:padding="12dp"
-                android:background="@android:drawable/edit_text"
+                android:layout_marginBottom="12dp"/>
+
+        <!-- POSICION -->
+
+        <EditText
+                android:id="@+id/txtPosicion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Posición"
+                android:inputType="textCapWords"
                 android:layout_marginBottom="12dp"/>
 
         <!-- NUMERO CAMISETA -->
 
         <EditText
-                android:id="@+id/txtNumeroCamiseta"
+                android:id="@+id/txtNumero"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Número camiseta"
+                android:hint="Número Camiseta"
                 android:inputType="number"
-                android:padding="12dp"
-                android:background="@android:drawable/edit_text"
                 android:layout_marginBottom="12dp"/>
 
-        <!-- ESTADO -->
+        <!-- ACTIVO -->
 
         <Spinner
-                android:id="@+id/spEstadosJugador"
+                android:id="@+id/spActivo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"/>
-
-        <!-- BOTON -->
+                android:layout_marginBottom="20dp"/>
 
         <Button
                 android:id="@+id/btnGuardarJugador"
@@ -118,8 +90,7 @@
                 android:text="Guardar Jugador"
                 android:textStyle="bold"
                 android:textColor="#FFFFFF"
-                android:backgroundTint="#534AB7"
-                android:padding="14dp"/>
+                android:backgroundTint="#534AB7"/>
 
     </LinearLayout>
 

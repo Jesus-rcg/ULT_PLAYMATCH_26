@@ -12,6 +12,31 @@
             android:orientation="vertical"
             android:padding="20dp">
 
+        <!-- BOTON VOLVER -->
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="20dp">
+
+            <ImageButton
+                    android:id="@+id/btnVolver"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@android:drawable/ic_menu_revert"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Volver"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Volver"
+                    android:textColor="#2563EB"
+                    android:textSize="14sp"/>
+        </LinearLayout>
+
         <!-- TITULO -->
 
         <TextView
@@ -23,18 +48,7 @@
                 android:textColor="#111827"
                 android:layout_marginBottom="20dp"/>
 
-        <!-- BUSCADOR -->
-
-        <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="18dp"
-                app:cardElevation="6dp"
-                android:layout_marginBottom="20dp">
-
-        </androidx.cardview.widget.CardView>
-
-        <!-- CARD INFO JUGADOR -->
+        <!-- CARD -->
 
         <androidx.cardview.widget.CardView
                 android:id="@+id/cardJugador"
@@ -49,137 +63,44 @@
                     android:orientation="vertical"
                     android:padding="20dp">
 
-                <!-- NOMBRE -->
+                <!-- ID USUARIO -->
 
-                <LinearLayout
+                <EditText
+                        android:id="@+id/etIdUsuario"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical"
-                        android:layout_marginBottom="15dp">
+                        android:hint="ID Usuario"
+                        android:inputType="number"
+                        android:layout_marginBottom="15dp"/>
 
-                    <EditText
-                            android:id="@+id/etNombre"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:hint="Nombre"
-                            android:enabled="false"/>
+                <!-- POSICION -->
 
-                    <ImageButton
-                            android:id="@+id/btnEditarNombre"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"
-                            android:src="@android:drawable/ic_menu_edit"
-                            android:backgroundTint="#2563EB"
-                            android:tint="#FFFFFF"/>
-                </LinearLayout>
-
-                <!-- APELLIDO -->
-
-                <LinearLayout
+                <EditText
+                        android:id="@+id/etPosicion"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical"
-                        android:layout_marginBottom="15dp">
-
-                    <EditText
-                            android:id="@+id/etApellido"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:hint="Apellido"
-                            android:enabled="false"/>
-
-                    <ImageButton
-                            android:id="@+id/btnEditarApellido"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"
-                            android:src="@android:drawable/ic_menu_edit"
-                            android:backgroundTint="#2563EB"
-                            android:tint="#FFFFFF"/>
-                </LinearLayout>
-
-                <!-- DOCUMENTO -->
-
-                <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical"
-                        android:layout_marginBottom="15dp">
-
-                    <EditText
-                            android:id="@+id/etDocumento"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:hint="Documento"
-                            android:enabled="false"/>
-
-                    <ImageButton
-                            android:id="@+id/btnEditarDocumento"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"
-                            android:src="@android:drawable/ic_menu_edit"
-                            android:backgroundTint="#2563EB"
-                            android:tint="#FFFFFF"/>
-                </LinearLayout>
+                        android:hint="Posición"
+                        android:layout_marginBottom="15dp"/>
 
                 <!-- NUMERO CAMISETA -->
 
-                <LinearLayout
+                <EditText
+                        android:id="@+id/etNumero"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical"
-                        android:layout_marginBottom="15dp">
+                        android:hint="Número Camiseta"
+                        android:inputType="number"
+                        android:layout_marginBottom="15dp"/>
 
-                    <EditText
-                            android:id="@+id/etNumero"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:hint="Número camiseta"
-                            android:enabled="false"/>
+                <!-- ACTIVO -->
 
-                    <ImageButton
-                            android:id="@+id/btnEditarNumero"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"
-                            android:src="@android:drawable/ic_menu_edit"
-                            android:backgroundTint="#2563EB"
-                            android:tint="#FFFFFF"/>
-                </LinearLayout>
-
-                <!-- ESTADO -->
-
-                <LinearLayout
+                <Spinner
+                        android:id="@+id/spActivo"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center_vertical"
-                        android:layout_marginBottom="25dp">
+                        android:layout_marginBottom="25dp"/>
 
-                    <EditText
-                            android:id="@+id/etEstado"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:hint="Estado"
-                            android:enabled="false"/>
-
-                    <ImageButton
-                            android:id="@+id/btnEditarEstado"
-                            android:layout_width="45dp"
-                            android:layout_height="45dp"
-                            android:src="@android:drawable/ic_menu_edit"
-                            android:backgroundTint="#2563EB"
-                            android:tint="#FFFFFF"/>
-                </LinearLayout>
-
-                <!-- BOTON -->
+                <!-- BOTON GUARDAR -->
 
                 <Button
                         android:id="@+id/btnActualizar"

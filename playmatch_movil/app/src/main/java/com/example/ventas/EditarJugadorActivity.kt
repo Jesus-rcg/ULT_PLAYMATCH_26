@@ -1,10 +1,12 @@
 package com.example.ventas
 
-import android.content.Context
 import android.os.Bundle
+import android.util.Log
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ventas.api.ApiClient
@@ -12,168 +14,99 @@ import com.example.ventas.model.Jugador
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import android.util.Log
+
 class EditarJugadorActivity : AppCompatActivity() {
 
-    private lateinit var etNombre: EditText
-    private lateinit var etApellido: EditText
-    private lateinit var etDocumento: EditText
+    private lateinit var etIdUsuario: EditText
+    private lateinit var etPosicion: EditText
     private lateinit var etNumero: EditText
-    private lateinit var etEstado: EditText
+    private lateinit var spActivo: Spinner
 
     private lateinit var btnActualizar: Button
 
-    // ================= BOTONES LAPIZ =================
-
-    private lateinit var btnEditarNombre: ImageButton
-    private lateinit var btnEditarApellido: ImageButton
-    private lateinit var btnEditarDocumento: ImageButton
-    private lateinit var btnEditarNumero: ImageButton
-    private lateinit var btnEditarEstado: ImageButton
-
     private var idJugador = 0
-    private var idEquipo = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_editar_jugador)
 
-        // ================= VINCULAR XML =================
+        findViewById<ImageButton>(R.id.btnVolver)
+            .setOnClickListener {
+                finish()
+            }
 
-        etNombre = findViewById(R.id.etNombre)
-
-        etApellido = findViewById(R.id.etApellido)
-
-        etDocumento = findViewById(R.id.etDocumento)
-
+        etIdUsuario = findViewById(R.id.etIdUsuario)
+        etPosicion = findViewById(R.id.etPosicion)
         etNumero = findViewById(R.id.etNumero)
+        spActivo = findViewById(R.id.spActivo)
 
-        etEstado = findViewById(R.id.etEstado)
+        btnActualizar =
+            findViewById(R.id.btnActualizar)
 
-        btnActualizar = findViewById(R.id.btnActualizar)
+        cargarEstados()
 
-        // ================= BOTONES EDITAR =================
+        // DATOS RECIBIDOS
 
-        btnEditarNombre =
-            findViewById(R.id.btnEditarNombre)
+        idJugador =
+            intent.getIntExtra("id_jugador", 0)
 
-        btnEditarApellido =
-            findViewById(R.id.btnEditarApellido)
-
-        btnEditarDocumento =
-            findViewById(R.id.btnEditarDocumento)
-
-        btnEditarNumero =
-            findViewById(R.id.btnEditarNumero)
-
-        btnEditarEstado =
-            findViewById(R.id.btnEditarEstado)
-
-        // ================= RECIBIR DATOS =================
-
-        idJugador = intent.getIntExtra(
-            "id_jugador",
-            0
+        etIdUsuario.setText(
+            intent.getIntExtra(
+                "id_usuario",
+                0
+            ).toString()
         )
 
-        idEquipo = intent.getIntExtra(
-            "id_equipo",
-            0
-        )
-
-        etNombre.setText(
-            intent.getStringExtra("nombre")
-        )
-
-        etApellido.setText(
-            intent.getStringExtra("apellido")
-        )
-
-        etDocumento.setText(
-            intent.getStringExtra("documento")
+        etPosicion.setText(
+            intent.getStringExtra("posicion")
         )
 
         etNumero.setText(
-            intent.getStringExtra("numero_camiseta")
+            intent.getIntExtra(
+                "numero_camiseta",
+                0
+            ).toString()
         )
 
-        etEstado.setText(
-            intent.getStringExtra("estado")
+        val activo =
+            intent.getIntExtra("activo", 1)
+
+        spActivo.setSelection(
+            if (activo == 1) 0 else 1
         )
-
-        // ================= DESHABILITAR CAMPOS =================
-
-        etNombre.isEnabled = false
-        etApellido.isEnabled = false
-        etDocumento.isEnabled = false
-        etNumero.isEnabled = false
-        etEstado.isEnabled = false
-
-        // ================= LAPICES =================
-
-        btnEditarNombre.setOnClickListener {
-
-            etNombre.isEnabled = true
-            etNombre.requestFocus()
-        }
-
-        btnEditarApellido.setOnClickListener {
-
-            etApellido.isEnabled = true
-            etApellido.requestFocus()
-        }
-
-        btnEditarDocumento.setOnClickListener {
-
-            etDocumento.isEnabled = true
-            etDocumento.requestFocus()
-        }
-
-        btnEditarNumero.setOnClickListener {
-
-            etNumero.isEnabled = true
-            etNumero.requestFocus()
-        }
-
-        btnEditarEstado.setOnClickListener {
-
-            etEstado.isEnabled = true
-            etEstado.requestFocus()
-        }
-
-        // ================= BOTON ACTUALIZAR =================
 
         btnActualizar.setOnClickListener {
-
             actualizarJugador()
         }
     }
 
-    // ================= ACTUALIZAR =================
+    private fun cargarEstados() {
+
+        val estados = listOf(
+            "Activo",
+            "Inactivo"
+        )
+
+        val adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            estados
+        )
+
+        adapter.setDropDownViewResource(
+            android.R.layout.simple_spinner_dropdown_item
+        )
+
+        spActivo.adapter = adapter
+    }
 
     private fun actualizarJugador() {
 
-        // ================= TOKEN =================
-
-        val sharedPreferences = getSharedPreferences(
-            "login",
-            Context.MODE_PRIVATE
-        )
-
-        val token = sharedPreferences.getString(
-            "token",
-            ""
-        ) ?: ""
-
-        // ================= VALIDAR =================
-
         if (
-            etNombre.text.toString().trim().isEmpty() ||
-            etApellido.text.toString().trim().isEmpty() ||
-            etDocumento.text.toString().trim().isEmpty() ||
-            etNumero.text.toString().trim().isEmpty() ||
-            etEstado.text.toString().trim().isEmpty()
+            etIdUsuario.text.isEmpty() ||
+            etPosicion.text.isEmpty() ||
+            etNumero.text.isEmpty()
         ) {
 
             Toast.makeText(
@@ -185,26 +118,33 @@ class EditarJugadorActivity : AppCompatActivity() {
             return
         }
 
-        // ================= OBJETO =================
+        val activo =
+            if (
+                spActivo.selectedItem.toString()
+                == "Activo"
+            ) 1 else 0
 
         val jugador = Jugador(
 
             id_jugador = idJugador,
 
-            id_equipo = idEquipo,
+            id_usuario =
+                etIdUsuario.text.toString().toInt(),
 
-            nombre = etNombre.text.toString(),
+            posicion =
+                etPosicion.text.toString(),
 
-            apellido = etApellido.text.toString(),
+            numero_camiseta =
+                etNumero.text.toString().toInt(),
 
-            documento = etDocumento.text.toString(),
-
-            numero_camiseta = etNumero.text.toString(),
-
-            estado = etEstado.text.toString()
+            activo = activo
         )
 
-        // ================= PETICION =================
+        val prefs =
+            getSharedPreferences("app", MODE_PRIVATE)
+
+        val token =
+            prefs.getString("token", "") ?: ""
 
         ApiClient.instance.actualizarJugadores(
 
@@ -226,7 +166,7 @@ class EditarJugadorActivity : AppCompatActivity() {
                     Toast.makeText(
                         this@EditarJugadorActivity,
                         "Jugador actualizado correctamente",
-                        Toast.LENGTH_SHORT
+                        Toast.LENGTH_LONG
                     ).show()
 
                     finish()
@@ -235,13 +175,14 @@ class EditarJugadorActivity : AppCompatActivity() {
 
                     Toast.makeText(
                         this@EditarJugadorActivity,
-                        "Error: ${response.code()}",
+                        "Error ${response.code()}",
                         Toast.LENGTH_LONG
                     ).show()
 
                     Log.e(
                         "UPDATE_ERROR",
-                        response.errorBody()?.string() ?: "Sin error body"
+                        response.errorBody()?.string()
+                            ?: "Error desconocido"
                     )
                 }
             }
@@ -253,9 +194,14 @@ class EditarJugadorActivity : AppCompatActivity() {
 
                 Toast.makeText(
                     this@EditarJugadorActivity,
-                    "Error: ${t.message}",
+                    t.message,
                     Toast.LENGTH_LONG
                 ).show()
+
+                Log.e(
+                    "UPDATE_ERROR",
+                    t.message.toString()
+                )
             }
         })
     }

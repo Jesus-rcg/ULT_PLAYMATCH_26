@@ -9,6 +9,7 @@ import com.example.ventas.R
 import com.example.ventas.model.Jugador
 
 class JugadorAdapter(
+
     private val jugadores: List<Jugador>,
     private val onClick: (Jugador) -> Unit
 ) : RecyclerView.Adapter<JugadorAdapter.ViewHolder>() {

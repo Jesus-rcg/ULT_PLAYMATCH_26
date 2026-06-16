@@ -122,13 +122,13 @@ class BuscarJugadorActivity : AppCompatActivity() {
                         // MOSTRAR DATOS
 
                         tvNombre.text =
-                            "Nombre: ${jugador.nombre}"
+                            "ID Usuario: ${jugador.id_usuario}"
 
                         tvApellido.text =
-                            "Apellido: ${jugador.apellido}"
+                            "Posición: ${jugador.posicion}"
 
                         tvDocumento.text =
-                            "Documento: ${jugador.documento}"
+                            "Activo: ${if (jugador.activo == 1) "Sí" else "No"}"
 
                         tvNumero.text =
                             "Número camiseta: ${jugador.numero_camiseta}"
@@ -199,23 +199,18 @@ class BuscarJugadorActivity : AppCompatActivity() {
             )
 
             intent.putExtra(
-                "id_equipo",
-                jugador.id_equipo
+                "id_usuario",
+                jugador.id_usuario
             )
 
             intent.putExtra(
-                "nombre",
-                jugador.nombre
+                "posicion",
+                jugador.posicion
             )
 
             intent.putExtra(
-                "apellido",
-                jugador.apellido
-            )
-
-            intent.putExtra(
-                "documento",
-                jugador.documento
+                "activo",
+                jugador.activo
             )
 
             intent.putExtra(
@@ -223,10 +218,6 @@ class BuscarJugadorActivity : AppCompatActivity() {
                 jugador.numero_camiseta
             )
 
-            intent.putExtra(
-                "estado",
-                jugador.estado
-            )
 
             startActivity(intent)
         }

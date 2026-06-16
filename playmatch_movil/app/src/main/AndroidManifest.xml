@@ -30,13 +30,25 @@
                 android:name=".PosicionesActivity"
                 android:exported="true"/>
 
+
         <activity android:name=".JugadoresActivity"
                   android:exported="true"/>
         <activity
                 android:name=".CrearJugadorActivity"
                 android:exported="true"/>
         <activity
-                android:name=".BuscarJugadorActivity"/>
+                android:name=".ListarJugadoresActivity"
+                android:exported="true"/>
+        <activity
+                android:name=".EliminarJugadorActivity"
+                android:exported="true"/>
+        <activity
+                android:name=".EditarJugadorActivity"
+                android:exported="true"/>
+
+
+
+
         <activity
                 android:name=".CrearUsuarioActivity"
                 android:exported="true"/>
@@ -46,7 +58,8 @@
                 android:exported="true"/>
 
 
-        <activity android:name=".EditarJugadorActivity"/>
+        <activity android:name=".EditarJugadorActivity"
+                  android:exported="true"/>
 
         <activity android:name=".EditarUsuarioActivity"
                   android:exported="true"/>
