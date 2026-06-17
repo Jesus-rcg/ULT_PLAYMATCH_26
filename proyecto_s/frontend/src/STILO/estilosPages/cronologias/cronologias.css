@@ -8,7 +8,7 @@
   display: flex;
   width: 1380px;
   justify-content: center;
-  background: #1a1a1a;
+  background: linear-gradient(to bottom, rgb(0, 63, 39), rgb(1, 122, 76));
   color: white;
   padding: 10px;
   margin-left: 55px;
@@ -60,19 +60,7 @@
   width: 50%;
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-}
-
-.zona {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-  padding: 10px;
-}
-
-.zona h4 {
-  color: white;
-  font-size: 14px;
+  padding: 5px;
 }
 
 /******************Delanteros***************************************/
@@ -137,7 +125,7 @@
 .pc-2 {
   margin-bottom: -350px;
   margin-top: -350px;
-  margin-left: -27px;
+  margin-left: -50px;
 }
 
 .pd,
@@ -153,30 +141,35 @@
 
 /****************Defensa********************************************/
 
-.lateral-izquierdo,
+.lateral-izquierdo {
+  margin-left: -80px;
+  margin-bottom: 40px;
+}
 .lateral-derecho {
-  margin-left: -120px;
+  margin-left: -80px;
+  margin-top: 35px;
 }
-
-.lateral-izquierdo-2,
 .lateral-derecho-2 {
-  margin-right: -120px;
+  margin-right: -80px;
+  margin-top: 40px;
 }
-
-.lateral-izquierdo,
 .lateral-izquierdo-2 {
-  margin-top: -70px;
+  margin-right: -80px;
+  margin-bottom: 35px;
 }
-
-.lateral-derecho,
-.lateral-derecho-2 {
-  margin-bottom: -70px;
-}
-
-.dfc,
 .dfc-2 {
-  margin-top: -70px;
-  margin-bottom: -70px;
+  margin-top: -10px;
+  margin-bottom: -10px;
+}
+.dfc {
+  margin-top: -10px;
+  margin-bottom: -10px;
+}
+.dfc-3 {
+  margin-left: -20px;
+}
+.dfc {
+  margin-right: -20px;
 }
 
 /*********************************************************/
@@ -201,11 +194,11 @@
   color: #0400ff;
 }
 
-.portero.ocupado,
-.defensa.ocupado,
-.pivotes.ocupado,
-.mediocampo.ocupado,
-.delantero.ocupado {
+.portero.ocupado-local,
+.defensa.ocupado-local,
+.pivotes.ocupado-local,
+.mediocampista.ocupado-local,
+.delantero.ocupado-local {
   background: blue;
   color: white;
   border: 1px solid blue;
@@ -213,11 +206,11 @@
   cursor: grab;
 }
 
-.portero.ocupado-2,
-.defensa.ocupado-2,
-.pivotes.ocupado-2,
-.mediocampo.ocupado-2,
-.delantero.ocupado-2 {
+.portero.ocupado-visitante,
+.defensa.ocupado-visitante,
+.pivotes.ocupado-visitante,
+.mediocampista.ocupado-visitante,
+.delantero.ocupado-visitante {
   background: red;
   color: white;
   border: 1px solid red;
@@ -229,20 +222,19 @@
 .zona-portero,
 .zona-defensa,
 .zona-pivotes,
-.zona-mediocampo,
+.zona-mediocampista,
 .zona-delanteros {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  padding: 10px;
-  margin-bottom: 10px;
+  padding-bottom: 10px;
 }
 
 .portero,
 .defensa,
 .pivotes,
-.mediocampo,
+.mediocampista,
 .delantero {
   width: 60px;
   height: 60px;
@@ -265,9 +257,18 @@
   height: 650px;
   padding: 8px;
   background: #2b2b2b;
-  border-radius: 12px;
   overflow-y: auto;
   margin-top: 10px;
+}
+
+.visitante-banca {
+  border-radius: 12px;
+  border: 4px solid red;
+}
+
+.local-banca {
+  border-radius: 12px;
+  border: 4px solid blue;
 }
 
 .banca h3 {
@@ -294,4 +295,69 @@
 .jugador-banca:active {
   cursor: grabbing;
   transform: scale(0.8);
+}
+
+.btn-l {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  z-index: 100;
+}
+
+.btn-eliminar-jugador {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: none;
+  background: red;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.contenedor-posicion {
+  position: relative;
+  display: inline-block;
+}
+
+.local {
+  border: 4px solid blue;
+  margin-top: 6px;
+  margin-bottom: 7px;
+  margin-left: 4px;
+}
+
+.visitante {
+  border: 4px solid red;
+  margin-top: 6px;
+  margin-bottom: 7px;
+  margin-right: 4px;
+}
+
+.container-guardar-alineaciones {
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn-local {
+  background-color: #0400ff;
+  width: 180px;
+  height: 35px;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+}
+
+.btn-visitante {
+  background-color: red;
+  width: 180px;
+  height: 35px;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+}
+
+.container-cancha-banca {
+  display: flex;
+  flex-direction: row;
 }

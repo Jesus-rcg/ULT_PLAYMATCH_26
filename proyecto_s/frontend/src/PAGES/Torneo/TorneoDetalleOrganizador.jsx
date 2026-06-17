@@ -54,19 +54,27 @@ export default function TorneoDetalleOrganizador() {
   return (
     <div className="detalle-container">
       {/* HEADER */}
-      <header className="detalle-header">
+      <header className="detalle-header-1">
         <h1>{torneo.nombre_torneo}</h1>
         <div className="data-detalle">
           <div>
             <img src={trofeo} alt="Logo" />
           </div>
-          <div>
-            <p>Categoria: {torneo.categoria}</p>
-            <p>tipo de torneo: {torneo.tipo_torneo}</p>
-            <p>Estado: {torneo.ciudad}</p>
+          <div className="info">
+            <p>
+              <span className="torneo-subtitulo">Categoria:</span>{" "}
+              {torneo.categoria}
+            </p>
+            <p>
+              <span className="torneo-subtitulo">Tipo De Torneo:</span>{" "}
+              {torneo.tipo_torneo}
+            </p>
+            <p>
+              <span className="torneo-subtitulo">Estado:</span> {torneo.ciudad}
+            </p>
 
             <p>
-              Fecha de Finalizacion:{" "}
+              <span className="torneo-subtitulo">Fecha de Finalizacion:</span>{" "}
               {new Date(torneo.fecha_fin).toLocaleDateString()}
             </p>
           </div>

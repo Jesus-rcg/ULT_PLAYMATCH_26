@@ -20,8 +20,6 @@ export const verificarToken = (req, res, next) => {
 
     req.user = decoded;
 
-    console.log("DECODED:", decoded);
-
     return next();
   } catch (error) {
     console.log("ERROR JWT:", error.message);

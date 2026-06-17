@@ -125,10 +125,7 @@ export default function EncuentrosCrear() {
 
           <button type="submit">Crear</button>
 
-          <button
-            type="button"
-            onClick={() => navigate(`/encuentros/${id_torneo}`)}
-          >
+          <button type="button" onClick={() => navigate(-1)}>
             Cancelar
           </button>
         </form>

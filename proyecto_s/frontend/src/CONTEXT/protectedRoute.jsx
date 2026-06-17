@@ -8,8 +8,6 @@ export default function ProtectedRoute({ allowedRoles }) {
   // evita errores al recargar
   if (loading) return <p>Cargando...</p>;
 
-  console.log("AUTH:", isAuthenticated);
-
   // No logueado
   if (!isAuthenticated) {
     return <Navigate to="/home" replace />;

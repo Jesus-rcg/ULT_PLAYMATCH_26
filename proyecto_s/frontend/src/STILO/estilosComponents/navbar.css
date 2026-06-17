@@ -82,7 +82,7 @@
 .navbar-registrar {
   text-align: center;
   width: 75px;
-  height: 25px;
+  height: 30px;
   padding: 3px;
   text-decoration: none;
   color: white;
@@ -98,11 +98,11 @@
 }
 
 .navbar-registrar {
-  background-color: rgba(2, 94, 2, 0.395);
+  background-color: rgb(3, 106, 3);
 }
 
 .navbar-login {
-  background-color: rgba(38, 0, 255, 0.3);
+  background-color: rgb(38, 0, 255);
 }
 
 .navbar-link:hover {
@@ -143,7 +143,7 @@
 
 /**boton de cerrar sesion*/
 .logout-btn {
-  background-color: rgb(255, 0, 0);
+  background-color: rgb(147, 0, 0);
   padding: 5px;
   height: 35px;
   border-radius: 7px;
@@ -169,6 +169,7 @@
 /**contenedor del icono y el titulo*/
 .logoName {
   display: flex;
+  font-family: "Courier New", Courier, monospace;
   flex-direction: row;
 }
 
@@ -182,9 +183,17 @@
 /** letras del titulo*/
 .titulo-logo {
   font-weight: 600;
-  font-size: 28px;
+  font-size: 36px;
   position: absolute;
   margin-left: 70px;
   margin-top: 10px;
   color: white;
+}
+
+.play {
+  color: rgb(0, 0, 196);
+}
+
+.match {
+  color: rgb(177, 0, 0);
 }

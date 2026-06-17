@@ -3,9 +3,9 @@ body {
   padding-top: 40px;
   background: linear-gradient(
     20deg,
-    rgb(27, 27, 242),
     rgb(8, 160, 8),
-    rgb(27, 27, 242)
+    rgb(27, 27, 242),
+    rgb(8, 160, 8)
   );
   background-attachment: fixed;
   animation: gradientMove 1s ease infinite;
