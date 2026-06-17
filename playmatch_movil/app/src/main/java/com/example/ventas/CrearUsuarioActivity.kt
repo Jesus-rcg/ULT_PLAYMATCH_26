@@ -16,6 +16,24 @@ class CrearUsuarioActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_crear_usuario)
 
+        var fechaSeleccionada: String? = null
+        val btnFecha = findViewById<Button>(R.id.btnFechaNacimiento)
+
+        btnFecha.setOnClickListener {
+            val calendario = java.util.Calendar.getInstance()
+            android.app.DatePickerDialog(
+                this,
+                { _, anio, mes, dia ->
+                    fechaSeleccionada = "%04d-%02d-%02d".format(anio, mes + 1, dia)
+                    btnFecha.text = fechaSeleccionada
+                    btnFecha.setTextColor(android.graphics.Color.BLACK)
+                },
+                calendario.get(java.util.Calendar.YEAR),
+                calendario.get(java.util.Calendar.MONTH),
+                calendario.get(java.util.Calendar.DAY_OF_MONTH)
+            ).show()
+        }
+
         findViewById<ImageButton>(R.id.btnVolver).setOnClickListener { finish() }
 
         val spinnerRol = findViewById<Spinner>(R.id.seleccionRol)
@@ -27,10 +45,17 @@ class CrearUsuarioActivity : AppCompatActivity() {
             val nombre   = findViewById<EditText>(R.id.etNombre).text.toString().trim()
             val apellido  = findViewById<EditText>(R.id.etApellido).text.toString().trim()
             val telefono  = findViewById<EditText>(R.id.etTelefono).text.toString().trim()
-            val fechaNac  = findViewById<EditText>(R.id.etFechaNacimiento).text.toString().trim()
             val email    = findViewById<EditText>(R.id.etEmail).text.toString().trim()
             val password = findViewById<EditText>(R.id.etPassword).text.toString().trim()
             val rolIndex      = spinnerRol.selectedItemPosition
+            val partes = fechaSeleccionada!!.split("-")
+            val nacimiento = java.util.Calendar.getInstance().apply {
+                set(partes[0].toInt(), partes[1].toInt() - 1, partes[2].toInt())
+            }
+            val hoy = java.util.Calendar.getInstance()
+            val edad = hoy.get(java.util.Calendar.YEAR) - nacimiento.get(java.util.Calendar.YEAR)
+            val cumpleEsteAnio = hoy.get(java.util.Calendar.DAY_OF_YEAR) < nacimiento.get(java.util.Calendar.DAY_OF_YEAR)
+            val edadReal = if (cumpleEsteAnio) edad - 1 else edad
 
             if (nombre.isEmpty()) {
                 Toast.makeText(this, "El nombre es obligatorio", Toast.LENGTH_SHORT).show()
@@ -47,11 +72,15 @@ class CrearUsuarioActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            if (fechaNac.isEmpty()) {
+            if (fechaSeleccionada == null) {
                 Toast.makeText(this, "La fecha de nacimiento es obligatoria", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
 
+            if (edadReal < 18) {
+                Toast.makeText(this, "El usuario debe ser mayor de 18 años", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
             if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 Toast.makeText(this, "Ingresa un email válido", Toast.LENGTH_SHORT).show()
@@ -71,7 +100,7 @@ class CrearUsuarioActivity : AppCompatActivity() {
                 id_rol = rolesId[rolIndex],
                 nombre_usuario = nombre,
                 apellido_usuario = apellido,
-                fecha_nacimiento = fechaNac,
+                fecha_nacimiento = fechaSeleccionada,
                 telefono         = telefono,
                 email = email,
                 password = password

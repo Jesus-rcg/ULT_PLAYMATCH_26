@@ -1,4 +1,5 @@
 import db from "../config/db.js";
+import bcrypt from "bcrypt";
 
 //Crear usario
 export const createUsuario = async (data) => {
@@ -12,6 +13,9 @@ export const createUsuario = async (data) => {
     password,
   } = data;
 
+  const passwordHash = await bcrypt.hash(password, 10);
+
+
   return await db.query(
     `INSERT INTO usuarios 
     (id_rol, nombre_usuario, apellido_usuario, fecha_nacimiento, telefono, email, password)
@@ -23,7 +27,7 @@ export const createUsuario = async (data) => {
       fecha_nacimiento,
       telefono,
       email,
-      password,
+      passwordHash,
     ],
   );
 };
@@ -80,17 +84,30 @@ export const getAllUsuarios = async () => {
 
 //Actualizar usuario
 export const updateUsuarioModel = async (id, data) => {
-  const { nombre_usuario, apellido_usuario, telefono, email } = data;
+  const { nombre_usuario, apellido_usuario, telefono, email, password } = data;
 
-  const [result] = await db.query(
-    `UPDATE usuarios 
+  const passwordHash = password ? await bcrypt.hash(password, 10) : null;
+
+  const query = password
+  ? `UPDATE usuarios 
      SET nombre_usuario = ?,
          apellido_usuario = ?,
-         telefono = ?,
-         email = ?
-     WHERE id_usuario = ?`,
-    [nombre_usuario, apellido_usuario, telefono, email, id],
-  );
+          telefono = ?,
+          email = ?,
+          password = ?
+     WHERE id_usuario = ?`
+     : `UPDATE usuarios
+      SET nombre_usuario = ?,
+          apellido_usuario = ?,
+          telefono = ?,
+          email = ?
+      WHERE id_usuario = ?`;
+
+    const params = passwordHash
+    ? [nombre_usuario, apellido_usuario, telefono, email, passwordHash, id]
+    : [nombre_usuario, apellido_usuario, telefono, email, id];
+
+  const [result] = await db.query(query, params);
 
   console.log(nombre_usuario);
   console.log(apellido_usuario);
