@@ -7,12 +7,14 @@
         android:orientation="vertical"
         android:background="#f0fff4">
 
+    <!-- Header -->
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="24dp"
-            android:paddingBottom="12dp">
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:gravity="center_vertical"
+            android:background="#16a34a">
 
         <ImageButton
                 android:id="@+id/btnVolver"
@@ -20,53 +22,43 @@
                 android:layout_height="40dp"
                 android:src="@android:drawable/ic_menu_revert"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                app:tint="#14532d"
-                android:layout_marginBottom="8dp"/>
+                app:tint="#FFFFFF"/>
 
         <TextView
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="⚽ PLAYMATCH"
-                android:textColor="#16a34a"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:gravity="center"
-                android:letterSpacing="0.1"
-                android:layout_marginBottom="8dp"/>
-
-        <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="Equipos"
-                android:textColor="#14532d"
+                android:textColor="#FFFFFF"
                 android:textStyle="bold"
-                android:textSize="26sp"
-                android:gravity="center"
-                android:layout_marginBottom="6dp"/>
+                android:textSize="20sp"
+                android:gravity="center"/>
 
-        <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/tvSubtitulo"
-                android:text="Toca un equipo para editarlo"
-                android:textColor="#4ade80"
-                android:textSize="13sp"
-                android:gravity="center"
-                android:layout_marginBottom="16dp"/>
-
+        <!-- Espacio para centrar el título -->
         <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#bbf7d0"/>
+                android:layout_width="40dp"
+                android:layout_height="40dp"/>
 
     </LinearLayout>
 
+    <!-- Subtítulo -->
+    <TextView
+            android:id="@+id/tvSubtitulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lista de todos los equipos"
+            android:textColor="#15803d"
+            android:textSize="13sp"
+            android:gravity="center"
+            android:padding="8dp"
+            android:background="#dcfce7"/>
+
+    <!-- Lista de equipos -->
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerEquipos"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:padding="16dp"
+            android:layout_height="match_parent"
+            android:padding="8dp"
             android:clipToPadding="false"/>
 
 </LinearLayout>

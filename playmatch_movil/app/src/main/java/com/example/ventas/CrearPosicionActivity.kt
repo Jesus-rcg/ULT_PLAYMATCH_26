@@ -5,7 +5,6 @@ import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ventas.api.ApiClient
-import com.example.ventas.model.Equipo
 import com.example.ventas.model.Posicion
 import com.example.ventas.model.PosicionRequest
 import com.example.ventas.model.Torneo

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#f0fff4">
@@ -12,6 +12,7 @@
             android:orientation="vertical"
             android:padding="24dp">
 
+        <!-- Botón volver -->
         <ImageButton
                 android:id="@+id/btnVolver"
                 android:layout_width="40dp"
@@ -21,6 +22,7 @@
                 app:tint="#14532d"
                 android:layout_marginBottom="8dp"/>
 
+        <!-- Título -->
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -29,13 +31,12 @@
                 android:textStyle="bold"
                 android:textSize="16sp"
                 android:gravity="center"
-                android:letterSpacing="0.1"
                 android:layout_marginBottom="8dp"/>
 
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Crear nuevo equipo"
+                android:text="Crear Equipo"
                 android:textColor="#14532d"
                 android:textStyle="bold"
                 android:textSize="26sp"
@@ -45,7 +46,7 @@
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Completa los datos del equipo"
+                android:text="Ingresa los datos del nuevo equipo"
                 android:textColor="#4ade80"
                 android:textSize="13sp"
                 android:gravity="center"
@@ -57,23 +58,7 @@
                 android:background="#bbf7d0"
                 android:layout_marginBottom="20dp"/>
 
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Torneo"
-                android:textColor="#15803d"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="6dp"/>
-
-        <Spinner
-                android:id="@+id/spinnerTorneo"
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:background="@drawable/spinner_background"
-                android:padding="12dp"
-                android:layout_marginBottom="14dp"/>
-
+        <!-- Nombre del equipo -->
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -84,43 +69,44 @@
                 android:layout_marginBottom="6dp"/>
 
         <EditText
-                android:id="@+id/etNombre"
+                android:id="@+id/etNombreEquipo"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:hint="Ej: Real Madrid"
                 android:padding="14dp"
                 android:background="@drawable/input_background"
                 android:inputType="textCapWords"
-                android:layout_marginBottom="14dp"/>
+                android:layout_marginBottom="16dp"/>
 
+        <!-- Escudo -->
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Entrenador"
+                android:text="Escudo (URL de la imagen)"
                 android:textColor="#15803d"
                 android:textSize="12sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="6dp"/>
 
         <EditText
-                android:id="@+id/etEntrenador"
+                android:id="@+id/etEscudo"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
-                android:hint="Ej: Carlo Ancelotti"
+                android:hint="Ej: https://miescudo.com/imagen.png"
                 android:padding="14dp"
                 android:background="@drawable/input_background"
-                android:inputType="textCapWords"
+                android:inputType="textUri"
                 android:layout_marginBottom="24dp"/>
 
+        <!-- Botón guardar -->
         <Button
                 android:id="@+id/btnGuardar"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
-                android:text="CREAR NUEVO EQUIPO"
+                android:text="GUARDAR EQUIPO"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold"
-                android:backgroundTint="#16a34a"
-                android:layout_marginBottom="8dp"/>
+                android:backgroundTint="#16a34a"/>
 
     </LinearLayout>
 </ScrollView>

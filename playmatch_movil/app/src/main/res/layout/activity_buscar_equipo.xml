@@ -7,12 +7,14 @@
         android:orientation="vertical"
         android:background="#f0fff4">
 
+    <!-- Header -->
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="24dp"
-            android:paddingBottom="12dp">
+            android:orientation="horizontal"
+            android:padding="16dp"
+            android:gravity="center_vertical"
+            android:background="#16a34a">
 
         <ImageButton
                 android:id="@+id/btnVolver"
@@ -20,62 +22,59 @@
                 android:layout_height="40dp"
                 android:src="@android:drawable/ic_menu_revert"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                app:tint="#14532d"
-                android:layout_marginBottom="8dp"/>
+                app:tint="#FFFFFF"/>
 
         <TextView
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="⚽ PLAYMATCH"
-                android:textColor="#16a34a"
+                android:layout_weight="1"
+                android:text="Buscar Equipo"
+                android:textColor="#FFFFFF"
                 android:textStyle="bold"
-                android:textSize="16sp"
-                android:gravity="center"
-                android:layout_marginBottom="8dp"/>
-
-        <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Buscar equipo"
-                android:textColor="#14532d"
-                android:textStyle="bold"
-                android:textSize="26sp"
-                android:gravity="center"
-                android:layout_marginBottom="6dp"/>
-
-        <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Busca por nombre o ID"
-                android:textColor="#4ade80"
-                android:textSize="13sp"
-                android:gravity="center"
-                android:layout_marginBottom="16dp"/>
+                android:textSize="20sp"
+                android:gravity="center"/>
 
         <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#bbf7d0"
-                android:layout_marginBottom="16dp"/>
-
-        <EditText
-                android:id="@+id/etBuscar"
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:hint="Escribe nombre o ID..."
-                android:padding="14dp"
-                android:background="@drawable/input_background"
-                android:inputType="text"
-                android:layout_marginBottom="12dp"/>
+                android:layout_width="40dp"
+                android:layout_height="40dp"/>
 
     </LinearLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerBuscar"
+    <!-- Barra de búsqueda -->
+    <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
             android:padding="16dp"
+            android:gravity="center_vertical">
+
+        <EditText
+                android:id="@+id/etBuscar"
+                android:layout_width="0dp"
+                android:layout_height="52dp"
+                android:layout_weight="1"
+                android:hint="Buscar por nombre..."
+                android:padding="14dp"
+                android:background="@drawable/input_background"
+                android:inputType="textCapWords"
+                android:layout_marginEnd="8dp"/>
+
+        <Button
+                android:id="@+id/btnBuscar"
+                android:layout_width="wrap_content"
+                android:layout_height="52dp"
+                android:text="Buscar"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#16a34a"/>
+
+    </LinearLayout>
+
+    <!-- Resultado -->
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerBusqueda"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp"
             android:clipToPadding="false"/>
 
 </LinearLayout>

@@ -7,6 +7,7 @@
         android:orientation="horizontal"
         android:padding="16dp"
         android:layout_marginBottom="12dp"
+        android:layout_marginHorizontal="8dp"
         android:background="@drawable/card_background"
         android:gravity="center_vertical">
 
@@ -16,6 +17,7 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
+        <!-- Nombre del equipo -->
         <TextView
                 android:id="@+id/tvNombreEquipo"
                 android:layout_width="wrap_content"
@@ -25,18 +27,19 @@
                 android:textStyle="bold"
                 android:textSize="16sp"/>
 
+        <!-- Escudo -->
         <TextView
-                android:id="@+id/tvEntrenador"
+                android:id="@+id/tvEscudo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Entrenador"
+                android:text="Escudo"
                 android:textColor="#15803d"
                 android:textSize="13sp"
                 android:layout_marginTop="4dp"/>
 
     </LinearLayout>
 
-    <!-- Ícono lápiz para editar -->
+    <!-- Botón editar -->
     <ImageButton
             android:id="@+id/btnEditar"
             android:layout_width="40dp"
@@ -46,14 +49,14 @@
             app:tint="#16a34a"
             android:visibility="gone"/>
 
-    <!-- Ícono basura para eliminar -->
+    <!-- Botón eliminar -->
     <ImageButton
             android:id="@+id/btnEliminar"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@android:drawable/ic_menu_delete"
             android:background="?attr/selectableItemBackgroundBorderless"
-            app:tint="#16a34a"
+            app:tint="#dc2626"
             android:visibility="gone"/>
 
 </LinearLayout>
