@@ -51,7 +51,10 @@ export default function Navbar() {
         <div>
           <div className="logoName">
             <img src={logo} alt="Logo" className="logo" />
-            <div className="titulo-logo">PLAYMATCH</div>
+            <div className="titulo-logo">
+              <span className="play">PLAY</span>
+              <span className="match">MATCH</span>
+            </div>
           </div>
         </div>
       </Link>

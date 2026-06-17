@@ -106,7 +106,7 @@ export default function Encuentros() {
                 key={encuentro.id_encuentro}
                 className="encuentro-card"
                 onClick={() =>
-                  navigate(`/cronologias/${encuentro.id_encuentro}`)
+                  navigate(`/alineacion/${encuentro.id_encuentro}`)
                 }
               >
                 <div className="fecha">
@@ -117,13 +117,23 @@ export default function Encuentros() {
                     .join("-")}
                 </div>
 
-                <div className="partido">
-                  {encuentro.equipo_local} vs {encuentro.equipo_visitante}
-                  <br />
-                  {encuentro.lugar}
+                <div>
+                  <div className="partido">
+                    <div className="equipo-e">
+                      <span className="eql">{encuentro.equipo_local}</span>
+                    </div>
+                    <div className="vs">vs</div>
+                    <div className="equipo-e">
+                      <span>{encuentro.equipo_visitante}</span>
+                    </div>
+                  </div>
+
+                  <div className="lugar-e">{encuentro.lugar}</div>
                 </div>
 
                 <div className="hora">{encuentro.hora?.slice(0, 5)}</div>
+
+                <span>{encuentro.estado}</span>
 
                 <div className="encuentro-acciones">
                   <button

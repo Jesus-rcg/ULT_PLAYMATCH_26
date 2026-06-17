@@ -21,15 +21,9 @@ export const getTorneos = async (req, res) => {
 
 export const getTorneosByUsuario = async (req, res) => {
   try {
-    console.log("REQ.USER:", req.user);
-
     const id_usuario = req.user?.id_usuario;
 
-    console.log("ID USUARIO:", id_usuario);
-
     const data = await getTorneosByUsuarioService(id_usuario);
-
-    console.log("TORNEOS:", data);
 
     res.json(data);
   } catch (error) {

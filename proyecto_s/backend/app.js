@@ -13,7 +13,8 @@ import jugadoresRoutes from "./routes/jugadoresRoutes.js";
 import encuentrosRoutes from "./routes/encuentrosRoutes.js";
 import posicionesRoutes from "./routes/posicionesRoutes.js";
 import cronologiasRoutes from "./routes/cronologiasRoutes.js";
-import resultadosRoutes from "./ROUTES/resultadosRoutes.js";
+import resultadosRoutes from "./routes/resultadosRoutes.js";
+import alineacionRoutes from "./routes/alineacionRoutes.js";
 
 const app = express();
 
@@ -45,6 +46,7 @@ app.use("/api/encuentros", encuentrosRoutes);
 app.use("/api/posiciones", posicionesRoutes);
 app.use("/api/cronologias", cronologiasRoutes);
 app.use("/api/resultados", resultadosRoutes);
+app.use("/api/alineaciones", alineacionRoutes);
 
 // ERROR HANDLER
 app.use((err, req, res, next) => {
