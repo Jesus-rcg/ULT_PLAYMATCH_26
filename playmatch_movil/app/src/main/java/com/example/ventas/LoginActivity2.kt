@@ -47,11 +47,17 @@ class LoginActivity2 : AppCompatActivity() {
                             val token = body?.token
                             val rol = body?.user?.rol
 
+<<<<<<< Updated upstream
                             if (rol != 1) {
                                 message.setTextColor(Color.RED)
                                 message.text = "No tienes permisos para acceder"
                                 return@onResponse
                             }
+=======
+                            val token = response.body()?.token
+
+
+>>>>>>> Stashed changes
                             // ✅ guardar token
                             val prefs = getSharedPreferences("app", MODE_PRIVATE)
                             prefs.edit().putString("token", token).apply()
