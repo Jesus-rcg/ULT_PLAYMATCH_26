@@ -198,3 +198,44 @@ interface ApiService {
         id: Int
     ): Call<Void>
 }
+// ================= ENCUENTROS =================
+
+@POST("/api/encuentros")
+fun createEncuentro(
+    @Header("Authorization")
+    token: String,
+    @Body
+    encuentro: Encuentro
+): Call<Encuentro>
+
+@GET("/api/encuentros")
+fun getEncuentros(
+    @Header("Authorization")
+    token: String
+): Call<List<Encuentro>>
+
+@GET("/api/encuentros/{id}")
+fun getEncuentro(
+    @Header("Authorization")
+    token: String,
+    @Path("id")
+    id: Int
+): Call<Encuentro>
+
+@PUT("/api/encuentros/{id}")
+fun updateEncuentro(
+    @Header("Authorization")
+    token: String,
+    @Path("id")
+    id: Int,
+    @Body
+    encuentro: Encuentro
+): Call<Void>
+
+@DELETE("/api/encuentros/{id}")
+fun deleteEncuentro(
+    @Header("Authorization")
+    token: String,
+    @Path("id")
+    id: Int
+): Call<Void>
