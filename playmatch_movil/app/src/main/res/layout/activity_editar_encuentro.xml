@@ -36,19 +36,10 @@
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Editar Equipo"
+                android:text="Editar Encuentro"
                 android:textColor="#14532d"
                 android:textStyle="bold"
                 android:textSize="26sp"
-                android:gravity="center"
-                android:layout_marginBottom="6dp"/>
-
-        <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Modifica los datos del equipo"
-                android:textColor="#4ade80"
-                android:textSize="13sp"
                 android:gravity="center"
                 android:layout_marginBottom="20dp"/>
 
@@ -58,44 +49,101 @@
                 android:background="#bbf7d0"
                 android:layout_marginBottom="20dp"/>
 
-        <!-- Nombre del equipo -->
+        <!-- Jornada -->
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nombre del equipo"
+                android:text="Jornada"
                 android:textColor="#15803d"
                 android:textSize="12sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="6dp"/>
 
         <EditText
-                android:id="@+id/etNombreEditar"
+                android:id="@+id/etJornadaEditar"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
-                android:hint="Ej: Real Madrid"
+                android:hint="Ej: 1"
+                android:padding="14dp"
+                android:background="@drawable/input_background"
+                android:inputType="number"
+                android:layout_marginBottom="16dp"/>
+
+        <!-- Lugar -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Lugar"
+                android:textColor="#15803d"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="6dp"/>
+
+        <EditText
+                android:id="@+id/etLugarEditar"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:hint="Ej: Estadio Central"
                 android:padding="14dp"
                 android:background="@drawable/input_background"
                 android:inputType="textCapWords"
                 android:layout_marginBottom="16dp"/>
 
-        <!-- Escudo -->
+        <!-- Fecha -->
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Escudo (URL de la imagen)"
+                android:text="Fecha (YYYY-MM-DD)"
                 android:textColor="#15803d"
                 android:textSize="12sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="6dp"/>
 
         <EditText
-                android:id="@+id/etEscudoEditar"
+                android:id="@+id/etFechaEditar"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
-                android:hint="Ej: https://miescudo.com/imagen.png"
+                android:hint="Ej: 2026-06-18"
                 android:padding="14dp"
                 android:background="@drawable/input_background"
-                android:inputType="textUri"
+                android:inputType="date"
+                android:layout_marginBottom="16dp"/>
+
+        <!-- Hora -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Hora (HH:MM:SS)"
+                android:textColor="#15803d"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="6dp"/>
+
+        <EditText
+                android:id="@+id/etHoraEditar"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:hint="Ej: 18:00:00"
+                android:padding="14dp"
+                android:background="@drawable/input_background"
+                android:inputType="time"
+                android:layout_marginBottom="16dp"/>
+
+        <!-- Estado -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Estado"
+                android:textColor="#15803d"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="6dp"/>
+
+        <Spinner
+                android:id="@+id/spinnerEstadoEditar"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="@drawable/input_background"
                 android:layout_marginBottom="24dp"/>
 
         <!-- Botón actualizar -->
@@ -103,7 +151,7 @@
                 android:id="@+id/btnActualizar"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
-                android:text="ACTUALIZAR EQUIPO"
+                android:text="ACTUALIZAR ENCUENTRO"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold"
                 android:backgroundTint="#16a34a"/>

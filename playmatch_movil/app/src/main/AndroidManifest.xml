@@ -71,11 +71,12 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.EquipoActivity"/>
-        <activity android:name=".ui.ListaEquiposActivity"/>
-        <activity android:name=".ui.EditarEquipoActivity"/>
-        <activity android:name=".ui.EquiposMenuActivity"/>
-        <activity android:name=".ui.BuscarEquipoActivity"/>
+        <!-- EQUIPOS -->
+        <activity android:name=".ui.equipos.EquiposMenuActivity"/>
+        <activity android:name=".ui.equipos.ListaEquiposActivity"/>
+        <activity android:name=".ui.equipos.CrearEquipoActivity"/>
+        <activity android:name=".ui.equipos.EditarEquipoActivity"/>
+        <activity android:name=".ui.equipos.BuscarEquipoActivity"/>
         <activity
                 android:name=".MainActivity"
                 android:exported="false"/>

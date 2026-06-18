@@ -28,13 +28,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Equipos"
+                android:text="Encuentros"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold"
                 android:textSize="20sp"
                 android:gravity="center"/>
 
-        <!-- Espacio para centrar el título -->
         <View
                 android:layout_width="40dp"
                 android:layout_height="40dp"/>
@@ -46,16 +45,16 @@
             android:id="@+id/tvSubtitulo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Lista de todos los equipos"
+            android:text="Lista de todos los encuentros"
             android:textColor="#15803d"
             android:textSize="13sp"
             android:gravity="center"
             android:padding="8dp"
             android:background="#dcfce7"/>
 
-    <!-- Lista de equipos -->
+    <!-- Lista -->
     <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerEquipos"
+            android:id="@+id/recyclerEncuentros"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="8dp"

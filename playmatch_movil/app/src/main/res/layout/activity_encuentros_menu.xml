@@ -34,7 +34,7 @@
         <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Equipos"
+                android:text="Encuentros"
                 android:textColor="#14532d"
                 android:textStyle="bold"
                 android:textSize="26sp"
@@ -52,7 +52,7 @@
                 android:id="@+id/btnCrear"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:text="➕ Crear Equipo"
+                android:text="➕ Crear Encuentro"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold"
                 android:backgroundTint="#16a34a"
@@ -74,7 +74,7 @@
                 android:id="@+id/btnEditar"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:text="✏️ Editar Equipo"
+                android:text="✏️ Editar Encuentro"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold"
                 android:backgroundTint="#ca8a04"
@@ -85,21 +85,10 @@
                 android:id="@+id/btnEliminar"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
-                android:text="🗑️ Eliminar Equipo"
+                android:text="🗑️ Eliminar Encuentro"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold"
                 android:backgroundTint="#dc2626"
-                android:layout_marginBottom="12dp"/>
-
-        <!-- Botón Buscar -->
-        <Button
-                android:id="@+id/btnBuscar"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:text="🔍 Buscar Equipo"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold"
-                android:backgroundTint="#0284c7"
                 android:layout_marginBottom="12dp"/>
 
     </LinearLayout>
