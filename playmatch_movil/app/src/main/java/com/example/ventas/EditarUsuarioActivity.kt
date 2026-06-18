@@ -36,6 +36,8 @@ class EditarUsuarioActivity : AppCompatActivity() {
         val etApellido = findViewById<EditText>(R.id.etApellido)
         val etEmail = findViewById<EditText>(R.id.etEmail)
         val etTelefono = findViewById<EditText>(R.id.etTelefono)
+        val etPassword = findViewById<EditText>(R.id.etPassword)
+
 
         //Carga los datos actuales del usuario.
         etNombre.setText(nombre)
@@ -50,6 +52,7 @@ class EditarUsuarioActivity : AppCompatActivity() {
             val nuevoApellido = etApellido.text.toString().trim()
             val nuevoEmail = etEmail.text.toString().trim()
             val nuevoTelefono = etTelefono.text.toString().trim()
+            val nuevoPassword  = etPassword.text.toString().trim()
 
             //Hacemos validaciones para que no hayan errores.
 
@@ -72,6 +75,11 @@ class EditarUsuarioActivity : AppCompatActivity() {
                 Toast.makeText(this, "El teléfono es obligatorio", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+
+            if (nuevoPassword.isNotEmpty() && nuevoPassword.length < 6) {
+                Toast.makeText(this, "La contraseña debe tener al menos 6 caracteres", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             //Cuando no escriben contraseña, se manda vacía (sin cambios).
 
             val usuario = Usuario(
@@ -80,7 +88,7 @@ class EditarUsuarioActivity : AppCompatActivity() {
                 email = nuevoEmail,
                 telefono = nuevoTelefono,
                 fecha_nacimiento = "",   // no se edita
-                password = null  // no se edita
+                password         = if (nuevoPassword.isEmpty()) null else nuevoPassword  // no se edita si el usuario no requiere editar
             )
 
             //Token y conectamos con la api para que se realicen los cambios.
