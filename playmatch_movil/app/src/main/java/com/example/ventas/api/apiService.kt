@@ -87,21 +87,21 @@ interface ApiService {
 
     ): Call<Jugador>
 
-    @GET("jugadores")
-    fun getJugadores(
-        @Header("Authorization")
-        token: String
-    ): Call<List<Jugador>>
+        @GET("jugadores")
+        fun getJugadores(
+            @Header("Authorization")
+            token: String
+        ): Call<List<Jugador>>
 
-    @GET("jugadores/buscar")
-    fun buscarJugador(
-        @Header("Authorization")
-        token: String,
+        @GET("jugadores/buscar")
+        fun buscarJugador(
+            @Header("Authorization")
+            token: String,
 
-        @Query("buscar")
-        buscar: String
+            @Query("buscar")
+            buscar: String
 
-    ): Call<Jugador>
+        ): Call<Jugador>
 
     @PUT("jugadores/{id}")
     fun actualizarJugadores(
