@@ -7,11 +7,13 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.ventas.ui.equipos.BuscarEquipoActivity
+import com.example.ventas.ui.equipos.CrearEquipoActivity
+import com.example.ventas.ui.equipos.ListaEquiposActivity
 
 class OperacionesActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.menu_usuarios)
 
@@ -33,7 +35,7 @@ class OperacionesActivity : AppCompatActivity() {
         cardGuardar.setOnClickListener {
             when (modulo) {
                 "Jugadores" -> startActivity(Intent(this, CrearJugadorActivity::class.java))
-                "Equipos" -> startActivity(Intent(this, com.example.ventas.ui.EquipoActivity::class.java))
+                "Equipos" -> startActivity(Intent(this, CrearEquipoActivity::class.java))
                 "Usuarios" -> startActivity(Intent(this, CrearUsuarioActivity::class.java))
                 "Torneos" -> startActivity(Intent(this, CrearTorneoActivity::class.java))
                 else -> Toast.makeText(this, "Formulario no disponible", Toast.LENGTH_SHORT).show()
@@ -44,7 +46,7 @@ class OperacionesActivity : AppCompatActivity() {
         cardBuscar.setOnClickListener {
             when (modulo) {
                 "Jugadores" -> startActivity(Intent(this, BuscarJugadorActivity::class.java))
-                "Equipos" -> startActivity(Intent(this, com.example.ventas.ui.BuscarEquipoActivity::class.java))
+                "Equipos" -> startActivity(Intent(this, BuscarEquipoActivity::class.java))
                 else -> Toast.makeText(this, "Buscar no disponible", Toast.LENGTH_SHORT).show()
             }
         }
@@ -54,7 +56,7 @@ class OperacionesActivity : AppCompatActivity() {
             when (modulo) {
                 "Jugadores" -> startActivity(Intent(this, EditarJugadorActivity::class.java))
                 "Equipos" -> {
-                    val intent = Intent(this, com.example.ventas.ui.ListaEquiposActivity::class.java)
+                    val intent = Intent(this, ListaEquiposActivity::class.java)
                     intent.putExtra("MODO", "editar")
                     startActivity(intent)
                 }
@@ -67,7 +69,7 @@ class OperacionesActivity : AppCompatActivity() {
             when (modulo) {
                 "Jugadores" -> startActivity(Intent(this, EliminarJugadorActivity::class.java))
                 "Equipos" -> {
-                    val intent = Intent(this, com.example.ventas.ui.ListaEquiposActivity::class.java)
+                    val intent = Intent(this, ListaEquiposActivity::class.java)
                     intent.putExtra("MODO", "eliminar")
                     startActivity(intent)
                 }
@@ -80,7 +82,7 @@ class OperacionesActivity : AppCompatActivity() {
             when (modulo) {
                 "Jugadores" -> startActivity(Intent(this, ListarJugadoresActivity::class.java))
                 "Equipos" -> {
-                    val intent = Intent(this, com.example.ventas.ui.ListaEquiposActivity::class.java)
+                    val intent = Intent(this, ListaEquiposActivity::class.java)
                     intent.putExtra("MODO", "vertodos")
                     startActivity(intent)
                 }
