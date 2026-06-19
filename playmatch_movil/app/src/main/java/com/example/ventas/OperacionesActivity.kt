@@ -10,6 +10,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.ventas.ui.equipos.BuscarEquipoActivity
 import com.example.ventas.ui.equipos.CrearEquipoActivity
 import com.example.ventas.ui.equipos.ListaEquiposActivity
+import com.example.ventas.ui.encuentros.CrearEncuentroActivity
+import com.example.ventas.ui.encuentros.ListaEncuentrosActivity
 
 class OperacionesActivity : AppCompatActivity() {
 
@@ -36,6 +38,7 @@ class OperacionesActivity : AppCompatActivity() {
             when (modulo) {
                 "Jugadores" -> startActivity(Intent(this, CrearJugadorActivity::class.java))
                 "Equipos" -> startActivity(Intent(this, CrearEquipoActivity::class.java))
+                "Encuentros" -> startActivity(Intent(this, CrearEncuentroActivity::class.java))
                 "Usuarios" -> startActivity(Intent(this, CrearUsuarioActivity::class.java))
                 "Torneos" -> startActivity(Intent(this, CrearTorneoActivity::class.java))
                 else -> Toast.makeText(this, "Formulario no disponible", Toast.LENGTH_SHORT).show()
@@ -47,6 +50,11 @@ class OperacionesActivity : AppCompatActivity() {
             when (modulo) {
                 "Jugadores" -> startActivity(Intent(this, BuscarJugadorActivity::class.java))
                 "Equipos" -> startActivity(Intent(this, BuscarEquipoActivity::class.java))
+                "Encuentros" -> {
+                    val intent = Intent(this, ListaEncuentrosActivity::class.java)
+                    intent.putExtra("MODO", "vertodos")
+                    startActivity(intent)
+                }
                 else -> Toast.makeText(this, "Buscar no disponible", Toast.LENGTH_SHORT).show()
             }
         }
@@ -57,6 +65,11 @@ class OperacionesActivity : AppCompatActivity() {
                 "Jugadores" -> startActivity(Intent(this, EditarJugadorActivity::class.java))
                 "Equipos" -> {
                     val intent = Intent(this, ListaEquiposActivity::class.java)
+                    intent.putExtra("MODO", "editar")
+                    startActivity(intent)
+                }
+                "Encuentros" -> {
+                    val intent = Intent(this, ListaEncuentrosActivity::class.java)
                     intent.putExtra("MODO", "editar")
                     startActivity(intent)
                 }
@@ -73,6 +86,11 @@ class OperacionesActivity : AppCompatActivity() {
                     intent.putExtra("MODO", "eliminar")
                     startActivity(intent)
                 }
+                "Encuentros" -> {
+                    val intent = Intent(this, ListaEncuentrosActivity::class.java)
+                    intent.putExtra("MODO", "eliminar")
+                    startActivity(intent)
+                }
                 else -> Toast.makeText(this, "Eliminar no disponible", Toast.LENGTH_SHORT).show()
             }
         }
@@ -83,6 +101,11 @@ class OperacionesActivity : AppCompatActivity() {
                 "Jugadores" -> startActivity(Intent(this, ListarJugadoresActivity::class.java))
                 "Equipos" -> {
                     val intent = Intent(this, ListaEquiposActivity::class.java)
+                    intent.putExtra("MODO", "vertodos")
+                    startActivity(intent)
+                }
+                "Encuentros" -> {
+                    val intent = Intent(this, ListaEncuentrosActivity::class.java)
                     intent.putExtra("MODO", "vertodos")
                     startActivity(intent)
                 }

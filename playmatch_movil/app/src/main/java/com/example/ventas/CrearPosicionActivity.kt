@@ -66,7 +66,7 @@ class CrearPosicionActivity : AppCompatActivity() {
                 ) {
                     if (response.isSuccessful) {
                         listaTorneos = response.body() ?: emptyList()
-                        val nombres = listaTorneos.map { it.nombre }
+                        val nombres = listaTorneos.map { it.nombre_torneo }
                         val adapter = ArrayAdapter(
                             this@CrearPosicionActivity,
                             android.R.layout.simple_spinner_item,
