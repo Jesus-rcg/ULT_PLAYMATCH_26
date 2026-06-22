@@ -69,24 +69,26 @@ export default function PosicionCampo({
           {jugador && (
             <div className="estadisticas">
               {stats.goles > 0 && (
-                <div className="badge gol">
+                <div className="badge-gol">
+                  <span className="cantida">{stats.goles}</span>
+                  <br />
                   <span className="icono-gol">⚽</span>
-                  <br /> <span>{stats.goles}</span>
                 </div>
               )}
 
               {stats.amarillas > 0 && (
-                <div className="badge amarilla">
-                  <span>🟨</span>
-                  <br /> <span>{stats.amarillas}</span>
+                <div className="badge-tarjeta">
+                  <span className="cantida">{stats.amarillas}</span>
+                  <br />
+                  <span className="icono-tarjeta">🟨</span>
                 </div>
               )}
 
               {stats.rojas > 0 && (
-                <div className="badge roja">
-                  <span>🟥</span>
+                <div className="badge-tarjeta">
+                  <span className="cantida">{stats.rojas}</span>
                   <br />
-                  <span>{stats.rojas}</span>
+                  <span className="icono-tarjeta">🟥</span>
                 </div>
               )}
             </div>

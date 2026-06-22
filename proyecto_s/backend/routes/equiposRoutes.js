@@ -3,6 +3,7 @@ import { Router } from "express";
 import {
   getEquipos,
   getEquipoById,
+  getEquiposByTorneo,
   createEquipo,
   updateEquipo,
   deleteEquipo,
@@ -10,6 +11,7 @@ import {
 
 const router = Router();
 
+router.get("/torneo/:id", getEquiposByTorneo);
 router.get("/", getEquipos);
 router.get("/:id", getEquipoById);
 router.post("/", createEquipo);
