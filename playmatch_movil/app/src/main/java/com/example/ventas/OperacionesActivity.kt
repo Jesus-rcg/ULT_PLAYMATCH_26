@@ -12,6 +12,8 @@ import com.example.ventas.ui.equipos.CrearEquipoActivity
 import com.example.ventas.ui.equipos.ListaEquiposActivity
 import com.example.ventas.ui.encuentros.CrearEncuentroActivity
 import com.example.ventas.ui.encuentros.ListaEncuentrosActivity
+import com.example.ventas.ui.resultados.CrearResultadoActivity
+import com.example.ventas.ui.resultados.ListaResultadosActivity
 
 class OperacionesActivity : AppCompatActivity() {
 
@@ -39,6 +41,8 @@ class OperacionesActivity : AppCompatActivity() {
                 "Jugadores" -> startActivity(Intent(this, CrearJugadorActivity::class.java))
                 "Equipos" -> startActivity(Intent(this, CrearEquipoActivity::class.java))
                 "Encuentros" -> startActivity(Intent(this, CrearEncuentroActivity::class.java))
+                // ✅ Agregado Resultados
+                "Resultados" -> startActivity(Intent(this, CrearResultadoActivity::class.java))
                 "Usuarios" -> startActivity(Intent(this, CrearUsuarioActivity::class.java))
                 "Torneos" -> startActivity(Intent(this, CrearTorneoActivity::class.java))
                 else -> Toast.makeText(this, "Formulario no disponible", Toast.LENGTH_SHORT).show()
@@ -52,6 +56,12 @@ class OperacionesActivity : AppCompatActivity() {
                 "Equipos" -> startActivity(Intent(this, BuscarEquipoActivity::class.java))
                 "Encuentros" -> {
                     val intent = Intent(this, ListaEncuentrosActivity::class.java)
+                    intent.putExtra("MODO", "vertodos")
+                    startActivity(intent)
+                }
+                // ✅ Agregado Resultados
+                "Resultados" -> {
+                    val intent = Intent(this, ListaResultadosActivity::class.java)
                     intent.putExtra("MODO", "vertodos")
                     startActivity(intent)
                 }
@@ -73,6 +83,12 @@ class OperacionesActivity : AppCompatActivity() {
                     intent.putExtra("MODO", "editar")
                     startActivity(intent)
                 }
+                // ✅ Agregado Resultados
+                "Resultados" -> {
+                    val intent = Intent(this, ListaResultadosActivity::class.java)
+                    intent.putExtra("MODO", "editar")
+                    startActivity(intent)
+                }
                 else -> Toast.makeText(this, "Editar no disponible", Toast.LENGTH_SHORT).show()
             }
         }
@@ -91,6 +107,12 @@ class OperacionesActivity : AppCompatActivity() {
                     intent.putExtra("MODO", "eliminar")
                     startActivity(intent)
                 }
+                // ✅ Agregado Resultados
+                "Resultados" -> {
+                    val intent = Intent(this, ListaResultadosActivity::class.java)
+                    intent.putExtra("MODO", "eliminar")
+                    startActivity(intent)
+                }
                 else -> Toast.makeText(this, "Eliminar no disponible", Toast.LENGTH_SHORT).show()
             }
         }
@@ -106,6 +128,12 @@ class OperacionesActivity : AppCompatActivity() {
                 }
                 "Encuentros" -> {
                     val intent = Intent(this, ListaEncuentrosActivity::class.java)
+                    intent.putExtra("MODO", "vertodos")
+                    startActivity(intent)
+                }
+                // ✅ Agregado Resultados
+                "Resultados" -> {
+                    val intent = Intent(this, ListaResultadosActivity::class.java)
                     intent.putExtra("MODO", "vertodos")
                     startActivity(intent)
                 }

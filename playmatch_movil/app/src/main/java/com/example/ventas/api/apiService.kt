@@ -251,4 +251,47 @@ interface ApiService {
         @Path("id")
         id: Int
     ): Call<Void>
+
+    // ================= RESULTADOS =================
+
+    @POST("/api/resultados")
+    fun createResultado(
+        @Header("Authorization")
+        token: String,
+        @Body
+        resultado: Resultado
+    ): Call<Resultado>
+
+    @GET("/api/resultados")
+    fun getResultados(
+        @Header("Authorization")
+        token: String
+    ): Call<List<Resultado>>
+
+    @GET("/api/resultados/{id}")
+    fun getResultado(
+        @Header("Authorization")
+        token: String,
+        @Path("id")
+        id: Int
+    ): Call<Resultado>
+
+    @PUT("/api/resultados/{id}")
+    fun updateResultado(
+        @Header("Authorization")
+        token: String,
+        @Path("id")
+        id: Int,
+        @Body
+        resultado: Resultado
+    ): Call<Void>
+
+    @DELETE("/api/resultados/{id}")
+    fun deleteResultado(
+        @Header("Authorization")
+        token: String,
+        @Path("id")
+        id: Int
+    ): Call<Void>
+
 }

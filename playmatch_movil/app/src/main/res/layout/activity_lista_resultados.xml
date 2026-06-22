@@ -28,7 +28,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Encuentros"
+                android:text="Resultados"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold"
                 android:textSize="20sp"
@@ -45,7 +45,7 @@
             android:id="@+id/tvSubtitulo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Lista de todos los encuentros"
+            android:text="Lista de todos los resultados"
             android:textColor="#15803d"
             android:textSize="13sp"
             android:gravity="center"
@@ -66,10 +66,10 @@
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_weight="1"
-                android:hint="🔍 Buscar por lugar o jornada..."
+                android:hint="🔍 Buscar por ID de encuentro..."
                 android:padding="12dp"
                 android:background="@drawable/input_background"
-                android:inputType="text"
+                android:inputType="number"
                 android:layout_marginEnd="8dp"/>
 
         <Button
@@ -83,7 +83,7 @@
 
     </LinearLayout>
 
-    <!-- Filtros de estado -->
+    <!-- Filtros de goles -->
     <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -107,40 +107,30 @@
                     android:layout_marginEnd="8dp"/>
 
             <Button
-                    android:id="@+id/btnFiltroPendiente"
+                    android:id="@+id/btnFiltroLocalGana"
                     android:layout_width="wrap_content"
                     android:layout_height="36dp"
-                    android:text="Pendiente"
-                    android:textSize="12sp"
-                    android:textColor="#FFFFFF"
-                    android:backgroundTint="#ca8a04"
-                    android:layout_marginEnd="8dp"/>
-
-            <Button
-                    android:id="@+id/btnFiltroJugando"
-                    android:layout_width="wrap_content"
-                    android:layout_height="36dp"
-                    android:text="Jugando"
+                    android:text="🏠 Local Gana"
                     android:textSize="12sp"
                     android:textColor="#FFFFFF"
                     android:backgroundTint="#0284c7"
                     android:layout_marginEnd="8dp"/>
 
             <Button
-                    android:id="@+id/btnFiltroFinalizado"
+                    android:id="@+id/btnFiltroVisitanteGana"
                     android:layout_width="wrap_content"
                     android:layout_height="36dp"
-                    android:text="Finalizado"
+                    android:text="✈️ Visitante Gana"
                     android:textSize="12sp"
                     android:textColor="#FFFFFF"
-                    android:backgroundTint="#14532d"
+                    android:backgroundTint="#ca8a04"
                     android:layout_marginEnd="8dp"/>
 
             <Button
-                    android:id="@+id/btnFiltroAplazado"
+                    android:id="@+id/btnFiltroEmpate"
                     android:layout_width="wrap_content"
                     android:layout_height="36dp"
-                    android:text="Aplazado"
+                    android:text="🤝 Empate"
                     android:textSize="12sp"
                     android:textColor="#FFFFFF"
                     android:backgroundTint="#dc2626"/>
@@ -150,7 +140,7 @@
 
     <!-- Lista -->
     <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerEncuentros"
+            android:id="@+id/recyclerResultados"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="8dp"

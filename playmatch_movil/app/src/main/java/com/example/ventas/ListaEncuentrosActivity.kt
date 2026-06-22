@@ -1,9 +1,7 @@
 package com.example.ventas.ui.encuentros
 
 import android.os.Bundle
-import android.widget.ImageButton
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,7 +15,12 @@ import retrofit2.Response
 class ListaEncuentrosActivity : AppCompatActivity() {
 
     private lateinit var recyclerEncuentros: RecyclerView
+    private lateinit var etBuscar: EditText
+    private lateinit var btnBuscar: Button
     private var modo: String = "vertodos"
+
+    // ✅ Lista completa para filtrar
+    private var listaCompleta: List<Encuentro> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +38,34 @@ class ListaEncuentrosActivity : AppCompatActivity() {
         recyclerEncuentros = findViewById(R.id.recyclerEncuentros)
         recyclerEncuentros.layoutManager = LinearLayoutManager(this)
 
+        etBuscar = findViewById(R.id.etBuscar)
+        btnBuscar = findViewById(R.id.btnBuscar)
+
         findViewById<ImageButton>(R.id.btnVolver).setOnClickListener { finish() }
+
+        // ✅ Botón buscar
+        btnBuscar.setOnClickListener {
+            val texto = etBuscar.text.toString().trim()
+            filtrarPorTexto(texto)
+        }
+
+        // ✅ Filtros de estado
+        findViewById<Button>(R.id.btnFiltroTodos).setOnClickListener {
+            etBuscar.setText("")
+            mostrarLista(listaCompleta)
+        }
+        findViewById<Button>(R.id.btnFiltroPendiente).setOnClickListener {
+            filtrarPorEstado("Pendiente")
+        }
+        findViewById<Button>(R.id.btnFiltroJugando).setOnClickListener {
+            filtrarPorEstado("Jugando")
+        }
+        findViewById<Button>(R.id.btnFiltroFinalizado).setOnClickListener {
+            filtrarPorEstado("Finalizado")
+        }
+        findViewById<Button>(R.id.btnFiltroAplazado).setOnClickListener {
+            filtrarPorEstado("Aplazado")
+        }
 
         cargarEncuentros()
     }
@@ -58,9 +88,8 @@ class ListaEncuentrosActivity : AppCompatActivity() {
                 response: Response<List<Encuentro>>
             ) {
                 if (response.isSuccessful) {
-                    val encuentros = response.body() ?: emptyList()
-                    val adapter = EncuentroAdapter(encuentros.toMutableList(), modo)
-                    recyclerEncuentros.adapter = adapter
+                    listaCompleta = response.body() ?: emptyList()
+                    mostrarLista(listaCompleta)
                 } else {
                     Toast.makeText(
                         this@ListaEncuentrosActivity,
@@ -78,5 +107,39 @@ class ListaEncuentrosActivity : AppCompatActivity() {
                 ).show()
             }
         })
+    }
+
+    // ✅ Filtra por texto en lugar o jornada
+    private fun filtrarPorTexto(texto: String) {
+        if (texto.isEmpty()) {
+            mostrarLista(listaCompleta)
+            return
+        }
+        val filtrados = listaCompleta.filter {
+            it.lugar.contains(texto, ignoreCase = true) ||
+                    it.jornada.toString().contains(texto)
+        }
+        if (filtrados.isEmpty()) {
+            Toast.makeText(this, "No se encontraron encuentros", Toast.LENGTH_SHORT).show()
+        }
+        mostrarLista(filtrados)
+    }
+
+    // ✅ Filtra por estado
+    private fun filtrarPorEstado(estado: String) {
+        etBuscar.setText("")
+        val filtrados = listaCompleta.filter {
+            it.estado.equals(estado, ignoreCase = true)
+        }
+        if (filtrados.isEmpty()) {
+            Toast.makeText(this, "No hay encuentros con estado: $estado", Toast.LENGTH_SHORT).show()
+        }
+        mostrarLista(filtrados)
+    }
+
+    // ✅ Muestra la lista en el RecyclerView
+    private fun mostrarLista(lista: List<Encuentro>) {
+        val adapter = EncuentroAdapter(lista.toMutableList(), modo)
+        recyclerEncuentros.adapter = adapter
     }
 }

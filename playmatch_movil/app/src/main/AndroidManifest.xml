@@ -80,6 +80,14 @@
         <activity android:name=".ui.encuentros.ListaEncuentrosActivity"/>
         <activity android:name=".ui.encuentros.CrearEncuentroActivity"/>
         <activity android:name=".ui.encuentros.EditarEncuentroActivity"/>
+
+        <!-- RESULTADOS -->
+        <activity android:name=".ui.resultados.ResultadosMenuActivity"/>
+        <activity android:name=".ui.resultados.ListaResultadosActivity"/>
+        <activity android:name=".ui.resultados.CrearResultadoActivity"/>
+        <activity android:name=".ui.resultados.EditarResultadoActivity"/>
+
+
         <activity
                 android:name=".MainActivity"
                 android:exported="false"/>

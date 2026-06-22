@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_marginBottom="12dp"
+        android:layout_marginHorizontal="8dp"
+        android:background="@drawable/card_background">
+
+    <!-- ID Encuentro -->
+    <TextView
+            android:id="@+id/tvEncuentro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Encuentro #1"
+            android:textColor="#14532d"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:layout_marginBottom="8dp"/>
+
+    <!-- Marcador -->
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="8dp">
+
+        <TextView
+                android:id="@+id/tvGolesLocal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="#14532d"
+                android:textStyle="bold"
+                android:textSize="32sp"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" - "
+                android:textColor="#14532d"
+                android:textStyle="bold"
+                android:textSize="32sp"/>
+
+        <TextView
+                android:id="@+id/tvGolesVisitante"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="#14532d"
+                android:textStyle="bold"
+                android:textSize="32sp"/>
+
+    </LinearLayout>
+
+    <!-- Botones -->
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="end">
+
+        <ImageButton
+                android:id="@+id/btnEditar"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@android:drawable/ic_menu_edit"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:tint="#16a34a"
+                android:visibility="gone"/>
+
+        <ImageButton
+                android:id="@+id/btnEliminar"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@android:drawable/ic_menu_delete"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:tint="#dc2626"
+                android:visibility="gone"/>
+
+    </LinearLayout>
+
+</LinearLayout>
