@@ -41,6 +41,18 @@
                 android:exported="true"/>
 
         <activity
+                android:name=".ListarTorneosActivity"
+                android:exported="true"/>
+
+        <activity
+                android:name=".CrearTorneoActivity"
+                android:exported="true"/>
+
+        <activity
+                android:name=".EditarTorneoActivity"
+                android:exported="true"/>
+
+        <activity
                 android:name=".CrearUsuarioActivity"
                 android:exported="true"/>
 

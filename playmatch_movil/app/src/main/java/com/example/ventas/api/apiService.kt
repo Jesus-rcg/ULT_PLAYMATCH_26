@@ -163,10 +163,36 @@ interface ApiService {
     ): Call<Torneo>
 
     @GET("/api/torneos")
-    fun getTorneos(
+    fun getTorneo(
         @Header("Authorization")
         token: String
     ): Call<List<Torneo>>
+
+    @GET("/api/torneos/{id}")
+    fun getTorneo(
+        @Header("Authorization")
+        token: String,
+        @Path("id")
+        id: Int
+    ): Call<Torneo>
+
+    @PUT("/api/torneos/{id}")
+    fun updateTorneo(
+        @Header("Authorization")
+        token: String,
+        @Path("id")
+        id: Int,
+        @Body
+        torneo: Torneo
+    ): Call<Void>
+
+    @DELETE("/api/torneos/{id}")
+    fun deleteTorneo(
+        @Header("Authorization")
+        token: String,
+        @Path("id")
+        id: Int
+    ): Call<Void>
 
     // ================= POSICIONES =================
 
