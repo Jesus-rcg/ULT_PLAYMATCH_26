@@ -1,79 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#F3F7FF">
+        android:orientation="vertical"
+        android:background="#F5F5F5"
+        android:padding="20dp"
+        android:paddingTop="50dp">
 
     <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:layout_marginTop="30dp"
-            android:padding="30dp">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="40dp">
 
-        <!-- Header -->
+        <ImageButton
+                android:id="@+id/btnVolver"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@android:drawable/ic_menu_revert"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Volver" />
 
-        <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="90dp"
-                android:orientation="vertical"
-                android:padding="25dp"
-                android:background="#1976D2">
-
-            <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Gestión de Jugadores"
-                    android:textColor="@android:color/white"
-                    android:textSize="28sp"
-                    android:textStyle="bold"/>
-
-
-
-        </LinearLayout>
-
-        <!-- Buscador -->
-
-        <!-- Lista -->
-
-        <com.google.android.material.card.MaterialCardView
-                android:layout_width="match_parent"
+        <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="6dp">
+                android:text="Volver al menú"
+                android:textColor="#534AB7"
+                android:textSize="13sp"
+                android:layout_marginStart="4dp" />
 
-            <androidx.appcompat.widget.SearchView
-                    android:id="@+id/searchView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:queryHint="Buscar jugador..."/>
-
-        </com.google.android.material.card.MaterialCardView>
-        <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvJugadores"
-                android:layout_width="match_parent"
+        <View
+                android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_weight="1"
-                android:paddingHorizontal="20dp"
-                android:clipToPadding="false"
-                android:paddingBottom="100dp"/>
+                android:layout_weight="4"/>
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabAgregar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/boton_agregar"
+                android:backgroundTint="#4CAF50"/>
     </LinearLayout>
 
-    <!-- FAB en esquina inferior derecha -->
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="4dp">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabAgregar"
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Jugadores"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#1A1A2E"/>
+
+        <TextView
+                android:id="@+id/txtContadorJugadores"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0 registros"
+                android:textSize="11sp"
+                android:textColor="#888780"
+                android:background="@drawable/rectangulo_gris"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"/>
+    </LinearLayout>
+
+    <EditText
+            android:id="@+id/edtBuscar"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Buscar por posición o camiseta..."
+            android:background="@drawable/bg_busqueda"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:drawableStart="@android:drawable/ic_menu_search"
+            android:drawablePadding="8dp"
+            android:inputType="text"
+            android:textColor="#000000"
+            android:textColorHint="#888780"
+            android:layout_marginBottom="10dp"/>
+
+    <ProgressBar
+            android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|end"
-            android:layout_margin="24dp"
-            android:contentDescription="Crear jugador"
-            android:src="@android:drawable/ic_input_add"
-            app:backgroundTint="#FF6B35"
-            app:tint="@android:color/white"/>
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone"/>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerJugadores"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:paddingBottom="16dp"/>
+
+</LinearLayout>

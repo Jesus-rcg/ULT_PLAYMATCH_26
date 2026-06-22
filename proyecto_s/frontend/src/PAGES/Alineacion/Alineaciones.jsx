@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   getCronologias,
   getEncuentroDetalle,
@@ -9,9 +10,10 @@ import {
   getAlineacionesEquipoRequest,
   getAlineacionRequest,
 } from "../../SERVICE/alineacionService";
+import Encuentros from "../Encuentros/Encuentros";
 import { useParams } from "react-router-dom";
 import PosicionCampo from "./PosicionCampo";
-import "../../STILO/estilosPages/cronologias/cronologias.css";
+import "../../STILO/estilosPages/alineacion/alineacion.css";
 
 import escudoA from "../../ASSETS/escudo 1.jpg";
 import escudoB from "../../ASSETS/escudo 2.jpg";
@@ -19,6 +21,8 @@ import campo from "../../ASSETS/campo12.png";
 
 export default function Alineacion() {
   const { id } = useParams();
+
+  const navigate = useNavigate();
 
   const [cronologias, setCronologias] = useState([]);
   const [encuentro, setEncuentro] = useState(null);
@@ -290,6 +294,15 @@ export default function Alineacion() {
       </button>
     );
   };
+
+  const obtenerEstadisticasJugador = (idJugador) => {
+    return {
+      goles: 0,
+      amarillas: 0,
+      rojas: 0,
+    };
+  };
+
   return (
     <div className="contenedor">
       <div className="bloques">
@@ -325,10 +338,10 @@ export default function Alineacion() {
           {mostrarBanca === "A" && (
             <div className="banca local-banca">
               <button
-                className="cerrar-banca"
+                className="cerrar-banca  btn-cerrar"
                 onClick={() => setMostrarBanca(null)}
               >
-                ✕
+                <span className="text-banca"> ✕</span>
               </button>
 
               <h3>{equipoA.nombre}</h3>
@@ -380,6 +393,7 @@ export default function Alineacion() {
                       handleDragStart={handleDragStart}
                       handleSeleccionarJugador={handleSeleccionarJugador}
                       renderBotonEliminar={renderBotonEliminar}
+                      obtenerEstadisticasJugador={obtenerEstadisticasJugador}
                     />
                   </div>
 
@@ -395,6 +409,7 @@ export default function Alineacion() {
                         handleDragStart={handleDragStart}
                         handleSeleccionarJugador={handleSeleccionarJugador}
                         renderBotonEliminar={renderBotonEliminar}
+                        obtenerEstadisticasJugador={obtenerEstadisticasJugador}
                       />
                     </div>
 
@@ -409,6 +424,7 @@ export default function Alineacion() {
                         handleDragStart={handleDragStart}
                         handleSeleccionarJugador={handleSeleccionarJugador}
                         renderBotonEliminar={renderBotonEliminar}
+                        obtenerEstadisticasJugador={obtenerEstadisticasJugador}
                       />
                     </div>
 
@@ -423,6 +439,7 @@ export default function Alineacion() {
                         handleDragStart={handleDragStart}
                         handleSeleccionarJugador={handleSeleccionarJugador}
                         renderBotonEliminar={renderBotonEliminar}
+                        obtenerEstadisticasJugador={obtenerEstadisticasJugador}
                       />
                     </div>
 
@@ -437,6 +454,7 @@ export default function Alineacion() {
                         handleDragStart={handleDragStart}
                         handleSeleccionarJugador={handleSeleccionarJugador}
                         renderBotonEliminar={renderBotonEliminar}
+                        obtenerEstadisticasJugador={obtenerEstadisticasJugador}
                       />
                     </div>
 
@@ -451,6 +469,7 @@ export default function Alineacion() {
                         handleDragStart={handleDragStart}
                         handleSeleccionarJugador={handleSeleccionarJugador}
                         renderBotonEliminar={renderBotonEliminar}
+                        obtenerEstadisticasJugador={obtenerEstadisticasJugador}
                       />
                     </div>
                   </div>
@@ -467,6 +486,7 @@ export default function Alineacion() {
                         handleDragStart={handleDragStart}
                         handleSeleccionarJugador={handleSeleccionarJugador}
                         renderBotonEliminar={renderBotonEliminar}
+                        obtenerEstadisticasJugador={obtenerEstadisticasJugador}
                       />
                     </div>
 
@@ -481,6 +501,7 @@ export default function Alineacion() {
                         handleDragStart={handleDragStart}
                         handleSeleccionarJugador={handleSeleccionarJugador}
                         renderBotonEliminar={renderBotonEliminar}
+                        obtenerEstadisticasJugador={obtenerEstadisticasJugador}
                       />
                     </div>
 
@@ -495,6 +516,7 @@ export default function Alineacion() {
                         handleDragStart={handleDragStart}
                         handleSeleccionarJugador={handleSeleccionarJugador}
                         renderBotonEliminar={renderBotonEliminar}
+                        obtenerEstadisticasJugador={obtenerEstadisticasJugador}
                       />
                     </div>
                   </div>
@@ -511,6 +533,7 @@ export default function Alineacion() {
                         handleDragStart={handleDragStart}
                         handleSeleccionarJugador={handleSeleccionarJugador}
                         renderBotonEliminar={renderBotonEliminar}
+                        obtenerEstadisticasJugador={obtenerEstadisticasJugador}
                       />
                     </div>
 
@@ -525,6 +548,7 @@ export default function Alineacion() {
                         handleDragStart={handleDragStart}
                         handleSeleccionarJugador={handleSeleccionarJugador}
                         renderBotonEliminar={renderBotonEliminar}
+                        obtenerEstadisticasJugador={obtenerEstadisticasJugador}
                       />
                     </div>
 
@@ -539,6 +563,7 @@ export default function Alineacion() {
                         handleDragStart={handleDragStart}
                         handleSeleccionarJugador={handleSeleccionarJugador}
                         renderBotonEliminar={renderBotonEliminar}
+                        obtenerEstadisticasJugador={obtenerEstadisticasJugador}
                       />
                     </div>
                   </div>
@@ -555,6 +580,7 @@ export default function Alineacion() {
                         handleDragStart={handleDragStart}
                         handleSeleccionarJugador={handleSeleccionarJugador}
                         renderBotonEliminar={renderBotonEliminar}
+                        obtenerEstadisticasJugador={obtenerEstadisticasJugador}
                       />
                     </div>
 
@@ -569,6 +595,7 @@ export default function Alineacion() {
                         handleDragStart={handleDragStart}
                         handleSeleccionarJugador={handleSeleccionarJugador}
                         renderBotonEliminar={renderBotonEliminar}
+                        obtenerEstadisticasJugador={obtenerEstadisticasJugador}
                       />
                     </div>
 
@@ -584,6 +611,9 @@ export default function Alineacion() {
                           handleDragStart={handleDragStart}
                           handleSeleccionarJugador={handleSeleccionarJugador}
                           renderBotonEliminar={renderBotonEliminar}
+                          obtenerEstadisticasJugador={
+                            obtenerEstadisticasJugador
+                          }
                         />
                       </div>
 
@@ -598,6 +628,9 @@ export default function Alineacion() {
                           handleDragStart={handleDragStart}
                           handleSeleccionarJugador={handleSeleccionarJugador}
                           renderBotonEliminar={renderBotonEliminar}
+                          obtenerEstadisticasJugador={
+                            obtenerEstadisticasJugador
+                          }
                         />
                       </div>
                     </div>
@@ -613,6 +646,7 @@ export default function Alineacion() {
                         handleDragStart={handleDragStart}
                         handleSeleccionarJugador={handleSeleccionarJugador}
                         renderBotonEliminar={renderBotonEliminar}
+                        obtenerEstadisticasJugador={obtenerEstadisticasJugador}
                       />
                     </div>
 
@@ -627,6 +661,7 @@ export default function Alineacion() {
                         handleDragStart={handleDragStart}
                         handleSeleccionarJugador={handleSeleccionarJugador}
                         renderBotonEliminar={renderBotonEliminar}
+                        obtenerEstadisticasJugador={obtenerEstadisticasJugador}
                       />
                     </div>
                   </div>
@@ -634,6 +669,21 @@ export default function Alineacion() {
 
                 {/* EQUIPO B */}
                 <div className="mitad visitante">
+                  <div className="zona-portero">
+                    <PosicionCampo
+                      id="b-por-1"
+                      clase="portero"
+                      abreviatura="POR"
+                      posiciones={posiciones}
+                      handleDrop={handleDrop}
+                      handleDragOver={handleDragOver}
+                      handleDragStart={handleDragStart}
+                      handleSeleccionarJugador={handleSeleccionarJugador}
+                      renderBotonEliminar={renderBotonEliminar}
+                      obtenerEstadisticasJugador={obtenerEstadisticasJugador}
+                    />
+                  </div>
+
                   <div className="zona-delanteros">
                     <div className="delantero-der ocupado-2">
                       <PosicionCampo
@@ -646,6 +696,7 @@ export default function Alineacion() {
                         handleDragStart={handleDragStart}
                         handleSeleccionarJugador={handleSeleccionarJugador}
                         renderBotonEliminar={renderBotonEliminar}
+                        obtenerEstadisticasJugador={obtenerEstadisticasJugador}
                       />
                     </div>
 
@@ -660,6 +711,7 @@ export default function Alineacion() {
                         handleDragStart={handleDragStart}
                         handleSeleccionarJugador={handleSeleccionarJugador}
                         renderBotonEliminar={renderBotonEliminar}
+                        obtenerEstadisticasJugador={obtenerEstadisticasJugador}
                       />
                     </div>
 
@@ -675,6 +727,9 @@ export default function Alineacion() {
                           handleDragStart={handleDragStart}
                           handleSeleccionarJugador={handleSeleccionarJugador}
                           renderBotonEliminar={renderBotonEliminar}
+                          obtenerEstadisticasJugador={
+                            obtenerEstadisticasJugador
+                          }
                         />
                       </div>
 
@@ -689,6 +744,9 @@ export default function Alineacion() {
                           handleDragStart={handleDragStart}
                           handleSeleccionarJugador={handleSeleccionarJugador}
                           renderBotonEliminar={renderBotonEliminar}
+                          obtenerEstadisticasJugador={
+                            obtenerEstadisticasJugador
+                          }
                         />
                       </div>
                     </div>
@@ -704,6 +762,7 @@ export default function Alineacion() {
                         handleDragStart={handleDragStart}
                         handleSeleccionarJugador={handleSeleccionarJugador}
                         renderBotonEliminar={renderBotonEliminar}
+                        obtenerEstadisticasJugador={obtenerEstadisticasJugador}
                       />
                     </div>
 
@@ -718,6 +777,7 @@ export default function Alineacion() {
                         handleDragStart={handleDragStart}
                         handleSeleccionarJugador={handleSeleccionarJugador}
                         renderBotonEliminar={renderBotonEliminar}
+                        obtenerEstadisticasJugador={obtenerEstadisticasJugador}
                       />
                     </div>
                   </div>
@@ -734,6 +794,7 @@ export default function Alineacion() {
                         handleDragStart={handleDragStart}
                         handleSeleccionarJugador={handleSeleccionarJugador}
                         renderBotonEliminar={renderBotonEliminar}
+                        obtenerEstadisticasJugador={obtenerEstadisticasJugador}
                       />
                     </div>
 
@@ -748,6 +809,7 @@ export default function Alineacion() {
                         handleDragStart={handleDragStart}
                         handleSeleccionarJugador={handleSeleccionarJugador}
                         renderBotonEliminar={renderBotonEliminar}
+                        obtenerEstadisticasJugador={obtenerEstadisticasJugador}
                       />
                     </div>
 
@@ -762,6 +824,7 @@ export default function Alineacion() {
                         handleDragStart={handleDragStart}
                         handleSeleccionarJugador={handleSeleccionarJugador}
                         renderBotonEliminar={renderBotonEliminar}
+                        obtenerEstadisticasJugador={obtenerEstadisticasJugador}
                       />
                     </div>
                   </div>
@@ -778,6 +841,7 @@ export default function Alineacion() {
                         handleDragStart={handleDragStart}
                         handleSeleccionarJugador={handleSeleccionarJugador}
                         renderBotonEliminar={renderBotonEliminar}
+                        obtenerEstadisticasJugador={obtenerEstadisticasJugador}
                       />
                     </div>
 
@@ -792,6 +856,7 @@ export default function Alineacion() {
                         handleDragStart={handleDragStart}
                         handleSeleccionarJugador={handleSeleccionarJugador}
                         renderBotonEliminar={renderBotonEliminar}
+                        obtenerEstadisticasJugador={obtenerEstadisticasJugador}
                       />
                     </div>
 
@@ -806,6 +871,7 @@ export default function Alineacion() {
                         handleDragStart={handleDragStart}
                         handleSeleccionarJugador={handleSeleccionarJugador}
                         renderBotonEliminar={renderBotonEliminar}
+                        obtenerEstadisticasJugador={obtenerEstadisticasJugador}
                       />
                     </div>
                   </div>
@@ -822,6 +888,7 @@ export default function Alineacion() {
                         handleDragStart={handleDragStart}
                         handleSeleccionarJugador={handleSeleccionarJugador}
                         renderBotonEliminar={renderBotonEliminar}
+                        obtenerEstadisticasJugador={obtenerEstadisticasJugador}
                       />
                     </div>
 
@@ -836,6 +903,7 @@ export default function Alineacion() {
                         handleDragStart={handleDragStart}
                         handleSeleccionarJugador={handleSeleccionarJugador}
                         renderBotonEliminar={renderBotonEliminar}
+                        obtenerEstadisticasJugador={obtenerEstadisticasJugador}
                       />
                     </div>
 
@@ -850,6 +918,7 @@ export default function Alineacion() {
                         handleDragStart={handleDragStart}
                         handleSeleccionarJugador={handleSeleccionarJugador}
                         renderBotonEliminar={renderBotonEliminar}
+                        obtenerEstadisticasJugador={obtenerEstadisticasJugador}
                       />
                     </div>
 
@@ -864,6 +933,7 @@ export default function Alineacion() {
                         handleDragStart={handleDragStart}
                         handleSeleccionarJugador={handleSeleccionarJugador}
                         renderBotonEliminar={renderBotonEliminar}
+                        obtenerEstadisticasJugador={obtenerEstadisticasJugador}
                       />
                     </div>
 
@@ -878,22 +948,9 @@ export default function Alineacion() {
                         handleDragStart={handleDragStart}
                         handleSeleccionarJugador={handleSeleccionarJugador}
                         renderBotonEliminar={renderBotonEliminar}
+                        obtenerEstadisticasJugador={obtenerEstadisticasJugador}
                       />
                     </div>
-                  </div>
-
-                  <div className="zona-portero">
-                    <PosicionCampo
-                      id="b-por-1"
-                      clase="portero"
-                      abreviatura="POR"
-                      posiciones={posiciones}
-                      handleDrop={handleDrop}
-                      handleDragOver={handleDragOver}
-                      handleDragStart={handleDragStart}
-                      handleSeleccionarJugador={handleSeleccionarJugador}
-                      renderBotonEliminar={renderBotonEliminar}
-                    />
                   </div>
                 </div>
               </div>
@@ -952,6 +1009,18 @@ export default function Alineacion() {
             </div>
           )}
         </div>
+        <button
+          className="btn-cronologia"
+          onClick={() =>
+            window.open(
+              `/cronologias/${encuentro.id_encuentro}`,
+              "_blank",
+              "noopener,noreferrer",
+            )
+          }
+        >
+          Ir a Cronologías
+        </button>
       </div>
     </div>
   );

@@ -66,29 +66,41 @@ interface ApiService {
         jugador: Jugador
     ): Call<Jugador>
 
-    @GET("/api/jugadores")
-    fun getJugadores(
-        @Header("Authorization")
-        token: String
-    ): Call<List<Jugador>>
 
-    @GET("/api/jugadores/buscar")
-    fun buscarJugador(
-        @Header("Authorization")
-        token: String,
-        @Query("buscar")
-        buscar: String
-    ): Call<Jugador>
+        @GET("/api/jugadores")
+        fun getJugadores(
+            @Header("Authorization")
+            token: String
+        ): Call<List<Jugador>>
 
-    @PUT("/api/jugadores/{id}")
-    fun actualizarJugadores(
-        @Header("Authorization")
-        token: String,
-        @Path("id")
-        id: Int,
-        @Body
-        jugador: Jugador
-    ): Call<Void>
+        @GET("/api/jugadores/buscar")
+        fun buscarJugador(
+            @Header("Authorization")
+            token: String,
+
+            @Query("buscar")
+            buscar: String
+
+        ): Call<Jugador>
+
+        @GET("/api/jugadores/{id}")
+        fun getJugador(
+            @Header("Authorization")
+            token: String,
+            @Path("id")
+            id: Int
+        ): Call<Jugador>
+
+
+        @PUT("/api/jugadores/{id}")
+        fun actualizarJugadores(
+            @Header("Authorization")
+            token: String,
+            @Path("id")
+            id: Int,
+            @Body
+            jugador: Jugador
+        ): Call<Void>
 
     @DELETE("/api/jugadores/{id}")
     fun eliminarJugador(

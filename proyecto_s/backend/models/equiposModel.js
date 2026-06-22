@@ -82,3 +82,31 @@ export const deleteEquipoModel = async (id) => {
 
   return result;
 };
+
+// Obtener equipos inscritos en un torneo
+export const getEquiposByTorneoModel = async (idTorneo) => {
+  const [rows] = await pool.query(
+    `
+    SELECT
+      e.id_equipo,
+      e.id_usuario,
+      u.nombre_usuario,
+      e.escudo,
+      e.nombre_equipo,
+      ie.estado
+    FROM inscripcionesequipos ie
+    INNER JOIN equipos e
+      ON ie.id_equipo = e.id_equipo
+    INNER JOIN usuarios u
+      ON e.id_usuario = u.id_usuario
+    WHERE ie.id_torneo = ?
+      AND ie.estado = 'Inscrito'
+      AND ie.activo = 1
+      AND e.activo = 1
+    ORDER BY e.nombre_equipo ASC
+    `,
+    [idTorneo],
+  );
+
+  return rows;
+};

@@ -30,7 +30,12 @@ export const getCronologiasModel = async () => {
     INNER JOIN usuarios u 
       ON j.id_usuario = u.id_usuario
     INNER JOIN inscripcionesjugadores ij
-      ON j.id_jugador = ij.id_jugador
+ON ij.id_jugador = j.id_jugador
+AND (
+    ij.id_equipo = e.id_equipo_local
+    OR ij.id_equipo = e.id_equipo_visitante
+)
+AND ij.activo = 1
     INNER JOIN equipos eq
       ON ij.id_equipo = eq.id_equipo
 
@@ -77,19 +82,15 @@ export const createCronologiaModel = async (cronologia) => {
 
 // Actualizar
 export const updateCronologiaModel = async (id, cronologia) => {
-  const { id_encuentro, id_jugador, evento, minuto } = cronologia;
+  const { evento } = cronologia;
 
   const [result] = await pool.query(
     `
     UPDATE cronologias
-    SET
-      id_encuentro = ?,
-      id_jugador = ?,
-      evento = ?,
-      minuto = ?
+    SET evento = ?
     WHERE id_cronologia = ?
-  `,
-    [id_encuentro, id_jugador, evento, minuto, id],
+    `,
+    [evento, id],
   );
 
   return result;
@@ -125,13 +126,13 @@ export const getJugadoresByEncuentroModel = async (id_encuentro) => {
       OR ij.id_equipo = e.id_equipo_visitante
 
     INNER JOIN jugadores j
-      ON ij.id_jugador = j.id_jugador
+      ON j.id_jugador = ij.id_jugador
 
     INNER JOIN usuarios u
-      ON j.id_usuario = u.id_usuario
+      ON u.id_usuario = j.id_usuario
 
     INNER JOIN equipos eq
-      ON ij.id_equipo = eq.id_equipo
+      ON eq.id_equipo = ij.id_equipo
 
     WHERE e.id_encuentro = ?
       AND ij.estado = 'Inscrito'
