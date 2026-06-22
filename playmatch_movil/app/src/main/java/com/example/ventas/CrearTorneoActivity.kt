@@ -19,159 +19,101 @@ import retrofit2.Response
 class CrearTorneoActivity : AppCompatActivity() {
 
     private lateinit var spEstados: Spinner
+    private lateinit var spTipoTorneo: Spinner
+    private lateinit var spCategoria: Spinner
 
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_crear_torneo)
 
-        // BOTON VOLVER
-
-        findViewById<ImageButton>(R.id.btnVolver).setOnClickListener {
-            finish()
-        }
-
-        // SPINNER
+        findViewById<ImageButton>(R.id.btnVolver).setOnClickListener { finish() }
 
         spEstados = findViewById(R.id.spEstados)
-
         cargarEstados()
 
-        // INPUTS
-
-        val txtNombre =
-            findViewById<EditText>(R.id.txtNombre)
-
-        val txtDescripcion =
-            findViewById<EditText>(R.id.txtDescripcion)
-
-        val txtFecha_inicio =
-            findViewById<EditText>(R.id.txtFecha_inicio)
-
-        val txtFecha_fin =
-            findViewById<EditText>(R.id.txtFecha_fin)
-
-        // BOTON
-
-        val btnGuardarTorneo =
-            findViewById<Button>(R.id.btnGuardarTorneo)
-
-        // CLICK BOTON
+        val txtNombre = findViewById<EditText>(R.id.txtNombre)
+        val txtFecha_inicio = findViewById<EditText>(R.id.txtFecha_inicio)
+        val txtFecha_fin = findViewById<EditText>(R.id.txtFecha_fin)
+        val btnGuardarTorneo = findViewById<Button>(R.id.btnGuardarTorneo)
 
         btnGuardarTorneo.setOnClickListener {
+            val nombre = txtNombre.text.toString().trim()
+            val fecha_inicio = txtFecha_inicio.text.toString().trim()
+            val fecha_fin = txtFecha_fin.text.toString().trim()
+            val estado = spEstados.selectedItem.toString()
 
-            val estado =
-                spEstados.selectedItem.toString()
+            if (nombre.isEmpty()) { txtNombre.error = "El nombre es obligatorio"; return@setOnClickListener }
+            if (fecha_inicio.isEmpty()) { txtFecha_inicio.error = "La fecha inicio es obligatoria"; return@setOnClickListener }
+            if (fecha_fin.isEmpty()) { txtFecha_fin.error = "La fecha fin es obligatoria"; return@setOnClickListener }
+
+            val prefs = getSharedPreferences("app", MODE_PRIVATE)
+            val token = prefs.getString("token", "") ?: ""
+            val idUsuario = prefs.getInt("id_usuario", 0)
 
             val torneo = Torneo(
-
-                nombre = txtNombre.text.toString(),
-
-                descripcion = txtDescripcion.text.toString(),
-
-                fecha_inicio = txtFecha_inicio.text.toString(),
-
-                fecha_fin = txtFecha_fin.text.toString(),
-
-                estado = estado
+                id_torneo = null,
+                id_usuario = idUsuario,
+                nombre_torneo = nombre,
+                categoria = "",
+                tipo_torneo = "",
+                ciudad = "",
+                fecha_inicio = fecha_inicio,
+                fecha_fin = fecha_fin,
+                estado = estado,
+                activo = 1
             )
 
-            // TOKEN
-
-            val prefs =
-                getSharedPreferences("app", MODE_PRIVATE)
-
-            val token =
-                prefs.getString("token", "") ?: ""
-
-            // PETICION API
-
             ApiClient.instance.createTorneo(
-
                 "Bearer $token",
                 torneo
-
             ).enqueue(object : Callback<Torneo> {
 
-                override fun onResponse(
-                    call: Call<Torneo>,
-                    response: Response<Torneo>
-                ) {
-
+                override fun onResponse(call: Call<Torneo>, response: Response<Torneo>) {
                     if (response.isSuccessful) {
-
                         Toast.makeText(
                             this@CrearTorneoActivity,
-                            "Torneo guardado correctamente",
+                            "✅ Torneo guardado correctamente",
                             Toast.LENGTH_LONG
                         ).show()
-
-                        // LIMPIAR CAMPOS
-
                         txtNombre.text.clear()
-                        txtDescripcion.text.clear()
                         txtFecha_inicio.text.clear()
                         txtFecha_fin.text.clear()
-
                         spEstados.setSelection(0)
-
                     } else {
-
                         Toast.makeText(
                             this@CrearTorneoActivity,
-                            "Error ${response.code()}",
+                            "❌ Error ${response.code()}",
                             Toast.LENGTH_LONG
                         ).show()
-
-                        Log.e(
-                            "API_ERROR",
-                            response.errorBody()?.string()
-                                ?: "Error desconocido"
-                        )
+                        Log.e("API_ERROR", response.errorBody()?.string() ?: "Error desconocido")
                     }
                 }
 
-                override fun onFailure(
-                    call: Call<Torneo>,
-                    t: Throwable
-                ) {
-
+                override fun onFailure(call: Call<Torneo>, t: Throwable) {
                     Toast.makeText(
                         this@CrearTorneoActivity,
-                        t.message,
+                        "❌ Error de conexión: ${t.message}",
                         Toast.LENGTH_LONG
                     ).show()
-
-                    Log.e(
-                        "API_ERROR",
-                        t.message.toString()
-                    )
+                    Log.e("API_ERROR", t.message.toString())
                 }
             })
         }
     }
 
-    // CARGAR ESTADOS MANUALMENTE
-
     private fun cargarEstados() {
-
         val estados = listOf(
-            "Activo",
-            "En curso",
+            "Inscripciones Abiertas",
+            "Comenzo",
             "Finalizado"
         )
-
         val adapter = ArrayAdapter(
             this,
             android.R.layout.simple_spinner_item,
             estados
         )
-
-        adapter.setDropDownViewResource(
-            android.R.layout.simple_spinner_dropdown_item
-        )
-
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spEstados.adapter = adapter
     }
 }
