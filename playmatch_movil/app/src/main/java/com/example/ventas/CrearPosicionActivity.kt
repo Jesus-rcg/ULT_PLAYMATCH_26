@@ -58,7 +58,7 @@ class CrearPosicionActivity : AppCompatActivity() {
     }
 
     private fun cargarTorneos(token: String) {
-        ApiClient.instance.getTorneos("Bearer $token")
+        ApiClient.instance.getTorneo("Bearer $token")
             .enqueue(object : Callback<List<Torneo>> {
                 override fun onResponse(
                     call: Call<List<Torneo>>,

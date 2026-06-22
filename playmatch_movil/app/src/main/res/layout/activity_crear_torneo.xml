@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#F5F5F5"
@@ -11,7 +10,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:padding="24dp">
 
         <LinearLayout
                 android:layout_width="wrap_content"
@@ -26,7 +25,7 @@
                     android:layout_height="48dp"
                     android:src="@android:drawable/ic_menu_revert"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:contentDescription="Volver" />
+                    android:contentDescription="Volver"/>
 
             <TextView
                     android:layout_width="wrap_content"
@@ -34,7 +33,7 @@
                     android:text="Volver a Torneos"
                     android:textColor="#534AB7"
                     android:textSize="13sp"
-                    android:layout_marginStart="4dp" />
+                    android:layout_marginStart="4dp"/>
         </LinearLayout>
 
         <TextView
@@ -46,70 +45,65 @@
                 android:textColor="#1A1A2E"
                 android:layout_marginBottom="20dp"/>
 
-        <!-- ID EQUIPO -->
+        <EditText
+                android:id="@+id/txtIdUsuario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="ID Usuario"
+                android:inputType="number"
+                android:layout_marginBottom="12dp"/>
+
+        <EditText
+                android:id="@+id/txtNombreTorneo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nombre del torneo"
+                android:layout_marginBottom="12dp"/>
 
         <Spinner
-                android:id="@+id/spTorneos"
+                android:id="@+id/spCategoria"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"/>
-
-        <!-- NOMBRE -->
-
-        <EditText
-                android:id="@+id/txtNombre"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Nombre"
-                android:inputType="textPersonName"
-                android:padding="12dp"
-                android:background="@android:drawable/edit_text"
                 android:layout_marginBottom="12dp"/>
-
-        <!-- APELLIDO -->
-
-        <EditText
-                android:id="@+id/txtDescripcion"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Descripción"
-                android:inputType="textPersonName"
-                android:padding="12dp"
-                android:background="@android:drawable/edit_text"
-                android:layout_marginBottom="12dp"/>
-
-        <!-- DOCUMENTO -->
-
-        <EditText
-                android:id="@+id/txtFecha_inicio"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Fecha Inicio (YYYY-MM-DD)"
-                android:inputType="date"
-                android:padding="12dp"
-                android:background="@android:drawable/edit_text"
-                android:layout_marginBottom="12dp"/>
-
-        <!-- NUMERO CAMISETA -->
-
-        <EditText
-                android:id="@+id/txtFecha_fin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Fecha Fin (YYYY-MM-DD)"
-                android:inputType="date"
-                android:padding="12dp"
-                android:background="@android:drawable/edit_text"
-                android:layout_marginBottom="12dp"/>
-
-        <!-- ESTADO -->
 
         <Spinner
-                android:id="@+id/spEstados"
+                android:id="@+id/spTipoTorneo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                tools:ignore="DuplicateIds"/>
+                android:layout_marginBottom="12dp"/>
+
+        <EditText
+                android:id="@+id/txtCiudad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Ciudad"
+                android:layout_marginBottom="12dp"/>
+
+        <EditText
+                android:id="@+id/txtFechaInicio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Fecha inicio (YYYY-MM-DD)"
+                android:layout_marginBottom="12dp"/>
+
+        <EditText
+                android:id="@+id/txtFechaFin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Fecha fin (YYYY-MM-DD)"
+                android:layout_marginBottom="12dp"/>
+
+        <Spinner
+                android:id="@+id/spEstado"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"/>
+
+        <Spinner
+                android:id="@+id/spActivo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"/>
 
         <Button
                 android:id="@+id/btnGuardarTorneo"
@@ -118,10 +112,7 @@
                 android:text="Guardar Torneo"
                 android:textStyle="bold"
                 android:textColor="#FFFFFF"
-                android:backgroundTint="#534AB7"
-                android:padding="14dp"/>
-
-
+                android:backgroundTint="#534AB7"/>
 
     </LinearLayout>
 
