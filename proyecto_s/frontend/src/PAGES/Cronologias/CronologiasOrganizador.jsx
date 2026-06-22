@@ -87,10 +87,13 @@ export default function CronologiasOrganizador() {
       (c) => Number(c.id_jugador) === Number(idJugador),
     );
 
+    const amarillas = eventos.filter((e) => e.evento === "Amarilla").length;
+    const rojas = eventos.filter((e) => e.evento === "Roja").length;
+
     return {
       goles: eventos.filter((e) => e.evento === "Gol").length,
-      amarillas: eventos.filter((e) => e.evento === "Amarilla").length,
-      rojas: eventos.filter((e) => e.evento === "Roja").length,
+      amarillas: amarillas + rojas * 2,
+      rojas: Math.floor(amarillas / 2) + rojas,
     };
   };
 
@@ -246,17 +249,56 @@ export default function CronologiasOrganizador() {
     if (!jugadorSeleccionado || !eventoFinal) return;
 
     try {
-      await createCronologia({
-        id_encuentro: id,
-        id_jugador: jugadorSeleccionado.id_jugador,
-        evento: eventoFinal,
-        minuto: Math.floor(segundos / 60),
-      });
+      const idJugador = jugadorSeleccionado.id_jugador;
+      const minutoActual = Math.floor(segundos / 60);
 
+      // =========================
+      // AMARILLA
+      // =========================
+      if (eventoFinal === "Amarilla") {
+        // 1. Registrar amarilla
+        await createCronologia({
+          id_encuentro: id,
+          id_jugador: idJugador,
+          evento: "Amarilla",
+          minuto: minutoActual,
+        });
+
+        // 2. Contar amarillas actuales (SIN depender de estado viejo)
+        const amarillasActuales = cronologias.filter(
+          (c) =>
+            Number(c.id_jugador) === Number(idJugador) &&
+            c.evento === "Amarilla",
+        ).length;
+
+        // 3. Si ya tenía 1, esta es la segunda → roja automática
+        if (amarillasActuales + 1 === 2) {
+          await createCronologia({
+            id_encuentro: id,
+            id_jugador: idJugador,
+            evento: "Roja",
+            minuto: minutoActual,
+          });
+        }
+      }
+
+      // =========================
+      // OTROS EVENTOS (Gol, Roja manual, etc.)
+      // =========================
+      else {
+        await createCronologia({
+          id_encuentro: id,
+          id_jugador: idJugador,
+          evento: eventoFinal,
+          minuto: minutoActual,
+        });
+      }
+
+      // =========================
+      // ACTUALIZAR ESTADO
+      // =========================
       await cargarCronologias();
-
       await recalcularResultado(id);
-
       await cargarResultado();
 
       setModalEvento(null);

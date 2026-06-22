@@ -1,96 +1,21 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { getResultados } from "../../SERVICE/resultadosService";
+import { useContext } from "react";
+import { AuthContext } from "../../CONTEXT/AuthContext";
+import { ROLES } from "../../CONSTANTES/roles";
+
+import ResultadoAdmin from "./ResultadoAdmin";
+import ResultadoOrganizador from "./ResultadoOrganizador";
+import ResultadoJugador from "./ResultadoJugador";
 
 export default function Resultados() {
-  const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
 
-  const [resultados, setResultados] = useState([]);
+  if (user?.rol === ROLES.ADMINISTRADOR) {
+    return <ResultadoAdmin />;
+  }
 
-  const cargarResultados = async () => {
-    try {
-      const data = await getResultados();
+  if (user?.rol === ROLES.ORGANIZADOR) {
+    return <ResultadoOrganizador />;
+  }
 
-      setResultados(data);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  useEffect(() => {
-    cargarResultados();
-  }, []);
-
-  return (
-    <div className="usuarios-container">
-      <div className="tabla-container">
-        <div className="header-tabla">
-          <h2 className="titulo">Resultados</h2>
-
-          <button
-            className="btn crear"
-            onClick={() => navigate("/resultados/Crear")}
-          >
-            Crear
-          </button>
-        </div>
-
-        <table className="tabla-usuarios">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Encuentro</th>
-              <th>Equipos</th>
-              <th>Goles Local</th>
-              <th>Goles Visitante</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {resultados.length > 0 ? (
-              resultados.map((r) => (
-                <tr key={r.id_resultado}>
-                  <td>{r.id_resultado}</td>
-                  <td>{r.id_encuentro}</td>
-
-                  <td>
-                    {r.equipo_local} vs {r.equipo_visitante}
-                  </td>
-
-                  <td>{r.goles_local}</td>
-
-                  <td>{r.goles_visitante}</td>
-
-                  <td className="acciones">
-                    <button
-                      className="btn editar"
-                      onClick={() =>
-                        navigate(`/resultados/Editar/${r.id_resultado}`)
-                      }
-                    >
-                      Editar
-                    </button>
-
-                    <button
-                      className="btn eliminar"
-                      onClick={() =>
-                        navigate(`/resultados/Eliminar/${r.id_resultado}`)
-                      }
-                    >
-                      Eliminar
-                    </button>
-                  </td>
-                </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="5">No hay resultados</td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
+  return <ResultadoJugador />;
 }

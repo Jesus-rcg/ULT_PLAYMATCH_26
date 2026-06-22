@@ -411,13 +411,30 @@
   gap: 5px;
 }
 
-.badge {
+.badge-gol {
   position: absolute;
-  top: -35px;
+  top: -45px;
+  left: 30px;
   z-index: 100;
 }
 
 .icono-gol {
   font-size: 20px;
   line-height: 1;
+}
+
+.badge-tarjeta {
+  position: absolute;
+  top: -45px;
+  right: 30px;
+  z-index: 100;
+}
+
+.icono-tarjeta {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.cantida {
+  font-size: 15px;
 }
