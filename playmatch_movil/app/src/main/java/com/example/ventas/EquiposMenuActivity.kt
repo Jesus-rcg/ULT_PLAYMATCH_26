@@ -1,8 +1,9 @@
-package com.example.ventas.ui
+package com.example.ventas.ui.equipos
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.LinearLayout
+import android.widget.Button
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ventas.R
 
@@ -12,30 +13,37 @@ class EquiposMenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_equipos_menu)
 
-        val btnGuardar = findViewById<LinearLayout>(R.id.tarjetaGuardar)
-        val btnBuscar = findViewById<LinearLayout>(R.id.tarjetaBuscar)
-        val btnEditar = findViewById<LinearLayout>(R.id.tarjetaEditar)
-        val btnEliminar = findViewById<LinearLayout>(R.id.tarjetaEliminar)
-        val btnVerTodos = findViewById<LinearLayout>(R.id.tarjetaVerTodos)
+        findViewById<ImageButton>(R.id.btnVolver).setOnClickListener { finish() }
 
-        btnGuardar.setOnClickListener {
-            startActivity(Intent(this, EquipoActivity::class.java))
+        // Botón Crear
+        findViewById<Button>(R.id.btnCrear).setOnClickListener {
+            startActivity(Intent(this, CrearEquipoActivity::class.java))
         }
 
-        btnBuscar.setOnClickListener {
-            // Lo conectamos después
+        // Botón Ver todos
+        findViewById<Button>(R.id.btnVerTodos).setOnClickListener {
+            val intent = Intent(this, ListaEquiposActivity::class.java)
+            intent.putExtra("MODO", "vertodos")
+            startActivity(intent)
         }
 
-        btnEditar.setOnClickListener {
-            startActivity(Intent(this, ListaEquiposActivity::class.java))
+        // Botón Editar
+        findViewById<Button>(R.id.btnEditar).setOnClickListener {
+            val intent = Intent(this, ListaEquiposActivity::class.java)
+            intent.putExtra("MODO", "editar")
+            startActivity(intent)
         }
 
-        btnEliminar.setOnClickListener {
-            // Lo conectamos después
+        // Botón Eliminar
+        findViewById<Button>(R.id.btnEliminar).setOnClickListener {
+            val intent = Intent(this, ListaEquiposActivity::class.java)
+            intent.putExtra("MODO", "eliminar")
+            startActivity(intent)
         }
 
-        btnVerTodos.setOnClickListener {
-            startActivity(Intent(this, ListaEquiposActivity::class.java))
+        // Botón Buscar
+        findViewById<Button>(R.id.btnBuscar).setOnClickListener {
+            startActivity(Intent(this, BuscarEquipoActivity::class.java))
         }
     }
 }

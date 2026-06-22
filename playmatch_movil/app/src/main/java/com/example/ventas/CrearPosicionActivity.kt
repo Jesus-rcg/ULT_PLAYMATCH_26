@@ -12,9 +12,6 @@ import com.example.ventas.model.Torneo
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 
 class CrearPosicionActivity : AppCompatActivity() {
 
@@ -36,7 +33,6 @@ class CrearPosicionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_crear_posicion)
 
-        // Inicializar vistas
         spinnerTorneo = findViewById(R.id.spinnerTorneo)
         spinnerEquipo = findViewById(R.id.spinnerEquipo)
         etJugados = findViewById(R.id.etJugados)
@@ -53,7 +49,6 @@ class CrearPosicionActivity : AppCompatActivity() {
         val token = getSharedPreferences("app", MODE_PRIVATE)
             .getString("token", "") ?: ""
 
-        // Cargar torneos y equipos
         cargarTorneos(token)
         cargarEquipos(token)
 
@@ -65,7 +60,10 @@ class CrearPosicionActivity : AppCompatActivity() {
     private fun cargarTorneos(token: String) {
         ApiClient.instance.getTorneos("Bearer $token")
             .enqueue(object : Callback<List<Torneo>> {
-                override fun onResponse(call: Call<List<Torneo>>, response: Response<List<Torneo>>) {
+                override fun onResponse(
+                    call: Call<List<Torneo>>,
+                    response: Response<List<Torneo>>
+                ) {
                     if (response.isSuccessful) {
                         listaTorneos = response.body() ?: emptyList()
                         val nombres = listaTorneos.map { it.nombre }
@@ -77,12 +75,18 @@ class CrearPosicionActivity : AppCompatActivity() {
                         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         spinnerTorneo.adapter = adapter
 
-                        spinnerTorneo.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                            override fun onItemSelected(parent: AdapterView<*>, view: android.view.View?, position: Int, id: Long) {
-                                torneoSeleccionadoId = listaTorneos[position].id_torneo ?: 0
+                        spinnerTorneo.onItemSelectedListener =
+                            object : AdapterView.OnItemSelectedListener {
+                                override fun onItemSelected(
+                                    parent: AdapterView<*>,
+                                    view: android.view.View?,
+                                    position: Int,
+                                    id: Long
+                                ) {
+                                    torneoSeleccionadoId = listaTorneos[position].id_torneo ?: 0
+                                }
+                                override fun onNothingSelected(parent: AdapterView<*>) {}
                             }
-                            override fun onNothingSelected(parent: AdapterView<*>) {}
-                        }
                     }
                 }
 
@@ -95,10 +99,13 @@ class CrearPosicionActivity : AppCompatActivity() {
     private fun cargarEquipos(token: String) {
         ApiClient.instance.getEquipos("Bearer $token")
             .enqueue(object : Callback<List<Equipo>> {
-                override fun onResponse(call: Call<List<Equipo>>, response: Response<List<Equipo>>) {
+                override fun onResponse(
+                    call: Call<List<Equipo>>,
+                    response: Response<List<Equipo>>
+                ) {
                     if (response.isSuccessful) {
                         listaEquipos = response.body() ?: emptyList()
-                        val nombres = listaEquipos.map { it.nombre }
+                        val nombres = listaEquipos.map { it.nombre_equipo }
                         val adapter = ArrayAdapter(
                             this@CrearPosicionActivity,
                             android.R.layout.simple_spinner_item,
@@ -107,12 +114,18 @@ class CrearPosicionActivity : AppCompatActivity() {
                         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                         spinnerEquipo.adapter = adapter
 
-                        spinnerEquipo.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-                            override fun onItemSelected(parent: AdapterView<*>, view: android.view.View?, position: Int, id: Long) {
-                                equipoSeleccionadoId = listaEquipos[position].id_equipo
+                        spinnerEquipo.onItemSelectedListener =
+                            object : AdapterView.OnItemSelectedListener {
+                                override fun onItemSelected(
+                                    parent: AdapterView<*>,
+                                    view: android.view.View?,
+                                    position: Int,
+                                    id: Long
+                                ) {
+                                    equipoSeleccionadoId = listaEquipos[position].id_equipo
+                                }
+                                override fun onNothingSelected(parent: AdapterView<*>) {}
                             }
-                            override fun onNothingSelected(parent: AdapterView<*>) {}
-                        }
                     }
                 }
 
@@ -152,19 +165,34 @@ class CrearPosicionActivity : AppCompatActivity() {
 
         ApiClient.instance.createPosicion("Bearer $token", posicionRequest)
             .enqueue(object : Callback<Posicion> {
-                override fun onResponse(call: Call<Posicion>, response: Response<Posicion>) {
+                override fun onResponse(
+                    call: Call<Posicion>,
+                    response: Response<Posicion>
+                ) {
                     if (response.isSuccessful) {
-                        Toast.makeText(this@CrearPosicionActivity, "Posición guardada correctamente", Toast.LENGTH_LONG).show()
+                        Toast.makeText(
+                            this@CrearPosicionActivity,
+                            "✅ Posición guardada correctamente",
+                            Toast.LENGTH_LONG
+                        ).show()
                         setResult(RESULT_OK)
                         finish()
                     } else {
-                        Toast.makeText(this@CrearPosicionActivity, "Error ${response.code()}", Toast.LENGTH_LONG).show()
+                        Toast.makeText(
+                            this@CrearPosicionActivity,
+                            "❌ Error ${response.code()}",
+                            Toast.LENGTH_LONG
+                        ).show()
                         Log.e("API_ERROR", response.errorBody()?.string() ?: "")
                     }
                 }
 
                 override fun onFailure(call: Call<Posicion>, t: Throwable) {
-                    Toast.makeText(this@CrearPosicionActivity, t.message, Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        this@CrearPosicionActivity,
+                        "❌ Error de conexión: ${t.message}",
+                        Toast.LENGTH_LONG
+                    ).show()
                     Log.e("API_ERROR", t.message.toString())
                 }
             })

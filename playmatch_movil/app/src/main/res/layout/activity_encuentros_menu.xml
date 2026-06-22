@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#f0fff4">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="24dp">
+
+        <!-- Botón volver -->
+        <ImageButton
+                android:id="@+id/btnVolver"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@android:drawable/ic_menu_revert"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:layout_marginBottom="8dp"/>
+
+        <!-- Título -->
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="⚽ PLAYMATCH"
+                android:textColor="#16a34a"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:gravity="center"
+                android:layout_marginBottom="8dp"/>
+
+        <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Encuentros"
+                android:textColor="#14532d"
+                android:textStyle="bold"
+                android:textSize="26sp"
+                android:gravity="center"
+                android:layout_marginBottom="24dp"/>
+
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#bbf7d0"
+                android:layout_marginBottom="24dp"/>
+
+        <!-- Botón Crear -->
+        <Button
+                android:id="@+id/btnCrear"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="➕ Crear Encuentro"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:backgroundTint="#16a34a"
+                android:layout_marginBottom="12dp"/>
+
+        <!-- Botón Ver todos -->
+        <Button
+                android:id="@+id/btnVerTodos"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="📋 Ver Todos"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:backgroundTint="#15803d"
+                android:layout_marginBottom="12dp"/>
+
+        <!-- Botón Editar -->
+        <Button
+                android:id="@+id/btnEditar"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="✏️ Editar Encuentro"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:backgroundTint="#ca8a04"
+                android:layout_marginBottom="12dp"/>
+
+        <!-- Botón Eliminar -->
+        <Button
+                android:id="@+id/btnEliminar"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="🗑️ Eliminar Encuentro"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:backgroundTint="#dc2626"
+                android:layout_marginBottom="12dp"/>
+
+    </LinearLayout>
+</ScrollView>

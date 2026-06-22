@@ -21,60 +21,41 @@ class EditarJugadorActivity : AppCompatActivity() {
     private lateinit var etPosicion: EditText
     private lateinit var etNumero: EditText
     private lateinit var spActivo: Spinner
-
     private lateinit var btnActualizar: Button
 
     private var idJugador = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_editar_jugador)
 
-        findViewById<ImageButton>(R.id.btnVolver)
-            .setOnClickListener {
-                finish()
-            }
+        findViewById<ImageButton>(R.id.btnVolver).setOnClickListener {
+            finish()
+        }
 
         etIdUsuario = findViewById(R.id.etIdUsuario)
         etPosicion = findViewById(R.id.etPosicion)
         etNumero = findViewById(R.id.etNumero)
         spActivo = findViewById(R.id.spActivo)
-
-        btnActualizar =
-            findViewById(R.id.btnActualizar)
+        btnActualizar = findViewById(R.id.btnActualizar)
 
         cargarEstados()
 
-        // DATOS RECIBIDOS
+        // Solo recibimos el ID
+        idJugador = intent.getIntExtra("id_jugador", 0)
 
-        idJugador =
-            intent.getIntExtra("id_jugador", 0)
+        if (idJugador == 0) {
+            Toast.makeText(
+                this,
+                "ID de jugador inválido",
+                Toast.LENGTH_LONG
+            ).show()
+            finish()
+            return
+        }
 
-        etIdUsuario.setText(
-            intent.getIntExtra(
-                "id_usuario",
-                0
-            ).toString()
-        )
-
-        etPosicion.setText(
-            intent.getStringExtra("posicion")
-        )
-
-        etNumero.setText(
-            intent.getIntExtra(
-                "numero_camiseta",
-                0
-            ).toString()
-        )
-
-        val activo =
-            intent.getIntExtra("activo", 1)
-
-        spActivo.setSelection(
-            if (activo == 1) 0 else 1
-        )
+        // Cargar datos desde la BD
+        cargarJugador()
 
         btnActualizar.setOnClickListener {
             actualizarJugador()
@@ -101,6 +82,82 @@ class EditarJugadorActivity : AppCompatActivity() {
         spActivo.adapter = adapter
     }
 
+    private fun cargarJugador() {
+
+        val prefs =
+            getSharedPreferences("app", MODE_PRIVATE)
+
+        val token =
+            prefs.getString("token", "") ?: ""
+
+        ApiClient.instance.getJugador(
+            "Bearer $token",
+            idJugador
+        ).enqueue(object : Callback<Jugador> {
+
+            override fun onResponse(
+                call: Call<Jugador>,
+                response: Response<Jugador>
+            ) {
+
+                if (response.isSuccessful) {
+
+                    val jugador = response.body()
+
+                    if (jugador != null) {
+
+                        etIdUsuario.setText(
+                            jugador.id_usuario.toString()
+                        )
+
+                        etPosicion.setText(
+                            jugador.posicion
+                        )
+
+                        etNumero.setText(
+                            jugador.numero_camiseta.toString()
+                        )
+
+                        spActivo.setSelection(
+                            if (jugador.activo == 1) 0 else 1
+                        )
+                    }
+
+                } else {
+
+                    Toast.makeText(
+                        this@EditarJugadorActivity,
+                        "Error al cargar jugador",
+                        Toast.LENGTH_LONG
+                    ).show()
+
+                    Log.e(
+                        "GET_JUGADOR",
+                        response.errorBody()?.string()
+                            ?: "Error desconocido"
+                    )
+                }
+            }
+
+            override fun onFailure(
+                call: Call<Jugador>,
+                t: Throwable
+            ) {
+
+                Toast.makeText(
+                    this@EditarJugadorActivity,
+                    t.message,
+                    Toast.LENGTH_LONG
+                ).show()
+
+                Log.e(
+                    "GET_JUGADOR",
+                    t.message ?: "Error"
+                )
+            }
+        })
+    }
+
     private fun actualizarJugador() {
 
         if (
@@ -119,24 +176,16 @@ class EditarJugadorActivity : AppCompatActivity() {
         }
 
         val activo =
-            if (
-                spActivo.selectedItem.toString()
-                == "Activo"
-            ) 1 else 0
+            if (spActivo.selectedItem.toString() == "Activo")
+                1
+            else
+                0
 
         val jugador = Jugador(
-
             id_jugador = idJugador,
-
-            id_usuario =
-                etIdUsuario.text.toString().toInt(),
-
-            posicion =
-                etPosicion.text.toString(),
-
-            numero_camiseta =
-                etNumero.text.toString().toInt(),
-
+            id_usuario = etIdUsuario.text.toString().toInt(),
+            posicion = etPosicion.text.toString(),
+            numero_camiseta = etNumero.text.toString().toInt(),
             activo = activo
         )
 
@@ -147,13 +196,9 @@ class EditarJugadorActivity : AppCompatActivity() {
             prefs.getString("token", "") ?: ""
 
         ApiClient.instance.actualizarJugadores(
-
             "Bearer $token",
-
             idJugador,
-
             jugador
-
         ).enqueue(object : Callback<Void> {
 
             override fun onResponse(
@@ -200,7 +245,7 @@ class EditarJugadorActivity : AppCompatActivity() {
 
                 Log.e(
                     "UPDATE_ERROR",
-                    t.message.toString()
+                    t.message ?: "Error"
                 )
             }
         })

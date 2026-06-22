@@ -1,4 +1,4 @@
-package com.example.ventas.ui
+package com.example.ventas.ui.equipos
 
 import android.app.AlertDialog
 import android.content.Intent
@@ -23,7 +23,7 @@ class EquipoAdapter(
 
     class EquipoViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val tvNombre: TextView = itemView.findViewById(R.id.tvNombreEquipo)
-        val tvEntrenador: TextView = itemView.findViewById(R.id.tvEntrenador)
+        val tvEscudo: TextView = itemView.findViewById(R.id.tvEscudo)
         val btnEditar: ImageButton = itemView.findViewById(R.id.btnEditar)
         val btnEliminar: ImageButton = itemView.findViewById(R.id.btnEliminar)
     }
@@ -36,16 +36,13 @@ class EquipoAdapter(
 
     override fun onBindViewHolder(holder: EquipoViewHolder, position: Int) {
         val equipo = listaEquipos[position]
-        holder.tvNombre.text = equipo.nombre
-        holder.tvEntrenador.text = "Entrenador: ${equipo.entrenador}"
 
-        // Ocultar todo por defecto
+        holder.tvNombre.text = equipo.nombre_equipo
+        holder.tvEscudo.text = "Escudo: ${equipo.escudo}"
+
+        // Ocultar botones por defecto
         holder.btnEditar.visibility = View.GONE
         holder.btnEliminar.visibility = View.GONE
-        holder.itemView.setOnClickListener(null)
-        holder.btnEditar.setOnClickListener(null)
-        holder.btnEliminar.setOnClickListener(null)
-        android.util.Log.d("ADAPTER", "Modo: $modo")
 
         when (modo) {
             "editar" -> {
@@ -54,8 +51,9 @@ class EquipoAdapter(
                     val context = holder.itemView.context
                     val intent = Intent(context, EditarEquipoActivity::class.java)
                     intent.putExtra("EQUIPO_ID", equipo.id_equipo)
-                    intent.putExtra("EQUIPO_NOMBRE", equipo.nombre)
-                    intent.putExtra("EQUIPO_ENTRENADOR", equipo.entrenador)
+                    intent.putExtra("EQUIPO_NOMBRE", equipo.nombre_equipo)
+                    intent.putExtra("EQUIPO_ESCUDO", equipo.escudo)
+                    intent.putExtra("EQUIPO_USUARIO", equipo.id_usuario)
                     context.startActivity(intent)
                 }
             }
@@ -65,7 +63,7 @@ class EquipoAdapter(
                     val context = holder.itemView.context
                     AlertDialog.Builder(context)
                         .setTitle("Eliminar equipo")
-                        .setMessage("¿Estás seguro que deseas eliminar ${equipo.nombre}?")
+                        .setMessage("¿Estás seguro que deseas eliminar ${equipo.nombre_equipo}?")
                         .setPositiveButton("Sí, eliminar") { _, _ ->
                             eliminarEquipo(context, equipo, holder.adapterPosition)
                         }
@@ -73,13 +71,15 @@ class EquipoAdapter(
                         .show()
                 }
             }
-            "vertodos" -> {
-
-            }
+            "vertodos" -> { }
         }
     }
 
-    private fun eliminarEquipo(context: android.content.Context, equipo: Equipo, position: Int) {
+    private fun eliminarEquipo(
+        context: android.content.Context,
+        equipo: Equipo,
+        position: Int
+    ) {
         val prefs = context.getSharedPreferences("app", android.content.Context.MODE_PRIVATE)
         val token = prefs.getString("token", "") ?: ""
 
@@ -95,12 +95,12 @@ class EquipoAdapter(
                     notifyItemRangeChanged(position, listaEquipos.size)
                     Toast.makeText(context, "✅ Equipo eliminado correctamente", Toast.LENGTH_SHORT).show()
                 } else {
-                    Toast.makeText(context, "Error al eliminar", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "❌ Error al eliminar", Toast.LENGTH_SHORT).show()
                 }
             }
 
             override fun onFailure(call: Call<Void>, t: Throwable) {
-                Toast.makeText(context, "Error de conexión", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "❌ Error de conexión", Toast.LENGTH_SHORT).show()
             }
         })
     }

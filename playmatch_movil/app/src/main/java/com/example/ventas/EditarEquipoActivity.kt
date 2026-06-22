@@ -1,8 +1,9 @@
-package com.example.ventas.ui
+package com.example.ventas.ui.equipos
 
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ventas.R
@@ -11,28 +12,30 @@ import com.example.ventas.model.Equipo
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import android.widget.ImageButton
 
 class EditarEquipoActivity : AppCompatActivity() {
 
     private lateinit var etNombre: EditText
-    private lateinit var etEntrenador: EditText
+    private lateinit var etEscudo: EditText
     private lateinit var btnActualizar: Button
     private var equipoId: Int = 0
+    private var idUsuario: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_editar_equipo)
 
         etNombre = findViewById(R.id.etNombreEditar)
-        etEntrenador = findViewById(R.id.etEntrenadorEditar)
+        etEscudo = findViewById(R.id.etEscudoEditar)
         btnActualizar = findViewById(R.id.btnActualizar)
+
         findViewById<ImageButton>(R.id.btnVolver).setOnClickListener { finish() }
 
-        // Recibe los datos del equipo que se tocó en la lista
+        // Recibir datos del equipo seleccionado
         equipoId = intent.getIntExtra("EQUIPO_ID", 0)
+        idUsuario = intent.getIntExtra("EQUIPO_USUARIO", 0)
         etNombre.setText(intent.getStringExtra("EQUIPO_NOMBRE"))
-        etEntrenador.setText(intent.getStringExtra("EQUIPO_ENTRENADOR"))
+        etEscudo.setText(intent.getStringExtra("EQUIPO_ESCUDO"))
 
         btnActualizar.setOnClickListener {
             actualizarEquipo()
@@ -40,16 +43,29 @@ class EditarEquipoActivity : AppCompatActivity() {
     }
 
     private fun actualizarEquipo() {
+        val nombre = etNombre.text.toString().trim()
+        val escudo = etEscudo.text.toString().trim()
 
-        val equipo = Equipo(
-            id_equipo = equipoId,
-            id_torneo = 1,
-            nombre = etNombre.text.toString(),
-            entrenador = etEntrenador.text.toString()
-        )
+        // Validar campos vacíos
+        if (nombre.isEmpty()) {
+            etNombre.error = "El nombre es obligatorio"
+            return
+        }
+        if (escudo.isEmpty()) {
+            etEscudo.error = "El escudo es obligatorio"
+            return
+        }
 
         val prefs = getSharedPreferences("app", MODE_PRIVATE)
         val token = prefs.getString("token", "") ?: ""
+
+        val equipo = Equipo(
+            id_equipo = equipoId,
+            id_usuario = idUsuario,
+            escudo = escudo,
+            nombre_equipo = nombre,
+            activo = 1
+        )
 
         ApiClient.instance.updateEquipo(
             "Bearer $token",
@@ -64,14 +80,14 @@ class EditarEquipoActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     Toast.makeText(
                         this@EditarEquipoActivity,
-                        "Equipo actualizado correctamente",
+                        "✅ Equipo actualizado correctamente",
                         Toast.LENGTH_SHORT
                     ).show()
                     finish()
                 } else {
                     Toast.makeText(
                         this@EditarEquipoActivity,
-                        "Error al actualizar",
+                        "❌ Error al actualizar: ${response.code()}",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -80,8 +96,8 @@ class EditarEquipoActivity : AppCompatActivity() {
             override fun onFailure(call: Call<Void>, t: Throwable) {
                 Toast.makeText(
                     this@EditarEquipoActivity,
-                    "Error de conexión",
-                    Toast.LENGTH_SHORT
+                    "❌ Error de conexión: ${t.message}",
+                    Toast.LENGTH_LONG
                 ).show()
             }
         })
