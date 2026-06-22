@@ -73,7 +73,7 @@ import ResultadosEditar from "../PAGES/Resultados/ResultadosEditar";
 import ResultadosEliminar from "../PAGES/Resultados/ResultadosEliminar";
 
 //Alineaciones
-import Alineaciones from "../PAGES/Aliniacion/Alineaciones";
+import Alineaciones from "../PAGES/Alineacion/Alineaciones";
 
 //Posiciones
 import Posiciones from "../PAGES/Posiciones/Posiciones";

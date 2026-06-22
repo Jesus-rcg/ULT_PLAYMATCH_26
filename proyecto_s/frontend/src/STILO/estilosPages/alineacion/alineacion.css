@@ -327,22 +327,11 @@
   transform: scale(0.8);
 }
 
-.btn-evento {
+.btn-l {
   position: absolute;
-  width: 28px;
-  height: 28px;
-  bottom: -19px;
+  top: -8px;
+  right: -8px;
   z-index: 100;
-  cursor: pointer;
-}
-
-.gol {
-  border-radius: 50%;
-  right: -35px;
-}
-
-.amarilla {
-  border-radius: 50%;
 }
 
 .btn-eliminar-jugador {
@@ -403,21 +392,4 @@
 .container-cancha-banca {
   display: flex;
   flex-direction: row;
-}
-
-.estadisticas {
-  display: flex;
-  justify-content: space-between;
-  gap: 5px;
-}
-
-.badge {
-  position: absolute;
-  top: -35px;
-  z-index: 100;
-}
-
-.icono-gol {
-  font-size: 20px;
-  line-height: 1;
 }
