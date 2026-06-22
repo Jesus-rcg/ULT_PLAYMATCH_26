@@ -57,6 +57,41 @@ export const updateCronologia = async (id, cronologia) => {
   return await response.json();
 };
 
+// Anular gol (helper semántico)
+export const anularGol = async (id_cronologia) => {
+  const response = await fetch(`${API}/${id_cronologia}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      evento: "Gol Anulado",
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Error al anular gol");
+  }
+
+  return await response.json();
+};
+
+export const anularCronologia = async (id) => {
+  const response = await fetch(`${API}/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ evento: "Gol Anulado" }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Error al anular cronología");
+  }
+
+  return await response.json();
+};
+
 // Eliminar
 export const deleteCronologia = async (id) => {
   const response = await fetch(`${API}/${id}`, {

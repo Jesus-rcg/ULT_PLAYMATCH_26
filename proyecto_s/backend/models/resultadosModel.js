@@ -95,3 +95,31 @@ export const deleteResultadoModel = async (id) => {
 
   return result;
 };
+
+export const getResultadoByEncuentroModel = async (idEncuentro) => {
+  const [rows] = await pool.query(
+    `
+    SELECT *
+    FROM resultados
+    WHERE id_encuentro = ?
+    `,
+    [idEncuentro],
+  );
+
+  return rows[0];
+};
+
+export const sumarGolResultadoModel = async (idEncuentro, equipo) => {
+  const campo = equipo === "A" ? "goles_local" : "goles_visitante";
+
+  const [result] = await pool.query(
+    `
+    UPDATE resultados
+    SET ${campo} = ${campo} + 1
+    WHERE id_encuentro = ?
+    `,
+    [idEncuentro],
+  );
+
+  return result;
+};

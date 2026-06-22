@@ -68,3 +68,29 @@ export const deleteResultado = async (id) => {
 
   return await response.json();
 };
+
+export const getResultadoByEncuentro = async (idEncuentro) => {
+  const response = await fetch(`${API}/encuentro/${idEncuentro}`);
+
+  if (!response.ok) {
+    throw new Error("Error al obtener el resultado del encuentro");
+  }
+
+  return await response.json();
+};
+
+export const sumarGolResultado = async ({ idEncuentro, equipo }) => {
+  const response = await fetch(`${API}/sumar-gol`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ idEncuentro, equipo }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Error al sumar gol");
+  }
+
+  return await response.json();
+};
