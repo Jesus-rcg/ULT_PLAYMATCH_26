@@ -1011,13 +1011,7 @@ export default function Alineacion() {
         </div>
         <button
           className="btn-cronologia"
-          onClick={() =>
-            window.open(
-              `/cronologias/${encuentro.id_encuentro}`,
-              "_blank",
-              "noopener,noreferrer",
-            )
-          }
+          onClick={() => navigate(`/cronologias/${encuentro.id_encuentro}`)}
         >
           Ir a Cronologías
         </button>

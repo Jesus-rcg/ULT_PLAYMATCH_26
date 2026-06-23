@@ -1,26 +1,17 @@
 import pool from "../config/db.js";
 
 //Actualizar el estado por fecha
-export const actualizarEstadosEncuentrosModel = async () => {
-  // PASAR A JUGANDO
-  await pool.query(`
+export const actualizarEstadoEncuentroModel = async (id, estado) => {
+  const [result] = await pool.query(
+    `
     UPDATE encuentros
-    SET estado = 'Jugando'
-    WHERE activo = 1
-      AND estado = 'Pendiente'
-      AND CONCAT(fecha, ' ', hora) <= NOW()
-  `);
+    SET estado = ?
+    WHERE id_encuentro = ?
+    `,
+    [estado, id],
+  );
 
-  // PASAR A FINALIZADO
-  // (2 HORAS DESPUÉS DEL INICIO)
-
-  await pool.query(`
-    UPDATE encuentros
-    SET estado = 'Finalizado'
-    WHERE activo = 1
-      AND estado = 'Jugando'
-      AND DATE_ADD(CONCAT(fecha, ' ', hora), INTERVAL 2 HOUR) <= NOW()
-  `);
+  return result;
 };
 
 // Obtener todas
@@ -324,10 +315,6 @@ export const generarEncuentrosAutomaticosModel = async (id_torneo) => {
 
   const tipo_torneo = torneoRows[0].tipo_torneo;
 
-  // =====================================================
-  // LIGA
-  // =====================================================
-
   if (tipo_torneo === "Liga") {
     const jornadas = generarJornadasLiga(equipos);
 
@@ -376,10 +363,6 @@ export const generarEncuentrosAutomaticosModel = async (id_torneo) => {
       message: "Fixture Liga generado correctamente",
     };
   }
-
-  // =====================================================
-  // GRUPOS
-  // =====================================================
 
   if (tipo_torneo === "Grupos") {
     const grupos = [];
@@ -485,10 +468,6 @@ export const generarEncuentrosAutomaticosModel = async (id_torneo) => {
       message: "Fixture grupos (ida y vuelta) generado correctamente",
     };
   }
-
-  // =====================================================
-  // ELIMINACIÓN DIRECTA
-  // =====================================================
 
   if (tipo_torneo === "Eliminacion Directa") {
     if (equipos.length % 2 !== 0) {

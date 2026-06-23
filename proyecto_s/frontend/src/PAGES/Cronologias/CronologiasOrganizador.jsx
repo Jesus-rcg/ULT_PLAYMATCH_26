@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   getAlineacionesEquipoRequest,
   getAlineacionRequest,
@@ -10,7 +11,6 @@ import {
   getCronologias,
 } from "../../SERVICE/cronologiasService";
 import { getResultadoByEncuentro } from "../../SERVICE/resultadosService";
-import { useParams } from "react-router-dom";
 import PosicionCampo from "../Alineacion/PosicionCampo";
 import "../../STILO/estilosPages/cronologias/cronologias.css";
 
@@ -20,6 +20,7 @@ import campo from "../../ASSETS/campo12.png";
 
 export default function CronologiasOrganizador() {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [encuentro, setEncuentro] = useState(null);
   const [posiciones, setPosiciones] = useState({});
@@ -27,8 +28,18 @@ export default function CronologiasOrganizador() {
   const [segundos, setSegundos] = useState(0);
   const [cronometroActivo, setCronometroActivo] = useState(false);
 
-  const minutos = Math.floor(segundos / 60);
+  const [periodo, setPeriodo] = useState(1); // 1 = Primer tiempo, 2 = Segundo tiempo
+  const [tiempoExtra, setTiempoExtra] = useState(0);
+
   const segundosRestantes = segundos % 60;
+
+  const minutos =
+    periodo === 1 ? Math.floor(segundos / 60) : 45 + Math.floor(segundos / 60);
+
+  const tiempoMostrar =
+    tiempoExtra > 0
+      ? `${periodo === 1 ? 45 : 90}+${Math.floor(tiempoExtra / 60)}`
+      : minutos;
 
   const equipoLocal = encuentro?.equipo_local || "Equipo Local";
   const equipoVisitante = encuentro?.equipo_visitante || "Equipo Visitante";
@@ -233,28 +244,66 @@ export default function CronologiasOrganizador() {
     }
   }, [id]);
 
+  const iniciarCronometro = () => {
+    const inicio = Date.now() - segundos * 1000;
+
+    localStorage.setItem(`partido_inicio_${id}`, inicio);
+    localStorage.setItem(`partido_activo_${id}`, "true");
+
+    setCronometroActivo(true);
+  };
+
   useEffect(() => {
     let intervalo;
 
     if (cronometroActivo) {
       intervalo = setInterval(() => {
-        setSegundos((prev) => prev + 1);
+        setSegundos((prev) => {
+          const limite = 45 * 60;
+
+          if (prev >= limite) {
+            setTiempoExtra((t) => t + 1);
+            return prev;
+          }
+
+          return prev + 1;
+        });
       }, 1000);
     }
 
     return () => clearInterval(intervalo);
   }, [cronometroActivo]);
 
+  useEffect(() => {
+    const activo = localStorage.getItem(`partido_activo_${id}`);
+    const inicio = localStorage.getItem(`partido_inicio_${id}`);
+
+    if (activo === "true" && inicio) {
+      const transcurridos = Math.floor((Date.now() - Number(inicio)) / 1000);
+
+      setSegundos(transcurridos);
+      setCronometroActivo(true);
+    }
+  }, [id]);
+
   const guardarEvento = async (eventoFinal) => {
     if (!jugadorSeleccionado || !eventoFinal) return;
 
     try {
       const idJugador = jugadorSeleccionado.id_jugador;
-      const minutoActual = Math.floor(segundos / 60);
+      let minutoActual;
 
-      // =========================
-      // AMARILLA
-      // =========================
+      if (tiempoExtra > 0) {
+        minutoActual = `${periodo === 1 ? 45 : 90}+${Math.floor(
+          tiempoExtra / 60,
+        )}`;
+      } else {
+        minutoActual =
+          periodo === 1
+            ? Math.max(1, Math.ceil(segundos / 60))
+            : 45 + Math.max(1, Math.ceil(segundos / 60));
+      }
+
       if (eventoFinal === "Amarilla") {
         // 1. Registrar amarilla
         await createCronologia({
@@ -280,12 +329,7 @@ export default function CronologiasOrganizador() {
             minuto: minutoActual,
           });
         }
-      }
-
-      // =========================
-      // OTROS EVENTOS (Gol, Roja manual, etc.)
-      // =========================
-      else {
+      } else {
         await createCronologia({
           id_encuentro: id,
           id_jugador: idJugador,
@@ -293,10 +337,6 @@ export default function CronologiasOrganizador() {
           minuto: minutoActual,
         });
       }
-
-      // =========================
-      // ACTUALIZAR ESTADO
-      // =========================
       await cargarCronologias();
       await recalcularResultado(id);
       await cargarResultado();
@@ -407,6 +447,52 @@ export default function CronologiasOrganizador() {
     }
 
     await cargarResultado();
+  };
+
+  const finalizarPartido = async () => {
+    const opcion = window.confirm(
+      "¿Qué deseas hacer?\n\nAceptar = Finalizar partido\nCancelar = Aplazar partido",
+    );
+
+    try {
+      setCronometroActivo(false);
+
+      localStorage.removeItem(`partido_inicio_${id}`);
+      localStorage.removeItem(`partido_activo_${id}`);
+
+      if (opcion) {
+        // ✅ FINALIZAR
+        await fetch(`${import.meta.env.VITE_API_URL}/encuentros/${id}/estado`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            estado: "Finalizado",
+          }),
+        });
+
+        alert("Partido finalizado");
+      } else {
+        // 🕒 APLAZAR
+        await fetch(`${import.meta.env.VITE_API_URL}/encuentros/${id}/estado`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            estado: "Aplazado",
+          }),
+        });
+
+        alert("Partido aplazado");
+      }
+
+      navigate(-2);
+    } catch (error) {
+      console.error(error);
+      alert("Error al actualizar estado del partido");
+    }
   };
 
   return (
@@ -941,9 +1027,7 @@ export default function CronologiasOrganizador() {
               </div>
             </div>
             <div className="controles-cronometro">
-              <button onClick={() => setCronometroActivo(true)}>
-                ▶ Iniciar
-              </button>
+              <button onClick={iniciarCronometro}>▶ Iniciar</button>
 
               <button onClick={() => setCronometroActivo(false)}>
                 ⏸ Pausar
@@ -951,11 +1035,21 @@ export default function CronologiasOrganizador() {
 
               <button
                 onClick={() => {
-                  setCronometroActivo(false);
+                  finalizarPartido();
                   setSegundos(0);
                 }}
               >
                 ⏹ Reiniciar
+              </button>
+
+              <button
+                onClick={() => {
+                  setPeriodo(2);
+                  setSegundos(0);
+                  setTiempoExtra(0);
+                }}
+              >
+                Segundo Tiempo
               </button>
 
               {modalEvento && (
@@ -1021,6 +1115,9 @@ export default function CronologiasOrganizador() {
             </div>
           </div>
         </div>
+        <button className="btn-finalizar" onClick={finalizarPartido}>
+          🏁 Finalizar Partido
+        </button>
       </div>
     </div>
   );
