@@ -11,12 +11,13 @@ import {
   deleteEncuentro,
   generarEncuentrosAutomaticos,
   getEncuentrosByTorneo,
+  actualizarEstadoEncuentro,
 } from "../CONTROLLERS/encuentrosController.js";
 
 const router = Router();
 
 router.get("/", getEncuentros);
-
+router.put("/:id/estado", actualizarEstadoEncuentro);
 router.post("/generar-fixture", generarEncuentrosAutomaticos);
 router.get("/torneo/:id", getEncuentrosByTorneo);
 router.get("/detalle/:id", getEncuentroDetalleById);

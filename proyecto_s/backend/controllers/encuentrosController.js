@@ -7,6 +7,7 @@ import {
   deleteEncuentroService,
   generarEncuentrosAutomaticosService,
   getEncuentrosByTorneoService,
+  actualizarEstadoEncuentroService,
 } from "../SERVICES/encuentrosService.js";
 
 //Obtener todas
@@ -164,6 +165,25 @@ export const getEncuentroDetalleById = async (req, res) => {
 
     res.status(500).json({
       message: "Error al obtener encuentro",
+    });
+  }
+};
+
+export const actualizarEstadoEncuentro = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { estado } = req.body;
+
+    await actualizarEstadoEncuentroService(id, estado);
+
+    res.json({
+      msg: "Estado actualizado correctamente",
+    });
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).json({
+      msg: "Error al actualizar estado",
     });
   }
 };
