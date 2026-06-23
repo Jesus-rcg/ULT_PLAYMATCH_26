@@ -163,10 +163,36 @@ interface ApiService {
     ): Call<Torneo>
 
     @GET("/api/torneos")
-    fun getTorneos(
+    fun getTorneo(
         @Header("Authorization")
         token: String
     ): Call<List<Torneo>>
+
+    @GET("/api/torneos/{id}")
+    fun getTorneo(
+        @Header("Authorization")
+        token: String,
+        @Path("id")
+        id: Int
+    ): Call<Torneo>
+
+    @PUT("/api/torneos/{id}")
+    fun updateTorneo(
+        @Header("Authorization")
+        token: String,
+        @Path("id")
+        id: Int,
+        @Body
+        torneo: Torneo
+    ): Call<Void>
+
+    @DELETE("/api/torneos/{id}")
+    fun deleteTorneo(
+        @Header("Authorization")
+        token: String,
+        @Path("id")
+        id: Int
+    ): Call<Void>
 
     // ================= POSICIONES =================
 
@@ -209,6 +235,89 @@ interface ApiService {
         @Path("id")
         id: Int
     ): Call<Void>
-}
-// ================= ENCUENTROS =================
 
+    // ================= ENCUENTROS =================
+
+    @POST("/api/encuentros")
+    fun createEncuentro(
+        @Header("Authorization")
+        token: String,
+        @Body
+        encuentro: Encuentro
+    ): Call<Encuentro>
+
+    @GET("/api/encuentros")
+    fun getEncuentros(
+        @Header("Authorization")
+        token: String
+    ): Call<List<Encuentro>>
+
+    @GET("/api/encuentros/{id}")
+    fun getEncuentro(
+        @Header("Authorization")
+        token: String,
+        @Path("id")
+        id: Int
+    ): Call<Encuentro>
+
+    @PUT("/api/encuentros/{id}")
+    fun updateEncuentro(
+        @Header("Authorization")
+        token: String,
+        @Path("id")
+        id: Int,
+        @Body
+        encuentro: Encuentro
+    ): Call<Void>
+
+    @DELETE("/api/encuentros/{id}")
+    fun deleteEncuentro(
+        @Header("Authorization")
+        token: String,
+        @Path("id")
+        id: Int
+    ): Call<Void>
+
+    // ================= RESULTADOS =================
+
+    @POST("/api/resultados")
+    fun createResultado(
+        @Header("Authorization")
+        token: String,
+        @Body
+        resultado: Resultado
+    ): Call<Resultado>
+
+    @GET("/api/resultados")
+    fun getResultados(
+        @Header("Authorization")
+        token: String
+    ): Call<List<Resultado>>
+
+    @GET("/api/resultados/{id}")
+    fun getResultado(
+        @Header("Authorization")
+        token: String,
+        @Path("id")
+        id: Int
+    ): Call<Resultado>
+
+    @PUT("/api/resultados/{id}")
+    fun updateResultado(
+        @Header("Authorization")
+        token: String,
+        @Path("id")
+        id: Int,
+        @Body
+        resultado: Resultado
+    ): Call<Void>
+
+    @DELETE("/api/resultados/{id}")
+    fun deleteResultado(
+        @Header("Authorization")
+        token: String,
+        @Path("id")
+        id: Int
+    ): Call<Void>
+
+}

@@ -1,6 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                   android:layout_width="match_parent"
-                                                   android:layout_height="match_parent">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#F3F4F6">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="25dp">
+
+        <!-- BOTON VOLVER -->
+
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="20dp">
+
+            <ImageButton
+                    android:id="@+id/btnVolver"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@android:drawable/ic_menu_revert"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Volver"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Volver"
+                    android:textColor="#2563EB"
+                    android:textSize="14sp"/>
+        </LinearLayout>
+
+        <!-- TITULO -->
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Editar Torneo"
+                android:textStyle="bold"
+                android:textSize="28sp"
+                android:textColor="#111827"
+                android:layout_marginBottom="20dp"/>
+
+        <!-- CARD -->
+
+        <androidx.cardview.widget.CardView
+                android:id="@+id/cardTorneo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="8dp">
+
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+
+
+                <EditText
+                        android:id="@+id/etIdUsuario"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="ID Usuario"
+                        android:inputType="number"
+                        android:layout_marginBottom="8dp"/>
+
+
+
+                <EditText
+                        android:id="@+id/etCiudad"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Ciudad"
+                        android:layout_marginBottom="8dp"/>
+
+                <EditText
+                        android:id="@+id/etNombreTorneo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Nombre torneo"
+                        android:layout_marginBottom="8dp"/>
+
+
+
+                <EditText
+                        android:id="@+id/etFechaInicio"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Fecha inicio"
+                        android:layout_marginBottom="8dp"/>
+
+
+                <EditText
+                        android:id="@+id/etFechaFin"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Fecha fin"
+                        android:layout_marginBottom="8dp"/>
+
+
+                <Spinner
+                        android:id="@+id/spCategoria"
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_marginBottom="8dp"/>
+
+                <!-- ACTIVO -->
+
+                <Spinner
+                        android:id="@+id/spTipoTorneo"
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_marginBottom="8dp"/>
+
+                <Spinner
+                        android:id="@+id/spEstado"
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_marginBottom="8dp"/>
+
+                <Spinner
+                        android:id="@+id/spActivo"
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_marginBottom="8dp"/>
+
+
+                <!-- BOTON GUARDAR -->
+
+                <Button
+                        android:id="@+id/btnActualizar"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:text="Guardar Cambios"
+                        android:layout_marginBottom="8dp"
+                        android:textStyle="bold"
+                        android:textColor="#FFFFFF"
+                        android:textSize="16sp"
+                        android:backgroundTint="#2563EB"/>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+</ScrollView>

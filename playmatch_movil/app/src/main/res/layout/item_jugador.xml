@@ -18,59 +18,82 @@
             android:padding="16dp">
 
         <TextView
-                android:id="@+id/txtNumero"
+                android:id="@+id/txtNombreTorneo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="🏆 Copa Bogotá"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                android:text="⚽ Camiseta #10"/>
+                android:textStyle="bold" />
 
         <TextView
-                android:id="@+id/txtPosicion"
+                android:id="@+id/txtCategoria"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="📍 Delantero"/>
+                android:text="📂 Amateur" />
+
+        <TextView
+                android:id="@+id/txtTipo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="⚔️ Liga" />
+
+        <TextView
+                android:id="@+id/txtCiudad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="📍 Bogotá" />
+
+        <TextView
+                android:id="@+id/txtFechas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="📅 2025-01-01 → 2025-03-30" />
 
         <TextView
                 android:id="@+id/txtUsuario"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="👤 Usuario"/>
+                android:text="👤 Usuario ID: 1" />
 
         <TextView
                 android:id="@+id/txtId"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="#1"
-                android:layout_marginTop="6dp"/>
+                android:layout_marginTop="4dp"
+                android:text="#1" />
 
         <TextView
                 android:id="@+id/txtEstado"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="🟢 Activo"/>
+                android:text="🟢 Inscripciones Abiertas" />
+
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:layout_marginTop="12dp"
                 android:gravity="end"
-                android:layout_marginTop="10dp">
+                android:orientation="horizontal">
 
             <Button
                     android:id="@+id/btnEditar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Editar"/>
+                    android:text="Editar" />
 
             <Button
                     android:id="@+id/btnEliminar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Eliminar"
-                    android:layout_marginStart="8dp"/>
+                    android:layout_marginStart="8dp"
+                    android:text="Eliminar" />
+
         </LinearLayout>
 
     </LinearLayout>
