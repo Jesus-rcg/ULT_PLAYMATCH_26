@@ -99,6 +99,8 @@
                 idJugador
             ).enqueue(object : Callback<Jugador> {
 
+
+
                 override fun onResponse(
                     call: Call<Jugador>,
                     response: Response<Jugador>

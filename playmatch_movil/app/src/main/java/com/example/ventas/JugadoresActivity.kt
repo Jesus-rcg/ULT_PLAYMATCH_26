@@ -20,27 +20,49 @@ import retrofit2.Response
 
 class JugadoresActivity : AppCompatActivity() {
 
+    private lateinit var recycler: RecyclerView
+    private lateinit var txtContador: TextView
+    private lateinit var progressBar: ProgressBar
+    private lateinit var edtBuscar: EditText
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_jugadores)
 
-        val recycler = findViewById<RecyclerView>(R.id.recyclerJugadores)
-        val txtContador = findViewById<TextView>(R.id.txtContadorJugadores)
-        val progressBar = findViewById<ProgressBar>(R.id.progressBar)
-        val edtBuscar = findViewById<EditText>(R.id.edtBuscar)
+        recycler = findViewById(R.id.recyclerJugadores)
+        txtContador = findViewById(R.id.txtContadorJugadores)
+        progressBar = findViewById(R.id.progressBar)
+        edtBuscar = findViewById(R.id.edtBuscar)
 
-        val fabAgregar = findViewById<com.google.android.material.floatingactionbutton.FloatingActionButton>(
-            R.id.fabAgregar
-        )
+        val fabAgregar =
+            findViewById<com.google.android.material.floatingactionbutton.FloatingActionButton>(
+                R.id.fabAgregar
+            )
+
         findViewById<ImageButton>(R.id.btnVolver).setOnClickListener {
             finish()
         }
 
         fabAgregar.setOnClickListener {
-            startActivity(Intent(this, CrearJugadorActivity::class.java))
+            startActivity(
+                Intent(
+                    this,
+                    CrearJugadorActivity::class.java
+                )
+            )
         }
 
         recycler.layoutManager = LinearLayoutManager(this)
+
+        cargarJugadores()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        cargarJugadores()
+    }
+
+    private fun cargarJugadores() {
 
         val token = getSharedPreferences("app", MODE_PRIVATE)
             .getString("token", "") ?: ""
@@ -58,18 +80,25 @@ class JugadoresActivity : AppCompatActivity() {
                     progressBar.visibility = View.GONE
 
                     if (!response.isSuccessful) {
+
                         Toast.makeText(
                             this@JugadoresActivity,
                             "Error ${response.code()}",
                             Toast.LENGTH_LONG
                         ).show()
-                        Log.e("API_JUGADORES", response.errorBody()?.string() ?: "")
+
+                        Log.e(
+                            "API_JUGADORES",
+                            response.errorBody()?.string() ?: ""
+                        )
+
                         return
                     }
 
                     val lista = response.body() ?: emptyList()
 
-                    txtContador.text = "${lista.size} registros"
+                    txtContador.text =
+                        "${lista.size} registros"
 
                     recycler.adapter = JugadorAdapter(
                         lista,
@@ -83,23 +112,41 @@ class JugadoresActivity : AppCompatActivity() {
 
                     edtBuscar.addTextChangedListener(object : TextWatcher {
 
-                        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                        override fun beforeTextChanged(
+                            s: CharSequence?,
+                            start: Int,
+                            count: Int,
+                            after: Int
+                        ) {
+                        }
+
                         override fun afterTextChanged(s: Editable?) {}
 
-                        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                        override fun onTextChanged(
+                            s: CharSequence?,
+                            start: Int,
+                            before: Int,
+                            count: Int
+                        ) {
 
-                            val texto = s.toString().lowercase().trim()
+                            val texto =
+                                s.toString().lowercase().trim()
 
-                            val filtrada = if (texto.isEmpty()) {
-                                lista
-                            } else {
-                                lista.filter {
-                                    it.posicion.lowercase().contains(texto) ||
-                                            it.numero_camiseta.toString().contains(texto)
+                            val filtrada =
+                                if (texto.isEmpty()) {
+                                    lista
+                                } else {
+                                    lista.filter {
+                                        it.posicion.lowercase()
+                                            .contains(texto) ||
+                                                it.numero_camiseta
+                                                    .toString()
+                                                    .contains(texto)
+                                    }
                                 }
-                            }
 
-                            txtContador.text = "${filtrada.size} registros"
+                            txtContador.text =
+                                "${filtrada.size} registros"
 
                             recycler.adapter = JugadorAdapter(
                                 filtrada,
@@ -114,7 +161,10 @@ class JugadoresActivity : AppCompatActivity() {
                     })
                 }
 
-                override fun onFailure(call: Call<List<Jugador>>, t: Throwable) {
+                override fun onFailure(
+                    call: Call<List<Jugador>>,
+                    t: Throwable
+                ) {
 
                     progressBar.visibility = View.GONE
 
@@ -124,12 +174,14 @@ class JugadoresActivity : AppCompatActivity() {
                         Toast.LENGTH_LONG
                     ).show()
 
-                    Log.e("API_JUGADORES", t.message ?: "Error")
+                    Log.e(
+                        "API_JUGADORES",
+                        t.message ?: "Error"
+                    )
                 }
             })
     }
 
-    // 🔥 ALERTA DE CONFIRMACIÓN
     private fun confirmarEliminar(jugador: Jugador) {
 
         AlertDialog.Builder(this)
@@ -142,53 +194,67 @@ class JugadoresActivity : AppCompatActivity() {
             .show()
     }
 
-    // 🔥 PETICIÓN DELETE A LA API
     private fun eliminarJugador(id: Int) {
 
         val token = getSharedPreferences("app", MODE_PRIVATE)
             .getString("token", "") ?: ""
 
-        ApiClient.instance.eliminarJugador("Bearer $token", id)
-            .enqueue(object : Callback<Void> {
+        ApiClient.instance.eliminarJugador(
+            "Bearer $token",
+            id
+        ).enqueue(object : Callback<Void> {
 
-                override fun onResponse(call: Call<Void>, response: Response<Void>) {
+            override fun onResponse(
+                call: Call<Void>,
+                response: Response<Void>
+            ) {
 
-                    if (response.isSuccessful) {
-
-                        Toast.makeText(
-                            this@JugadoresActivity,
-                            "Jugador eliminado",
-                            Toast.LENGTH_SHORT
-                        ).show()
-
-                        recreate() // recarga lista
-                    } else {
-
-                        Toast.makeText(
-                            this@JugadoresActivity,
-                            "Error al eliminar",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-
-                override fun onFailure(call: Call<Void>, t: Throwable) {
+                if (response.isSuccessful) {
 
                     Toast.makeText(
                         this@JugadoresActivity,
-                        t.message,
+                        "Jugador eliminado",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    cargarJugadores()
+                } else {
+
+                    Toast.makeText(
+                        this@JugadoresActivity,
+                        "Error al eliminar",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
-            })
+            }
+
+            override fun onFailure(
+                call: Call<Void>,
+                t: Throwable
+            ) {
+
+                Toast.makeText(
+                    this@JugadoresActivity,
+                    t.message,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
     }
 
     private fun abrirEditar(jugador: Jugador) {
 
-        val intent = Intent(this, EditarJugadorActivity::class.java)
+        val intent =
+            Intent(
+                this,
+                EditarJugadorActivity::class.java
+            )
 
-        intent.putExtra("id_jugador", jugador.id_jugador ?: 0)
+        intent.putExtra(
+            "id_jugador",
+            jugador.id_jugador ?: 0
+        )
 
-        startActivityForResult(intent, 100)
+        startActivity(intent)
     }
 }
