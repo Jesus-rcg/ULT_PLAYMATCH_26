@@ -65,13 +65,20 @@ export const createJugador = async (req, res) => {
 // Actualizar jugador
 export const updateJugador = async (req, res) => {
   try {
+
     const { id } = req.params;
 
-    await updateJugadorService(id, req.body);
+    console.log("ID:", id);
+    console.log("BODY:", req.body);
+
+    const result = await updateJugadorService(id, req.body);
+
+    console.log("RESULT:", result);
 
     res.json({
       msg: "Jugador actualizado correctamente",
     });
+
   } catch (error) {
     console.error(error);
 
@@ -84,13 +91,19 @@ export const updateJugador = async (req, res) => {
 // Eliminar jugador
 export const deleteJugador = async (req, res) => {
   try {
+
     const { id } = req.params;
 
-    await deleteJugadorService(id);
+    console.log("ID recibido:", id);
+
+    const result = await deleteJugadorService(id);
+
+    console.log("Resultado:", result);
 
     res.json({
       msg: "Jugador eliminado correctamente",
     });
+
   } catch (error) {
     console.error(error);
 

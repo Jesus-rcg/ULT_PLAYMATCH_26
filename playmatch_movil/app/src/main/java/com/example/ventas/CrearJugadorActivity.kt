@@ -20,6 +20,8 @@ class CrearJugadorActivity : AppCompatActivity() {
 
     private lateinit var spActivo: Spinner
 
+    private lateinit var spUsuario: Spinner
+
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
