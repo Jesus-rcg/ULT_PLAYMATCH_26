@@ -85,13 +85,6 @@ export default function TorneoDetalleOrganizador() {
           </button>
 
           <button
-            className={tab === "inscripciones" ? "active" : ""}
-            onClick={() => setTab("inscripciones")}
-          >
-            Inscripciones
-          </button>
-
-          <button
             className={tab === "posiciones" ? "active" : ""}
             onClick={() => setTab("posiciones")}
           >

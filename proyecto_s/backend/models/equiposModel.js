@@ -110,3 +110,26 @@ export const getEquiposByTorneoModel = async (idTorneo) => {
 
   return rows;
 };
+
+export const getEquipoByUsuarioModel = async (idUsuario) => {
+  const [rows] = await pool.query(
+    `
+    SELECT
+      e.id_equipo,
+      e.id_usuario,
+      u.nombre_usuario,
+      e.escudo,
+      e.nombre_equipo,
+      e.activo
+    FROM equipos e
+    INNER JOIN usuarios u
+      ON e.id_usuario = u.id_usuario
+    WHERE e.id_usuario = ?
+      AND e.activo = 1
+    LIMIT 1
+    `,
+    [idUsuario],
+  );
+
+  return rows[0];
+};

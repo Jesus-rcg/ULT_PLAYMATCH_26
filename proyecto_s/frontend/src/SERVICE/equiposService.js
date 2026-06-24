@@ -42,11 +42,20 @@ export const deleteEquipo = async (id) => {
   return await res.json();
 };
 
-// 🔥 NUEVO: equipos inscritos en torneo
 export const getEquiposByTorneo = async (idTorneo) => {
   const res = await fetch(
     `${import.meta.env.VITE_API_URL}/equipos/torneo/${idTorneo}`,
   );
+
+  return await res.json();
+};
+
+export const getEquipoByUsuario = async (idUsuario) => {
+  const res = await fetch(`${API}/usuario/${idUsuario}`);
+
+  if (!res.ok) {
+    throw new Error("Error al obtener el equipo del usuario");
+  }
 
   return await res.json();
 };
