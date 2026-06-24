@@ -18,40 +18,26 @@
             android:padding="16dp">
 
         <TextView
-                android:id="@+id/txtNombreTorneo"
+                android:id="@+id/txtNumero"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="🏆 Copa Bogotá"
+                android:text="⚽ Camiseta #10"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
         <TextView
-                android:id="@+id/txtCategoria"
+                android:id="@+id/txtPosicion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:text="📂 Amateur" />
+                android:text="📍 Delantero" />
 
         <TextView
-                android:id="@+id/txtTipo"
+                android:id="@+id/txtNombre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="⚔️ Liga" />
-
-        <TextView
-                android:id="@+id/txtCiudad"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="📍 Bogotá" />
-
-        <TextView
-                android:id="@+id/txtFechas"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="📅 2025-01-01 → 2025-03-30" />
+                android:text="👤 Juan Pérez" />
 
         <TextView
                 android:id="@+id/txtUsuario"
@@ -72,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="🟢 Inscripciones Abiertas" />
+                android:text="🟢 Activo" />
 
         <LinearLayout
                 android:layout_width="match_parent"

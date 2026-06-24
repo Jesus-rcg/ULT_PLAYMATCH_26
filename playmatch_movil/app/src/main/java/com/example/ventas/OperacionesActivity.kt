@@ -101,7 +101,7 @@ class OperacionesActivity : AppCompatActivity() {
         // ================= VER TODOS =================
         cardVerTodos.setOnClickListener {
             when (modulo) {
-                "Jugadores" -> startActivity(Intent(this, ListarJugadoresActivity::class.java))
+                "Jugadores" -> startActivity(Intent(this, JugadoresActivity::class.java))
                 "Equipos" -> {
                     val intent = Intent(this, ListaEquiposActivity::class.java)
                     intent.putExtra("MODO", "vertodos")

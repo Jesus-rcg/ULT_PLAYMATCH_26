@@ -80,21 +80,21 @@
                 android:layout_marginBottom="12dp"/>
 
         <EditText
-                android:id="@+id/txtFechaInicio"
+                android:id="@+id/txtFecha_inicio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Fecha inicio (YYYY-MM-DD)"
                 android:layout_marginBottom="12dp"/>
 
         <EditText
-                android:id="@+id/txtFechaFin"
+                android:id="@+id/txtFecha_fin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Fecha fin (YYYY-MM-DD)"
                 android:layout_marginBottom="12dp"/>
 
         <Spinner
-                android:id="@+id/spEstado"
+                android:id="@+id/spEstados"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"/>

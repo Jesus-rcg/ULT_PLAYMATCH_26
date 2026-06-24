@@ -10,6 +10,7 @@ import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ventas.api.ApiClient
+import com.example.ventas.model.ApiResponse
 import com.example.ventas.model.Jugador
 import retrofit2.Call
 import retrofit2.Callback
@@ -31,6 +32,9 @@ class CrearJugadorActivity : AppCompatActivity() {
         val txtIdUsuario =
             findViewById<EditText>(R.id.txtIdUsuario)
 
+        val etNombreUsuario =
+            findViewById<EditText>(R.id.etNombre_usuario)
+
         val txtPosicion =
             findViewById<EditText>(R.id.txtPosicion)
 
@@ -49,6 +53,7 @@ class CrearJugadorActivity : AppCompatActivity() {
 
             if (
                 txtIdUsuario.text.isEmpty() ||
+                etNombreUsuario.text.isEmpty() ||
                 txtPosicion.text.isEmpty() ||
                 txtNumero.text.isEmpty()
             ) {
@@ -63,14 +68,18 @@ class CrearJugadorActivity : AppCompatActivity() {
             }
 
             val activo =
-                if (
-                    spActivo.selectedItem.toString() == "Activo"
-                ) 1 else 0
+                if (spActivo.selectedItem.toString() == "Activo")
+                    1
+                else
+                    0
 
             val jugador = Jugador(
 
                 id_usuario =
                     txtIdUsuario.text.toString().toInt(),
+
+                nombre_usuario =
+                    etNombreUsuario.text.toString(),
 
                 posicion =
                     txtPosicion.text.toString(),
@@ -90,11 +99,11 @@ class CrearJugadorActivity : AppCompatActivity() {
             ApiClient.instance.createJugador(
                 "Bearer $token",
                 jugador
-            ).enqueue(object : Callback<Jugador> {
+            ).enqueue(object : Callback<ApiResponse> {
 
                 override fun onResponse(
-                    call: Call<Jugador>,
-                    response: Response<Jugador>
+                    call: Call<ApiResponse>,
+                    response: Response<ApiResponse>
                 ) {
 
                     if (response.isSuccessful) {
@@ -106,6 +115,7 @@ class CrearJugadorActivity : AppCompatActivity() {
                         ).show()
 
                         txtIdUsuario.text.clear()
+                        etNombreUsuario.text.clear()
                         txtPosicion.text.clear()
                         txtNumero.text.clear()
 
@@ -128,7 +138,7 @@ class CrearJugadorActivity : AppCompatActivity() {
                 }
 
                 override fun onFailure(
-                    call: Call<Jugador>,
+                    call: Call<ApiResponse>,
                     t: Throwable
                 ) {
 
@@ -140,7 +150,7 @@ class CrearJugadorActivity : AppCompatActivity() {
 
                     Log.e(
                         "API_ERROR",
-                        t.message.toString()
+                        t.message ?: "Error"
                     )
                 }
             })
