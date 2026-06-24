@@ -1,3 +1,4 @@
+
 package com.example.ventas.ui.encuentros
 
 import android.content.Intent
@@ -42,3 +43,4 @@ class EncuentrosMenuActivity : AppCompatActivity() {
         }
     }
 }
+
