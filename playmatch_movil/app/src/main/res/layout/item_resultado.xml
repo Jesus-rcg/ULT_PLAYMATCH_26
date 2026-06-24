@@ -1,86 +1,203 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp"
-        android:layout_marginBottom="12dp"
-        android:layout_marginHorizontal="8dp"
-        android:background="@drawable/card_background">
+        android:background="@drawable/rectangulo"
+        android:padding="12dp"
+        android:layout_marginBottom="10dp">
 
-    <!-- ID Encuentro -->
-    <TextView
-            android:id="@+id/tvEncuentro"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Encuentro #1"
-            android:textColor="#14532d"
-            android:textStyle="bold"
-            android:textSize="14sp"
-            android:layout_marginBottom="8dp"/>
-
-    <!-- Marcador -->
+    <!-- Marcador principal -->
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginBottom="8dp">
+            android:gravity="center_vertical"
+            android:padding="12dp">
 
-        <TextView
-                android:id="@+id/tvGolesLocal"
+        <!-- Equipo local -->
+        <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+            <TextView
+                    android:id="@+id/txtAvatarLocal"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:gravity="center"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="#3C3489"
+                    android:background="@drawable/circulo_morado"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="6dp" />
+
+            <TextView
+                    android:id="@+id/txtEquipoLocal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:textColor="#1A1A2E"
+                    android:gravity="center"
+                    android:layout_gravity="center" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Local"
+                    android:textSize="9sp"
+                    android:textColor="#888780"
+                    android:layout_gravity="center" />
+        </LinearLayout>
+
+        <!-- Marcador -->
+        <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="0"
-                android:textColor="#14532d"
-                android:textStyle="bold"
-                android:textSize="32sp"/>
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp">
 
-        <TextView
-                android:layout_width="wrap_content"
+            <TextView
+                    android:id="@+id/txtGolesLocal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:textColor="#534AB7"
+                    android:minWidth="32dp"
+                    android:gravity="center" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" - "
+                    android:textSize="20sp"
+                    android:textColor="#888780" />
+
+            <TextView
+                    android:id="@+id/txtGolesVisitante"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:textColor="#534AB7"
+                    android:minWidth="32dp"
+                    android:gravity="center" />
+        </LinearLayout>
+
+        <!-- Equipo visitante -->
+        <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text=" - "
-                android:textColor="#14532d"
-                android:textStyle="bold"
-                android:textSize="32sp"/>
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
 
-        <TextView
-                android:id="@+id/tvGolesVisitante"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:textColor="#14532d"
-                android:textStyle="bold"
-                android:textSize="32sp"/>
+            <TextView
+                    android:id="@+id/txtAvatarVisitante"
+                    android:layout_width="38dp"
+                    android:layout_height="38dp"
+                    android:gravity="center"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="#0C447C"
+                    android:background="@drawable/circulo_azul"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="6dp" />
 
+            <TextView
+                    android:id="@+id/txtEquipoVisitante"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:textColor="#1A1A2E"
+                    android:gravity="center"
+                    android:layout_gravity="center" />
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Visitante"
+                    android:textSize="9sp"
+                    android:textColor="#888780"
+                    android:layout_gravity="center" />
+        </LinearLayout>
     </LinearLayout>
 
-    <!-- Botones -->
+    <!-- Footer: fecha + resultado + id -->
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:gravity="end">
+            android:gravity="center_vertical"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="8dp">
 
-        <ImageButton
+        <TextView
+                android:id="@+id/txtFecha"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textSize="10sp"
+                android:textColor="#888780"
+                android:drawableStart="@android:drawable/ic_menu_today"
+                android:drawablePadding="4dp" />
+
+        <TextView
+                android:id="@+id/txtGanador"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:textStyle="bold"
+                android:textColor="#27500A"
+                android:background="@drawable/rectangulo_verde"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:layout_marginEnd="8dp" />
+
+        <TextView
+                android:id="@+id/txtId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="10sp"
+                android:textColor="#BDBCB8" />
+    </LinearLayout>
+
+
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <Button
                 android:id="@+id/btnEditar"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@android:drawable/ic_menu_edit"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                app:tint="#16a34a"
-                android:visibility="gone"/>
+                android:text="Editar"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/boton_editar"
+                android:backgroundTint="#2196F3"
+                android:layout_marginEnd="10dp" />
 
-        <ImageButton
+        <Button
                 android:id="@+id/btnEliminar"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@android:drawable/ic_menu_delete"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                app:tint="#dc2626"
-                android:visibility="gone"/>
+                android:text="Eliminar"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/boton_eliminar"
+                android:backgroundTint="#F33446" />
 
     </LinearLayout>
 
