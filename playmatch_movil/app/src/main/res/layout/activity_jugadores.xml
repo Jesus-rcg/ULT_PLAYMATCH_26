@@ -1,298 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-    <ScrollView
-            xmlns:android="http://schemas.android.com/apk/res/android"
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#F5F5F5"
+        android:padding="20dp"
+        android:paddingTop="50dp">
+
+    <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#F5F5F5"
-            android:fillViewport="true">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="40dp">
 
-        <LinearLayout
-                android:layout_width="match_parent"
+        <ImageButton
+                android:id="@+id/btnVolver"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@android:drawable/ic_menu_revert"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Volver" />
+
+        <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="20dp"
-                android:layout_marginTop="40dp">
+                android:text="Volver al menú"
+                android:textColor="#534AB7"
+                android:textSize="13sp"
+                android:layout_marginStart="4dp" />
 
-            <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:layout_marginBottom="16dp"
-                    android:elevation="10dp">
+        <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="4"/>
 
-                <ImageButton
-                        android:id="@+id/btnVolver"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:src="@android:drawable/ic_menu_revert"
-                        android:background="?attr/selectableItemBackgroundBorderless"
-                        android:contentDescription="Volver"/>
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/fabAgregar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/boton_agregar"
+                android:backgroundTint="#4CAF50"/>
+    </LinearLayout>
 
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Menú principal"
-                        android:textColor="#534AB7"
-                        android:textSize="13sp"
-                        android:layout_marginStart="4dp" />
-            </LinearLayout>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="4dp">
 
-            <TextView
-                    android:id="@+id/txtTituloModulo"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Jugadores"
-                    android:textSize="22sp"
-                    android:textStyle="bold"
-                    android:textColor="#1A1A2E"
-                    android:layout_marginBottom="6dp" />
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Jugadores"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="#1A1A2E"/>
 
-            <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="¿Qué quieres hacer?"
-                    android:textSize="14sp"
-                    android:textColor="#888780"
-                    android:layout_marginBottom="20dp" />
+        <TextView
+                android:id="@+id/txtContadorJugadores"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0 registros"
+                android:textSize="11sp"
+                android:textColor="#888780"
+                android:background="@drawable/rectangulo_gris"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"/>
+    </LinearLayout>
 
+    <EditText
+            android:id="@+id/edtBuscar"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Buscar por posición o camiseta..."
+            android:background="@drawable/bg_busqueda"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:drawableStart="@android:drawable/ic_menu_search"
+            android:drawablePadding="8dp"
+            android:inputType="text"
+            android:textColor="#000000"
+            android:textColorHint="#888780"
+            android:layout_marginBottom="10dp"/>
 
-            <LinearLayout
-                    android:id="@+id/tarjetaGuardar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:elevation="10dp"
-                    android:padding="16dp"
-                    android:layout_marginBottom="10dp">
+    <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:visibility="gone"/>
 
-                <LinearLayout
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:gravity="center">
+    <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerJugadores"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:paddingBottom="16dp"/>
 
-                    <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            app:srcCompat="@mipmap/guardar"
-                            android:contentDescription="Guardar" />
-                </LinearLayout>
-
-                <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:layout_marginStart="14dp">
-
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Guardar"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
-                            android:textColor="#1A1A2E" />
-
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Crear nuevo registro"
-                            android:textSize="12sp"
-                            android:textColor="#888780" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                    android:id="@+id/tarjetaBuscar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:elevation="10dp"
-                    android:padding="16dp"
-                    android:layout_marginBottom="10dp">
-
-                <LinearLayout
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:gravity="center">
-
-                    <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            app:srcCompat="@mipmap/buscar"
-                            android:contentDescription="Buscar" />
-                </LinearLayout>
-
-                <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:layout_marginStart="14dp">
-
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Buscar"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
-                            android:textColor="#1A1A2E" />
-
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Buscar por ID"
-                            android:textSize="12sp"
-                            android:textColor="#888780" />
-                </LinearLayout>
-            </LinearLayout>
-
-
-            <LinearLayout
-                    android:id="@+id/tarjetaEditar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:elevation="10dp"
-                    android:gravity="center_vertical"
-                    android:padding="16dp"
-                    android:layout_marginBottom="10dp">
-
-                <LinearLayout
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:gravity="center">
-
-                    <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            app:srcCompat="@mipmap/editar"
-                            android:contentDescription="Editar" />
-                </LinearLayout>
-
-                <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:layout_marginStart="14dp">
-
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Editar"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
-                            android:textColor="#1A1A2E" />
-
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Modificar un registro"
-                            android:textSize="12sp"
-                            android:textColor="#888780" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
-                    android:id="@+id/tarjetaEliminar"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:elevation="10dp"
-                    android:padding="16dp"
-                    android:layout_marginBottom="10dp">
-
-                <LinearLayout
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:gravity="center">
-
-                    <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            app:srcCompat="@mipmap/eliminar"
-                            android:contentDescription="Eliminar" />
-                </LinearLayout>
-
-                <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:layout_marginStart="14dp">
-
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Eliminar"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
-                            android:textColor="#1A1A2E" />
-
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Borrar por ID"
-                            android:textSize="12sp"
-                            android:textColor="#888780" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                    android:id="@+id/tarjetaVerTodos"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center_vertical"
-                    android:elevation="10dp"
-                    android:padding="16dp"
-                    android:layout_marginBottom="10dp">
-
-                <LinearLayout
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:gravity="center">
-
-                    <ImageView
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
-                            app:srcCompat="@mipmap/ver"
-                            android:contentDescription="Ver todos" />
-                </LinearLayout>
-
-                <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:layout_marginStart="14dp">
-
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Ver todos"
-                            android:textSize="15sp"
-                            android:textStyle="bold"
-                            android:textColor="#1A1A2E" />
-
-                    <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Ver todos los registros"
-                            android:textSize="12sp"
-                            android:textColor="#888780" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-        </LinearLayout>
-    </ScrollView>
+</LinearLayout>

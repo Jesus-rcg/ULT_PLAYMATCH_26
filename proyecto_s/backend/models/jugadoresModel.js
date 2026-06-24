@@ -24,11 +24,19 @@ export const getJugadoresModel = async () => {
 export const getJugadorByIdModel = async (id) => {
   const [rows] = await pool.query(
     `
-    SELECT *
-    FROM jugadores
-    WHERE id_jugador = ?
+    SELECT
+      j.id_jugador,
+      j.id_usuario,
+      u.nombre_usuario,
+      j.posicion,
+      j.numero_camiseta,
+      j.activo
+    FROM jugadores j
+    INNER JOIN usuarios u
+      ON j.id_usuario = u.id_usuario
+    WHERE j.id_jugador = ?
     `,
-    [id],
+    [id]
   );
 
   return rows[0];

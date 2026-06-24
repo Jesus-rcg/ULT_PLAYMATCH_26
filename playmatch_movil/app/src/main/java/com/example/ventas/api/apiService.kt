@@ -64,7 +64,7 @@ interface ApiService {
         token: String,
         @Body
         jugador: Jugador
-    ): Call<Jugador>
+    ): Call<ApiResponse>
 
 
         @GET("/api/jugadores")

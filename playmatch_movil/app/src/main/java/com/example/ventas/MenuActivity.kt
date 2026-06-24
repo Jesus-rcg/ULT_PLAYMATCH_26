@@ -54,7 +54,7 @@ class MenuActivity : AppCompatActivity() {
     }
 
     private fun abrirJugadores(modulo: String){
-        val intent = Intent(this, ListarJugadoresActivity::class.java)
+        val intent = Intent(this, JugadoresActivity::class.java)
         intent.putExtra("MODULO", modulo)
         startActivity(intent)
     }
@@ -72,7 +72,7 @@ class MenuActivity : AppCompatActivity() {
     }
 
     private fun abrirTorneos(modulo: String){
-        val intent = Intent(this, ListarTorneosActivity::class.java)
+        val intent = Intent(this, TorneosActivity::class.java)
         intent.putExtra("MODULO", modulo)
         startActivity(intent)
     }
