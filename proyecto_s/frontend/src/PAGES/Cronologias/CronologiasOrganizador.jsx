@@ -30,11 +30,11 @@ export default function CronologiasOrganizador() {
 
   const [periodo, setPeriodo] = useState(1); // 1 = Primer tiempo, 2 = Segundo tiempo
   const [tiempoExtra, setTiempoExtra] = useState(0);
+  const [estadoPartido, setEstadoPartido] = useState("Primer Tiempo");
 
   const segundosRestantes = segundos % 60;
 
-  const minutos =
-    periodo === 1 ? Math.floor(segundos / 60) : 45 + Math.floor(segundos / 60);
+  const minutos = Math.floor(segundos / 60);
 
   const tiempoMostrar =
     tiempoExtra > 0
@@ -245,38 +245,83 @@ export default function CronologiasOrganizador() {
   }, [id]);
 
   const iniciarCronometro = () => {
-    const inicio = Date.now() - segundos * 1000;
+    if (!cronometroActivo) {
+      const inicio = Date.now() - segundos * 1000;
 
-    localStorage.setItem(`partido_inicio_${id}`, inicio);
-    localStorage.setItem(`partido_activo_${id}`, "true");
+      localStorage.setItem(`partido_inicio_${id}`, inicio);
+      localStorage.setItem(`partido_activo_${id}`, "true");
 
-    setCronometroActivo(true);
+      setCronometroActivo(true);
+    }
+  };
+
+  const pausarCronometro = () => {
+    setCronometroActivo(false);
+
+    localStorage.removeItem(`partido_activo_${id}`);
+  };
+
+  const reiniciarCronometro = () => {
+    setCronometroActivo(false);
+    setSegundos(0);
+
+    localStorage.removeItem(`partido_activo_${id}`);
+    localStorage.removeItem(`partido_estado_${id}`);
+
+    setEstadoPartido("Primer Tiempo");
+  };
+
+  const finalizarPrimerTiempo = () => {
+    setCronometroActivo(false);
+
+    localStorage.removeItem(`partido_activo_${id}`);
+
+    setEstadoPartido("Descanso");
+    localStorage.setItem(`partido_estado_${id}`, "Descanso");
+  };
+
+  const prepararSegundoTiempo = () => {
+    setCronometroActivo(false);
+
+    const segundosSegundoTiempo = 45 * 60;
+
+    setSegundos(segundosSegundoTiempo);
+    setPeriodo(2);
+
+    localStorage.setItem(
+      `partido_inicio_${id}`,
+      Date.now() - segundosSegundoTiempo * 1000,
+    );
+
+    localStorage.setItem(`partido_periodo_${id}`, "2");
+
+    setEstadoPartido("Segundo Tiempo");
+    localStorage.setItem(`partido_estado_${id}`, "Segundo Tiempo");
+
+    localStorage.removeItem(`partido_activo_${id}`);
   };
 
   useEffect(() => {
-    let intervalo;
+    localStorage.setItem(`partido_segundos_${id}`, segundos);
+  }, [segundos, id]);
 
-    if (cronometroActivo) {
-      intervalo = setInterval(() => {
-        setSegundos((prev) => {
-          const limite = 45 * 60;
-
-          if (prev >= limite) {
-            setTiempoExtra((t) => t + 1);
-            return prev;
-          }
-
-          return prev + 1;
-        });
-      }, 1000);
-    }
-
-    return () => clearInterval(intervalo);
-  }, [cronometroActivo]);
+  useEffect(() => {
+    localStorage.setItem(`partido_estado_${id}`, estadoPartido);
+  }, [estadoPartido, id]);
 
   useEffect(() => {
     const activo = localStorage.getItem(`partido_activo_${id}`);
     const inicio = localStorage.getItem(`partido_inicio_${id}`);
+    const estado = localStorage.getItem(`partido_estado_${id}`);
+    const periodoGuardado = localStorage.getItem(`partido_periodo_${id}`);
+
+    if (estado) {
+      setEstadoPartido(estado);
+    }
+
+    if (periodoGuardado) {
+      setPeriodo(Number(periodoGuardado));
+    }
 
     if (activo === "true" && inicio) {
       const transcurridos = Math.floor((Date.now() - Number(inicio)) / 1000);
@@ -285,6 +330,18 @@ export default function CronologiasOrganizador() {
       setCronometroActivo(true);
     }
   }, [id]);
+
+  useEffect(() => {
+    let intervalo;
+
+    if (cronometroActivo) {
+      intervalo = setInterval(() => {
+        setSegundos((prev) => prev + 1);
+      }, 1000);
+    }
+
+    return () => clearInterval(intervalo);
+  }, [cronometroActivo]);
 
   const guardarEvento = async (eventoFinal) => {
     if (!jugadorSeleccionado || !eventoFinal) return;
@@ -1029,28 +1086,15 @@ export default function CronologiasOrganizador() {
             <div className="controles-cronometro">
               <button onClick={iniciarCronometro}>▶ Iniciar</button>
 
-              <button onClick={() => setCronometroActivo(false)}>
-                ⏸ Pausar
+              <button onClick={pausarCronometro}>⏸ Pausar</button>
+
+              <button onClick={reiniciarCronometro}>🔄 Reiniciar</button>
+
+              <button onClick={finalizarPrimerTiempo}>
+                ⏹ Fin Primer Tiempo
               </button>
 
-              <button
-                onClick={() => {
-                  finalizarPartido();
-                  setSegundos(0);
-                }}
-              >
-                ⏹ Reiniciar
-              </button>
-
-              <button
-                onClick={() => {
-                  setPeriodo(2);
-                  setSegundos(0);
-                  setTiempoExtra(0);
-                }}
-              >
-                Segundo Tiempo
-              </button>
+              <button onClick={prepararSegundoTiempo}>▶ Segundo Tiempo</button>
 
               {modalEvento && (
                 <div className="modal-evento">

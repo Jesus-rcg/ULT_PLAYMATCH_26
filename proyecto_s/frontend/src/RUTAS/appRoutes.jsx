@@ -33,6 +33,7 @@ import InscripcionesEquipos from "../PAGES/InscripcionesEquipo/inscripcionesEqui
 import InscripcionesEquiposCrear from "../PAGES/InscripcionesEquipo/inscripcionesEquiposCrear";
 import InscripcionesEquiposEditar from "../PAGES/InscripcionesEquipo/inscripcionesEquiposEditar";
 import InscripcionesEquiposEliminar from "../PAGES/InscripcionesEquipo/inscripcionesEquiposEliminar";
+import InscripcionesEquiposOrganizador from "../PAGES/InscripcionesEquipo/InscripcionesEquiposOrganizador";
 
 //Equipos
 import Equipos from "../PAGES/Equipos/Equipos";
@@ -152,20 +153,25 @@ export default function AppRoutes() {
             <Route path="/torneos/editar/:id" element={<TorneoEditar />} />
             <Route path="/torneos/eliminar/:id" element={<TorneoEliminar />} />
             //----------------Inscripcio-de-equipos----------------------------------
+            //----------------Inscripcion-de-equipos----------------------------------
             <Route
               path="/inscripcionEquipos"
               element={<InscripcionesEquipos />}
             />
             <Route
-              path="/inscripcionEquipos/Crear"
+              path="/inscripcionEquipos/torneo/:id_torneo"
+              element={<InscripcionesEquiposOrganizador />}
+            />
+            <Route
+              path="/inscripcionEquipos/crear/:id_torneo"
               element={<InscripcionesEquiposCrear />}
             />
             <Route
-              path="/inscripcionEquipos/Editar/:id"
+              path="/inscripcionEquipos/editar/:id"
               element={<InscripcionesEquiposEditar />}
             />
             <Route
-              path="/inscripcionEquipos/Eliminar/:id"
+              path="/inscripcionEquipos/eliminar/:id"
               element={<InscripcionesEquiposEliminar />}
             />
             //---------------------Equipos--------------------------------------------
