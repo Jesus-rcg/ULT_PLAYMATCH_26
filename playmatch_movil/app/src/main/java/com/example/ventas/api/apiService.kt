@@ -64,7 +64,7 @@ interface ApiService {
         token: String,
         @Body
         jugador: Jugador
-    ): Call<Jugador>
+    ): Call<ApiResponse>
 
 
         @GET("/api/jugadores")
@@ -280,34 +280,38 @@ interface ApiService {
 
     // ================= RESULTADOS =================
 
-    @POST("/api/resultados")
-    fun createResultado(
-        @Header("Authorization")
-        token: String,
-        @Body
-        resultado: Resultado
-    ): Call<Resultado>
-
     @GET("/api/resultados")
     fun getResultados(
         @Header("Authorization")
         token: String
-    ): Call<List<Resultado>>
+    ): Call<ResultadoResponse>
 
     @GET("/api/resultados/{id}")
     fun getResultado(
         @Header("Authorization")
         token: String,
+
         @Path("id")
         id: Int
+    ): Call<Resultado>
+
+    @POST("/api/resultados")
+    fun createResultado(
+        @Header("Authorization")
+        token: String,
+
+        @Body
+        resultado: Resultado
     ): Call<Resultado>
 
     @PUT("/api/resultados/{id}")
     fun updateResultado(
         @Header("Authorization")
         token: String,
+
         @Path("id")
         id: Int,
+
         @Body
         resultado: Resultado
     ): Call<Void>
@@ -316,8 +320,8 @@ interface ApiService {
     fun deleteResultado(
         @Header("Authorization")
         token: String,
+
         @Path("id")
         id: Int
     ): Call<Void>
-
 }

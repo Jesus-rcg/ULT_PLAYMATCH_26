@@ -23,13 +23,13 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ListarTorneosActivity : AppCompatActivity() {
+class TorneosActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
 
-        setContentView(R.layout.activity_listar_torneos)
+        setContentView(R.layout.activity_torneos)
 
         val recycler = findViewById<RecyclerView>(R.id.recyclerTorneos)
         val txtContador = findViewById<TextView>(R.id.txtContadorTorneos)
@@ -82,7 +82,7 @@ class ListarTorneosActivity : AppCompatActivity() {
                     if (!response.isSuccessful) {
 
                         Toast.makeText(
-                            this@ListarTorneosActivity,
+                            this@TorneosActivity,
                             "Error ${response.code()}",
                             Toast.LENGTH_LONG
                         ).show()
@@ -191,7 +191,7 @@ class ListarTorneosActivity : AppCompatActivity() {
                     progressBar.visibility = View.GONE
 
                     Toast.makeText(
-                        this@ListarTorneosActivity,
+                        this@TorneosActivity,
                         t.message,
                         Toast.LENGTH_LONG
                     ).show()
@@ -241,7 +241,7 @@ class ListarTorneosActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
 
                         Toast.makeText(
-                            this@ListarTorneosActivity,
+                            this@TorneosActivity,
                             "Torneo eliminado correctamente",
                             Toast.LENGTH_SHORT
                         ).show()
@@ -251,7 +251,7 @@ class ListarTorneosActivity : AppCompatActivity() {
                     } else {
 
                         Toast.makeText(
-                            this@ListarTorneosActivity,
+                            this@TorneosActivity,
                             "Error al eliminar torneo",
                             Toast.LENGTH_SHORT
                         ).show()
@@ -264,7 +264,7 @@ class ListarTorneosActivity : AppCompatActivity() {
                 ) {
 
                     Toast.makeText(
-                        this@ListarTorneosActivity,
+                        this@TorneosActivity,
                         t.message,
                         Toast.LENGTH_SHORT
                     ).show()

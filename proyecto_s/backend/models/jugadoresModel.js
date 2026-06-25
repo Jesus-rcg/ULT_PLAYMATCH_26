@@ -13,7 +13,6 @@ export const getJugadoresModel = async () => {
     FROM jugadores j
     INNER JOIN usuarios u
       ON j.id_usuario = u.id_usuario
-    WHERE j.activo = 1
     ORDER BY j.id_jugador ASC
   `);
 
@@ -24,11 +23,19 @@ export const getJugadoresModel = async () => {
 export const getJugadorByIdModel = async (id) => {
   const [rows] = await pool.query(
     `
-    SELECT *
-    FROM jugadores
-    WHERE id_jugador = ?
+    SELECT
+      j.id_jugador,
+      j.id_usuario,
+      u.nombre_usuario,
+      j.posicion,
+      j.numero_camiseta,
+      j.activo
+    FROM jugadores j
+    INNER JOIN usuarios u
+      ON j.id_usuario = u.id_usuario
+    WHERE j.id_jugador = ?
     `,
-    [id],
+    [id]
   );
 
   return rows[0];
@@ -52,7 +59,12 @@ export const createJugadorModel = async (jugador) => {
 
 // Actualizar jugador
 export const updateJugadorModel = async (id, jugador) => {
-  const { id_usuario, posicion, numero_camiseta } = jugador;
+  const {
+    id_usuario,
+    posicion,
+    numero_camiseta,
+    activo
+  } = jugador;
 
   const [result] = await pool.query(
     `
@@ -60,10 +72,17 @@ export const updateJugadorModel = async (id, jugador) => {
     SET
       id_usuario = ?,
       posicion = ?,
-      numero_camiseta = ?
+      numero_camiseta = ?,
+      activo = ?
     WHERE id_jugador = ?
     `,
-    [id_usuario, posicion, numero_camiseta, id],
+    [
+      id_usuario,
+      posicion,
+      numero_camiseta,
+      activo,
+      id
+    ]
   );
 
   return result;

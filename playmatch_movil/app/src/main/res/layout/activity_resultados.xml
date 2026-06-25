@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -35,14 +36,15 @@
         <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:layout_weight="4"/>
+                android:layout_weight="4" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fabAgregarTorneo"
-                android:layout_width="wrap_content"
+        <Button
+                android:id="@+id/btnAgregar"
+                android:text="Agregar"
                 android:layout_height="wrap_content"
-                android:src="@drawable/boton_agregar"
-                android:backgroundTint="#4CAF50"/>
+                android:layout_width="wrap_content"
+                android:drawableLeft="@drawable/boton_agregar"
+                android:backgroundTint="#4CAF50" />
     </LinearLayout>
 
     <LinearLayout
@@ -56,13 +58,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Torneos"
+                android:text="Resultados"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:textColor="#1A1A2E"/>
+                android:textColor="#1A1A2E" />
 
         <TextView
-                android:id="@+id/txtContadorTorneos"
+                android:id="@+id/txtContador"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0 registros"
@@ -72,14 +74,14 @@
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
                 android:paddingTop="3dp"
-                android:paddingBottom="3dp"/>
+                android:paddingBottom="3dp" />
     </LinearLayout>
 
     <EditText
-            android:id="@+id/edtBuscarTorneos"
+            android:id="@+id/edtBuscar"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:hint="Buscar por nombre o lugar..."
+            android:hint="Buscar por equipo..."
             android:background="@drawable/bg_busqueda"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
@@ -88,21 +90,21 @@
             android:inputType="text"
             android:textColor="#000000"
             android:textColorHint="#888780"
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginBottom="10dp" />
 
     <ProgressBar
-            android:id="@+id/progressBarTorneos"
+            android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:visibility="gone"/>
+            android:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerTorneos"
+            android:id="@+id/recyclerResultados"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:clipToPadding="false"
-            android:paddingBottom="16dp"/>
+            android:paddingBottom="16dp" />
 
 </LinearLayout>

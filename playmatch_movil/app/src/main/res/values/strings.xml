@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">ventas</string>
+    <string name="app_name">PlayMatch</string>
+    <string name="agregar_torneo">Agregar torneo</string>
 </resources>

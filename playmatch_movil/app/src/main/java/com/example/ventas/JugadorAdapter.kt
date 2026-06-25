@@ -20,6 +20,7 @@ class JugadorAdapter(
 
         val txtNumero = view.findViewById<TextView>(R.id.txtNumero)
         val txtPosicion = view.findViewById<TextView>(R.id.txtPosicion)
+        val txtNombre = view.findViewById<TextView>(R.id.txtNombre)
         val txtUsuario = view.findViewById<TextView>(R.id.txtUsuario)
         val txtEstado = view.findViewById<TextView>(R.id.txtEstado)
         val txtId = view.findViewById<TextView>(R.id.txtId)
@@ -43,6 +44,7 @@ class JugadorAdapter(
         holder.txtNumero.text = "⚽ Camiseta #${jugador.numero_camiseta}"
         holder.txtPosicion.text = "📍 ${jugador.posicion}"
         holder.txtUsuario.text = "👤 Usuario ID: ${jugador.id_usuario}"
+        holder.txtNombre.text = jugador.nombre_usuario
         holder.txtId.text = "#${jugador.id_jugador}"
 
         holder.txtEstado.text =

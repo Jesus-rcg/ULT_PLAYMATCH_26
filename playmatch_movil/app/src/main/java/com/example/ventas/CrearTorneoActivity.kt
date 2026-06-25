@@ -1,5 +1,6 @@
 package com.example.ventas
 
+
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
@@ -32,7 +33,7 @@ class CrearTorneoActivity : AppCompatActivity() {
         spEstados = findViewById(R.id.spEstados)
         cargarEstados()
 
-        val txtNombre = findViewById<EditText>(R.id.txtNombre)
+        val txtNombre = findViewById<EditText>(R.id.txtNombreTorneo)
         val txtFecha_inicio = findViewById<EditText>(R.id.txtFecha_inicio)
         val txtFecha_fin = findViewById<EditText>(R.id.txtFecha_fin)
         val btnGuardarTorneo = findViewById<Button>(R.id.btnGuardarTorneo)

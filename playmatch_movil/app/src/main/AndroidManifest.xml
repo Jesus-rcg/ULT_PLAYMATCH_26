@@ -27,6 +27,10 @@
                 android:exported="true"/>
 
         <activity
+                android:name=".ResultadosActivity"
+                android:exported="true"/>
+
+        <activity
                 android:name=".PosicionesActivity"
                 android:exported="true"/>
 
@@ -36,12 +40,11 @@
         <activity
                 android:name=".CrearJugadorActivity"
                 android:exported="true"/>
-        <activity
-                android:name=".ListarJugadoresActivity"
-                android:exported="true"/>
+
+
 
         <activity
-                android:name=".ListarTorneosActivity"
+                android:name=".TorneosActivity"
                 android:exported="true"/>
 
         <activity
@@ -51,6 +54,8 @@
         <activity
                 android:name=".EditarTorneoActivity"
                 android:exported="true"/>
+
+
 
         <activity
                 android:name=".CrearUsuarioActivity"
