@@ -324,4 +324,26 @@ interface ApiService {
         @Path("id")
         id: Int
     ): Call<Void>
+
+    // ================= INSCRIPCIONES EQUIPOS =================
+
+    @POST("/api/inscripcionesequipos")
+    fun inscribirEquipo(
+        @Header("Authorization") token: String,
+        @Body inscripcion: InscripcionEquipo
+    ): Call<InscripcionEquipo>
+
+    @GET("/api/inscripcionesequipos")
+    fun getInscripciones(
+        @Header("Authorization") token: String
+    ): Call<List<InscripcionEquipo>>
+
+    @DELETE("/api/inscripcionesequipos/{id}")
+    fun deleteInscripcion(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int
+    ): Call<Void>
+
+
+
 }

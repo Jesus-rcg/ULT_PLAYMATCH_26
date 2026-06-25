@@ -4,109 +4,117 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#f0fff4">
+        android:background="#F2F4F7">
 
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="24dp">
+            android:orientation="vertical">
 
-        <!-- Botón volver -->
-        <ImageButton
-                android:id="@+id/btnVolver"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@android:drawable/ic_menu_revert"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                app:tint="#14532d"
-                android:layout_marginBottom="8dp"/>
-
-        <!-- Título -->
-        <TextView
+        <!-- Toolbar -->
+        <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="⚽ PLAYMATCH"
-                android:textColor="#16a34a"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:gravity="center"
-                android:layout_marginBottom="8dp"/>
+                android:orientation="horizontal"
+                android:padding="12dp"
+                android:gravity="center_vertical"
+                android:background="#FFFFFF">
 
-        <TextView
+            <ImageButton
+                    android:id="@+id/btnVolver"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@android:drawable/ic_menu_revert"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    app:tint="#16a34a"/>
+
+            <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Editar Equipo"
+                    android:textColor="#111827"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    android:gravity="center"/>
+
+            <!-- Espacio para centrar el título -->
+            <View
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"/>
+
+        </LinearLayout>
+
+        <!-- Card con el formulario -->
+        <androidx.cardview.widget.CardView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Editar Equipo"
-                android:textColor="#14532d"
-                android:textStyle="bold"
-                android:textSize="26sp"
-                android:gravity="center"
-                android:layout_marginBottom="6dp"/>
+                android:layout_margin="16dp"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="3dp"
+                app:cardBackgroundColor="#FFFFFF">
 
-        <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Modifica los datos del equipo"
-                android:textColor="#4ade80"
-                android:textSize="13sp"
-                android:gravity="center"
-                android:layout_marginBottom="20dp"/>
+            <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
 
-        <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#bbf7d0"
-                android:layout_marginBottom="20dp"/>
+                <!-- Nombre del equipo -->
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nombre del equipo"
+                        android:textColor="#374151"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="6dp"/>
 
-        <!-- Nombre del equipo -->
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nombre del equipo"
-                android:textColor="#15803d"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="6dp"/>
+                <EditText
+                        android:id="@+id/etNombreEditar"
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:hint="Ej: Real Madrid"
+                        android:padding="14dp"
+                        android:background="@drawable/input_background"
+                        android:inputType="textCapWords"
+                        android:layout_marginBottom="16dp"/>
 
-        <EditText
-                android:id="@+id/etNombreEditar"
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:hint="Ej: Real Madrid"
-                android:padding="14dp"
-                android:background="@drawable/input_background"
-                android:inputType="textCapWords"
-                android:layout_marginBottom="16dp"/>
+                <!-- Escudo -->
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Escudo (URL de la imagen)"
+                        android:textColor="#374151"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="6dp"/>
 
-        <!-- Escudo -->
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Escudo (URL de la imagen)"
-                android:textColor="#15803d"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="6dp"/>
+                <EditText
+                        android:id="@+id/etEscudoEditar"
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:hint="Ej: https://miescudo.com/imagen.png"
+                        android:padding="14dp"
+                        android:background="@drawable/input_background"
+                        android:inputType="textUri"
+                        android:layout_marginBottom="24dp"/>
 
-        <EditText
-                android:id="@+id/etEscudoEditar"
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:hint="Ej: https://miescudo.com/imagen.png"
-                android:padding="14dp"
-                android:background="@drawable/input_background"
-                android:inputType="textUri"
-                android:layout_marginBottom="24dp"/>
+                <!-- Botón actualizar -->
+                <Button
+                        android:id="@+id/btnActualizar"
+                        android:layout_width="match_parent"
+                        android:layout_height="52dp"
+                        android:text="ACTUALIZAR EQUIPO"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold"
+                        android:backgroundTint="#16a34a"/>
 
-        <!-- Botón actualizar -->
-        <Button
-                android:id="@+id/btnActualizar"
-                android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:text="ACTUALIZAR EQUIPO"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold"
-                android:backgroundTint="#16a34a"/>
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
 
     </LinearLayout>
+
 </ScrollView>
