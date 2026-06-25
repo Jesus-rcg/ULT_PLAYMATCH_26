@@ -2,10 +2,11 @@ package com.example.ventas.ui.encuentros
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
+import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
@@ -22,13 +23,13 @@ class EncuentroAdapter(
 ) : RecyclerView.Adapter<EncuentroAdapter.EncuentroViewHolder>() {
 
     class EncuentroViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val tvJornada: TextView = itemView.findViewById(R.id.tvJornada)
-        val tvEstado: TextView = itemView.findViewById(R.id.tvEstado)
-        val tvEquipos: TextView = itemView.findViewById(R.id.tvEquipos)
+        val tvJornada: TextView   = itemView.findViewById(R.id.tvJornada)
+        val tvEstado: TextView    = itemView.findViewById(R.id.tvEstado)
+        val tvEquipos: TextView   = itemView.findViewById(R.id.tvEquipos)
         val tvFechaHora: TextView = itemView.findViewById(R.id.tvFechaHora)
-        val tvLugar: TextView = itemView.findViewById(R.id.tvLugar)
-        val btnEditar: ImageButton = itemView.findViewById(R.id.btnEditar)
-        val btnEliminar: ImageButton = itemView.findViewById(R.id.btnEliminar)
+        val tvLugar: TextView     = itemView.findViewById(R.id.tvLugar)
+        val btnEditar: Button     = itemView.findViewById(R.id.btnEditar)
+        val btnEliminar: Button   = itemView.findViewById(R.id.btnEliminar)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EncuentroViewHolder {
@@ -40,14 +41,23 @@ class EncuentroAdapter(
     override fun onBindViewHolder(holder: EncuentroViewHolder, position: Int) {
         val encuentro = listaEncuentros[position]
 
-        holder.tvJornada.text = "Jornada ${encuentro.jornada}"
+        holder.tvJornada.text   = "Jornada ${encuentro.jornada}"
+        holder.tvEquipos.text   = "${encuentro.equipo_local ?: "Local"} vs ${encuentro.equipo_visitante ?: "Visitante"}"
+        holder.tvFechaHora.text = "${encuentro.fecha} — ${encuentro.hora}"
+        holder.tvLugar.text     = encuentro.lugar
+
+        // Color del badge según estado
         holder.tvEstado.text = encuentro.estado
-        holder.tvEquipos.text = "Local ${encuentro.id_equipo_local} vs Visitante ${encuentro.id_equipo_visitante}"
-        holder.tvFechaHora.text = "${encuentro.fecha} - ${encuentro.hora}"
-        holder.tvLugar.text = encuentro.lugar
+        val colorEstado = when (encuentro.estado) {
+            "Jugando"    -> "#0284C7"
+            "Finalizado" -> "#16a34a"
+            "Aplazado"   -> "#DC2626"
+            else         -> "#D97706" // Pendiente
+        }
+        holder.tvEstado.setBackgroundColor(Color.parseColor(colorEstado))
 
         // Ocultar botones por defecto
-        holder.btnEditar.visibility = View.GONE
+        holder.btnEditar.visibility  = View.GONE
         holder.btnEliminar.visibility = View.GONE
 
         when (modo) {
@@ -56,14 +66,14 @@ class EncuentroAdapter(
                 holder.btnEditar.setOnClickListener {
                     val context = holder.itemView.context
                     val intent = Intent(context, EditarEncuentroActivity::class.java)
-                    intent.putExtra("ENCUENTRO_ID", encuentro.id_encuentro)
-                    intent.putExtra("ENCUENTRO_JORNADA", encuentro.jornada)
-                    intent.putExtra("ENCUENTRO_LUGAR", encuentro.lugar)
-                    intent.putExtra("ENCUENTRO_FECHA", encuentro.fecha)
-                    intent.putExtra("ENCUENTRO_HORA", encuentro.hora)
-                    intent.putExtra("ENCUENTRO_ESTADO", encuentro.estado)
-                    intent.putExtra("ENCUENTRO_TORNEO", encuentro.id_torneo)
-                    intent.putExtra("ENCUENTRO_LOCAL", encuentro.id_equipo_local)
+                    intent.putExtra("ENCUENTRO_ID",        encuentro.id_encuentro)
+                    intent.putExtra("ENCUENTRO_JORNADA",   encuentro.jornada)
+                    intent.putExtra("ENCUENTRO_LUGAR",     encuentro.lugar)
+                    intent.putExtra("ENCUENTRO_FECHA",     encuentro.fecha)
+                    intent.putExtra("ENCUENTRO_HORA",      encuentro.hora)
+                    intent.putExtra("ENCUENTRO_ESTADO",    encuentro.estado)
+                    intent.putExtra("ENCUENTRO_TORNEO",    encuentro.id_torneo)
+                    intent.putExtra("ENCUENTRO_LOCAL",     encuentro.id_equipo_local)
                     intent.putExtra("ENCUENTRO_VISITANTE", encuentro.id_equipo_visitante)
                     context.startActivity(intent)
                 }
@@ -94,26 +104,22 @@ class EncuentroAdapter(
         val prefs = context.getSharedPreferences("app", android.content.Context.MODE_PRIVATE)
         val token = prefs.getString("token", "") ?: ""
 
-        ApiClient.instance.deleteEncuentro(
-            "Bearer $token",
-            encuentro.id_encuentro
-        ).enqueue(object : Callback<Void> {
-
-            override fun onResponse(call: Call<Void>, response: Response<Void>) {
-                if (response.isSuccessful) {
-                    listaEncuentros.removeAt(position)
-                    notifyItemRemoved(position)
-                    notifyItemRangeChanged(position, listaEncuentros.size)
-                    Toast.makeText(context, "✅ Encuentro eliminado correctamente", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(context, "❌ Error al eliminar", Toast.LENGTH_SHORT).show()
+        ApiClient.instance.deleteEncuentro("Bearer $token", encuentro.id_encuentro)
+            .enqueue(object : Callback<Void> {
+                override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                    if (response.isSuccessful) {
+                        listaEncuentros.removeAt(position)
+                        notifyItemRemoved(position)
+                        notifyItemRangeChanged(position, listaEncuentros.size)
+                        Toast.makeText(context, "✅ Encuentro eliminado", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(context, "❌ Error al eliminar", Toast.LENGTH_SHORT).show()
+                    }
                 }
-            }
-
-            override fun onFailure(call: Call<Void>, t: Throwable) {
-                Toast.makeText(context, "❌ Error de conexión", Toast.LENGTH_SHORT).show()
-            }
-        })
+                override fun onFailure(call: Call<Void>, t: Throwable) {
+                    Toast.makeText(context, "❌ Error de conexión", Toast.LENGTH_SHORT).show()
+                }
+            })
     }
 
     override fun getItemCount(): Int = listaEncuentros.size

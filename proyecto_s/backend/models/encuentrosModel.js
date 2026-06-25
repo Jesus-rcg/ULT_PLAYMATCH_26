@@ -1,6 +1,6 @@
 import pool from "../config/db.js";
 
-//Actualizar el estado por fecha
+//Actualizar el estado de UN encuentro por ID
 export const actualizarEstadoEncuentroModel = async (id, estado) => {
   const [result] = await pool.query(
     `
@@ -12,6 +12,32 @@ export const actualizarEstadoEncuentroModel = async (id, estado) => {
   );
 
   return result;
+};
+
+// Actualizar estados automáticamente según la fecha y hora actual
+export const actualizarEstadosEncuentrosModel = async () => {
+  const ahora = new Date();
+  const fechaHoy = ahora.toISOString().split("T")[0];
+  const horaAhora = ahora.toTimeString().split(" ")[0];
+
+  // Poner "Jugando" si la fecha/hora ya llegó y sigue en "Pendiente"
+  await pool.query(
+    `UPDATE encuentros
+     SET estado = 'Jugando'
+     WHERE estado = 'Pendiente'
+       AND activo = 1
+       AND (fecha < ? OR (fecha = ? AND hora <= ?))`,
+    [fechaHoy, fechaHoy, horaAhora]
+  );
+
+  // Poner "Finalizado" si llevan más de 2 horas en estado "Jugando"
+  await pool.query(
+    `UPDATE encuentros
+     SET estado = 'Finalizado'
+     WHERE estado = 'Jugando'
+       AND activo = 1
+       AND TIMESTAMPDIFF(HOUR, CONCAT(fecha, ' ', hora), NOW()) >= 2`
+  );
 };
 
 // Obtener todas
@@ -225,7 +251,6 @@ export const generarJornadasLiga = (equipos) => {
   const lista = [...equipos];
 
   // SI ES IMPAR AGREGA DESCANSO
-
   if (lista.length % 2 !== 0) {
     lista.push(null);
   }
@@ -254,7 +279,6 @@ export const generarJornadasLiga = (equipos) => {
     jornadas.push(partidos);
 
     // ROTAR EQUIPOS
-
     lista.splice(1, 0, lista.pop());
   }
 
@@ -264,7 +288,6 @@ export const generarJornadasLiga = (equipos) => {
 //Generar encuentros auto
 export const generarEncuentrosAutomaticosModel = async (id_torneo) => {
   // VALIDAR TORNEO
-
   const [torneoRows] = await pool.query(
     `
     SELECT tipo_torneo
@@ -279,7 +302,6 @@ export const generarEncuentrosAutomaticosModel = async (id_torneo) => {
   }
 
   // VALIDAR SI YA EXISTEN ENCUENTROS
-
   const [existentes] = await pool.query(
     `
     SELECT id_encuentro
@@ -296,7 +318,6 @@ export const generarEncuentrosAutomaticosModel = async (id_torneo) => {
   }
 
   // OBTENER EQUIPOS INSCRITOS
-
   const [equiposRows] = await pool.query(
     `
     SELECT id_equipo
@@ -317,10 +338,6 @@ export const generarEncuentrosAutomaticosModel = async (id_torneo) => {
 
   if (tipo_torneo === "Liga") {
     const jornadas = generarJornadasLiga(equipos);
-
-    let fechaBase = new Date();
-
-    let totalJornadas = jornadas.length;
 
     for (const jornada of jornadas) {
       for (const partido of jornada) {
@@ -385,9 +402,7 @@ export const generarEncuentrosAutomaticosModel = async (id_torneo) => {
 
       for (const jornada of jornadasGrupo) {
         for (const partido of jornada) {
-          // =====================
           // PARTIDO DE IDA
-          // =====================
           const fechaIda = new Date();
 
           fechaIda.setDate(fechaIda.getDate() + numeroJornada);
@@ -421,9 +436,7 @@ export const generarEncuentrosAutomaticosModel = async (id_torneo) => {
             ],
           );
 
-          // =====================
           // PARTIDO DE VUELTA
-          // =====================
           const fechaVuelta = new Date();
 
           fechaVuelta.setDate(

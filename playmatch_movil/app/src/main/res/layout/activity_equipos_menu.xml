@@ -1,106 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#f0fff4">
+        android:orientation="vertical"
+        android:background="#F2F4F7">
 
+    <!-- Toolbar -->
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="24dp">
+            android:orientation="horizontal"
+            android:padding="12dp"
+            android:gravity="center_vertical"
+            android:background="#FFFFFF">
 
-        <!-- Botón volver -->
         <ImageButton
                 android:id="@+id/btnVolver"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@android:drawable/ic_menu_revert"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:layout_marginBottom="8dp"/>
-
-        <!-- Título -->
-        <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="⚽ PLAYMATCH"
-                android:textColor="#16a34a"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:gravity="center"
-                android:layout_marginBottom="8dp"/>
+                app:tint="#16a34a"/>
 
         <TextView
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:text="Equipos"
-                android:textColor="#14532d"
+                android:textColor="#111827"
                 android:textStyle="bold"
-                android:textSize="26sp"
-                android:gravity="center"
-                android:layout_marginBottom="24dp"/>
+                android:textSize="18sp"
+                android:gravity="center"/>
 
         <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#bbf7d0"
-                android:layout_marginBottom="24dp"/>
-
-        <!-- Botón Crear -->
-        <Button
-                android:id="@+id/btnCrear"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:text="➕ Crear Equipo"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold"
-                android:backgroundTint="#16a34a"
-                android:layout_marginBottom="12dp"/>
-
-        <!-- Botón Ver todos -->
-        <Button
-                android:id="@+id/btnVerTodos"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:text="📋 Ver Todos"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold"
-                android:backgroundTint="#15803d"
-                android:layout_marginBottom="12dp"/>
-
-        <!-- Botón Editar -->
-        <Button
-                android:id="@+id/btnEditar"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:text="✏️ Editar Equipo"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold"
-                android:backgroundTint="#ca8a04"
-                android:layout_marginBottom="12dp"/>
-
-        <!-- Botón Eliminar -->
-        <Button
-                android:id="@+id/btnEliminar"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:text="🗑️ Eliminar Equipo"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold"
-                android:backgroundTint="#dc2626"
-                android:layout_marginBottom="12dp"/>
-
-        <!-- Botón Buscar -->
-        <Button
-                android:id="@+id/btnBuscar"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:text="🔍 Buscar Equipo"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold"
-                android:backgroundTint="#0284c7"
-                android:layout_marginBottom="12dp"/>
+                android:layout_width="40dp"
+                android:layout_height="40dp"/>
 
     </LinearLayout>
-</ScrollView>
+
+    <!-- Subtítulo -->
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="¿Qué quieres hacer?"
+            android:textColor="#6B7280"
+            android:textSize="13sp"
+            android:gravity="center"
+            android:paddingVertical="12dp"/>
+
+    <!-- Opciones -->
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+            <!-- Crear -->
+            <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="#FFFFFF">
+
+                <Button
+                        android:id="@+id/btnCrear"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:text="Crear Equipo"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold"
+                        android:backgroundTint="#16a34a"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Ver todos -->
+            <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="#FFFFFF">
+
+                <Button
+                        android:id="@+id/btnVerTodos"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:text="Ver Todos"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold"
+                        android:backgroundTint="#2563EB"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Editar -->
+            <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="#FFFFFF">
+
+                <Button
+                        android:id="@+id/btnEditar"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:text="Editar Equipo"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold"
+                        android:backgroundTint="#D97706"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Eliminar -->
+            <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="#FFFFFF">
+
+                <Button
+                        android:id="@+id/btnEliminar"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:text="Eliminar Equipo"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold"
+                        android:backgroundTint="#DC2626"/>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Buscar -->
+            <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    app:cardCornerRadius="12dp"
+                    app:cardElevation="2dp"
+                    app:cardBackgroundColor="#FFFFFF">
+
+                <Button
+                        android:id="@+id/btnBuscar"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:text="Buscar Equipo"
+                        android:textColor="#FFFFFF"
+                        android:textStyle="bold"
+                        android:backgroundTint="#0284C7"/>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
