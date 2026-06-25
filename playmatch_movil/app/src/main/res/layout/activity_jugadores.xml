@@ -4,7 +4,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="#F5F5F5"
+        android:background="#1A1A2E"
         android:padding="20dp"
         android:paddingTop="50dp">
 
@@ -28,7 +28,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Volver al menú"
-                android:textColor="#534AB7"
+                android:textColor="#FFF"
                 android:textSize="13sp"
                 android:layout_marginStart="4dp" />
 
@@ -42,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/boton_agregar"
-                android:backgroundTint="#4CAF50"/>
+                android:backgroundTint="#FFF"/>
     </LinearLayout>
 
     <LinearLayout
@@ -59,7 +59,7 @@
                 android:text="Jugadores"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:textColor="#1A1A2E"/>
+                android:textColor="#FFFF"/>
 
         <TextView
                 android:id="@+id/txtContadorJugadores"
@@ -79,15 +79,15 @@
             android:id="@+id/edtBuscar"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:hint="Buscar por posición o camiseta..."
+            android:hint="Buscar por nombre o camiseta..."
             android:background="@drawable/bg_busqueda"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:drawableStart="@android:drawable/ic_menu_search"
             android:drawablePadding="8dp"
             android:inputType="text"
-            android:textColor="#000000"
-            android:textColorHint="#888780"
+            android:textColor="#FFFF"
+            android:textColorHint="#FFFF"
             android:layout_marginBottom="10dp"/>
 
     <ProgressBar

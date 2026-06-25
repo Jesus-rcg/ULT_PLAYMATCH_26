@@ -87,6 +87,29 @@ export const updateJugador = async (req, res) => {
     });
   }
 };
+export const getUsuariosDisponibles = async (req, res) => {
+
+    try {
+
+        const usuarios = await getUsuariosDisponiblesModel();
+
+        res.json({
+            success: true,
+            data: usuarios
+        });
+
+    } catch (error) {
+
+        console.log(error);
+
+        res.status(500).json({
+            success: false,
+            message: "Error interno"
+        });
+
+    }
+
+};
 
 // Eliminar jugador
 export const deleteJugador = async (req, res) => {
