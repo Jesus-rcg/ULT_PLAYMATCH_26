@@ -73,13 +73,6 @@ export default function InscripcionesEquiposOrganizador({ id_torneo }) {
         }}
       >
         <h2>Inscripciones del torneo</h2>
-
-        <button
-          className="btn crear"
-          onClick={() => navigate(`/inscripcionEquipos/Crear/${id_torneo}`)}
-        >
-          + Crear inscripción
-        </button>
       </div>
 
       {loading && <p>Cargando...</p>}
@@ -94,20 +87,14 @@ export default function InscripcionesEquiposOrganizador({ id_torneo }) {
           className="encuentro-card"
           style={{ marginBottom: "15px" }}
         >
-          <div className="fecha">ID #{inscripcion.id_inscripcion_e}</div>
-
           <div className="partido">
+            <span className="equipo-e">{inscripcion.nombre_torneo}</span>
+
             <span className="equipo-e">{inscripcion.nombre_equipo}</span>
 
-            <div>
-              <div className="tiempo-partido">Estado</div>
+            <div className="tiempo-partido">Estado</div>
 
-              <div className="marcador">
-                <strong>{inscripcion.estado}</strong>
-              </div>
-            </div>
-
-            <span className="equipo-e">{inscripcion.nombre_torneo}</span>
+            <div className="equipo-e">{inscripcion.estado}</div>
           </div>
 
           <div className="lugar-e">

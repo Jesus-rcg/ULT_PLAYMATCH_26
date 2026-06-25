@@ -6,7 +6,7 @@
 .titulo-equipos {
   font-size: 22px;
   font-weight: bold;
-  color: #facc15;
+  color: white;
 }
 
 /* GRID */
@@ -18,7 +18,7 @@
 
 /* CARD */
 .equipo-card {
-  background: #1e293b;
+  background: rgb(1, 122, 76);
   border-radius: 12px;
   padding: 15px;
   text-align: center;
