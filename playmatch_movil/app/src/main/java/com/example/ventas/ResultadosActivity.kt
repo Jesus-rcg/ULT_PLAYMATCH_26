@@ -44,11 +44,11 @@ class ResultadosActivity : AppCompatActivity() {
         progressBar.visibility = View.VISIBLE
 
         ApiClient.instance.getResultados("Bearer $token")
-            .enqueue(object : Callback<ResultadoResponse> {
+            .enqueue(object : Callback<List<Resultado>> {
 
                 override fun onResponse(
-                    call: Call<ResultadoResponse>,
-                    response: Response<ResultadoResponse>
+                    call: Call<List<Resultado>>,
+                    response: Response<List<Resultado>>
                 ) {
                     progressBar.visibility = View.GONE
 
@@ -68,7 +68,7 @@ class ResultadosActivity : AppCompatActivity() {
                     los datos que tiene antes de modificar.
                      */
 
-                    val lista = response.body()?.data ?: emptyList()
+                    val lista = response.body() ?: emptyList()
                     txtContador.text = "${lista.size} registros"
                     recycler.adapter = ResultadoAdapter(lista) {  resultado -> abrirEditar(resultado) }
 
@@ -89,7 +89,7 @@ class ResultadosActivity : AppCompatActivity() {
                     })
                 }
 
-                override fun onFailure(call: Call<ResultadoResponse>, t: Throwable) {
+                override fun onFailure(call: Call<List<Resultado>>, t: Throwable) {
                     progressBar.visibility = View.GONE
                     Toast.makeText(this@ResultadosActivity, t.message, Toast.LENGTH_LONG).show()
                     Log.e("API_ERROR", t.message.toString())
@@ -121,6 +121,8 @@ class ResultadosActivity : AppCompatActivity() {
 
 
 class ResultadoAdapter(
+
+
     private val lista: List<Resultado>,
     private val onEditar: (Resultado) -> Unit
 
@@ -155,7 +157,7 @@ class ResultadoAdapter(
         holder.txtEquipoVisitante.text = r.equipo_visitante ?: "-"
         holder.txtGolesLocal.text      = (r.goles_local ?: 0).toString()
         holder.txtGolesVisitante.text  = (r.goles_visitante ?: 0).toString()
-        holder.txtFecha.text           = r.fecha ?: "-"
+        holder.txtFecha.text           = formatearFecha(r.fecha)
         holder.txtId.text              = "#${r.id_resultado}"
 
         // Ganador según goles
@@ -210,5 +212,18 @@ class ResultadoAdapter(
         }
     }
 
+    private fun formatearFecha(fechaISO: String?): String {
+        if (fechaISO == null) return "-"
+        return try {
+            val parser = java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", java.util.Locale.getDefault())
+            parser.timeZone = java.util.TimeZone.getTimeZone("UTC")
+            val fecha = parser.parse(fechaISO)
+            val formatter = java.text.SimpleDateFormat("dd/MM/yyyy HH:mm", java.util.Locale.getDefault())
+            formatter.timeZone = java.util.TimeZone.getDefault()
+            formatter.format(fecha!!)
+        } catch (e: Exception) {
+            fechaISO // si falla muestra la original
+        }
+    }
     override fun getItemCount() = lista.size
 }

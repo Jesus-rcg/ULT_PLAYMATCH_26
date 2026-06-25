@@ -4,7 +4,11 @@ data class Encuentro(
     val id_encuentro: Int = 0,
     val id_torneo: Int = 0,
     val id_equipo_local: Int = 0,
+    val equipo_local: String = "",
+
     val id_equipo_visitante: Int = 0,
+    val equipo_visitante: String = "",
+
     val jornada: Int = 0,
     val lugar: String = "",
     val fecha: String = "",

@@ -4,133 +4,196 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#f0fff4">
+        android:background="#F5F5F5"
+        android:fillViewport="true">
 
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="24dp">
+            android:padding="20dp"
+            android:layout_marginTop="40dp">
 
-        <!-- Botón volver -->
-        <ImageButton
-                android:id="@+id/btnVolver"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:src="@android:drawable/ic_menu_revert"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                app:tint="#14532d"
-                android:layout_marginBottom="8dp"/>
-
-        <!-- Título -->
-        <TextView
-                android:layout_width="match_parent"
+        <!-- Volver -->
+        <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="⚽ PLAYMATCH"
-                android:textColor="#16a34a"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:gravity="center"
-                android:layout_marginBottom="8dp"/>
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp">
+
+            <ImageButton
+                    android:id="@+id/btnVolver"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:src="@android:drawable/ic_menu_revert"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Volver"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Volver a Resultados"
+                    android:textColor="#534AB7"
+                    android:textSize="13sp"
+                    android:layout_marginStart="4dp"/>
+        </LinearLayout>
+
+        <!-- Badge -->
+        <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingStart="10dp"
+                android:paddingEnd="12dp"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:layout_marginBottom="12dp">
+
+            <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    app:srcCompat="@mipmap/guardar"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Guardar"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:textColor="#3C3489"/>
+        </LinearLayout>
 
         <TextView
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Registrar Resultado"
-                android:textColor="#14532d"
+                android:text="Nuevo resultado"
+                android:textSize="20sp"
                 android:textStyle="bold"
-                android:textSize="26sp"
-                android:gravity="center"
+                android:textColor="#1A1A2E"
+                android:layout_marginBottom="4dp"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Completa todos los campos"
+                android:textSize="13sp"
+                android:textColor="#888780"
                 android:layout_marginBottom="20dp"/>
 
-        <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="#bbf7d0"
-                android:layout_marginBottom="20dp"/>
-
-        <!-- Spinner Encuentro -->
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Encuentro"
-                android:textColor="#15803d"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="6dp"/>
+                android:textSize="11sp"
+                android:textColor="#888780"
+                android:layout_marginBottom="4dp" />
 
-        <Spinner
-                android:id="@+id/spinnerEncuentro"
+        <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:background="@drawable/input_background"
-                android:layout_marginBottom="16dp"/>
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:layout_marginBottom="12dp">
+
+            <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@android:drawable/ic_menu_agenda"
+                    android:layout_marginEnd="8dp" />
+
+            <Spinner
+                    android:id="@+id/spEncuentro"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:background="@null" />
+
+        </LinearLayout>
 
         <!-- Goles Local -->
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Goles Local"
-                android:textColor="#15803d"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="6dp"/>
+                android:textSize="11sp"
+                android:textColor="#888780"
+                android:layout_marginBottom="4dp"/>
 
-        <EditText
-                android:id="@+id/etGolesLocal"
+        <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:hint="Ej: 2"
-                android:padding="14dp"
-                android:background="@drawable/input_background"
-                android:inputType="number"
-                android:layout_marginBottom="16dp"/>
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:layout_marginBottom="12dp">
+
+            <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@android:drawable/ic_menu_edit"
+                    android:layout_marginEnd="8dp"/>
+
+            <EditText
+                    android:id="@+id/etGolesLocal"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:hint="0"
+                    android:inputType="number"
+                    android:background="@null"/>
+        </LinearLayout>
 
         <!-- Goles Visitante -->
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Goles Visitante"
-                android:textColor="#15803d"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="6dp"/>
+                android:textSize="11sp"
+                android:textColor="#888780"
+                android:layout_marginBottom="4dp"/>
 
-        <EditText
-                android:id="@+id/etGolesVisitante"
+        <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:hint="Ej: 1"
-                android:padding="14dp"
-                android:background="@drawable/input_background"
-                android:inputType="number"
-                android:layout_marginBottom="24dp"/>
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:layout_marginBottom="20dp">
 
-        <!-- Botón guardar -->
+            <ImageView
+                    android:layout_width="18dp"
+                    android:layout_height="18dp"
+                    android:src="@android:drawable/ic_menu_edit"
+                    android:layout_marginEnd="8dp"/>
+
+            <EditText
+                    android:id="@+id/etGolesVisitante"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:hint="0"
+                    android:inputType="number"
+                    android:background="@null"/>
+        </LinearLayout>
+
         <Button
                 android:id="@+id/btnGuardar"
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:text="GUARDAR RESULTADO"
-                android:textColor="#FFFFFF"
+                android:layout_height="48dp"
+                android:text="Guardar resultado"
+                android:textColor="#EEEDFE"
                 android:textStyle="bold"
-                android:backgroundTint="#16a34a"/>
-        <!-- Spinner Torneo -->
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Torneo"
-                android:textColor="#15803d"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                android:layout_marginBottom="6dp"/>
+                android:backgroundTint="#534AB7"/>
 
-        <Spinner
-                android:id="@+id/spinnerTorneo"
+        <TextView
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:background="@drawable/input_background"
-                android:layout_marginBottom="16dp"/>
+                android:layout_height="wrap_content"
+                android:text="El id_resultado se genera automáticamente"
+                android:textSize="11sp"
+                android:textColor="#BDBCB8"
+                android:gravity="center"
+                android:layout_marginTop="10dp"/>
 
     </LinearLayout>
+
 </ScrollView>

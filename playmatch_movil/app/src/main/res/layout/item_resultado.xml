@@ -147,10 +147,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:textSize="10sp"
+                android:textSize="14sp"
                 android:textColor="#888780"
-                android:drawableStart="@android:drawable/ic_menu_today"
-                android:drawablePadding="4dp" />
+                android:drawableStart="@drawable/calendario"
+                android:drawablePadding="4dp"/>
 
         <TextView
                 android:id="@+id/txtGanador"

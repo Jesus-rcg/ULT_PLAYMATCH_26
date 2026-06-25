@@ -16,7 +16,7 @@ export const actualizarEstadoEncuentroModel = async (id, estado) => {
 
 // Obtener todas
 export const getEncuentrosModel = async () => {
-  await actualizarEstadosEncuentrosModel();
+  await actualizarEstadoEncuentroModel();
 
   const [rows] = await pool.query(`
     SELECT 
