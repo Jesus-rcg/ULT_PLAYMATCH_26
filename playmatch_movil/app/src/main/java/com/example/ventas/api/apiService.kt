@@ -91,6 +91,11 @@ interface ApiService {
             id: Int
         ): Call<Jugador>
 
+        @GET("/api/jugadores/usuarios-disponibles")
+        fun getUsuariosDisponibles(
+            @Header("Authorization")
+            token: String
+        ): Call<UsuarioResponse>
 
         @PUT("/api/jugadores/{id}")
         fun actualizarJugadores(

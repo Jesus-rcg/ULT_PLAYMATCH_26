@@ -87,13 +87,27 @@ export const updateJugadorModel = async (id, jugador) => {
 
   return result;
 };
+export const getUsuariosDisponiblesModel = async () => {
+  const [rows] = await pool.query(`
+    SELECT
+        u.id,
+        u.nombre_usuario,
+        u.apellido_usuario
+    FROM usuarios u
+    LEFT JOIN jugadores j
+        ON u.id = j.id_usuario
+    WHERE j.id_usuario IS NULL
+      AND u.activo = 1
+    ORDER BY u.nombre_usuario
+  `);
 
+  return rows;
+};
 // Eliminar jugador (borrado lógico)
 export const deleteJugadorModel = async (id) => {
   const [result] = await pool.query(
     `
-    UPDATE jugadores
-    SET activo = 0
+    DELETE FROM jugadores
     WHERE id_jugador = ?
     `,
     [id],

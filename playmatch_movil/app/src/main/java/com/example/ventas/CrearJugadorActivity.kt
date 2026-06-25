@@ -2,16 +2,13 @@ package com.example.ventas
 
 import android.os.Bundle
 import android.util.Log
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.Spinner
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ventas.api.ApiClient
 import com.example.ventas.model.ApiResponse
 import com.example.ventas.model.Jugador
+import com.example.ventas.model.Usuario
+import com.example.ventas.model.UsuarioResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -19,8 +16,13 @@ import retrofit2.Response
 class CrearJugadorActivity : AppCompatActivity() {
 
     private lateinit var spActivo: Spinner
-
     private lateinit var spUsuario: Spinner
+    private lateinit var spPosicion: Spinner
+
+    private lateinit var txtNumero: EditText
+    private lateinit var btnGuardar: Button
+
+    private var listaUsuarios: List<Usuario> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -31,43 +33,59 @@ class CrearJugadorActivity : AppCompatActivity() {
             finish()
         }
 
-        val txtIdUsuario =
-            findViewById<EditText>(R.id.txtIdUsuario)
+        spUsuario = findViewById(R.id.spUsuario)
+        spPosicion = findViewById(R.id.spPosicion)
+        spActivo = findViewById(R.id.spActivo)
 
-        val etNombreUsuario =
-            findViewById<EditText>(R.id.etNombre_usuario)
+        txtNumero = findViewById(R.id.txtNumero)
 
-        val txtPosicion =
-            findViewById<EditText>(R.id.txtPosicion)
-
-        val txtNumero =
-            findViewById<EditText>(R.id.txtNumero)
-
-        val btnGuardar =
-            findViewById<Button>(R.id.btnGuardarJugador)
-
-        spActivo =
-            findViewById(R.id.spActivo)
+        btnGuardar =
+            findViewById(R.id.btnGuardarJugador)
 
         cargarEstados()
+        cargarPosiciones()
+        cargarUsuarios()
 
         btnGuardar.setOnClickListener {
 
-            if (
-                txtIdUsuario.text.isEmpty() ||
-                etNombreUsuario.text.isEmpty() ||
-                txtPosicion.text.isEmpty() ||
-                txtNumero.text.isEmpty()
-            ) {
+            if (listaUsuarios.isEmpty()) {
 
                 Toast.makeText(
                     this,
-                    "Complete todos los campos",
+                    "No hay usuarios disponibles",
                     Toast.LENGTH_LONG
                 ).show()
 
                 return@setOnClickListener
             }
+
+            if (txtNumero.text.isEmpty()) {
+
+                Toast.makeText(
+                    this,
+                    "Ingrese el número de camiseta",
+                    Toast.LENGTH_LONG
+                ).show()
+
+                return@setOnClickListener
+            }
+
+            val numero =
+                txtNumero.text.toString().toInt()
+
+            if (numero !in 1..100) {
+
+                Toast.makeText(
+                    this,
+                    "El número debe estar entre 1 y 100",
+                    Toast.LENGTH_LONG
+                ).show()
+
+                return@setOnClickListener
+            }
+
+            val usuarioSeleccionado =
+                listaUsuarios[spUsuario.selectedItemPosition]
 
             val activo =
                 if (spActivo.selectedItem.toString() == "Activo")
@@ -78,18 +96,19 @@ class CrearJugadorActivity : AppCompatActivity() {
             val jugador = Jugador(
 
                 id_usuario =
-                    txtIdUsuario.text.toString().toInt(),
+                    usuarioSeleccionado.id,
 
                 nombre_usuario =
-                    etNombreUsuario.text.toString(),
+                    usuarioSeleccionado.nombre_usuario,
 
                 posicion =
-                    txtPosicion.text.toString(),
+                    spPosicion.selectedItem.toString(),
 
                 numero_camiseta =
-                    txtNumero.text.toString().toInt(),
+                    numero,
 
-                activo = activo
+                activo =
+                    activo
             )
 
             val prefs =
@@ -116,11 +135,10 @@ class CrearJugadorActivity : AppCompatActivity() {
                             Toast.LENGTH_LONG
                         ).show()
 
-                        txtIdUsuario.text.clear()
-                        etNombreUsuario.text.clear()
-                        txtPosicion.text.clear()
                         txtNumero.text.clear()
 
+                        spUsuario.setSelection(0)
+                        spPosicion.setSelection(0)
                         spActivo.setSelection(0)
 
                     } else {
@@ -177,5 +195,89 @@ class CrearJugadorActivity : AppCompatActivity() {
         )
 
         spActivo.adapter = adapter
+    }
+
+    private fun cargarPosiciones() {
+
+        val posiciones = listOf(
+            "Portero",
+            "Defensa",
+            "Centrocampista",
+            "Delantero"
+        )
+
+        val adapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            posiciones
+        )
+
+        adapter.setDropDownViewResource(
+            android.R.layout.simple_spinner_dropdown_item
+        )
+
+        spPosicion.adapter = adapter
+    }
+
+    private fun cargarUsuarios() {
+
+        val prefs =
+            getSharedPreferences("app", MODE_PRIVATE)
+
+        val token =
+            prefs.getString("token", "") ?: ""
+
+        ApiClient.instance.getUsuariosDisponibles(
+            "Bearer $token"
+        ).enqueue(object : Callback<UsuarioResponse> {
+
+            override fun onResponse(
+                call: Call<UsuarioResponse>,
+                response: Response<UsuarioResponse>
+            ) {
+
+                if (response.isSuccessful) {
+
+                    listaUsuarios =
+                        response.body()?.data ?: emptyList()
+
+                    val nombres =
+                        listaUsuarios.map {
+                            "${it.nombre_usuario} ${it.apellido_usuario}"
+                        }
+
+                    val adapter = ArrayAdapter(
+                        this@CrearJugadorActivity,
+                        android.R.layout.simple_spinner_item,
+                        nombres
+                    )
+
+                    adapter.setDropDownViewResource(
+                        android.R.layout.simple_spinner_dropdown_item
+                    )
+
+                    spUsuario.adapter = adapter
+
+                } else {
+
+                    Log.e(
+                        "USUARIOS",
+                        response.errorBody()?.string()
+                            ?: "Error"
+                    )
+                }
+            }
+
+            override fun onFailure(
+                call: Call<UsuarioResponse>,
+                t: Throwable
+            ) {
+
+                Log.e(
+                    "USUARIOS",
+                    t.message ?: "Error"
+                )
+            }
+        })
     }
 }
