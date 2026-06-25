@@ -284,7 +284,7 @@ interface ApiService {
     fun getResultados(
         @Header("Authorization")
         token: String
-    ): Call<ResultadoResponse>
+    ): Call<List<Resultado>>
 
     @GET("/api/resultados/{id}")
     fun getResultado(

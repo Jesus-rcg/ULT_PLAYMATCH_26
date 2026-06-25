@@ -2,7 +2,7 @@ package com.example.ventas
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.ImageButton
+import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 
 class MenuActivity : AppCompatActivity() {
@@ -11,31 +11,31 @@ class MenuActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_menu)
 
-        findViewById<ImageButton>(R.id.btnUser).setOnClickListener {
+        findViewById<LinearLayout>(R.id.cardUsuarios).setOnClickListener {
             abrirUsuarios("Usuarios")
         }
 
-        findViewById<ImageButton>(R.id.btnEquipos).setOnClickListener {
+        findViewById<LinearLayout>(R.id.cardEquipos).setOnClickListener {
             abrirOperaciones("Equipos")
         }
 
-        findViewById<ImageButton>(R.id.btnVersus).setOnClickListener {
+        findViewById<LinearLayout>(R.id.cardEncuentros).setOnClickListener {
             abrirOperaciones("Encuentros")
         }
 
-        findViewById<ImageButton>(R.id.btnPosiciones).setOnClickListener {
+        findViewById<LinearLayout>(R.id.cardPosiciones).setOnClickListener {
             abrirPosiciones("Posiciones")
         }
 
-        findViewById<ImageButton>(R.id.btnJugadores).setOnClickListener {
+        findViewById<LinearLayout>(R.id.cardJugadores).setOnClickListener {
             abrirJugadores("Jugadores")
         }
 
-        findViewById<ImageButton>(R.id.btnTorneo).setOnClickListener {
+        findViewById<LinearLayout>(R.id.cardTorneos).setOnClickListener {
             abrirTorneos("Torneos")
         }
 
-        findViewById<ImageButton>(R.id.btnResultados).setOnClickListener {
+        findViewById<LinearLayout>(R.id.cardResultados).setOnClickListener {
             abrirResultados("Resultados")
         }
 

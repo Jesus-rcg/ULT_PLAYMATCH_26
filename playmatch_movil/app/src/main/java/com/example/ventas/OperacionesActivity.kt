@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.ventas.ui.equipos.BuscarEquipoActivity
 import com.example.ventas.ui.equipos.CrearEquipoActivity
 import com.example.ventas.ui.equipos.ListaEquiposActivity
-import com.example.ventas.ui.encuentros.CrearEncuentroActivity
+//import com.example.ventas.ui.encuentros.CrearEncuentroActivity
 import com.example.ventas.ui.encuentros.ListaEncuentrosActivity
 
 class OperacionesActivity : AppCompatActivity() {
@@ -38,10 +38,10 @@ class OperacionesActivity : AppCompatActivity() {
             when (modulo) {
                 "Jugadores" -> startActivity(Intent(this, CrearJugadorActivity::class.java))
                 "Equipos" -> startActivity(Intent(this, CrearEquipoActivity::class.java))
-                "Encuentros" -> startActivity(Intent(this, CrearEncuentroActivity::class.java))
+                //"Encuentros" -> startActivity(Intent(this, CrearEncuentroActivity::class.java))
                 // ✅ Agregado Resultados
                 "Usuarios" -> startActivity(Intent(this, CrearUsuarioActivity::class.java))
-                "Torneos" -> startActivity(Intent(this, CrearTorneoActivity::class.java))
+                //"Torneos" -> startActivity(Intent(this, CrearTorneoActivity::class.java))
                 else -> Toast.makeText(this, "Formulario no disponible", Toast.LENGTH_SHORT).show()
             }
         }

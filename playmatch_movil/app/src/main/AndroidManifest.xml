@@ -31,6 +31,10 @@
                 android:exported="true"/>
 
         <activity
+                android:name=".CrearResultadoActivity"
+                android:exported="true"/>
+
+        <activity
                 android:name=".PosicionesActivity"
                 android:exported="true"/>
 
