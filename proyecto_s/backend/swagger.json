@@ -5,16 +5,14 @@
     "version": "1.0.0",
     "description": "API de gestión"
   },
-  "host": "localhost:3000",
+  "host": "localhost:3001",
   "servers": [
     {
       "url": "http://localhost:3001"
     }
   ],
   "basePath": "/",
-  "schemes": [
-    "http"
-  ],
+  "schemes": ["http"],
   "paths": {
     "/login": {
       "post": {

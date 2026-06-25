@@ -47,6 +47,9 @@ export default function Equipos() {
         <div className="grid-equipos">
           {equipos.map((e) => (
             <div key={e.id_equipo} className="equipo-card">
+              <div>
+                <span>{e.id_equipo}</span>
+              </div>
               <div className="equipo-logo">
                 <img src={e.escudo} alt={e.nombre_equipo} />
               </div>
