@@ -46,12 +46,7 @@ export default function Equipos() {
       ) : (
         <div className="grid-equipos">
           {equipos.map((e) => (
-            <div
-              key={e.id_equipo}
-              className="equipo-card"
-              onClick={() => navigate(`/jugadores/${e.id_equipo}`)}
-              style={{ cursor: "pointer" }}
-            >
+
               <div>
                 <span>{e.id_equipo}</span>
               </div>
