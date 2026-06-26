@@ -35,6 +35,10 @@
                 android:exported="true"/>
 
         <activity
+                android:name=".EditarResultadoActivity"
+                android:exported="true"/>
+
+        <activity
                 android:name=".PosicionesActivity"
                 android:exported="true"/>
 
@@ -77,6 +81,12 @@
                   android:exported="true"/>
 
         <activity android:name=".EditarPosicionActivity"
+                  android:exported="true"/>
+
+        <activity android:name=".RegistrarseActivity"
+                  android:exported="true"/>
+
+        <activity android:name=".VerificarCodigoActivity"
                   android:exported="true"/>
 
         <activity

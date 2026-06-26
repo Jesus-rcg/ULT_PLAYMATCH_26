@@ -7,6 +7,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ventas.MenuActivity
 import com.example.ventas.R
+import com.example.ventas.RegistrarseActivity
 import com.example.ventas.api.ApiClient
 import com.example.ventas.api.ApiService
 import com.example.ventas.model.LoginRequest
@@ -25,6 +26,11 @@ class LoginActivity2 : AppCompatActivity() {
         val etPassword = findViewById<EditText>(R.id.etPassword)
         val btnLogin = findViewById<Button>(R.id.btnLogin)
         val message = findViewById<TextView>(R.id.message)
+        val btnRegistrarse = findViewById<Button>(R.id.btnRegistrarse)
+
+        btnRegistrarse.setOnClickListener {
+            startActivity(Intent(this, RegistrarseActivity::class.java))
+        }
 
         btnLogin.setOnClickListener {
 
