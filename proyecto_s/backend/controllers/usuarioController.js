@@ -5,7 +5,7 @@ import {
   deleteUsuarioService,
 } from "../services/usuarioService.js";
 
-import { createUsuario as createUsuarioModel} from "../models/usuarioModel.js";
+import { createUsuario as createUsuarioModel } from "../models/usuarioModel.js";
 //Crear usuario
 export const createUsuario = async (req, res) => {
   try {
@@ -13,14 +13,13 @@ export const createUsuario = async (req, res) => {
 
     return res.status(201).json({
       success: true,
-      message: "Usuario creado correctamente"
+      message: "Usuario creado correctamente",
     });
-
   } catch (err) {
     console.error(err);
     return res.status(500).json({
       success: false,
-      message: err.message
+      message: err.message,
     });
   }
 };

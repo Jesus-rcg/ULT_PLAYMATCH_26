@@ -1,8 +1,8 @@
 import {
   getEquiposService,
   getEquipoByIdService,
-  getEquipoByUsuarioService,
   getEquiposByTorneoService,
+  getEquipoJugadorByUsuarioService,
   createEquipoService,
   updateEquipoService,
   deleteEquipoService,
@@ -96,23 +96,24 @@ export const getEquiposByTorneo = async (req, res) => {
   }
 };
 
-export const getEquipoByUsuario = async (req, res) => {
+export const getEquipoJugadorByUsuario = async (req, res) => {
   try {
     const { id_usuario } = req.params;
 
-    const equipo = await getEquipoByUsuarioService(id_usuario);
+    const equipo = await getEquipoJugadorByUsuarioService(id_usuario);
 
     if (!equipo) {
       return res.status(404).json({
-        msg: "El usuario no tiene equipo",
+        msg: "El jugador no pertenece a ningún equipo",
       });
     }
 
     res.json(equipo);
   } catch (error) {
     console.error(error);
+
     res.status(500).json({
-      msg: "Error al obtener equipo del usuario",
+      msg: "Error al obtener el equipo del jugador",
     });
   }
 };

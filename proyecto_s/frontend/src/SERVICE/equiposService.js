@@ -59,3 +59,13 @@ export const getEquipoByUsuario = async (idUsuario) => {
 
   return await res.json();
 };
+
+export const getEquipoJugadorByUsuario = async (idUsuario) => {
+  const res = await fetch(`${API}/jugador/usuario/${idUsuario}`);
+
+  if (!res.ok) {
+    throw new Error("Error al obtener el equipo del jugador");
+  }
+
+  return await res.json();
+};

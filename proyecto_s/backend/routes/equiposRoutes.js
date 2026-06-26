@@ -3,7 +3,7 @@ import { Router } from "express";
 import {
   getEquipos,
   getEquipoById,
-  getEquipoByUsuario,
+  getEquipoJugadorByUsuario,
   getEquiposByTorneo,
   createEquipo,
   updateEquipo,
@@ -13,8 +13,7 @@ import {
 const router = Router();
 
 router.get("/torneo/:id", getEquiposByTorneo);
-
-router.get("/usuario/:id_usuario", getEquipoByUsuario);
+router.get("/jugador/usuario/:id_usuario", getEquipoJugadorByUsuario);
 
 router.get("/", getEquipos);
 router.get("/:id", getEquipoById);
