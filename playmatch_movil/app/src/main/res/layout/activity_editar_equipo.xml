@@ -4,29 +4,30 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#F2F4F7">
+        android:background="#1A1A2E">
 
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="20dp"
+            android:paddingTop="60dp">
 
-        <!-- Toolbar -->
+        <!-- Header -->
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="12dp"
                 android:gravity="center_vertical"
-                android:background="#FFFFFF">
+                android:layout_marginBottom="24dp">
 
             <ImageButton
                     android:id="@+id/btnVolver"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:src="@android:drawable/ic_menu_revert"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    app:tint="#16a34a"/>
+                    android:contentDescription="Volver"/>
 
             <TextView
                     android:layout_width="0dp"
@@ -35,85 +36,69 @@
                     android:text="Editar Equipo"
                     android:textColor="#111827"
                     android:textStyle="bold"
-                    android:textSize="18sp"
+                    android:textSize="20sp"
                     android:gravity="center"/>
 
-            <!-- Espacio para centrar el título -->
             <View
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"/>
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"/>
 
         </LinearLayout>
 
-        <!-- Card con el formulario -->
-        <androidx.cardview.widget.CardView
-                xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:layout_width="match_parent"
+        <!-- Nombre del equipo -->
+        <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                app:cardCornerRadius="12dp"
-                app:cardElevation="3dp"
-                app:cardBackgroundColor="#FFFFFF">
+                android:text="Nombre del equipo"
+                android:textColor="#A5B4FC"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="6dp"/>
 
-            <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="20dp">
+        <EditText
+                android:id="@+id/etNombreEditar"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:hint="Ej: Real Madrid"
+                android:padding="14dp"
+                android:background="@drawable/input_background"
+                android:inputType="textCapWords"
+                android:textColor="#111827"
+                android:textColorHint="#FFFFFF"
+                android:layout_marginBottom="16dp"/>
 
-                <!-- Nombre del equipo -->
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Nombre del equipo"
-                        android:textColor="#374151"
-                        android:textSize="13sp"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="6dp"/>
 
-                <EditText
-                        android:id="@+id/etNombreEditar"
-                        android:layout_width="match_parent"
-                        android:layout_height="52dp"
-                        android:hint="Ej: Real Madrid"
-                        android:padding="14dp"
-                        android:background="@drawable/input_background"
-                        android:inputType="textCapWords"
-                        android:layout_marginBottom="16dp"/>
+        <!-- Escudo -->
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Escudo (URL de la imagen)"
+                android:textColor="#A5B4FC"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="6dp"/>
 
-                <!-- Escudo -->
-                <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Escudo (URL de la imagen)"
-                        android:textColor="#374151"
-                        android:textSize="13sp"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="6dp"/>
+        <EditText
+                android:id="@+id/etEscudoEditar"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:hint="Ej: https://miescudo.com/imagen.png"
+                android:padding="14dp"
+                android:background="@drawable/input_background"
+                android:inputType="textUri"
+                android:textColor="#111827"
+                android:textColorHint="#6B7280"
+                android:layout_marginBottom="24dp"/>
 
-                <EditText
-                        android:id="@+id/etEscudoEditar"
-                        android:layout_width="match_parent"
-                        android:layout_height="52dp"
-                        android:hint="Ej: https://miescudo.com/imagen.png"
-                        android:padding="14dp"
-                        android:background="@drawable/input_background"
-                        android:inputType="textUri"
-                        android:layout_marginBottom="24dp"/>
-
-                <!-- Botón actualizar -->
-                <Button
-                        android:id="@+id/btnActualizar"
-                        android:layout_width="match_parent"
-                        android:layout_height="52dp"
-                        android:text="ACTUALIZAR EQUIPO"
-                        android:textColor="#FFFFFF"
-                        android:textStyle="bold"
-                        android:backgroundTint="#16a34a"/>
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
+        <!-- Botón actualizar -->
+        <Button
+                android:id="@+id/btnActualizar"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:text="ACTUALIZAR EQUIPO"
+                android:textColor="#111827"
+                android:textStyle="bold"
+                android:backgroundTint="#16a34a"/>
 
     </LinearLayout>
 

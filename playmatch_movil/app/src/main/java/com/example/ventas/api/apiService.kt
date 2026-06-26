@@ -349,6 +349,42 @@ interface ApiService {
         @Path("id") id: Int
     ): Call<Void>
 
+// ================= CRONOLOGÍAS =================
 
+    @GET("/api/cronologias")
+    fun getCronologias(
+        @Header("Authorization") token: String
+    ): Call<List<Cronologia>>
+
+    @GET("/api/cronologias/{id}")
+    fun getCronologia(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int
+    ): Call<Cronologia>
+
+    @POST("/api/cronologias")
+    fun createCronologia(
+        @Header("Authorization") token: String,
+        @Body cronologia: Cronologia
+    ): Call<Cronologia>
+
+    @PUT("/api/cronologias/{id}")
+    fun updateCronologia(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int,
+        @Body cronologia: Cronologia
+    ): Call<Void>
+
+    @DELETE("/api/cronologias/{id}")
+    fun deleteCronologia(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int
+    ): Call<Void>
+
+    @GET("/api/cronologias/encuentro/{id_encuentro}/jugadores")
+    fun getJugadoresByEncuentro(
+        @Header("Authorization") token: String,
+        @Path("id_encuentro") idEncuentro: Int
+    ): Call<List<JugadorEncuentro>>
 
 }

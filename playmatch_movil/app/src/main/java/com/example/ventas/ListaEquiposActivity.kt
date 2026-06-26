@@ -37,35 +37,29 @@ class ListaEquiposActivity : AppCompatActivity() {
 
         recyclerEquipos.layoutManager = LinearLayoutManager(this)
 
-        // Botón volver
-        findViewById<ImageButton>(R.id.btnVolver).setOnClickListener {
-            finish()
-        }
+        findViewById<ImageButton>(R.id.btnVolver).setOnClickListener { finish() }
 
-        // Botón agregar
         findViewById<Button>(R.id.btnAgregar).setOnClickListener {
             startActivity(Intent(this, CrearEquipoActivity::class.java))
         }
 
-        // Botón Inscribir
         findViewById<Button>(R.id.btnIrInscripcion).setOnClickListener {
             startActivity(Intent(this, InscribirEquipoActivity::class.java))
         }
 
-        // Botón buscar
-        findViewById<Button>(R.id.btnBuscar).setOnClickListener {
-            val texto = etBuscar.text.toString().trim().lowercase()
-
-            if (texto.isEmpty()) {
-                mostrarEquipos(listaCompleta)
-            } else {
-                val filtrada = listaCompleta.filter {
+        // Buscador automático mientras escribe
+        etBuscar.addTextChangedListener(object : android.text.TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun afterTextChanged(s: android.text.Editable?) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val texto = s.toString().lowercase().trim()
+                val filtrada = if (texto.isEmpty()) listaCompleta
+                else listaCompleta.filter {
                     it.nombre_equipo.lowercase().contains(texto)
                 }.toMutableList()
-
-                mostrarEquipos(filtrada)
+                mostrarEquipos(filtrada.toMutableList())
             }
-        }
+        })
 
         cargarEquipos()
     }
@@ -76,58 +70,28 @@ class ListaEquiposActivity : AppCompatActivity() {
     }
 
     private fun cargarEquipos() {
-
-        val prefs = getSharedPreferences("app", MODE_PRIVATE)
-        val token = prefs.getString("token", "") ?: ""
+        val token = getSharedPreferences("app", MODE_PRIVATE).getString("token", "") ?: ""
 
         ApiClient.instance.getEquipos("Bearer $token")
             .enqueue(object : Callback<List<Equipo>> {
-
-                override fun onResponse(
-                    call: Call<List<Equipo>>,
-                    response: Response<List<Equipo>>
-                ) {
-
+                override fun onResponse(call: Call<List<Equipo>>, response: Response<List<Equipo>>) {
                     if (response.isSuccessful) {
-                        listaCompleta =
-                            (response.body() ?: emptyList()).toMutableList()
-
+                        listaCompleta = (response.body() ?: emptyList()).toMutableList()
                         mostrarEquipos(listaCompleta)
-
                     } else {
-
-                        Toast.makeText(
-                            this@ListaEquiposActivity,
-                            "Error al cargar equipos",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        Toast.makeText(this@ListaEquiposActivity, "Error al cargar equipos", Toast.LENGTH_SHORT).show()
                     }
                 }
-
-                override fun onFailure(
-                    call: Call<List<Equipo>>,
-                    t: Throwable
-                ) {
-
-                    Toast.makeText(
-                        this@ListaEquiposActivity,
-                        "Error: ${t.message}",
-                        Toast.LENGTH_LONG
-                    ).show()
+                override fun onFailure(call: Call<List<Equipo>>, t: Throwable) {
+                    Toast.makeText(this@ListaEquiposActivity, "Error: ${t.message}", Toast.LENGTH_LONG).show()
                 }
             })
     }
 
     private fun mostrarEquipos(lista: MutableList<Equipo>) {
-
         tvContador.text = "${lista.size} registros"
-
-        val adapter = EquipoAdapter(lista, modo) {
-
+        recyclerEquipos.adapter = EquipoAdapter(lista, modo) {
             tvContador.text = "${lista.size} registros"
-
         }
-
-        recyclerEquipos.adapter = adapter
     }
 }
