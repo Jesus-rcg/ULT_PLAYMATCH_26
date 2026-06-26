@@ -47,6 +47,7 @@ class TorneosActivity : AppCompatActivity() {
             startActivity(Intent(this, CrearTorneoActivity::class.java))
         }
 
+
         recycler.layoutManager = LinearLayoutManager(this)
 
         cargarTorneos(

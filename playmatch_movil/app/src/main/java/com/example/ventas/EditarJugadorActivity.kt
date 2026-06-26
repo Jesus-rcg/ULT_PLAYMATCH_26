@@ -21,7 +21,7 @@
 
         private lateinit var etNombreUsuario: EditText
 
-        private lateinit var etPosicion: EditText
+        private lateinit var spPosicion: Spinner
         private lateinit var etNumero: EditText
         private lateinit var spActivo: Spinner
         private lateinit var btnActualizar: Button
@@ -38,7 +38,7 @@
 
             etIdUsuario = findViewById(R.id.etIdUsuario)
             etNombreUsuario = findViewById(R.id.etNombre_usuario)
-            etPosicion = findViewById(R.id.etPosicion)
+            spPosicion = findViewById(R.id.spPosicion)
             etNumero = findViewById(R.id.etNumero)
             spActivo = findViewById(R.id.spActivo)
             btnActualizar = findViewById(R.id.btnActualizar)
@@ -60,6 +60,7 @@
 
             // Cargar datos desde la BD
             cargarJugador()
+            cargarPosicion()
 
             btnActualizar.setOnClickListener {
                 actualizarJugador()
@@ -85,7 +86,27 @@
 
             spActivo.adapter = adapter
         }
+        private fun cargarPosicion() {
 
+            val estados = listOf(
+                "Portero",
+                "Defensa",
+                "Centrocampista",
+                "Delantero"
+            )
+
+            val adapter = ArrayAdapter(
+                this,
+                android.R.layout.simple_spinner_item,
+                estados
+            )
+
+            adapter.setDropDownViewResource(
+                android.R.layout.simple_spinner_dropdown_item
+            )
+
+            spPosicion.adapter = adapter
+        }
         private fun cargarJugador() {
 
             val prefs =
@@ -120,9 +141,18 @@
                                 jugador.nombre_usuario
                             )
 
-                            etPosicion.setText(
-                                jugador.posicion
+                            val posiciones = listOf(
+                                "Portero",
+                                "Defensa",
+                                "Centrocampista",
+                                "Delantero"
                             )
+
+                            val index = posiciones.indexOf(jugador.posicion)
+
+                            if (index >= 0) {
+                                spPosicion.setSelection(index)
+                            }
 
                             etNumero.setText(
                                 jugador.numero_camiseta.toString()
@@ -171,8 +201,7 @@
         private fun actualizarJugador() {
 
             if (
-                etIdUsuario.text.isEmpty() ||
-                etPosicion.text.isEmpty() ||
+                etNombreUsuario.text.isEmpty() ||
                 etNumero.text.isEmpty()
             ) {
 
@@ -191,11 +220,12 @@
                 else
                     0
 
+
             val jugador = Jugador(
                 id_jugador = idJugador,
                 id_usuario = etIdUsuario.text.toString().toInt(),
                 nombre_usuario = etNombreUsuario.text.toString(),
-                posicion = etPosicion.text.toString(),
+                posicion = spPosicion.selectedItem.toString(),
                 numero_camiseta = etNumero.text.toString().toInt(),
                 activo = activo
             )

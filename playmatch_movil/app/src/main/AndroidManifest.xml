@@ -31,6 +31,10 @@
                 android:exported="true"/>
 
         <activity
+                android:name=".CrearResultadoActivity"
+                android:exported="true"/>
+
+        <activity
                 android:name=".PosicionesActivity"
                 android:exported="true"/>
 
@@ -92,11 +96,13 @@
         <activity android:name=".ui.equipos.EditarEquipoActivity"/>
         <activity android:name=".ui.equipos.BuscarEquipoActivity"/>
 
+
         <!-- ENCUENTROS -->
         <activity android:name=".ui.encuentros.EncuentrosMenuActivity"/>
         <activity android:name=".ui.encuentros.ListaEncuentrosActivity"/>
         <activity android:name=".ui.encuentros.CrearEncuentroActivity"/>
         <activity android:name=".ui.encuentros.EditarEncuentroActivity"/>
+        <activity android:name=".ui.equipos.InscribirEquipoActivity"/>
 
         <!-- RESULTADOS -->
         <activity android:name=".ui.resultados.ResultadosMenuActivity"/>

@@ -21,6 +21,7 @@ class EncuentrosMenuActivity : AppCompatActivity() {
             startActivity(Intent(this, CrearEncuentroActivity::class.java))
         }
 
+
         // Botón Ver todos
         findViewById<Button>(R.id.btnVerTodos).setOnClickListener {
             val intent = Intent(this, ListaEncuentrosActivity::class.java)

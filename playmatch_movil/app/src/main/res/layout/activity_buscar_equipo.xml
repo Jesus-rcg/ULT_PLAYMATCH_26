@@ -5,16 +5,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="#f0fff4">
+        android:background="#F2F4F7">
 
-    <!-- Header -->
+    <!-- Toolbar -->
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="16dp"
+            android:padding="12dp"
             android:gravity="center_vertical"
-            android:background="#16a34a">
+            android:background="#FFFFFF">
 
         <ImageButton
                 android:id="@+id/btnVolver"
@@ -22,16 +22,16 @@
                 android:layout_height="40dp"
                 android:src="@android:drawable/ic_menu_revert"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                app:tint="#FFFFFF"/>
+                app:tint="#16a34a"/>
 
         <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Buscar Equipo"
-                android:textColor="#FFFFFF"
+                android:textColor="#111827"
                 android:textStyle="bold"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:gravity="center"/>
 
         <View
@@ -40,36 +40,40 @@
 
     </LinearLayout>
 
-    <!-- Barra de búsqueda -->
+    <!-- Buscador -->
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="16dp"
-            android:gravity="center_vertical">
+            android:padding="12dp"
+            android:gravity="center_vertical"
+            android:background="#FFFFFF"
+            android:layout_marginTop="1dp">
 
         <EditText
                 android:id="@+id/etBuscar"
                 android:layout_width="0dp"
-                android:layout_height="52dp"
+                android:layout_height="44dp"
                 android:layout_weight="1"
                 android:hint="Buscar por nombre..."
-                android:padding="14dp"
-                android:background="@drawable/input_background"
+                android:paddingHorizontal="12dp"
+                android:background="@drawable/search_background"
                 android:inputType="textCapWords"
-                android:layout_marginEnd="8dp"/>
+                android:textSize="14sp"/>
 
         <Button
                 android:id="@+id/btnBuscar"
                 android:layout_width="wrap_content"
-                android:layout_height="52dp"
+                android:layout_height="44dp"
                 android:text="Buscar"
                 android:textColor="#FFFFFF"
-                android:backgroundTint="#16a34a"/>
+                android:backgroundTint="#16a34a"
+                android:layout_marginStart="8dp"
+                android:paddingHorizontal="16dp"/>
 
     </LinearLayout>
 
-    <!-- Resultado -->
+    <!-- Lista resultados -->
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerBusqueda"
             android:layout_width="match_parent"

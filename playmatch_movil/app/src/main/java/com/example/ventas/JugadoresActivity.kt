@@ -139,9 +139,13 @@ class JugadoresActivity : AppCompatActivity() {
                                     lista.filter {
                                         it.posicion.lowercase()
                                             .contains(texto) ||
+                                                it.activo
+                                                    .toString()
+                                                    .contains(texto) ||
                                                 it.numero_camiseta
                                                     .toString()
-                                                    .contains(texto)
+                                                        .contains(texto)
+
                                     }
                                 }
 
