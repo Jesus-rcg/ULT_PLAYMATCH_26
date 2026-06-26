@@ -124,3 +124,25 @@ export const deleteUsuarioModel = async (id) => {
     [id],
   );
 };
+
+export const registrarUsuarioModel = async (data) => {
+  const {
+   nombre_usuario,
+   apellido_usuario,
+   fecha_nacimiento,
+   telefono,
+   email,
+   password, 
+  } = data;
+  
+  const passwordHash = await bcrypt.hash(password, 10);
+
+  const [result] = await db.query(
+    `INSERT INTO usuarios 
+    (id_rol, nombre_usuario, apellido_usuario, fecha_nacimiento, telefono, email, password, activo)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+    [3, nombre_usuario, apellido_usuario, fecha_nacimiento, telefono, email, passwordHash, 1],
+  );
+
+  return result;
+}

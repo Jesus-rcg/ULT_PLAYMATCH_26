@@ -56,6 +56,28 @@ interface ApiService {
         id: Int
     ): Call<Void>
 
+    // ================= REGISTRO =================
+
+    @POST("/api/usuarios/registrar")
+
+    fun registrarUsuario(
+
+        @Body
+
+        request: VerificarCodigoRequest
+
+    ): Call<RegistroResponse>
+
+    @POST("/api/usuarios/enviar-codigo")
+    fun enviarCodigo(
+        @Body usuario: Usuario
+    ): Call<RegistroResponse>
+
+    @POST("/api/usuarios/reenviar-codigo")
+    fun reenviarCodigo(
+        @Body request: EmailRequest
+    ): Call<RegistroResponse>
+
     // ================= JUGADORES =================
 
     @POST("/api/jugadores")

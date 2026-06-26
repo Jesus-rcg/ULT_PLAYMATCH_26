@@ -5,6 +5,9 @@ import {
   updateUsuario,
   deleteUsuario,
   createUsuario,
+  registrarUsuario,
+  enviarCodigoRegistro,
+  reenviarCodigoRegistro,
 } from "../controllers/usuarioController.js";
 
 import { findUsuarioByEmail } from "../models/usuarioModel.js";
@@ -37,5 +40,8 @@ router.get("/", getUsuarios);
 router.get("/:id", getUsuarioById);
 router.put("/:id", updateUsuario);
 router.delete("/:id", deleteUsuario);
+router.post("/registrar", registrarUsuario);
+router.post("/enviar-codigo", enviarCodigoRegistro);
+router.post("/reenviar-codigo", reenviarCodigoRegistro);
 
 export default router;
