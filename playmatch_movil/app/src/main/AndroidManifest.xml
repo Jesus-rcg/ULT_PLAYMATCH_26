@@ -110,7 +110,10 @@
         <activity android:name=".ui.resultados.CrearResultadoActivity"/>
         <activity android:name=".ui.resultados.EditarResultadoActivity"/>
 
-
+        <!-- CRONOLOGÍAS -->
+        <activity android:name=".ui.cronologias.ListaCronologiasActivity"/>
+        <activity android:name=".ui.cronologias.CrearCronologiaActivity"/>
+        <activity android:name=".ui.cronologias.EditarCronologiaActivity"/>
         <activity
                 android:name=".MainActivity"
                 android:exported="false"/>

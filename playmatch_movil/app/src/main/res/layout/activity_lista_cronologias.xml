@@ -60,13 +60,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Encuentros"
+                android:text="Cronologías"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:textColor="#1A1A2E"/>
 
         <TextView
-                android:id="@+id/tvSubtitulo"
+                android:id="@+id/tvContador"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="0 registros"
@@ -85,7 +85,7 @@
             android:id="@+id/etBuscar"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:hint="Buscar por lugar o jornada..."
+            android:hint="Buscar por jugador o evento..."
             android:background="@drawable/bg_busqueda"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
@@ -98,7 +98,7 @@
 
     <!-- Lista -->
     <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerEncuentros"
+            android:id="@+id/recyclerCronologias"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"

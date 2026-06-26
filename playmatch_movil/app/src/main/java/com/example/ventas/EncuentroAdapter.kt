@@ -46,53 +46,44 @@ class EncuentroAdapter(
         holder.tvFechaHora.text = "${encuentro.fecha} — ${encuentro.hora}"
         holder.tvLugar.text     = encuentro.lugar
 
-        // Color del badge según estado
         holder.tvEstado.text = encuentro.estado
         val colorEstado = when (encuentro.estado) {
             "Jugando"    -> "#0284C7"
             "Finalizado" -> "#16a34a"
             "Aplazado"   -> "#DC2626"
-            else         -> "#D97706" // Pendiente
+            else         -> "#D97706"
         }
         holder.tvEstado.setBackgroundColor(Color.parseColor(colorEstado))
 
-        // Ocultar botones por defecto
-        holder.btnEditar.visibility  = View.GONE
-        holder.btnEliminar.visibility = View.GONE
+        // Siempre visibles
+        holder.btnEditar.visibility   = View.VISIBLE
+        holder.btnEliminar.visibility = View.VISIBLE
 
-        when (modo) {
-            "editar" -> {
-                holder.btnEditar.visibility = View.VISIBLE
-                holder.btnEditar.setOnClickListener {
-                    val context = holder.itemView.context
-                    val intent = Intent(context, EditarEncuentroActivity::class.java)
-                    intent.putExtra("ENCUENTRO_ID",        encuentro.id_encuentro)
-                    intent.putExtra("ENCUENTRO_JORNADA",   encuentro.jornada)
-                    intent.putExtra("ENCUENTRO_LUGAR",     encuentro.lugar)
-                    intent.putExtra("ENCUENTRO_FECHA",     encuentro.fecha)
-                    intent.putExtra("ENCUENTRO_HORA",      encuentro.hora)
-                    intent.putExtra("ENCUENTRO_ESTADO",    encuentro.estado)
-                    intent.putExtra("ENCUENTRO_TORNEO",    encuentro.id_torneo)
-                    intent.putExtra("ENCUENTRO_LOCAL",     encuentro.id_equipo_local)
-                    intent.putExtra("ENCUENTRO_VISITANTE", encuentro.id_equipo_visitante)
-                    context.startActivity(intent)
+        holder.btnEditar.setOnClickListener {
+            val context = holder.itemView.context
+            val intent = Intent(context, EditarEncuentroActivity::class.java)
+            intent.putExtra("ENCUENTRO_ID",        encuentro.id_encuentro)
+            intent.putExtra("ENCUENTRO_JORNADA",   encuentro.jornada)
+            intent.putExtra("ENCUENTRO_LUGAR",     encuentro.lugar)
+            intent.putExtra("ENCUENTRO_FECHA",     encuentro.fecha)
+            intent.putExtra("ENCUENTRO_HORA",      encuentro.hora)
+            intent.putExtra("ENCUENTRO_ESTADO",    encuentro.estado)
+            intent.putExtra("ENCUENTRO_TORNEO",    encuentro.id_torneo)
+            intent.putExtra("ENCUENTRO_LOCAL",     encuentro.id_equipo_local)
+            intent.putExtra("ENCUENTRO_VISITANTE", encuentro.id_equipo_visitante)
+            context.startActivity(intent)
+        }
+
+        holder.btnEliminar.setOnClickListener {
+            val context = holder.itemView.context
+            AlertDialog.Builder(context)
+                .setTitle("Eliminar encuentro")
+                .setMessage("¿Estás seguro que deseas eliminar este encuentro?")
+                .setPositiveButton("Sí, eliminar") { _, _ ->
+                    eliminarEncuentro(context, encuentro, holder.adapterPosition)
                 }
-            }
-            "eliminar" -> {
-                holder.btnEliminar.visibility = View.VISIBLE
-                holder.btnEliminar.setOnClickListener {
-                    val context = holder.itemView.context
-                    AlertDialog.Builder(context)
-                        .setTitle("Eliminar encuentro")
-                        .setMessage("¿Estás seguro que deseas eliminar este encuentro?")
-                        .setPositiveButton("Sí, eliminar") { _, _ ->
-                            eliminarEncuentro(context, encuentro, holder.adapterPosition)
-                        }
-                        .setNegativeButton("Cancelar", null)
-                        .show()
-                }
-            }
-            "vertodos" -> { }
+                .setNegativeButton("Cancelar", null)
+                .show()
         }
     }
 

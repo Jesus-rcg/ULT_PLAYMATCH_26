@@ -4,7 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
-
+import com.example.ventas.ui.equipos.ListaEquiposActivity
+import com.example.ventas.ui.encuentros.ListaEncuentrosActivity
+import com.example.ventas.ui.cronologias.ListaCronologiasActivity
 class MenuActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -16,11 +18,11 @@ class MenuActivity : AppCompatActivity() {
         }
 
         findViewById<LinearLayout>(R.id.cardEquipos).setOnClickListener {
-            abrirOperaciones("Equipos")
+            startActivity(Intent(this, ListaEquiposActivity::class.java))
         }
 
         findViewById<LinearLayout>(R.id.cardEncuentros).setOnClickListener {
-            abrirOperaciones("Encuentros")
+            startActivity(Intent(this, ListaEncuentrosActivity::class.java))
         }
 
         findViewById<LinearLayout>(R.id.cardPosiciones).setOnClickListener {
@@ -39,6 +41,9 @@ class MenuActivity : AppCompatActivity() {
             abrirResultados("Resultados")
         }
 
+        findViewById<LinearLayout>(R.id.cardCronologias).setOnClickListener {
+            startActivity(Intent(this, ListaCronologiasActivity::class.java))
+        }
     }
 
     private fun abrirUsuarios(modulo: String){
@@ -61,12 +66,6 @@ class MenuActivity : AppCompatActivity() {
 
     private fun abrirPosiciones(modulo: String){
         val intent = Intent(this, PosicionesActivity::class.java)
-        intent.putExtra("MODULO", modulo)
-        startActivity(intent)
-    }
-
-    private fun abrirOperaciones(modulo: String){
-        val intent = Intent(this, OperacionesActivity::class.java)
         intent.putExtra("MODULO", modulo)
         startActivity(intent)
     }
