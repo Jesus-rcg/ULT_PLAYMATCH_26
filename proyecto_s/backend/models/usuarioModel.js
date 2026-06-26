@@ -15,7 +15,6 @@ export const createUsuario = async (data) => {
 
   const passwordHash = await bcrypt.hash(password, 10);
 
-
   return await db.query(
     `INSERT INTO usuarios 
     (id_rol, nombre_usuario, apellido_usuario, fecha_nacimiento, telefono, email, password)
@@ -89,30 +88,25 @@ export const updateUsuarioModel = async (id, data) => {
   const passwordHash = password ? await bcrypt.hash(password, 10) : null;
 
   const query = password
-  ? `UPDATE usuarios 
+    ? `UPDATE usuarios 
      SET nombre_usuario = ?,
          apellido_usuario = ?,
           telefono = ?,
           email = ?,
           password = ?
      WHERE id_usuario = ?`
-     : `UPDATE usuarios
+    : `UPDATE usuarios
       SET nombre_usuario = ?,
           apellido_usuario = ?,
           telefono = ?,
           email = ?
       WHERE id_usuario = ?`;
 
-    const params = passwordHash
+  const params = passwordHash
     ? [nombre_usuario, apellido_usuario, telefono, email, passwordHash, id]
     : [nombre_usuario, apellido_usuario, telefono, email, id];
 
   const [result] = await db.query(query, params);
-
-  console.log(nombre_usuario);
-  console.log(apellido_usuario);
-  console.log(telefono);
-  console.log(email);
 
   if (result.affectedRows === 0) {
     throw new Error("Usuario no encontrado");

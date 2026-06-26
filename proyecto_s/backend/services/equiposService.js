@@ -1,7 +1,7 @@
 import {
   getEquiposModel,
   getEquipoByIdModel,
-  getEquipoByUsuarioModel,
+  getEquipoJugadorByUsuarioModel,
   getEquiposByTorneoModel,
   createEquipoModel,
   updateEquipoModel,
@@ -16,11 +16,6 @@ export const getEquiposService = async () => {
 // Obtener por ID
 export const getEquipoByIdService = async (id) => {
   return await getEquipoByIdModel(id);
-};
-
-// Obtener por usuario
-export const getEquipoByUsuarioService = async (idUsuario) => {
-  return await getEquipoByUsuarioModel(idUsuario);
 };
 
 // Crear
@@ -41,4 +36,9 @@ export const deleteEquipoService = async (id) => {
 // Equipos por torneo
 export const getEquiposByTorneoService = async (idTorneo) => {
   return await getEquiposByTorneoModel(idTorneo);
+};
+
+// Obtener equipo donde el usuario pertenece como jugador
+export const getEquipoJugadorByUsuarioService = async (idUsuario) => {
+  return await getEquipoJugadorByUsuarioModel(idUsuario);
 };

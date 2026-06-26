@@ -113,7 +113,9 @@ export default function InscripcionesEquiposOrganizador({ id_torneo }) {
             <div className="acciones-inscripcion">
               <button
                 className="btn-aceptar"
-                onClick={() => actualizarEstado(i.id_inscripcion_e, "Inscrito")}
+                onClick={() =>
+                  actualizarEstado(inscripcion.id_inscripcion_e, "Inscrito")
+                }
               >
                 Aceptar
               </button>
@@ -121,7 +123,7 @@ export default function InscripcionesEquiposOrganizador({ id_torneo }) {
               <button
                 className="btn-rechazar"
                 onClick={() =>
-                  actualizarEstado(i.id_inscripcion_e, "No Inscrito")
+                  actualizarEstado(inscripcion.id_inscripcion_e, "No Inscrito")
                 }
               >
                 Rechazar

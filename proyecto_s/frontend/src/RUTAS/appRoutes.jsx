@@ -52,6 +52,7 @@ import Jugadores from "../PAGES/Jugadores/Jugadores";
 import JugadorCrear from "../PAGES/Jugadores/JugadorCrear";
 import JugadorEditar from "../PAGES/Jugadores/JugadorEditar";
 import JugadorEliminar from "../PAGES/Jugadores/JugadorEliminar";
+import JugadoresEquipo from "../PAGES/Jugadores/JugadoresEquipo";
 
 //Encuentros
 import Encuentros from "../PAGES/Encuentros/Encuentros";
@@ -184,6 +185,7 @@ export default function AppRoutes() {
               path="/inscripcionJugadores"
               element={<InscripcionJugadores />}
             />
+            <Route path="/jugadores/:idEquipo" element={<JugadoresEquipo />} />
             <Route
               path="/inscripcionJugadores/Crear"
               element={<InscripcionJugadoresCrear />}
