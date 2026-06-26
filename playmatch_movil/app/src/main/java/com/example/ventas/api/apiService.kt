@@ -91,6 +91,11 @@ interface ApiService {
             id: Int
         ): Call<Jugador>
 
+        @GET("/api/jugadores/usuarios-disponibles")
+        fun getUsuariosDisponibles(
+            @Header("Authorization")
+            token: String
+        ): Call<UsuarioResponse>
 
         @PUT("/api/jugadores/{id}")
         fun actualizarJugadores(
@@ -284,7 +289,7 @@ interface ApiService {
     fun getResultados(
         @Header("Authorization")
         token: String
-    ): Call<ResultadoResponse>
+    ): Call<List<Resultado>>
 
     @GET("/api/resultados/{id}")
     fun getResultado(
@@ -324,4 +329,26 @@ interface ApiService {
         @Path("id")
         id: Int
     ): Call<Void>
+
+    // ================= INSCRIPCIONES EQUIPOS =================
+
+    @POST("/api/inscripcionesequipos")
+    fun inscribirEquipo(
+        @Header("Authorization") token: String,
+        @Body inscripcion: InscripcionEquipo
+    ): Call<InscripcionEquipo>
+
+    @GET("/api/inscripcionesequipos")
+    fun getInscripciones(
+        @Header("Authorization") token: String
+    ): Call<List<InscripcionEquipo>>
+
+    @DELETE("/api/inscripcionesequipos/{id}")
+    fun deleteInscripcion(
+        @Header("Authorization") token: String,
+        @Path("id") id: Int
+    ): Call<Void>
+
+
+
 }
