@@ -49,7 +49,7 @@ class OperacionesActivity : AppCompatActivity() {
         // ================= BUSCAR =================
         cardBuscar.setOnClickListener {
             when (modulo) {
-                "Jugadores" -> startActivity(Intent(this, BuscarJugadorActivity::class.java))
+
                 "Equipos" -> startActivity(Intent(this, BuscarEquipoActivity::class.java))
                 "Encuentros" -> {
                     val intent = Intent(this, ListaEncuentrosActivity::class.java)
@@ -82,7 +82,7 @@ class OperacionesActivity : AppCompatActivity() {
         // ================= ELIMINAR =================
         cardEliminar.setOnClickListener {
             when (modulo) {
-                "Jugadores" -> startActivity(Intent(this, EliminarJugadorActivity::class.java))
+
                 "Equipos" -> {
                     val intent = Intent(this, ListaEquiposActivity::class.java)
                     intent.putExtra("MODO", "eliminar")

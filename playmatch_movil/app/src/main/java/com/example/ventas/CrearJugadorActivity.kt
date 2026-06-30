@@ -40,7 +40,7 @@ class CrearJugadorActivity : AppCompatActivity() {
         txtNumero = findViewById(R.id.txtNumero)
 
         btnGuardar =
-            findViewById(R.id.btnGuardarJugador)
+            findViewById(R.id.btnGuardarJugadores)
 
         cargarEstados()
         cargarPosiciones()
@@ -99,12 +99,6 @@ class CrearJugadorActivity : AppCompatActivity() {
 
                 id_usuario =
                     usuarioSeleccionado.id!!,
-
-                nombre_usuario =
-                    usuarioSeleccionado.nombre_usuario,
-
-                apellido_usuario =
-                    usuarioSeleccionado.apellido_usuario,
 
                 posicion =
                     spPosicion.selectedItem.toString(),
@@ -232,7 +226,7 @@ class CrearJugadorActivity : AppCompatActivity() {
         val token =
             prefs.getString("token", "") ?: ""
 
-        ApiClient.instance.getUsuariosDisponibles(
+        ApiClient.instance.getJugador(
             "Bearer $token"
         ).enqueue(object : Callback<UsuarioResponse> {
 
