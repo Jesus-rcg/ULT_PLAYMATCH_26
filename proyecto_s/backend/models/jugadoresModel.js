@@ -43,43 +43,24 @@ export const getJugadorByIdModel = async (id) => {
   return rows[0];
 };
 
-// Crear jugador
 export const createJugadorModel = async (jugador) => {
-
   const {
     id_usuario,
-    nombre_usuario,
-    apellido_usuario,
     posicion,
     numero_camiseta
   } = jugador;
 
-  // 1. Actualizar datos del usuario
-  await pool.query(
-    `
-    UPDATE usuarios
-    SET nombre_usuario = ?,
-        apellido_usuario = ?
-    WHERE id_usuario = ?
-    `,
-    [
-      nombre_usuario,
-      apellido_usuario,
-      id_usuario
-    ]
-  );
-
-  // 2. Crear jugador
   const [result] = await pool.query(
     `
     INSERT INTO jugadores
-    (id_usuario, posicion, numero_camiseta)
-    VALUES (?, ?, ?)
+    (id_usuario, posicion, numero_camiseta, activo)
+    VALUES (?, ?, ?, ?)
     `,
     [
       id_usuario,
       posicion,
-      numero_camiseta
+      numero_camiseta,
+      1
     ]
   );
 

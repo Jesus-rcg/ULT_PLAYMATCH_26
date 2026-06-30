@@ -87,6 +87,7 @@
                         android:id="@+id/etNombre_usuario"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:enabled="false"
                         android:hint="Nombre Usuario"
                         android:inputType="text"
                         android:layout_marginBottom="15dp"/>
@@ -101,6 +102,7 @@
                         android:id="@+id/etApellido_usuario"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:enabled="false"
                         android:hint="Apellido Usuario"
                         android:inputType="text"
                         android:layout_marginBottom="15dp"/>

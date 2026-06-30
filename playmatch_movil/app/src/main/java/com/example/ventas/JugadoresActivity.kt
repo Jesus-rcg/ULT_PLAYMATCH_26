@@ -136,8 +136,8 @@ class JugadoresActivity : AppCompatActivity() {
         } else {
             listaGlobal.filter {
                 it.id_jugador.toString().contains(query) ||
-                        it.nombre_usuario.lowercase().contains(query) ||
-                        it.apellido_usuario.lowercase().contains(query) ||
+//                        it.nombre_usuario.lowercase().contains(query) ||
+//                        it.apellido_usuario.lowercase().contains(query) ||
                         it.posicion.lowercase().contains(query) ||
                         it.numero_camiseta.toString().contains(query) ||
                         it.activo.toString().contains(query)
@@ -163,7 +163,7 @@ class JugadoresActivity : AppCompatActivity() {
 
         AlertDialog.Builder(this)
             .setTitle("Eliminar jugador")
-            .setMessage("¿Seguro que deseas eliminar a ${jugador.nombre_usuario}?")
+//            .setMessage("¿Seguro que deseas eliminar a ${jugador.nombre_usuario}?")
             .setPositiveButton("Eliminar") { _, _ ->
                 eliminarJugador(jugador.id_jugador ?: 0)
             }

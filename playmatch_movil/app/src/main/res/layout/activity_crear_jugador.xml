@@ -92,7 +92,7 @@
         <EditText
                 android:id="@+id/txtNumero"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:hint="Número Camiseta"
                 android:textColor="#000000"
                 android:inputType="number"
@@ -109,13 +109,15 @@
                 android:layout_marginBottom="20dp"/>
 
         <Button
-                android:id="@+id/btnGuardarJugador"
+                android:id="@+id/btnGuardarJugadores"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Guardar Jugador"
                 android:textStyle="bold"
                 android:textColor="#FFFFFF"
-                android:backgroundTint="#534AB7"/>
+                android:backgroundTint="#534AB7"
+                android:enabled="true"/>
+
 
         </LinearLayout>
     </LinearLayout>

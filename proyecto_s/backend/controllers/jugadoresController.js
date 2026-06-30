@@ -49,7 +49,7 @@ export const getJugadorById = async (req, res) => {
 
 // Crear jugador
 export const createJugador = async (req, res) => {
-  console.log("¡SÍ! ENTRÓ AL CONTROLADOR DE CREAR JUGADOR (POST)");
+  console.log("¡SÍ! ENTRÓ AL CONTROLADOR DE CREAR JUGADOR (POSTTTT)");
   console.log("Datos recibidos:", req.body);
   try {
     const result = await createJugadorService(req.body);
