@@ -9,6 +9,8 @@ export default function InscripcionesEquiposOrganizador({ id_torneo }) {
   const [inscripciones, setInscripciones] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const [filtro, setFiltro] = useState("Pendiente");
+
   const navigate = useNavigate();
 
   const getInscripciones = async () => {
@@ -30,22 +32,30 @@ export default function InscripcionesEquiposOrganizador({ id_torneo }) {
     getInscripciones();
   }, []);
 
-  const actualizarEstado = async (id_inscripcion_e, nuevoEstado) => {
+  const actualizarEstado = async (id_inscripcion_e, estado, activo) => {
     try {
-      await fetch(`${API}/${id_inscripcion_e}`, {
+      const res = await fetch(`${API}/${id_inscripcion_e}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          estado: nuevoEstado,
+          estado,
+          activo,
         }),
       });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.message);
+        return;
+      }
 
       setInscripciones((prev) =>
         prev.map((ins) =>
           ins.id_inscripcion_e === id_inscripcion_e
-            ? { ...ins, estado: nuevoEstado }
+            ? { ...ins, estado, activo }
             : ins,
         ),
       );
@@ -53,17 +63,14 @@ export default function InscripcionesEquiposOrganizador({ id_torneo }) {
       console.error(error);
     }
   };
-  const filtrados = inscripciones.filter((i) => {
-    const estado = (i.estado || "").toLowerCase();
 
-    return (
-      String(i.id_torneo) === String(id_torneo) &&
-      (estado === "pendiente" || estado === "no inscrito")
-    );
+  const filtrados = inscripciones.filter((i) => {
+    return String(i.id_torneo) === String(id_torneo) && i.estado === filtro;
   });
 
   return (
     <div>
+      {/* HEADER */}
       <div
         style={{
           display: "flex",
@@ -75,12 +82,37 @@ export default function InscripcionesEquiposOrganizador({ id_torneo }) {
         <h2>Inscripciones del torneo</h2>
       </div>
 
+      {/* BOTONES FILTRO */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          gap: "10px",
+          marginBottom: "20px",
+        }}
+      >
+        <button
+          className={filtro === "Pendiente" ? "btn-aceptar" : "btn-rechazar"}
+          onClick={() => setFiltro("Pendiente")}
+        >
+          Pendientes
+        </button>
+
+        <button
+          className={filtro === "Inscrito" ? "btn-aceptar" : "btn-rechazar"}
+          onClick={() => setFiltro("Inscrito")}
+        >
+          Inscritos
+        </button>
+      </div>
+
       {loading && <p>Cargando...</p>}
 
       {!loading && filtrados.length === 0 && (
-        <p>No hay inscripciones para este torneo</p>
+        <p>No hay inscripciones para este filtro</p>
       )}
 
+      {/* CARDS */}
       {filtrados.map((inscripcion) => (
         <div
           key={inscripcion.id_inscripcion_e}
@@ -102,6 +134,7 @@ export default function InscripcionesEquiposOrganizador({ id_torneo }) {
             {new Date(inscripcion.fecha_ins_equipo).toLocaleDateString("es-CO")}
           </div>
 
+          {/* ACCIONES */}
           <div
             style={{
               display: "flex",
@@ -110,25 +143,46 @@ export default function InscripcionesEquiposOrganizador({ id_torneo }) {
               marginTop: "15px",
             }}
           >
-            <div className="acciones-inscripcion">
-              <button
-                className="btn-aceptar"
-                onClick={() =>
-                  actualizarEstado(inscripcion.id_inscripcion_e, "Inscrito")
-                }
-              >
-                Aceptar
-              </button>
+            {inscripcion.estado === "Pendiente" && (
+              <>
+                <button
+                  className="btn-aceptar"
+                  onClick={() =>
+                    actualizarEstado(
+                      inscripcion.id_inscripcion_e,
+                      "Inscrito",
+                      1,
+                    )
+                  }
+                >
+                  Aceptar
+                </button>
 
+                <button
+                  className="btn-rechazar"
+                  onClick={() =>
+                    actualizarEstado(
+                      inscripcion.id_inscripcion_e,
+                      "Cancelado",
+                      0,
+                    )
+                  }
+                >
+                  Rechazar
+                </button>
+              </>
+            )}
+
+            {inscripcion.estado === "Inscrito" && (
               <button
                 className="btn-rechazar"
                 onClick={() =>
-                  actualizarEstado(inscripcion.id_inscripcion_e, "No Inscrito")
+                  actualizarEstado(inscripcion.id_inscripcion_e, "Pendiente", 1)
                 }
               >
-                Rechazar
+                Pasar a Pendiente
               </button>
-            </div>
+            )}
           </div>
         </div>
       ))}

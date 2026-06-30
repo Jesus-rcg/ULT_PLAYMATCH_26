@@ -35,6 +35,10 @@
                 android:exported="true"/>
 
         <activity
+                android:name=".EditarResultadoActivity"
+                android:exported="true"/>
+
+        <activity
                 android:name=".PosicionesActivity"
                 android:exported="true"/>
 
@@ -79,6 +83,12 @@
         <activity android:name=".EditarPosicionActivity"
                   android:exported="true"/>
 
+        <activity android:name=".RegistrarseActivity"
+                  android:exported="true"/>
+
+        <activity android:name=".VerificarCodigoActivity"
+                  android:exported="true"/>
+
         <activity
                 android:name=".loginActivity.LoginActivity2"
                 android:exported="true">
@@ -110,7 +120,10 @@
         <activity android:name=".ui.resultados.CrearResultadoActivity"/>
         <activity android:name=".ui.resultados.EditarResultadoActivity"/>
 
-
+        <!-- CRONOLOGÍAS -->
+        <activity android:name=".ui.cronologias.ListaCronologiasActivity"/>
+        <activity android:name=".ui.cronologias.CrearCronologiaActivity"/>
+        <activity android:name=".ui.cronologias.EditarCronologiaActivity"/>
         <activity
                 android:name=".MainActivity"
                 android:exported="false"/>

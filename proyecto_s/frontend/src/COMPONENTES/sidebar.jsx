@@ -23,10 +23,16 @@ export default function Sidebar() {
       path: "/usuarios",
     },
     {
+      id: 1,
+      roles: [ROLES.USUARIO],
+      label: "Home",
+      path: "/home",
+    },
+    {
       id: 2,
       roles: [ROLES.ADMINISTRADOR, ROLES.USUARIO],
-      label: "Torneos",
-      path: "/torneos",
+      label: "Mi Equipo",
+      path: "/equipos",
     },
     {
       id: 2,

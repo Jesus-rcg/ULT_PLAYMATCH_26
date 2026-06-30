@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="4dp"
+        android:layout_marginBottom="10dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="3dp"
+        app:cardBackgroundColor="#FFFFFF">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="14dp">
+
+        <!-- Minuto + Evento -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="8dp">
+
+            <TextView
+                    android:id="@+id/tvMinuto"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="45'"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="13sp"
+                    android:background="@drawable/badge_pendiente"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="4dp"/>
+
+            <TextView
+                    android:id="@+id/tvEvento"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Gol"
+                    android:textColor="#111827"
+                    android:textStyle="bold"
+                    android:textSize="15sp"
+                    android:layout_marginStart="10dp"/>
+
+            <TextView
+                    android:id="@+id/tvId"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="#1"
+                    android:textColor="#9CA3AF"
+                    android:textSize="12sp"/>
+
+        </LinearLayout>
+
+        <!-- Jugador -->
+        <TextView
+                android:id="@+id/tvJugador"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nombre Jugador"
+                android:textColor="#374151"
+                android:textSize="13sp"
+                android:layout_marginBottom="4dp"/>
+
+        <!-- Equipo jugador -->
+        <TextView
+                android:id="@+id/tvEquipoJugador"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Equipo"
+                android:textColor="#6B7280"
+                android:textSize="12sp"
+                android:layout_marginBottom="4dp"/>
+
+        <!-- Encuentro -->
+        <TextView
+                android:id="@+id/tvEncuentro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Local vs Visitante"
+                android:textColor="#6B7280"
+                android:textSize="12sp"
+                android:layout_marginBottom="10dp"/>
+
+        <!-- Línea divisora -->
+        <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#F3F4F6"
+                android:layout_marginBottom="8dp"/>
+
+        <!-- Botones -->
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+            <Button
+                    android:id="@+id/btnEditar"
+                    android:layout_width="0dp"
+                    android:layout_height="38dp"
+                    android:layout_weight="1"
+                    android:text="Editar"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp"
+                    android:backgroundTint="#2563EB"
+                    android:layout_marginEnd="6dp"/>
+
+            <Button
+                    android:id="@+id/btnEliminar"
+                    android:layout_width="0dp"
+                    android:layout_height="38dp"
+                    android:layout_weight="1"
+                    android:text="Eliminar"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp"
+                    android:backgroundTint="#DC2626"
+                    android:layout_marginStart="6dp"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

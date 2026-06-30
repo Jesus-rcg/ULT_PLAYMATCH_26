@@ -5,7 +5,7 @@ import { getEquiposByTorneo } from "../../SERVICE/equiposService";
 import "../../STILO/estilosPages/equipos/equipos.css";
 
 export default function Equipos() {
-  const { id } = useParams(); // id del torneo
+  const { id } = useParams();
   const navigate = useNavigate();
 
   const [equipos, setEquipos] = useState([]);
@@ -32,7 +32,7 @@ export default function Equipos() {
 
         <button
           className="btn-inscribir-equipo"
-          onClick={() => navigate(`/inscripcionEquipos/Crear/${id}`)}
+          onClick={() => navigate(`/inscripcionEquiposOrganizador/crear/${id}`)}
         >
           + Inscribir Equipo
         </button>
@@ -46,10 +46,15 @@ export default function Equipos() {
       ) : (
         <div className="grid-equipos">
           {equipos.map((e) => (
-
-              <div>
-                <span>{e.id_equipo}</span>
+            <div
+              className="equipo-card"
+              key={e.id_equipo}
+              onClick={() => navigate(`/jugadoresEquipo/${e.id_equipo}`)}
+            >
+              <div className="equipo-id">
+                <span>#{e.id_equipo}</span>
               </div>
+
               <div className="equipo-logo">
                 <img src={e.escudo} alt={e.nombre_equipo} />
               </div>

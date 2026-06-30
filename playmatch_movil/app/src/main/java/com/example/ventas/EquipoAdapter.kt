@@ -40,54 +40,39 @@ class EquipoAdapter(
     override fun onBindViewHolder(holder: EquipoViewHolder, position: Int) {
         val equipo = listaEquipos[position]
 
-        // Avatar con iniciales
         val iniciales = equipo.nombre_equipo
             .split(" ")
             .take(2)
             .joinToString("") { it.first().uppercaseChar().toString() }
         holder.tvAvatar.text = iniciales
-
         holder.tvNombre.text = equipo.nombre_equipo
         holder.tvEscudo.text = "Escudo: ${equipo.escudo}"
         holder.tvNumero.text = "#${position + 1}"
 
-        // Ocultar ambos botones por defecto
-        holder.btnEditar.visibility  = View.GONE
-        holder.btnEliminar.visibility = View.GONE
+        // Siempre visibles
+        holder.btnEditar.visibility  = View.VISIBLE
+        holder.btnEliminar.visibility = View.VISIBLE
 
-        when (modo) {
+        holder.btnEditar.setOnClickListener {
+            val context = holder.itemView.context
+            val intent = Intent(context, EditarEquipoActivity::class.java)
+            intent.putExtra("EQUIPO_ID",      equipo.id_equipo)
+            intent.putExtra("EQUIPO_NOMBRE",  equipo.nombre_equipo)
+            intent.putExtra("EQUIPO_ESCUDO",  equipo.escudo)
+            intent.putExtra("EQUIPO_USUARIO", equipo.id_usuario)
+            context.startActivity(intent)
+        }
 
-            "vertodos" -> {
-                // Sin botones, solo muestra la info
-            }
-
-            "editar" -> {
-                holder.btnEditar.visibility = View.VISIBLE
-                holder.btnEditar.setOnClickListener {
-                    val context = holder.itemView.context
-                    val intent = Intent(context, EditarEquipoActivity::class.java)
-                    intent.putExtra("EQUIPO_ID",      equipo.id_equipo)
-                    intent.putExtra("EQUIPO_NOMBRE",  equipo.nombre_equipo)
-                    intent.putExtra("EQUIPO_ESCUDO",  equipo.escudo)
-                    intent.putExtra("EQUIPO_USUARIO", equipo.id_usuario)
-                    context.startActivity(intent)
+        holder.btnEliminar.setOnClickListener {
+            val context = holder.itemView.context
+            AlertDialog.Builder(context)
+                .setTitle("Eliminar equipo")
+                .setMessage("¿Eliminar ${equipo.nombre_equipo}?")
+                .setPositiveButton("Sí, eliminar") { _, _ ->
+                    eliminarEquipo(context, equipo, holder.adapterPosition)
                 }
-            }
-
-            "eliminar" -> {
-                holder.btnEliminar.visibility = View.VISIBLE
-                holder.btnEliminar.setOnClickListener {
-                    val context = holder.itemView.context
-                    AlertDialog.Builder(context)
-                        .setTitle("Eliminar equipo")
-                        .setMessage("¿Eliminar ${equipo.nombre_equipo}?")
-                        .setPositiveButton("Sí, eliminar") { _, _ ->
-                            eliminarEquipo(context, equipo, holder.adapterPosition)
-                        }
-                        .setNegativeButton("Cancelar", null)
-                        .show()
-                }
-            }
+                .setNegativeButton("Cancelar", null)
+                .show()
         }
     }
 

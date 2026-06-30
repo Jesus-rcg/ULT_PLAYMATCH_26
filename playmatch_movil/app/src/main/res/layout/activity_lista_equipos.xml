@@ -1,113 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="#F2F4F7">
+        android:background="#1A1A2E"
+        android:padding="20dp"
+        android:paddingTop="50dp">
 
-    <!-- Toolbar -->
+    <!-- Header -->
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:padding="12dp"
             android:gravity="center_vertical"
-            android:background="#FFFFFF">
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="40dp">
 
         <ImageButton
                 android:id="@+id/btnVolver"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
                 android:src="@android:drawable/ic_menu_revert"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                app:tint="#16a34a"/>
+                android:contentDescription="Volver"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Volver al menú"
+                android:textColor="#534AB7"
+                android:textSize="13sp"
+                android:layout_marginStart="4dp"/>
+
+        <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="4"/>
+
+        <Button
+                android:id="@+id/btnAgregar"
+                android:text="Agregar"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:drawableLeft="@drawable/boton_agregar"
+                android:backgroundTint="#4CAF50"/>
+
+    </LinearLayout>
+
+    <!-- Título + Contador -->
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="4dp">
 
         <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Equipos"
-                android:textColor="#111827"
+                android:textSize="20sp"
                 android:textStyle="bold"
-                android:textSize="18sp"
-                android:gravity="center"/>
+                android:textColor="#1A1A2E"/>
 
-        <Button
-                android:id="@+id/btnAgregar"
+        <TextView
+                android:id="@+id/tvContador"
                 android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:text="Agregar"
-                android:textColor="#FFFFFF"
-                android:textSize="13sp"
-                android:backgroundTint="#16a34a"
-                android:paddingHorizontal="16dp"/>
+                android:layout_height="wrap_content"
+                android:text="0 registros"
+                android:textSize="11sp"
+                android:textColor="#888780"
+                android:background="@drawable/rectangulo_gris"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:paddingTop="3dp"
+                android:paddingBottom="3dp"/>
 
     </LinearLayout>
 
     <!-- Buscador -->
-    <LinearLayout
+    <EditText
+            android:id="@+id/etBuscar"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="Buscar por nombre..."
+            android:background="@drawable/bg_busqueda"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:drawableStart="@android:drawable/ic_menu_search"
+            android:drawablePadding="8dp"
+            android:inputType="text"
+            android:textColor="#000000"
+            android:textColorHint="#888780"
+            android:layout_marginBottom="10dp"/>
+
+    <!-- Botón Inscribir -->
+    <Button
+            android:id="@+id/btnIrInscripcion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="12dp"
-            android:gravity="center_vertical"
-            android:background="#FFFFFF"
-            android:layout_marginTop="1dp">
-
-        <EditText
-                android:id="@+id/etBuscar"
-                android:layout_width="0dp"
-                android:layout_height="44dp"
-                android:layout_weight="1"
-                android:hint="Buscar por nombre..."
-                android:paddingHorizontal="12dp"
-                android:background="@drawable/search_background"
-                android:inputType="text"
-                android:textSize="14sp"/>
-
-        <Button
-                android:id="@+id/btnBuscar"
-                android:layout_width="wrap_content"
-                android:layout_height="44dp"
-                android:text="Buscar"
-                android:textColor="#FFFFFF"
-                android:backgroundTint="#16a34a"
-                android:layout_marginStart="8dp"
-                android:paddingHorizontal="16dp"/>
-        <Button
-                android:id="@+id/btnIrInscripcion"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:layout_marginStart="8dp"
-                android:text="Inscribir"
-                android:textColor="#FFFFFF"
-                android:textSize="13sp"
-                android:backgroundTint="#2563EB"
-                android:paddingHorizontal="16dp"/>
-
-
-    </LinearLayout>
-
-    <!-- Contador -->
-    <TextView
-            android:id="@+id/tvContador"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="0 registros"
-            android:textColor="#6B7280"
-            android:textSize="12sp"
-            android:gravity="end"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="6dp"/>
+            android:text="Inscribir Equipo en Torneo"
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#2563EB"
+            android:layout_marginBottom="10dp"/>
 
     <!-- Lista -->
     <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerEquipos"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="8dp"
-            android:clipToPadding="false"/>
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:clipToPadding="false"
+            android:paddingBottom="16dp"/>
 
 </LinearLayout>

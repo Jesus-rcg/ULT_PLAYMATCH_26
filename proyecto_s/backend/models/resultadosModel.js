@@ -20,7 +20,7 @@ export const getResultadosModel = async () => {
     FROM resultados r
 
     INNER JOIN encuentros e
-      ON r.id_encuentro = e.id_encuentro
+      ON r.id_encuentro = e.id_encuentroi
 
     INNER JOIN equipos local
       ON e.id_equipo_local = local.id_equipo

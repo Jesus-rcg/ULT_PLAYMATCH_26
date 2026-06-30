@@ -100,7 +100,8 @@ class ResultadosActivity : AppCompatActivity() {
 
     private fun abrirEditar(resultado: Resultado){
         val intent = Intent(this, EditarResultadoActivity::class.java)
-        intent.putExtra("ID", resultado.id_resultado ?: 0)
+        intent.putExtra("ID_RESULTADO", resultado.id_resultado ?: 0)
+        intent.putExtra("ID_ENCUENTRO", resultado.id_encuentro ?: 0)
         intent.putExtra("GOLES_LOCAL", resultado.goles_local)
         intent.putExtra("GOLES_VISITANTE", resultado.goles_visitante)
         intent.putExtra("EQUIPO_LOCAL", resultado.equipo_local)

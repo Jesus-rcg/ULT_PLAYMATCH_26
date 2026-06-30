@@ -75,7 +75,9 @@ export const updateEstado = async (req, res) => {
     const { estado } = req.body;
 
     if (!id || !estado) {
-      return res.status(400).json({ message: "Datos incompletos" });
+      return res.status(400).json({
+        message: "Datos incompletos",
+      });
     }
 
     const result = await InscripcionService.cambiarEstado(id, estado);

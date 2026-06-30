@@ -1,4 +1,4 @@
-package com.example.ventas.ui.encuentros
+package com.example.ventas.ui.cronologias
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,34 +8,34 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ventas.R
 import com.example.ventas.api.ApiClient
-import com.example.ventas.model.Encuentro
+import com.example.ventas.model.Cronologia
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ListaEncuentrosActivity : AppCompatActivity() {
+class ListaCronologiasActivity : AppCompatActivity() {
 
-    private lateinit var recyclerEncuentros: RecyclerView
+    private lateinit var recycler: RecyclerView
+    private lateinit var tvContador: TextView
     private lateinit var etBuscar: EditText
-    private lateinit var tvSubtitulo: TextView
-    private var listaCompleta: List<Encuentro> = emptyList()
+    private var listaCompleta: List<Cronologia> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_lista_encuentros)
+        setContentView(R.layout.activity_lista_cronologias)
 
-        recyclerEncuentros = findViewById(R.id.recyclerEncuentros)
-        recyclerEncuentros.layoutManager = LinearLayoutManager(this)
-        etBuscar   = findViewById(R.id.etBuscar)
-        tvSubtitulo = findViewById(R.id.tvSubtitulo)
+        recycler    = findViewById(R.id.recyclerCronologias)
+        tvContador  = findViewById(R.id.tvContador)
+        etBuscar    = findViewById(R.id.etBuscar)
+
+        recycler.layoutManager = LinearLayoutManager(this)
 
         findViewById<ImageButton>(R.id.btnVolver).setOnClickListener { finish() }
 
         findViewById<Button>(R.id.btnAgregar).setOnClickListener {
-            startActivity(Intent(this, CrearEncuentroActivity::class.java))
+            startActivity(Intent(this, CrearCronologiaActivity::class.java))
         }
 
-        // Buscador automático
         etBuscar.addTextChangedListener(object : android.text.TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun afterTextChanged(s: android.text.Editable?) {}
@@ -45,8 +45,9 @@ class ListaEncuentrosActivity : AppCompatActivity() {
                     mostrarLista(listaCompleta)
                 } else {
                     val filtrados = listaCompleta.filter {
-                        it.lugar.contains(texto, ignoreCase = true) ||
-                                it.jornada.toString().contains(texto) ||
+                        (it.nombre_usuario ?: "").contains(texto, ignoreCase = true) ||
+                                (it.apellido_usuario ?: "").contains(texto, ignoreCase = true) ||
+                                (it.evento ?: "").contains(texto, ignoreCase = true) ||
                                 (it.equipo_local ?: "").contains(texto, ignoreCase = true) ||
                                 (it.equipo_visitante ?: "").contains(texto, ignoreCase = true)
                     }
@@ -55,39 +56,39 @@ class ListaEncuentrosActivity : AppCompatActivity() {
             }
         })
 
-        cargarEncuentros()
+        cargarCronologias()
     }
 
     override fun onResume() {
         super.onResume()
-        cargarEncuentros()
+        cargarCronologias()
     }
 
-    private fun cargarEncuentros() {
+    private fun cargarCronologias() {
         val token = getSharedPreferences("app", MODE_PRIVATE).getString("token", "") ?: ""
 
-        ApiClient.instance.getEncuentros("Bearer $token")
-            .enqueue(object : Callback<List<Encuentro>> {
-                override fun onResponse(call: Call<List<Encuentro>>, response: Response<List<Encuentro>>) {
+        ApiClient.instance.getCronologias("Bearer $token")
+            .enqueue(object : Callback<List<Cronologia>> {
+                override fun onResponse(call: Call<List<Cronologia>>, response: Response<List<Cronologia>>) {
                     if (response.isSuccessful) {
                         listaCompleta = response.body() ?: emptyList()
                         mostrarLista(listaCompleta)
                     } else {
-                        Toast.makeText(this@ListaEncuentrosActivity,
-                            "❌ Error al cargar encuentros: ${response.code()}",
-                            Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this@ListaCronologiasActivity,
+                            "❌ Error: ${response.code()}", Toast.LENGTH_SHORT).show()
                     }
                 }
-                override fun onFailure(call: Call<List<Encuentro>>, t: Throwable) {
-                    Toast.makeText(this@ListaEncuentrosActivity,
-                        "❌ Error de conexión: ${t.message}",
-                        Toast.LENGTH_LONG).show()
+                override fun onFailure(call: Call<List<Cronologia>>, t: Throwable) {
+                    Toast.makeText(this@ListaCronologiasActivity,
+                        "❌ Error de conexión: ${t.message}", Toast.LENGTH_LONG).show()
                 }
             })
     }
 
-    private fun mostrarLista(lista: List<Encuentro>) {
-        tvSubtitulo.text = "${lista.size} registros"
-        recyclerEncuentros.adapter = EncuentroAdapter(lista.toMutableList(), "vertodos")
+    private fun mostrarLista(lista: List<Cronologia>) {
+        tvContador.text = "${lista.size} registros"
+        recycler.adapter = CronologiaAdapter(lista.toMutableList()) {
+            cargarCronologias()
+        }
     }
 }

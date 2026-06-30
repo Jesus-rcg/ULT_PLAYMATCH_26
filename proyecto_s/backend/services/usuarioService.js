@@ -1,8 +1,10 @@
 import {
   findUsuarioById,
+  findUsuarioByEmail,
   getAllUsuarios,
   updateUsuarioModel,
   deleteUsuarioModel,
+  registrarUsuarioModel,
 } from "../models/usuarioModel.js";
 
 //Obtener todas
@@ -41,4 +43,14 @@ export const deleteUsuarioService = async (id) => {
   }
 
   await deleteUsuarioModel(id);
+};
+
+//Registrar usuario
+export const registrarUsuarioService = async (data) => {
+  const usuario = await findUsuarioByEmail(data.email);
+
+  if (usuario) {
+    throw new Error("El email ya está registrado");
+  }
+  await registrarUsuarioModel(data);
 };

@@ -47,17 +47,17 @@ export default function Navbar() {
   return (
     <nav className="navbar">
       {/* LOGO */}
-      <Link to="/home" className="navbar-logo">
-        <div>
-          <div className="logoName">
-            <img src={logo} alt="Logo" className="logo" />
-            <div className="titulo-logo">
-              <span className="play">PLAY</span>
-              <span className="match">MATCH</span>
-            </div>
+      {/* <Link to="/home" className="navbar-logo">*/}
+      <div>
+        <div className="logoName">
+          <img src={logo} alt="Logo" className="logo" />
+          <div className="titulo-logo">
+            <span className="play">PLAY</span>
+            <span className="match">MATCH</span>
           </div>
         </div>
-      </Link>
+      </div>
+      {/*</Link>*/}
 
       {/* BUSCADOR */}
       <div className="navbar-search">
@@ -74,10 +74,9 @@ export default function Navbar() {
         {isAuthenticated && (
           <ul className="navbar-menu">
             <li>
-              <Link to="/novedades" className="navbar-link icon-link">
+              {/*<Link to="/novedades" className="navbar-link icon-link">
                 <FaBell />
-                <span>Novedades</span>
-              </Link>
+              </Link>*/}
             </li>
           </ul>
         )}

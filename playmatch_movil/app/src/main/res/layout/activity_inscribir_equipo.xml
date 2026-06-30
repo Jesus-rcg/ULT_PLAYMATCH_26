@@ -1,63 +1,119 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:padding="16dp">
+<LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="#1A1A2E"
+        android:padding="20dp"
+        android:paddingTop="60dp">
 
+    <!-- Header -->
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="24dp">
+
+        <ImageButton
+                android:id="@+id/btnVolver"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@android:drawable/ic_menu_revert"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="Volver"/>
+
+        <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Inscribir Equipo"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:gravity="center"/>
+
+        <View
+                android:layout_width="48dp"
+                android:layout_height="48dp"/>
+
+    </LinearLayout>
+
+    <!-- Label Torneo -->
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Inscribir Equipo"
+            android:text="Seleccionar Torneo"
+            android:textColor="#A5B4FC"
             android:textStyle="bold"
-            android:textSize="22sp"/>
+            android:textSize="13sp"
+            android:layout_marginBottom="6dp"/>
 
-    <!-- Torneos -->
+    <!-- Spinner Torneos -->
     <Spinner
             android:id="@+id/spTorneos"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"/>
+            android:layout_height="48dp"
+            android:background="@drawable/bg_busqueda"
+            android:paddingStart="12dp"
+            android:layout_marginBottom="16dp"/>
 
-    <!-- Buscar equipo -->
+    <!-- Label Buscar -->
     <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Buscar equipo"
+            android:textColor="#A5B4FC"
             android:textStyle="bold"
-            android:layout_marginTop="20dp"/>
+            android:textSize="13sp"
+            android:layout_marginBottom="6dp"/>
 
+    <!-- Buscador -->
     <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginBottom="12dp">
 
         <EditText
                 android:id="@+id/etBuscarEquipo"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="48dp"
                 android:layout_weight="1"
-                android:hint="Nombre del equipo"/>
+                android:hint="Nombre del equipo"
+                android:background="@drawable/bg_busqueda"
+                android:paddingStart="16dp"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#6B7280"/>
 
         <Button
                 android:id="@+id/btnBuscarEquipo"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Buscar"/>
+                android:layout_height="48dp"
+                android:text="Buscar"
+                android:textColor="#FFFFFF"
+                android:backgroundTint="#534AB7"
+                android:layout_marginStart="8dp"/>
+
     </LinearLayout>
 
-    <!-- Equipos encontrados -->
+    <!-- Lista equipos encontrados -->
     <ListView
             android:id="@+id/listaEquipos"
             android:layout_width="match_parent"
-            android:layout_height="220dp"
-            android:layout_marginTop="10dp"/>
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:layout_marginBottom="12dp"/>
 
+    <!-- Botón Inscribir -->
     <Button
             android:id="@+id/btnInscribir"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:text="Inscribir Equipo"/>
+            android:layout_height="52dp"
+            android:text="Inscribir Equipo"
+            android:textColor="#111827"
+            android:textStyle="bold"
+            android:backgroundTint="#534AB7"/>
 
 </LinearLayout>
