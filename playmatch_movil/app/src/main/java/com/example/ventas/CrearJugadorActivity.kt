@@ -95,11 +95,16 @@ class CrearJugadorActivity : AppCompatActivity() {
 
             val jugador = Jugador(
 
+                id_jugador = 0,
+
                 id_usuario =
-                    usuarioSeleccionado.id,
+                    usuarioSeleccionado.id!!,
 
                 nombre_usuario =
                     usuarioSeleccionado.nombre_usuario,
+
+                apellido_usuario =
+                    usuarioSeleccionado.apellido_usuario,
 
                 posicion =
                     spPosicion.selectedItem.toString(),
@@ -241,20 +246,20 @@ class CrearJugadorActivity : AppCompatActivity() {
                     listaUsuarios =
                         response.body()?.data ?: emptyList()
 
-                    val nombres =
-                        listaUsuarios.map {
-                            "${it.nombre_usuario} ${it.apellido_usuario}"
-                        }
+                    val nombres = listaUsuarios.map {
+                        "${it.nombre_usuario} ${it.apellido_usuario}"
 
+                    }
+                    Log.d("USUARIOS_SIZE", listaUsuarios.size.toString())
+                    Log.d("USUARIOS_DATA", listaUsuarios.toString())
+                    Log.d("NOMBRES", nombres.toString())
                     val adapter = ArrayAdapter(
                         this@CrearJugadorActivity,
                         android.R.layout.simple_spinner_item,
                         nombres
                     )
 
-                    adapter.setDropDownViewResource(
-                        android.R.layout.simple_spinner_dropdown_item
-                    )
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 
                     spUsuario.adapter = adapter
 

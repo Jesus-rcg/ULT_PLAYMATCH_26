@@ -4,7 +4,10 @@ import {
   createJugadorService,
   updateJugadorService,
   deleteJugadorService,
+  
 } from "../services/jugadoresService.js";
+
+import { getUsuariosDisponiblesModel } from "../models/jugadoresModel.js";
 
 // Obtener todos los jugadores
 export const getJugadores = async (req, res) => {
@@ -46,6 +49,8 @@ export const getJugadorById = async (req, res) => {
 
 // Crear jugador
 export const createJugador = async (req, res) => {
+  console.log("¡SÍ! ENTRÓ AL CONTROLADOR DE CREAR JUGADOR (POST)");
+  console.log("Datos recibidos:", req.body);
   try {
     const result = await createJugadorService(req.body);
 
@@ -88,6 +93,7 @@ export const updateJugador = async (req, res) => {
   }
 };
 export const getUsuariosDisponibles = async (req, res) => {
+  console.log("¡SÍ! Entró al controlador correcto de JUGADORES");
 
     try {
 

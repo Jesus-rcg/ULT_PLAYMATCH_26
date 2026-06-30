@@ -7,6 +7,7 @@ export const getJugadoresModel = async () => {
       j.id_jugador,
       j.id_usuario,
       u.nombre_usuario,
+      u.apellido_usuario,
       j.posicion,
       j.numero_camiseta,
       j.activo
@@ -27,6 +28,7 @@ export const getJugadorByIdModel = async (id) => {
       j.id_jugador,
       j.id_usuario,
       u.nombre_usuario,
+      u.apellido_usuario,
       j.posicion,
       j.numero_camiseta,
       j.activo
@@ -43,15 +45,42 @@ export const getJugadorByIdModel = async (id) => {
 
 // Crear jugador
 export const createJugadorModel = async (jugador) => {
-  const { id_usuario, posicion, numero_camiseta } = jugador;
 
+  const {
+    id_usuario,
+    nombre_usuario,
+    apellido_usuario,
+    posicion,
+    numero_camiseta
+  } = jugador;
+
+  // 1. Actualizar datos del usuario
+  await pool.query(
+    `
+    UPDATE usuarios
+    SET nombre_usuario = ?,
+        apellido_usuario = ?
+    WHERE id_usuario = ?
+    `,
+    [
+      nombre_usuario,
+      apellido_usuario,
+      id_usuario
+    ]
+  );
+
+  // 2. Crear jugador
   const [result] = await pool.query(
     `
     INSERT INTO jugadores
     (id_usuario, posicion, numero_camiseta)
     VALUES (?, ?, ?)
     `,
-    [id_usuario, posicion, numero_camiseta],
+    [
+      id_usuario,
+      posicion,
+      numero_camiseta
+    ]
   );
 
   return result;
@@ -61,10 +90,27 @@ export const createJugadorModel = async (jugador) => {
 export const updateJugadorModel = async (id, jugador) => {
   const {
     id_usuario,
+    nombre_usuario,
+    apellido_usuario,
     posicion,
     numero_camiseta,
     activo
   } = jugador;
+
+ await pool.query(
+  `
+  UPDATE usuarios
+  SET
+    nombre_usuario = ?,
+    apellido_usuario = ?
+  WHERE id_usuario = ?
+  `,
+[
+  nombre_usuario,
+  apellido_usuario,
+  id_usuario
+]
+);
 
   const [result] = await pool.query(
     `
@@ -90,12 +136,12 @@ export const updateJugadorModel = async (id, jugador) => {
 export const getUsuariosDisponiblesModel = async () => {
   const [rows] = await pool.query(`
     SELECT
-        u.id,
+        u.id_usuario,
         u.nombre_usuario,
         u.apellido_usuario
     FROM usuarios u
     LEFT JOIN jugadores j
-        ON u.id = j.id_usuario
+        ON u.id_usuario = j.id_usuario
     WHERE j.id_usuario IS NULL
       AND u.activo = 1
     ORDER BY u.nombre_usuario
