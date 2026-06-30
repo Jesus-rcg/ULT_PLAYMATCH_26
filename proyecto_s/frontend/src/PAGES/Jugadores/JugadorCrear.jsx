@@ -25,7 +25,7 @@ export default function JugadorCrear() {
     try {
       await createJugador(form);
 
-      navigate("/jugadores");
+      navigate(-1);
     } catch (error) {
       console.error(error);
     }

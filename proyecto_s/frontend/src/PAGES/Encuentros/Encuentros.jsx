@@ -5,6 +5,7 @@ import { ROLES } from "../../CONSTANTES/roles";
 
 import EncuentrosAdmin from "./EncuentrosAdmin";
 import EncuentrosOrganizador from "./EncuentrosOrganizador";
+import EncuentrosJugador from "./EncuentrosJugador";
 
 export default function Encuentros() {
   const { user } = useContext(AuthContext);
@@ -19,5 +20,5 @@ export default function Encuentros() {
     return <EncuentrosOrganizador />;
   }
 
-  return null;
+  return <EncuentrosJugador />;
 }

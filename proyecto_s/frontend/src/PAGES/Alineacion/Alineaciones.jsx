@@ -15,8 +15,8 @@ import { useParams } from "react-router-dom";
 import PosicionCampo from "./PosicionCampo";
 import "../../STILO/estilosPages/alineacion/alineacion.css";
 
-import escudoA from "../../ASSETS/escudo 1.jpg";
-import escudoB from "../../ASSETS/escudo 2.jpg";
+import escudoA from "../../ASSETS/escudo.jpg";
+import escudoB from "../../ASSETS/escudo.jpg";
 import campo from "../../ASSETS/campo12.png";
 
 export default function Alineacion() {

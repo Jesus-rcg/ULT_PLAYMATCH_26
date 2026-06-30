@@ -41,13 +41,11 @@ export default function Navbar() {
 
   const handleLogout = () => {
     logout();
-    // ❌ NO navigate aquí porque logout ya redirige
   };
 
   return (
     <nav className="navbar">
       {/* LOGO */}
-      {/* <Link to="/home" className="navbar-logo">*/}
       <div>
         <div className="logoName">
           <img src={logo} alt="Logo" className="logo" />
@@ -57,7 +55,6 @@ export default function Navbar() {
           </div>
         </div>
       </div>
-      {/*</Link>*/}
 
       {/* BUSCADOR */}
       <div className="navbar-search">
@@ -74,9 +71,7 @@ export default function Navbar() {
         {isAuthenticated && (
           <ul className="navbar-menu">
             <li>
-              {/*<Link to="/novedades" className="navbar-link icon-link">
-                <FaBell />
-              </Link>*/}
+              <div>ID: {user.id_usuario}</div>
             </li>
           </ul>
         )}

@@ -14,8 +14,8 @@ import { getResultadoByEncuentro } from "../../SERVICE/resultadosService";
 import PosicionCampo from "../Alineacion/PosicionCampo";
 import "../../STILO/estilosPages/cronologias/cronologias.css";
 
-import escudoA from "../../ASSETS/escudo 1.jpg";
-import escudoB from "../../ASSETS/escudo 2.jpg";
+import escudoA from "../../ASSETS/escudo.jpg";
+import escudoB from "../../ASSETS/escudo.jpg";
 import campo from "../../ASSETS/campo12.png";
 
 export default function CronologiasOrganizador() {
