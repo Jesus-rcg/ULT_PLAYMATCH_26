@@ -12,8 +12,8 @@ import {
 const router = Router();
 
 router.get("/", getJugadores);
-router.get("/:id", getJugadorById);
 router.get("/usuarios-disponibles", getUsuariosDisponibles);
+router.get("/:id", getJugadorById);
 router.post("/", createJugador);
 router.put("/:id", updateJugador);
 router.delete("/:id", deleteJugador);

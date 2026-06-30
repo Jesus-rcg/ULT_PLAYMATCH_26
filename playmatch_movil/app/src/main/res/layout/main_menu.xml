@@ -182,8 +182,8 @@
 
                     <ImageButton
                             android:id="@+id/btnJugadores"
-                            android:layout_width="52dp"
-                            android:layout_height="52dp"
+                            android:layout_width=" 48dp"
+                            android:layout_height="48dp"
                             app:srcCompat="@mipmap/jugadores"
                             android:background="@drawable/icono_menu_bg"
                             android:scaleType="fitCenter"
