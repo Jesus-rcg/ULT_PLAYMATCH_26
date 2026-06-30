@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import { getJugadoresByEquipo } from "../../SERVICE/cronologiasService";
 import { getEquipoById } from "../../SERVICE/equiposService";
@@ -8,6 +8,7 @@ import "../../STILO/estilosPages/jugadores/Jugadores.css";
 
 export default function JugadoresEquipo() {
   const { idEquipo } = useParams();
+  const navigate = useNavigate();
 
   const [equipo, setEquipo] = useState(null);
   const [jugadores, setJugadores] = useState([]);
@@ -63,7 +64,25 @@ export default function JugadoresEquipo() {
 
       {/* MAIN */}
       <main className="detalle-main">
-        <h2>Plantilla del equipo</h2>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: "20px",
+          }}
+        >
+          <h2>Plantilla del equipo</h2>
+
+          <button
+            className="btn-inscribir-equipo"
+            onClick={() =>
+              navigate(`/inscripcionJugadoresOrganizador/crear/${idEquipo}`)
+            }
+          >
+            + Inscribir Jugador
+          </button>
+        </div>
 
         {jugadores.length === 0 ? (
           <p>No hay jugadores inscritos.</p>

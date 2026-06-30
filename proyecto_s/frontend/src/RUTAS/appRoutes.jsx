@@ -34,6 +34,7 @@ import InscripcionesEquiposCrear from "../PAGES/InscripcionesEquipo/inscripcione
 import InscripcionesEquiposEditar from "../PAGES/InscripcionesEquipo/inscripcionesEquiposEditar";
 import InscripcionesEquiposEliminar from "../PAGES/InscripcionesEquipo/inscripcionesEquiposEliminar";
 import InscripcionesEquiposOrganizador from "../PAGES/InscripcionesEquipo/InscripcionesEquiposOrganizador";
+import InscripcionesEquiposOrganizadorCrear from "../PAGES/InscripcionesEquipo/InscripcionesEquiposOrganizadorCrear";
 
 //Equipos
 import Equipos from "../PAGES/Equipos/Equipos";
@@ -46,6 +47,7 @@ import InscripcionJugadores from "../PAGES/InscripcionJugador/InscripcionJugador
 import InscripcionJugadoresCrear from "../PAGES/InscripcionJugador/InscripcionJugadoresCrear";
 import InscripcionJugadoresEditar from "../PAGES/InscripcionJugador/InscripcionJugadoresEditar";
 import InscripcionJugadoresEliminar from "../PAGES/InscripcionJugador/InscripcionJugadoresEliminar";
+import InscripcionJugadoresOrganizadorCrear from "../PAGES/InscripcionJugador/InscripcionJugadoresOrganizadorCrear";
 
 //Jugadores
 import Jugadores from "../PAGES/Jugadores/Jugadores";
@@ -133,6 +135,10 @@ export default function AppRoutes() {
               path="/cronologias/Eliminar/:id"
               element={<CronologiasEliminar />}
             />
+            ************************************************************************************
+            <Route path="/torneos/crear" element={<TorneoCrear />} />
+            <Route path="/torneos/editar/:id" element={<TorneoEditar />} />
+            <Route path="/torneos/eliminar/:id" element={<TorneoEliminar />} />
           </Route>
           //*********************************************************************************************
           */
@@ -150,11 +156,7 @@ export default function AppRoutes() {
             //------------------------Tornoes----------------------------------------
             <Route path="/torneos/:id_torneo" element={<Torneos />} />
             <Route path="/torneos" element={<Torneos />} />
-            <Route path="/torneos/crear" element={<TorneoCrear />} />
-            <Route path="/torneos/editar/:id" element={<TorneoEditar />} />
-            <Route path="/torneos/eliminar/:id" element={<TorneoEliminar />} />
             //----------------Inscripcio-de-equipos----------------------------------
-            //----------------Inscripcion-de-equipos----------------------------------
             <Route
               path="/inscripcionEquipos"
               element={<InscripcionesEquipos />}
@@ -164,8 +166,8 @@ export default function AppRoutes() {
               element={<InscripcionesEquiposOrganizador />}
             />
             <Route
-              path="/inscripcionEquipos/crear/:id_torneo"
-              element={<InscripcionesEquiposCrear />}
+              path="/inscripcionEquiposOrganizador/crear/:id_torneo"
+              element={<InscripcionesEquiposOrganizadorCrear />}
             />
             <Route
               path="/inscripcionEquipos/editar/:id"
@@ -185,7 +187,10 @@ export default function AppRoutes() {
               path="/inscripcionJugadores"
               element={<InscripcionJugadores />}
             />
-            <Route path="/jugadores/:idEquipo" element={<JugadoresEquipo />} />
+            <Route
+              path="/inscripcionJugadoresOrganizador/crear/:idEquipo"
+              element={<InscripcionJugadoresOrganizadorCrear />}
+            />
             <Route
               path="/inscripcionJugadores/Crear"
               element={<InscripcionJugadoresCrear />}
@@ -200,6 +205,10 @@ export default function AppRoutes() {
             />
             //-------------------Jugadores-----------------------------------------------
             <Route path="/jugadores" element={<Jugadores />} />
+            <Route
+              path="/jugadoresEquipo/:idEquipo"
+              element={<JugadoresEquipo />}
+            />
             <Route path="/jugadores/crear" element={<JugadorCrear />} />
             <Route path="/jugadores/editar/:id" element={<JugadorEditar />} />
             <Route

@@ -64,23 +64,49 @@ export const getInscripcionById = async (id) => {
 };
 
 //Crear inscripcion
+// Crear inscripción
 export const createInscripcion = async (id_torneo, id_equipo, estado) => {
   const [exist] = await db.query(
     `
-    SELECT * FROM inscripcionesequipos
+    SELECT *
+    FROM inscripcionesequipos
     WHERE id_torneo = ? AND id_equipo = ?
     `,
     [id_torneo, id_equipo],
   );
 
+  // Ya existe una inscripción
   if (exist.length > 0) {
-    throw new Error("Este equipo ya está inscrito en este torneo");
+    const inscripcion = exist[0];
+
+    // Si está activa, no permitir otra
+    if (inscripcion.activo === 1) {
+      throw new Error("Este equipo ya está inscrito en este torneo");
+    }
+
+    // Si estaba inactiva, reactivarla
+    const [result] = await db.query(
+      `
+      UPDATE inscripcionesequipos
+      SET
+        activo = 1,
+        estado = ?,
+        fecha_ins_equipo = NOW()
+      WHERE id_inscripcion_e = ?
+      `,
+      [estado, inscripcion.id_inscripcion_e],
+    );
+
+    return result;
   }
 
+  // No existe: crear una nueva
   const [result] = await db.query(
     `
-    INSERT INTO inscripcionesequipos (id_torneo, id_equipo, estado)
-    VALUES (?, ?, ?)
+    INSERT INTO inscripcionesequipos
+      (id_torneo, id_equipo, estado, activo)
+    VALUES
+      (?, ?, ?, 1)
     `,
     [id_torneo, id_equipo, estado],
   );
@@ -89,19 +115,39 @@ export const createInscripcion = async (id_torneo, id_equipo, estado) => {
 };
 
 //Cambiar estado
+//Cambiar estado
 export const updateEstado = async (id_inscripcion_e, estado) => {
-  const [result] = await db.query(
-    `
-    UPDATE inscripcionesequipos i
-    JOIN equipos e ON i.id_equipo = e.id_equipo
-    SET i.estado = CASE
-      WHEN e.activo = 1 THEN ?
-      ELSE 'Cancelado'
-    END
-    WHERE i.id_inscripcion_e = ?
-    `,
-    [estado, id_inscripcion_e],
-  );
+  let query = "";
+  let params = [];
+
+  if (estado === "Cancelado") {
+    query = `
+      UPDATE inscripcionesequipos i
+      JOIN equipos e ON i.id_equipo = e.id_equipo
+      SET
+        i.estado = 'Cancelado',
+        i.activo = 0
+      WHERE i.id_inscripcion_e = ?
+    `;
+
+    params = [id_inscripcion_e];
+  } else {
+    query = `
+      UPDATE inscripcionesequipos i
+      JOIN equipos e ON i.id_equipo = e.id_equipo
+      SET
+        i.estado = CASE
+          WHEN e.activo = 1 THEN ?
+          ELSE 'Cancelado'
+        END,
+        i.activo = 1
+      WHERE i.id_inscripcion_e = ?
+    `;
+
+    params = [estado, id_inscripcion_e];
+  }
+
+  const [result] = await db.query(query, params);
 
   return result;
 };

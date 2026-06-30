@@ -1,21 +1,21 @@
 import * as InscripcionModel from "../models/inscripcionEquiposModel.js";
 
-//Otener todas
+// Obtener todas
 export const getInscripciones = async () => {
   return await InscripcionModel.getAllInscripciones();
 };
 
-//Obtener por torneo
+// Obtener por torneo
 export const getInscripcionesByTorneo = async (id_torneo) => {
   return await InscripcionModel.getByTorneo(id_torneo);
 };
 
-//obtener por ID
+// Obtener por ID
 export const getInscripcionById = async (id) => {
   return await InscripcionModel.getInscripcionById(id);
 };
 
-//crear inscripcion
+// Crear inscripción
 export const crearInscripcion = async (id_torneo, id_equipo, estado) => {
   if (!id_torneo || !id_equipo) {
     throw new Error("Datos incompletos");
@@ -28,8 +28,8 @@ export const crearInscripcion = async (id_torneo, id_equipo, estado) => {
   );
 };
 
-//Si el equipo es eliminado se cambia el estado automaticamente a cancelado
-export const cambiarEstado = async (id_inscripcion_e, estado) => {
+// Cambiar estado
+export const cambiarEstado = async (id_inscripcion_e, estado, activo) => {
   const estadosValidos = ["Pendiente", "Inscrito", "Cancelado"];
 
   if (!estadosValidos.includes(estado)) {
@@ -43,13 +43,10 @@ export const cambiarEstado = async (id_inscripcion_e, estado) => {
     throw new Error("Inscripción no encontrada");
   }
 
-  // regla de negocio centralizada
-  const estadoFinal = inscripcion.activo == 1 ? estado : "Cancelado";
-
-  return await InscripcionModel.updateEstado(id_inscripcion_e, estadoFinal);
+  return await InscripcionModel.updateEstado(id_inscripcion_e, estado, activo);
 };
 
-//Eliminar
+// Eliminar
 export const eliminarInscripcion = async (id_inscripcion_e) => {
   return await InscripcionModel.deleteInscripcion(id_inscripcion_e);
 };
