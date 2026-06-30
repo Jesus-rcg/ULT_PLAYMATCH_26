@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getEquiposByTorneo } from "../../SERVICE/equiposService";
+import escudo from "../../ASSETS/escudo.jpg";
 
 import "../../STILO/estilosPages/equipos/equipos.css";
 
@@ -56,7 +57,7 @@ export default function Equipos() {
               </div>
 
               <div className="equipo-logo">
-                <img src={e.escudo} alt={e.nombre_equipo} />
+                <img src={escudo} alt={e.nombre_equipo} />
               </div>
 
               <div className="equipo-info">

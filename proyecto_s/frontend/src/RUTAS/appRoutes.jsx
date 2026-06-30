@@ -27,6 +27,7 @@ import Torneos from "../PAGES/Torneo/Torneos";
 import TorneoCrear from "../PAGES/Torneo/TorneoCrear";
 import TorneoEditar from "../PAGES/Torneo/TorneoEditar";
 import TorneoEliminar from "../PAGES/Torneo/TorneoEliminar";
+import TorneoDetalleJugador from "../PAGES/Torneo/TorneoDetalleJugador";
 
 //Inscripciones de equipos
 import InscripcionesEquipos from "../PAGES/InscripcionesEquipo/inscripcionesEquipos";
@@ -155,6 +156,10 @@ export default function AppRoutes() {
           >
             //------------------------Tornoes----------------------------------------
             <Route path="/torneos/:id_torneo" element={<Torneos />} />
+            <Route
+              path="/torneoJugador/:id"
+              element={<TorneoDetalleJugador />}
+            />
             <Route path="/torneos" element={<Torneos />} />
             //----------------Inscripcio-de-equipos----------------------------------
             <Route

@@ -114,27 +114,57 @@ export const getEquiposByTorneoModel = async (idTorneo) => {
 export const getEquipoJugadorByUsuarioModel = async (id_usuario) => {
   const [rows] = await pool.query(
     `
-    SELECT
-      e.id_equipo,
-      e.nombre_equipo,
-      e.escudo,
-      j.id_jugador,
-      u.nombre_usuario,
-      ij.estado
-    FROM jugadores j
-    INNER JOIN usuarios u
-      ON u.id_usuario = j.id_usuario
-    INNER JOIN inscripcionesjugadores ij
-      ON ij.id_jugador = j.id_jugador
-    INNER JOIN equipos e
-      ON e.id_equipo = ij.id_equipo
-    WHERE j.id_usuario = ?
-      AND ij.estado = 'Inscrito'
-      AND ij.activo = 1
-      AND e.activo = 1
+    SELECT *
+    FROM (
+      -- Caso 1: El usuario es el creador del equipo
+      SELECT
+        e.id_equipo,
+        e.nombre_equipo,
+        e.escudo,
+        NULL AS id_jugador,
+        u.nombre_usuario,
+        'Propietario' AS estado,
+        ie.id_torneo
+      FROM equipos e
+      INNER JOIN usuarios u
+        ON u.id_usuario = e.id_usuario
+      LEFT JOIN inscripcionesequipos ie
+        ON ie.id_equipo = e.id_equipo
+        AND ie.estado = 'Inscrito'
+        AND ie.activo = 1
+      WHERE e.id_usuario = ?
+        AND e.activo = 1
+
+      UNION
+
+      -- Caso 2: El usuario pertenece al equipo como jugador
+      SELECT
+        e.id_equipo,
+        e.nombre_equipo,
+        e.escudo,
+        j.id_jugador,
+        u.nombre_usuario,
+        ij.estado,
+        ie.id_torneo
+      FROM jugadores j
+      INNER JOIN usuarios u
+        ON u.id_usuario = j.id_usuario
+      INNER JOIN inscripcionesjugadores ij
+        ON ij.id_jugador = j.id_jugador
+      INNER JOIN equipos e
+        ON e.id_equipo = ij.id_equipo
+      LEFT JOIN inscripcionesequipos ie
+        ON ie.id_equipo = e.id_equipo
+        AND ie.estado = 'Inscrito'
+        AND ie.activo = 1
+      WHERE j.id_usuario = ?
+        AND ij.estado = 'Inscrito'
+        AND ij.activo = 1
+        AND e.activo = 1
+    ) AS equipo
     LIMIT 1
     `,
-    [id_usuario],
+    [id_usuario, id_usuario],
   );
 
   return rows[0];

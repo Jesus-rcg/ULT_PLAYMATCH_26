@@ -16,6 +16,4 @@ export default function Torneos() {
   if (user?.rol === ROLES.ORGANIZADOR) {
     return <TorneosOrganizador />;
   }
-
-  return <TorneosJugador />;
 }

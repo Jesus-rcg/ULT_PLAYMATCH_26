@@ -13,9 +13,5 @@ export default function Resultados() {
     return <ResultadoAdmin />;
   }
 
-  if (user?.rol === ROLES.ORGANIZADOR) {
-    return <ResultadoOrganizador />;
-  }
-
-  return <ResultadoJugador />;
+  return <ResultadoOrganizador />;
 }

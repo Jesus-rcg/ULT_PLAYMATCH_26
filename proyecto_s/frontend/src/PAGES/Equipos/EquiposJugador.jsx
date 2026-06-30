@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import { AuthContext } from "../../CONTEXT/AuthContext";
 import { getEquipoJugadorByUsuario } from "../../SERVICE/equiposService";
+import escudo from "../../ASSETS/escudo.jpg";
 
 import "../../STILO/estilosPages/torneoCard.css";
 
@@ -44,20 +44,37 @@ export default function EquipoJugador() {
     <div>
       <div className="header-torneos">
         <h2>Mi Equipo</h2>
+        {!equipo && (
+          <div style={{ display: "flex", gap: "10px" }}>
+            <button
+              className="btn-crear"
+              onClick={() => navigate("/jugadores/crear")}
+            >
+              Crear Jugador
+            </button>
+
+            <button
+              className="btn-crear"
+              onClick={() => navigate("/equipos/crear")}
+            >
+              Crear Equipo
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="torneos-container">
         {equipo ? (
           <div
             className="torneo-card"
-            onClick={() => navigate(`/jugadores/${equipo.id_equipo}`)}
+            onClick={() => navigate(`/jugadoresEquipo/${equipo.id_equipo}`)}
             style={{ cursor: "pointer" }}
           >
             <h3 className="torneo-title">{equipo.nombre_equipo}</h3>
-
+            <h4>ID: {equipo.id_equipo}</h4>
             <div className="data-container">
               <div className="img-torneo">
-                <img src={equipo.escudo} alt={equipo.nombre_equipo} />
+                <img src={escudo} alt={equipo.nombre_equipo} />
               </div>
 
               <div className="data-torneo">
@@ -72,27 +89,25 @@ export default function EquipoJugador() {
             </div>
 
             <div className="foot-data">
-              <div className="foot-data">
-                <button
-                  className="btn-editar"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    navigate(`/jugadores/${equipo.id_equipo}`);
-                  }}
-                >
-                  Ver Equipo
-                </button>
+              <button
+                className="btn-editar"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigate(`/jugadoresEquipo/${equipo.id_equipo}`);
+                }}
+              >
+                Ver Jugadores
+              </button>
 
-                <button
-                  className="btn-ver"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    navigate(`/torneos/${equipo.id_torneo}`);
-                  }}
-                >
-                  Ver Torneo
-                </button>
-              </div>
+              <button
+                className="btn-ver"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigate(`/torneoJugador/${equipo.id_torneo}`);
+                }}
+              >
+                Ver Torneo
+              </button>
             </div>
           </div>
         ) : (
