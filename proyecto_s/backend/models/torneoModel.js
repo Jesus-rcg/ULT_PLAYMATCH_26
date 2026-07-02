@@ -55,6 +55,29 @@ export const getTorneosByUsuarioModel = async (id_usuario) => {
   return rows;
 };
 
+export const getTipoTorneoModel = async () => {
+  const [rows] = await pool.query(`
+    SELECT DISTINCT tipo_torneo
+    FROM torneos
+    WHERE tipo_torneo IS NOT NULL
+    ORDER BY tipo_torneo
+  `);
+
+  return rows;
+};
+
+export const getCategoriaModel = async () => {
+  const [rows] = await pool.query(`
+    SELECT DISTINCT categoria
+    FROM torneos
+    WHERE categoria IS NOT NULL
+    ORDER BY categoria
+  `);
+
+  return rows;
+};
+
+
 //Crear torneo
 export const createTorneoModel = async (torneo) => {
   const {
@@ -126,15 +149,11 @@ export const deleteTorneoModel = async (id) => {
     throw new Error("No se puede Eliminar el torneo, tiene equipos inscritos");
   }
 
-  // desactivar torneo
+  // Eliminar torneo
   await pool.query(
-    `
-    UPDATE torneos
-    SET activo = 0
-    WHERE id_torneo = ?
-    `,
-    [id],
-  );
+  `DELETE FROM torneos WHERE id_torneo = ?`,
+  [id]
+);
 };
 
 //Obtener torneos por ID

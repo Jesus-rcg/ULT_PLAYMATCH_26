@@ -6,6 +6,7 @@ import {
   registrarUsuarioService,
   cambiarPasswordService,
 } from "../services/usuarioService.js";
+import {getUsuariosDisponiblesService} from "../services/usuarioService.js";
 
 import codigos from "../utils/codigosVerificacion.js";
 import { enviarCodigo } from "../utils/email.js";
@@ -42,6 +43,29 @@ export const getUsuarios = async (req, res) => {
     return res.status(500).json({
       success: false,
     });
+  }
+};
+
+
+
+export const getUsuariosDisponibles = async (req, res) => {
+
+  try {
+
+    const usuarios = await getUsuariosDisponiblesService();
+
+    res.json({
+      data: usuarios
+    });
+
+  } catch (error) {
+
+    console.error(error);
+
+    res.status(500).json({
+      msg: "Error al obtener usuarios disponibles"
+    });
+
   }
 };
 

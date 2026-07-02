@@ -4,15 +4,32 @@ import {
   getTorneoByIdModel,
   deleteTorneoModel,
   updateTorneoModel,
-  actualizarEstadoTorneoModel,
-  getTorneosByUsuarioModel,
+  actualizarEstadoTorneoModel
 } from "../models/torneoModel.js";
+
+import { getTipoTorneoModel } from "../models/torneoModel.js";
+
+import { getCategoriaModel } from "../models/torneoModel.js";
+
 
 // =========================
 // OBTENER TODOS
 // =========================
 export const getTorneosService = async () => {
   return await getTorneosModel();
+};
+
+// =========================
+// OBTENER Tipo Torneo
+// =========================
+export const getTipoTorneoService = async () => {
+  return await getTipoTorneoModel();
+};
+// =========================
+// OBTENER Categoria
+// =========================
+export const getCategoriaService = async () => {
+  return await getCategoriaModel();
 };
 
 // =========================

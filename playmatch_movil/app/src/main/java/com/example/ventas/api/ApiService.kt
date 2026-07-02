@@ -38,6 +38,11 @@ interface ApiService {
         id: Int
     ): Call<Usuario>
 
+    @GET("/api/usuarios/disponibles")
+    fun getUsuariosDisponibles(
+        @Header("Authorization") token: String
+    ): Call<UsuarioResponse>
+
     @PUT("/api/usuarios/{id}")
     fun updateUsuario(
         @Header("Authorization")
@@ -186,17 +191,25 @@ interface ApiService {
 
     @POST("/api/torneos")
     fun createTorneo(
-        @Header("Authorization")
-        token: String,
-        @Body
-        torneo: Torneo
-    ): Call<Torneo>
+        @Header("Authorization") token: String,
+        @Body torneo: CreateTorneoRequest
+    ): Call<ApiResponse>
 
+    @GET("/api/torneos/tipo-torneo")
+    fun getTipoTorneo(
+        @Header("Authorization") token: String
+    ): Call<List<TipoTorneo>>
+    @GET("/api/torneos/categoria")
+    fun getCategoria(
+        @Header("Authorization") token: String
+    ): Call<List<CategoriaTorneo>>
     @GET("/api/torneos")
     fun getTorneo(
         @Header("Authorization")
         token: String
     ): Call<List<Torneo>>
+
+
 
     @GET("/api/torneos/{id}")
     fun getTorneo(
@@ -208,13 +221,11 @@ interface ApiService {
 
     @PUT("/api/torneos/{id}")
     fun updateTorneo(
-        @Header("Authorization")
-        token: String,
-        @Path("id")
-        id: Int,
-        @Body
-        torneo: Torneo
+        @Header("Authorization") token: String,
+        @Path("id") id: Int,
+        @Body torneo: UpdateTorneoRequest
     ): Call<Void>
+
 
     @DELETE("/api/torneos/{id}")
     fun deleteTorneo(

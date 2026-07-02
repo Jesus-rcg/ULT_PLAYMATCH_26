@@ -22,14 +22,19 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class TorneosActivity : AppCompatActivity() {
+
+    private var lista: List<Torneo> = emptyList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
 
         setContentView(R.layout.activity_torneos)
+
 
         val recycler = findViewById<RecyclerView>(R.id.recyclerTorneos)
         val txtContador = findViewById<TextView>(R.id.txtContadorTorneos)
@@ -96,7 +101,7 @@ class TorneosActivity : AppCompatActivity() {
                         return
                     }
 
-                    val lista = response.body() ?: emptyList()
+                    lista = response.body() ?: emptyList()
 
                     txtContador.text = "${lista.size} registros"
 
@@ -118,9 +123,8 @@ class TorneosActivity : AppCompatActivity() {
                             count: Int,
                             after: Int
                         ) {
-                        }
 
-                        override fun afterTextChanged(s: Editable?) {}
+                        }
 
                         override fun onTextChanged(
                             s: CharSequence?,
@@ -129,57 +133,31 @@ class TorneosActivity : AppCompatActivity() {
                             count: Int
                         ) {
 
-                            val texto =
-                                s.toString().lowercase().trim()
+                            val texto = s.toString().lowercase().trim()
 
-                            val filtrada =
-                                if (texto.isEmpty()) {
-                                    lista
-                                } else {
-                                    lista.filter {
-
-                                        it.nombre_torneo
-                                            .lowercase()
-                                            .contains(texto)
-
-                                                ||
-
-                                                it.categoria
-                                                    .lowercase()
-                                                    .contains(texto)
-
-                                                ||
-
-                                                it.tipo_torneo
-                                                    .lowercase()
-                                                    .contains(texto)
-
-                                                ||
-
-                                                it.ciudad
-                                                    .lowercase()
-                                                    .contains(texto)
-
-                                                ||
-
-                                                it.estado
-                                                    .lowercase()
-                                                    .contains(texto)
-                                    }
+                            val filtrada = if (texto.isEmpty()) {
+                                lista
+                            } else {
+                                lista.filter {
+                                    it.nombre_torneo.lowercase().contains(texto)
+                                            || it.categoria.toString().contains(texto)
+                                            || it.tipo_torneo.toString().contains(texto)
+                                            || it.ciudad.lowercase().contains(texto)
+                                            || it.estado.lowercase().contains(texto)
                                 }
+                            }
 
-                            txtContador.text =
-                                "${filtrada.size} registros"
+                            txtContador.text = "${filtrada.size} registros"
 
                             recycler.adapter = TorneoAdapter(
                                 filtrada,
-                                onEditar = { torneo ->
-                                    abrirEditar(torneo)
-                                },
-                                onEliminar = { torneo ->
-                                    confirmarEliminar(torneo)
-                                }
+                                onEditar = { abrirEditar(it) },
+                                onEliminar = { confirmarEliminar(it) }
                             )
+                        }
+
+                        override fun afterTextChanged(s: Editable?) {
+                            // no se usa normalmente
                         }
                     })
                 }
@@ -291,6 +269,12 @@ class TorneosActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        recreate()
+
+        cargarTorneos(
+            findViewById(R.id.recyclerTorneos),
+            findViewById(R.id.txtContadorTorneos),
+            findViewById(R.id.progressBarTorneos),
+            findViewById(R.id.edtBuscarTorneos)
+        )
     }
 }

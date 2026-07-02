@@ -7,6 +7,7 @@ import {
   registrarUsuarioModel,
   cambiarPasswordModel
 } from "../models/usuarioModel.js";
+import { getUsuariosDisponiblesModel } from "../models/usuarioModel.js";
 
 //Obtener todas
 export const getUsuariosService = async () => {
@@ -22,6 +23,12 @@ export const getUsuarioByIdService = async (id) => {
   }
 
   return user;
+};
+
+
+
+export const getUsuariosDisponiblesService = async () => {
+  return await getUsuariosDisponiblesModel();
 };
 
 //Actualizar

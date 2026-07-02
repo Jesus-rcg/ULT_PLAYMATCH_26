@@ -67,7 +67,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="48dp"
-                android:layout_marginBottom="48dp"/>
+                android:layout_marginBottom="20dp"/>
 
         <!-- POSICION -->
 
@@ -101,12 +101,7 @@
 
         <!-- ACTIVO -->
 
-        <Spinner
-                android:id="@+id/spActivo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="48dp"
-                android:layout_marginBottom="20dp"/>
+
 
         <Button
                 android:id="@+id/btnGuardarJugadores"
