@@ -1,6 +1,5 @@
 import {
   getJugadoresService,
-  getJugadorByIdService,
   createJugadorService,
   updateJugadorService,
   deleteJugadorService,
