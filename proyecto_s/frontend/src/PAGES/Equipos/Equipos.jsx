@@ -5,8 +5,9 @@ import { ROLES } from "../../CONSTANTES/roles";
 import EquiposAdmin from "./EquiposAdmin";
 import EquiposOrganizador from "./EquiposOrganizador";
 import EquiposJugador from "./EquiposJugador";
+import EquiposUsuario from "./EquipoUsuario";
 
-export default function Resultados() {
+export default function Equipos() {
   const { user } = useContext(AuthContext);
 
   if (user?.rol === ROLES.ADMINISTRADOR) {
@@ -17,5 +18,9 @@ export default function Resultados() {
     return <EquiposOrganizador />;
   }
 
-  return <EquiposJugador />;
+  if (user?.rol === ROLES.USUARIO) {
+    return <EquiposJugador />;
+  }
+
+  // return <EquiposUsuario />;
 }

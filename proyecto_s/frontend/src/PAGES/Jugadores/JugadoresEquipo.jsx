@@ -74,14 +74,16 @@ export default function JugadoresEquipo() {
         >
           <h2>Plantilla del equipo</h2>
 
-          <button
-            className="btn-inscribir-equipo"
-            onClick={() =>
-              navigate(`/inscripcionJugadoresOrganizador/crear/${idEquipo}`)
-            }
-          >
-            + Inscribir Jugador
-          </button>
+          <div style={{ display: "flex", gap: "10px" }}>
+            <button
+              className="btn-inscribir-equipo"
+              onClick={() =>
+                navigate(`/inscripcionJugadoresOrganizador/crear/${idEquipo}`)
+              }
+            >
+              Inscribir Jugador
+            </button>
+          </div>
         </div>
 
         {jugadores.length === 0 ? (

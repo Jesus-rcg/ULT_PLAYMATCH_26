@@ -78,7 +78,7 @@ export default function PosicionCampo({
 
               {stats.amarillas > 0 && (
                 <div className="badge-tarjeta">
-                  <span className="cantida">{stats.amarillas}</span>
+                  <span></span>
                   <br />
                   <span className="icono-tarjeta">🟨</span>
                 </div>
@@ -86,7 +86,7 @@ export default function PosicionCampo({
 
               {stats.rojas > 0 && (
                 <div className="badge-tarjeta">
-                  <span className="cantida">{stats.rojas}</span>
+                  <span></span>
                   <br />
                   <span className="icono-tarjeta">🟥</span>
                 </div>

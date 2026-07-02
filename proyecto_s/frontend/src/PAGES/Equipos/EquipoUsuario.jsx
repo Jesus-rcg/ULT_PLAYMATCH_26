@@ -35,7 +35,7 @@ export default function Equipos() {
           className="btn-inscribir-equipo"
           onClick={() => navigate(`/inscripcionEquiposOrganizador/crear/${id}`)}
         >
-          Inscribir Equipo
+          + Inscribir Equipo
         </button>
       </div>
 

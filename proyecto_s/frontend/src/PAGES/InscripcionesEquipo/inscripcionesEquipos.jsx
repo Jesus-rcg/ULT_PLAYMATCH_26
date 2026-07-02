@@ -4,6 +4,7 @@ import { ROLES } from "../../CONSTANTES/roles";
 
 import InscripcionesEquiposAdmin from "./InscripcionesEquiposAdmin";
 import InscripcionesEquiposOrganizador from "./InscripcionesEquiposOrganizador";
+import InscripcionesEquiposUsuario from "./InscripcionesEquiposUsuario";
 
 export default function InscripcionesEquipos({ id_torneo }) {
   const { user } = useContext(AuthContext);
@@ -12,5 +13,9 @@ export default function InscripcionesEquipos({ id_torneo }) {
     return <InscripcionesEquiposAdmin />;
   }
 
-  return <InscripcionesEquiposOrganizador id_torneo={id_torneo} />;
+  if (user?.rol == ROLES.ORGANIZADOR) {
+    return <InscripcionesEquiposOrganizador id_torneo={id_torneo} />;
+  }
+
+  return <InscripcionesEquiposUsuario id_torneo={id_torneo} />;
 }

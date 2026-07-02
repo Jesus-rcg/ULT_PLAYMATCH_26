@@ -71,3 +71,12 @@ export const eliminarInscripcionJugador = async (id_inscripcion_j) => {
 
   return InscripcionJugadorModel.deleteInscripcionJugador(id_inscripcion_j);
 };
+
+// Obtener solicitudes de un equipo
+export const getSolicitudesByEquipo = async (id_equipo) => {
+  if (!id_equipo) {
+    throw new Error("ID de equipo requerido");
+  }
+
+  return InscripcionJugadorModel.getSolicitudesByEquipo(id_equipo);
+};

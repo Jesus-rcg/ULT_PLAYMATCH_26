@@ -92,17 +92,21 @@ export default function InscripcionesEquiposOrganizador({ id_torneo }) {
         }}
       >
         <button
-          className={filtro === "Pendiente" ? "btn-aceptar" : "btn-rechazar"}
+          className={
+            filtro === "Pendiente" ? "btn-inscritos" : "btn-pendientes-i"
+          }
           onClick={() => setFiltro("Pendiente")}
         >
           Pendientes
         </button>
 
         <button
-          className={filtro === "Inscrito" ? "btn-aceptar" : "btn-rechazar"}
+          className={
+            filtro === "Inscrito" ? "btn-inscritos" : "btn-pendientes-i"
+          }
           onClick={() => setFiltro("Inscrito")}
         >
-          Inscritos
+          Equipos Inscritos
         </button>
       </div>
 
@@ -146,7 +150,7 @@ export default function InscripcionesEquiposOrganizador({ id_torneo }) {
             {inscripcion.estado === "Pendiente" && (
               <>
                 <button
-                  className="btn-aceptar"
+                  className="btn-aceptar-i"
                   onClick={() =>
                     actualizarEstado(
                       inscripcion.id_inscripcion_e,
@@ -159,7 +163,7 @@ export default function InscripcionesEquiposOrganizador({ id_torneo }) {
                 </button>
 
                 <button
-                  className="btn-rechazar"
+                  className="btn-rechazar-i"
                   onClick={() =>
                     actualizarEstado(
                       inscripcion.id_inscripcion_e,
@@ -175,12 +179,12 @@ export default function InscripcionesEquiposOrganizador({ id_torneo }) {
 
             {inscripcion.estado === "Inscrito" && (
               <button
-                className="btn-rechazar"
+                className="btn-pendiente"
                 onClick={() =>
                   actualizarEstado(inscripcion.id_inscripcion_e, "Pendiente", 1)
                 }
               >
-                Pasar a Pendiente
+                Eliminar
               </button>
             )}
           </div>
