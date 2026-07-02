@@ -23,6 +23,12 @@ export default function Sidebar() {
       path: "/usuarios",
     },
     {
+      id: 2,
+      roles: [ROLES.ADMINISTRADOR],
+      label: "Torneos",
+      path: "/torneos",
+    },
+    {
       id: 1,
       roles: [ROLES.USUARIO],
       label: "Home",
@@ -30,7 +36,7 @@ export default function Sidebar() {
     },
     {
       id: 2,
-      roles: [ROLES.ADMINISTRADOR, ROLES.USUARIO],
+      roles: [ROLES.USUARIO],
       label: "Mi Equipo",
       path: "/equipos",
     },
@@ -81,12 +87,6 @@ export default function Sidebar() {
       roles: [ROLES.ADMINISTRADOR],
       label: "Resultados",
       path: "/resultados",
-    },
-    {
-      id: 10,
-      roles: [ROLES.ADMINISTRADOR],
-      label: "Posiciones",
-      path: "/posiciones",
     },
   ];
 

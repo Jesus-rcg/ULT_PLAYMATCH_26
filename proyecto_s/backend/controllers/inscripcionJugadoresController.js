@@ -39,6 +39,31 @@ export const getByEquipo = async (req, res) => {
   }
 };
 
+// Obtener solicitudes de un equipo
+export const getSolicitudesByEquipo = async (req, res) => {
+  try {
+    const { id_equipo } = req.params;
+
+    if (!id_equipo) {
+      return res.status(400).json({
+        message: "ID de equipo requerido",
+      });
+    }
+
+    const data =
+      await InscripcionJugadorService.getSolicitudesByEquipo(id_equipo);
+
+    res.json(data);
+  } catch (error) {
+    console.error("ERROR REAL:", error.sqlMessage || error.message || error);
+
+    res.status(500).json({
+      message:
+        error.sqlMessage || error.message || "Error al obtener solicitudes",
+    });
+  }
+};
+
 //Obtener por ID
 export const getInscripcionJugadorById = async (req, res) => {
   try {

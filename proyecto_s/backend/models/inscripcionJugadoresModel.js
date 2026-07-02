@@ -103,23 +103,44 @@ export const createInscripcionJugador = async (
   id_jugador,
   estado,
 ) => {
-  const [exist] = await db.query(
+  const [rows] = await db.query(
     `
-    SELECT * 
+    SELECT *
     FROM inscripcionesjugadores
-    WHERE id_equipo = ? AND id_jugador = ?
+    WHERE id_equipo = ?
+      AND id_jugador = ?
     `,
     [id_equipo, id_jugador],
   );
 
-  if (exist.length > 0) {
-    throw new Error("Este jugador ya está inscrito en este equipo");
+  if (rows.length > 0) {
+    const inscripcion = rows[0];
+
+    if (Number(inscripcion.activo) === 1) {
+      throw new Error("Este jugador ya está inscrito en este equipo");
+    }
+
+    await db.query(
+      `
+      UPDATE inscripcionesjugadores
+      SET
+        activo = 1,
+        estado = ?,
+        fecha_inscripcion = NOW()
+      WHERE id_inscripcion_j = ?
+      `,
+      [estado, inscripcion.id_inscripcion_j],
+    );
+
+    return {
+      insertId: inscripcion.id_inscripcion_j,
+    };
   }
 
   const [result] = await db.query(
     `
-    INSERT INTO inscripcionesjugadores 
-    (id_equipo, id_jugador, estado)
+    INSERT INTO inscripcionesjugadores
+      (id_equipo, id_jugador, estado)
     VALUES (?, ?, ?)
     `,
     [id_equipo, id_jugador, estado],
@@ -130,18 +151,17 @@ export const createInscripcionJugador = async (
 
 //Actualizar estado jugador
 export const updateEstadoJugador = async (id_inscripcion_j, estado) => {
+  const activo = estado === "Cancelado" ? 0 : 1;
+
   const [result] = await db.query(
     `
-    UPDATE inscripcionesjugadores ij
-    JOIN jugadores j 
-      ON ij.id_jugador = j.id_jugador
-    SET ij.estado = CASE
-      WHEN j.activo = 1 THEN ?
-      ELSE 'Cancelado'
-    END
-    WHERE ij.id_inscripcion_j = ?
+    UPDATE inscripcionesjugadores
+    SET
+      estado = ?,
+      activo = ?
+    WHERE id_inscripcion_j = ?
     `,
-    [estado, id_inscripcion_j],
+    [estado, activo, id_inscripcion_j],
   );
 
   return result;
@@ -182,4 +202,42 @@ export const deleteInscripcionJugador = async (id_inscripcion_j) => {
   );
 
   return result;
+};
+
+// Obtener solicitudes de un equipo (Pendientes, Inscritos y Cancelados)
+export const getSolicitudesByEquipo = async (id_equipo) => {
+  const [rows] = await db.query(
+    `
+    SELECT
+      ij.id_inscripcion_j,
+      ij.id_equipo,
+      e.nombre_equipo,
+      ij.id_jugador,
+      u.nombre_usuario,
+      u.apellido_usuario,
+      j.posicion,
+      j.numero_camiseta,
+      ij.fecha_inscripcion,
+      ij.estado,
+      ij.activo
+
+    FROM inscripcionesjugadores ij
+
+    INNER JOIN jugadores j
+      ON ij.id_jugador = j.id_jugador
+
+    INNER JOIN usuarios u
+      ON u.id_usuario = j.id_usuario
+
+    INNER JOIN equipos e
+      ON e.id_equipo = ij.id_equipo
+
+    WHERE ij.id_equipo = ?
+
+    ORDER BY ij.fecha_inscripcion DESC
+    `,
+    [id_equipo],
+  );
+
+  return rows;
 };

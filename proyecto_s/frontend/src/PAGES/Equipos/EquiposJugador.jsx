@@ -1,36 +1,50 @@
 import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../../CONTEXT/AuthContext";
-import { getEquipoJugadorByUsuario } from "../../SERVICE/equiposService";
+
+import {
+  getEquiposByTorneo,
+  getEquipoJugadorByUsuario,
+  deleteEquipo,
+} from "../../SERVICE/equiposService";
+
 import escudo from "../../ASSETS/escudo.jpg";
 
+import "../../STILO/estilosPages/equipos/equipos.css";
 import "../../STILO/estilosPages/torneoCard.css";
 
-export default function EquipoJugador() {
+export default function Equipos() {
+  const { id } = useParams();
   const navigate = useNavigate();
-
   const { user } = useContext(AuthContext);
 
+  const [equipos, setEquipos] = useState([]);
   const [equipo, setEquipo] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const cargarEquipo = async () => {
+    const cargarDatos = async () => {
       try {
-        const data = await getEquipoJugadorByUsuario(user.id_usuario);
-        setEquipo(data);
+        setLoading(true);
+
+        if (id) {
+          // Organizador/Admin: equipos del torneo
+          const data = await getEquiposByTorneo(id);
+          setEquipos(data || []);
+        } else if (user?.id_usuario) {
+          // Jugador: su equipo
+          const data = await getEquipoJugadorByUsuario(user.id_usuario);
+          setEquipo(data);
+        }
       } catch (error) {
         console.error(error);
-        setEquipo(null);
       } finally {
         setLoading(false);
       }
     };
 
-    if (user?.id_usuario) {
-      cargarEquipo();
-    }
-  }, [user]);
+    cargarDatos();
+  }, [id, user]);
 
   if (loading) {
     return (
@@ -40,10 +54,81 @@ export default function EquipoJugador() {
     );
   }
 
+  const eliminarEquipo = async (id_equipo) => {
+    const confirmar = window.confirm("¿Deseas eliminar este equipo?");
+
+    if (!confirmar) return;
+
+    try {
+      await deleteEquipo(id_equipo);
+
+      alert("Equipo eliminado correctamente");
+
+      setEquipos((prev) => prev.filter((e) => e.id_equipo !== id_equipo));
+
+      if (equipo?.id_equipo === id_equipo) {
+        setEquipo(null);
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Error al eliminar el equipo");
+    }
+  };
+
+  if (id) {
+    return (
+      <div className="equipos-container">
+        <div className="header-equipos">
+          <h2 className="titulo-equipos">Equipos Inscritos</h2>
+
+          <button
+            className="btn-inscribir-equipo"
+            onClick={() =>
+              navigate(`/inscripcionEquiposOrganizador/crear/${id}`)
+            }
+          >
+            + Inscribir Equipo
+          </button>
+        </div>
+
+        {equipos.length === 0 ? (
+          <div className="empty-state">
+            <h3>No hay equipos inscritos</h3>
+            <p>Aún no hay equipos en este torneo.</p>
+          </div>
+        ) : (
+          <div className="grid-equipos">
+            {equipos.map((e) => (
+              <div
+                className="equipo-card"
+                key={e.id_equipo}
+                onClick={() => navigate(`/jugadoresEquipo/${e.id_equipo}`)}
+              >
+                <div className="equipo-id">
+                  <span>#{e.id_equipo}</span>
+                </div>
+
+                <div className="equipo-logo">
+                  <img src={escudo} alt={e.nombre_equipo} />
+                </div>
+
+                <div className="equipo-info">
+                  <h3>{e.nombre_equipo}</h3>
+                  <p>{e.nombre_usuario}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  }
+
   return (
     <div>
       <div className="header-torneos">
         <h2>Mi Equipo</h2>
+
         {!equipo && (
           <div style={{ display: "flex", gap: "10px" }}>
             <button
@@ -71,7 +156,9 @@ export default function EquipoJugador() {
             style={{ cursor: "pointer" }}
           >
             <h3 className="torneo-title">{equipo.nombre_equipo}</h3>
+
             <h4>ID: {equipo.id_equipo}</h4>
+
             <div className="data-container">
               <div className="img-torneo">
                 <img src={escudo} alt={equipo.nombre_equipo} />
@@ -85,28 +172,60 @@ export default function EquipoJugador() {
                 <p>
                   <strong>Estado:</strong> {equipo.estado}
                 </p>
+
+                <div className="foot-data">
+                  <button
+                    className="btn-solicitudes"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigate(`/equipo/${equipo.id_equipo}/solicitudes`);
+                    }}
+                  >
+                    Solicitudes
+                  </button>
+
+                  <button
+                    className="btn-ver-jugadores"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigate(`/jugadoresEquipo/${equipo.id_equipo}`);
+                    }}
+                  >
+                    Ver Jugadores
+                  </button>
+
+                  <button
+                    className="btn-ver-torneo"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      navigate(`/torneoJugador/${equipo.id_torneo}`);
+                    }}
+                  >
+                    Ver Torneo
+                  </button>
+                </div>
               </div>
             </div>
 
-            <div className="foot-data">
+            <div>
+              <button
+                className="btn-eliminar"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  eliminarEquipo(equipo.id_equipo);
+                }}
+              >
+                Eliminar
+              </button>
+
               <button
                 className="btn-editar"
                 onClick={(e) => {
                   e.stopPropagation();
-                  navigate(`/jugadoresEquipo/${equipo.id_equipo}`);
+                  navigate(`/equipos/editar/${equipo.id_equipo}`);
                 }}
               >
-                Ver Jugadores
-              </button>
-
-              <button
-                className="btn-ver"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  navigate(`/torneoJugador/${equipo.id_torneo}`);
-                }}
-              >
-                Ver Torneo
+                Editar
               </button>
             </div>
           </div>

@@ -49,6 +49,7 @@ import InscripcionJugadoresCrear from "../PAGES/InscripcionJugador/InscripcionJu
 import InscripcionJugadoresEditar from "../PAGES/InscripcionJugador/InscripcionJugadoresEditar";
 import InscripcionJugadoresEliminar from "../PAGES/InscripcionJugador/InscripcionJugadoresEliminar";
 import InscripcionJugadoresOrganizadorCrear from "../PAGES/InscripcionJugador/InscripcionJugadoresOrganizadorCrear";
+import SolicitudesJugadoresEquipo from "../PAGES/inscripcionJugador/SolicitudesJugadoresEquipo";
 
 //Jugadores
 import Jugadores from "../PAGES/Jugadores/Jugadores";
@@ -195,6 +196,10 @@ export default function AppRoutes() {
             <Route
               path="/inscripcionJugadoresOrganizador/crear/:idEquipo"
               element={<InscripcionJugadoresOrganizadorCrear />}
+            />
+            <Route
+              path="/equipo/:idEquipo/solicitudes"
+              element={<SolicitudesJugadoresEquipo />}
             />
             <Route
               path="/inscripcionJugadores/Crear"

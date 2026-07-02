@@ -1,7 +1,7 @@
 import express from "express";
 import cors from "cors";
 import swaggerUI from "swagger-ui-express";
-import swaggerDocumentation from "./swagger.json" with { type: "json" };
+import swaggerSpec from "./swagger.js";
 
 import authRoutes from "./routes/authRoutes.js";
 import usuarioRoutes from "./routes/usuarioRoutes.js";
@@ -37,7 +37,16 @@ app.use(
 );
 
 // SWAGGER
-app.use("/docs", swaggerUI.serve, swaggerUI.setup(swaggerDocumentation));
+app.use(
+  "/docs",
+  swaggerUI.serve,
+  swaggerUI.setup(swaggerSpec, {
+    explorer: true,
+    swaggerOptions: {
+      persistAuthorization: true,
+    },
+  }),
+);
 
 // ROUTES
 app.use("/api/auth", authRoutes);

@@ -30,6 +30,8 @@
 .escudo {
   text-align: center;
   cursor: pointer;
+  width: 200px;
+  margin-top: 200px;
 }
 
 .escudo img {
@@ -46,6 +48,7 @@
 }
 
 .cancha {
+  position: relative;
   width: 990px;
   height: 650px;
   display: flex;
@@ -437,4 +440,131 @@
 
 .cantida {
   font-size: 15px;
+}
+
+.cronometro {
+  font-size: 30px;
+  color: black;
+  margin-left: 550px;
+  margin-top: -10px;
+}
+
+.btn-cronometro {
+  background-color: rgba(255, 255, 255, 0.475);
+  width: 90px;
+  height: 30px;
+  border-radius: 5px;
+  margin-left: 15px;
+  margin-right: 15px;
+  cursor: pointer;
+}
+
+.btn-cronometro-2 {
+  background-color: rgba(255, 255, 255, 0.475);
+  width: 130px;
+  height: 30px;
+  border-radius: 5px;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.controles-cronometro {
+  margin-left: 565px;
+  margin-top: 5px;
+}
+
+.contenedor-tarjetas {
+  position: absolute;
+  border-radius: 20px;
+  padding: 20px;
+  top: 350px;
+  left: 750px;
+  width: 400px;
+  height: 300px;
+  background: white;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+}
+
+.cont-tar {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+}
+
+.tar {
+  width: 165px;
+  height: 200px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  color: black;
+  font-size: 30px;
+  cursor: pointer;
+}
+
+.tar-a {
+  background-color: yellow;
+}
+
+.tar-r {
+  background-color: red;
+}
+
+.amarilla-opc {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  height: 240px;
+}
+
+.btn-anular {
+  height: 25px;
+  background-color: rgb(74, 74, 248);
+  margin-bottom: 10px;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.contenedor-gol {
+  position: absolute;
+  border-radius: 20px;
+  padding: 20px;
+  top: 350px;
+  left: 800px;
+  width: 300px;
+  height: 300px;
+  background: white;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+}
+
+.gol-tar {
+  width: auto;
+  height: 200px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  color: black;
+  font-size: 30px;
+  cursor: pointer;
+  background-color: blue;
+}
+
+.btn-anular-gol {
+  height: 25px;
+  background-color: red;
+  margin-bottom: 10px;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.btn-finalizar {
+  background-color: red;
+  width: 120px;
+  height: 40px;
+  color: white;
+  border-radius: 10px;
+  margin-left: 40px;
+  cursor: pointer;
 }

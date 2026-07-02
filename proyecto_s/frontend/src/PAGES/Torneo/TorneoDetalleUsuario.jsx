@@ -2,15 +2,20 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 import { getTorneoById } from "../../SERVICE/torneoService";
-import { getEncuentrosByTorneo } from "../../SERVICE/encuentrosService";
 
-import "../../STILO/estilosPages/TorneoDetalle.css";
+import Posiciones from "../Posiciones/Posiciones";
+import Resultados from "../Resultados/Resultados";
+import Equipos from "../Equipos/Equipos";
+import InscripcionesEquipos from "../InscripcionesEquipo/inscripcionesEquipos";
+import Encuentros from "../Encuentros/Encuentros";
 
-export default function TorneoDetalleOrganizador() {
+import trofeo from "../../ASSETS/trofeo.jpg";
+import "../../STILO/estilosPages/torneoDetalle.css";
+
+export default function TorneoDetalleUsuario() {
   const { id } = useParams();
 
   const [torneo, setTorneo] = useState(null);
-  const [encuentros, setEncuentros] = useState([]);
 
   const [tab, setTab] = useState("encuentros");
 
@@ -23,13 +28,8 @@ export default function TorneoDetalleOrganizador() {
         setLoading(true);
         setError("");
 
-        // 🔥 TORNEO
         const torneoData = await getTorneoById(id);
         setTorneo(Array.isArray(torneoData) ? torneoData[0] : torneoData);
-
-        // 🔥 ENCUENTROS
-        const encuentrosData = await getEncuentrosByTorneo(id);
-        setEncuentros(Array.isArray(encuentrosData) ? encuentrosData : []);
       } catch (err) {
         console.error(err);
         setError("Error al cargar el torneo");
@@ -54,22 +54,40 @@ export default function TorneoDetalleOrganizador() {
   return (
     <div className="detalle-container">
       {/* HEADER */}
-      <header className="detalle-header">
+      <header className="detalle-header-1">
         <h1>{torneo.nombre_torneo}</h1>
-        <p>📍 Ciudad: {torneo.ciudad}</p>
-        <p>🏆 Categoria: {torneo.categoria}</p>
-        <p>📌 Estado: {torneo.estado}</p>
-        <p>📌 tipo de torneo: {torneo.tipo_torneo}</p>
-        <p>
-          📌 Fecha de Inicio:{" "}
-          {new Date(torneo.fecha_inicio).toLocaleDateString()}
-        </p>
-        <p>
-          📌 Fecha de Inicio: {new Date(torneo.fecha_fin).toLocaleDateString()}
-        </p>
+        <div className="data-detalle">
+          <div>
+            <img src={trofeo} alt="Logo" />
+          </div>
+          <div className="info">
+            <p>
+              <span className="torneo-subtitulo">Categoria:</span>{" "}
+              {torneo.categoria}
+            </p>
+            <p>
+              <span className="torneo-subtitulo">Tipo De Torneo:</span>{" "}
+              {torneo.tipo_torneo}
+            </p>
+            <p>
+              <span className="torneo-subtitulo">Estado:</span> {torneo.ciudad}
+            </p>
 
+            <p>
+              <span className="torneo-subtitulo">Fecha de Finalizacion:</span>{" "}
+              {new Date(torneo.fecha_fin).toLocaleDateString()}
+            </p>
+          </div>
+        </div>
         {/* TABS */}
         <nav className="detalle-nav">
+          <button
+            className={tab === "posiciones" ? "active" : ""}
+            onClick={() => setTab("posiciones")}
+          >
+            Posiciones
+          </button>
+
           <button
             className={tab === "encuentros" ? "active" : ""}
             onClick={() => setTab("encuentros")}
@@ -85,75 +103,31 @@ export default function TorneoDetalleOrganizador() {
           </button>
 
           <button
-            className={tab === "posiciones" ? "active" : ""}
-            onClick={() => setTab("posiciones")}
+            className={tab === "equipos" ? "active" : ""}
+            onClick={() => setTab("equipos")}
           >
-            Posiciones
+            equipos
           </button>
 
           <button
-            className={tab === "posiciones" ? "active" : ""}
-            onClick={() => setTab("posiciones")}
+            className={tab === "inscripciones" ? "active" : ""}
+            onClick={() => setTab("inscripciones")}
           >
-            equipos
+            Inscripciones
           </button>
         </nav>
       </header>
 
       {/* CONTENIDO */}
       <main className="detalle-main">
-        {/* ENCUENTROS */}
-        {tab === "encuentros" && (
-          <div>
-            <h2>📅 Encuentros</h2>
+        {tab === "posiciones" && <Posiciones id_torneo={id} />}
+        {tab === "encuentros" && <Encuentros id_torneo={id} />}
 
-            {encuentros.length === 0 ? (
-              <p>No hay encuentros registrados</p>
-            ) : (
-              encuentros.map((encuentro) => (
-                <div key={encuentro.id_encuentro} className="encuentro-card">
-                  <h3>
-                    {encuentro.equipo_local} vs {encuentro.equipo_visitante}
-                  </h3>
+        {tab === "resultados" && <Resultados id_torneo={id} />}
 
-                  <p>
-                    📅 Fecha: {new Date(encuentro.fecha).toLocaleDateString()}
-                  </p>
+        {tab === "equipos" && <Equipos id_torneo={id} />}
 
-                  <p>⏰ Hora: {encuentro.hora}</p>
-
-                  <p>📍 Cancha: {encuentro.lugar}</p>
-
-                  <p>📌 Estado: {encuentro.estado}</p>
-                </div>
-              ))
-            )}
-          </div>
-        )}
-
-        {/* RESULTADOS */}
-        {tab === "resultados" && (
-          <div>
-            <h2>🏆 Resultados</h2>
-            <p>Aquí puedes mostrar los resultados</p>
-          </div>
-        )}
-
-        {/* INSCRIPCIONES */}
-        {tab === "inscripciones" && (
-          <div>
-            <h2>📝 Inscripciones</h2>
-            <p>Aquí puedes mostrar las inscripciones</p>
-          </div>
-        )}
-
-        {/* POSICIONES */}
-        {tab === "posiciones" && (
-          <div>
-            <h2>📊 Posiciones</h2>
-            <p>Aquí puedes mostrar la tabla de posiciones</p>
-          </div>
-        )}
+        {tab === "inscripciones" && <InscripcionesEquipos id_torneo={id} />}
       </main>
     </div>
   );

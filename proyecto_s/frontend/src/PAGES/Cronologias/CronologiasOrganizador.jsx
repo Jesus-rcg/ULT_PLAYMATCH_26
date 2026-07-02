@@ -427,6 +427,10 @@ export default function CronologiasOrganizador() {
     await cargarCronologias();
     await recalcularResultado(id);
     await cargarResultado();
+
+    setModalEvento(null);
+    setJugadorSeleccionado(null);
+    setPosicionSeleccionada(null);
   };
 
   const anularUltimaTarjeta = async (tipoTarjeta) => {
@@ -452,6 +456,10 @@ export default function CronologiasOrganizador() {
     await cargarCronologias();
     await recalcularResultado(id);
     await cargarResultado();
+
+    setModalEvento(null);
+    setJugadorSeleccionado(null);
+    setPosicionSeleccionada(null);
   };
 
   const recalcularResultado = async (idEncuentro) => {
@@ -1079,22 +1087,33 @@ export default function CronologiasOrganizador() {
             </div>
             <div>
               <div className="cronometro">
+                <button
+                  className="btn-cronometro"
+                  onClick={reiniciarCronometro}
+                >
+                  🔄 Reiniciar
+                </button>
                 {String(minutos).padStart(2, "0")}:
                 {String(segundosRestantes).padStart(2, "0")}
+                <button className="btn-cronometro" onClick={iniciarCronometro}>
+                  ▶ Iniciar
+                </button>
               </div>
             </div>
             <div className="controles-cronometro">
-              <button onClick={iniciarCronometro}>▶ Iniciar</button>
-
-              <button onClick={pausarCronometro}>⏸ Pausar</button>
-
-              <button onClick={reiniciarCronometro}>🔄 Reiniciar</button>
-
-              <button onClick={finalizarPrimerTiempo}>
-                ⏹ Fin Primer Tiempo
+              <button
+                className="btn-cronometro-2"
+                onClick={prepararSegundoTiempo}
+              >
+                Segundo Tiempo
               </button>
 
-              <button onClick={prepararSegundoTiempo}>▶ Segundo Tiempo</button>
+              <button
+                className="btn-cronometro-2"
+                onClick={finalizarPrimerTiempo}
+              >
+                Pausar Tiempo
+              </button>
 
               {modalEvento && (
                 <div className="modal-evento">
@@ -1103,56 +1122,80 @@ export default function CronologiasOrganizador() {
 
                     {modalEvento === "gol" && (
                       <>
-                        <button
-                          onClick={() => {
-                            setEventoFinal("Gol");
-                            guardarEvento("Gol");
-                          }}
-                        >
-                          ⚽ Gol válido
-                        </button>
+                        <div className="contenedor-gol">
+                          <button
+                            className="gol-tar"
+                            onClick={() => {
+                              setEventoFinal("Gol");
+                              guardarEvento("Gol");
+                            }}
+                          >
+                            <div>⚽</div> Gol
+                          </button>
 
-                        <button
-                          onClick={() => {
-                            anularUltimoGol();
-                          }}
-                        >
-                          ❌ Gol anulado
-                        </button>
+                          <button
+                            className="btn-anular-gol"
+                            onClick={() => {
+                              anularUltimoGol();
+                            }}
+                          >
+                            ❌ Gol anulado
+                          </button>
+
+                          <button onClick={() => setModalEvento(null)}>
+                            Cancelar
+                          </button>
+                        </div>
                       </>
                     )}
 
                     {modalEvento === "amarilla" && (
                       <>
-                        <button onClick={() => guardarEvento("Amarilla")}>
-                          🟨 Amarilla
-                        </button>
+                        <div className="contenedor-tarjetas">
+                          <div className="cont-tar">
+                            <div className="amarilla-opc">
+                              <button
+                                className="tar tar-a"
+                                onClick={() => guardarEvento("Amarilla")}
+                              >
+                                Amarilla
+                              </button>
 
-                        <button onClick={() => guardarEvento("Roja")}>
-                          🟥 Roja
-                        </button>
+                              <button
+                                className="btn-anular"
+                                onClick={() => {
+                                  anularUltimaTarjeta("Amarilla");
+                                }}
+                              >
+                                Anular Amarilla
+                              </button>
+                            </div>
 
-                        <button
-                          onClick={() => {
-                            anularUltimaTarjeta("Amarilla");
-                          }}
-                        >
-                          ❌ Anular Amarilla
-                        </button>
+                            <div className="amarilla-opc">
+                              <button
+                                className="tar tar-r"
+                                onClick={() => guardarEvento("Roja")}
+                              >
+                                Roja
+                              </button>
 
-                        <button
-                          onClick={() => {
-                            anularUltimaTarjeta("Roja");
-                          }}
-                        >
-                          ❌ Anular Roja
-                        </button>
+                              <button
+                                className="btn-anular"
+                                onClick={() => {
+                                  anularUltimaTarjeta("Roja");
+                                }}
+                              >
+                                Anular Roja
+                              </button>
+                            </div>
+                          </div>
+
+                          <button onClick={() => setModalEvento(null)}>
+                            Cancelar
+                          </button>
+                        </div>
                       </>
                     )}
-
-                    <button onClick={() => setModalEvento(null)}>
-                      Cancelar
-                    </button>
                   </div>
                 </div>
               )}
@@ -1160,7 +1203,7 @@ export default function CronologiasOrganizador() {
           </div>
         </div>
         <button className="btn-finalizar" onClick={finalizarPartido}>
-          🏁 Finalizar Partido
+          Finalizar Partido
         </button>
       </div>
     </div>

@@ -59,3 +59,40 @@
   margin-top: 50px;
   color: #94a3b8;
 }
+
+.btn-inscribir-equipo {
+  padding: 3px;
+  height: 30px;
+  margin-top: 10px;
+  border-radius: 5px;
+  background-color: rgb(1, 92, 1);
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.btn-ver-jugadores {
+  padding: 3px;
+  height: 30px;
+  margin-top: 10px;
+  border-radius: 5px;
+  background-color: rgb(1, 92, 1);
+  cursor: pointer;
+}
+
+.btn-ver-torneo {
+  padding: 3px;
+  height: 30px;
+  margin-top: 10px;
+  border-radius: 5px;
+  background-color: rgb(1, 92, 1);
+  cursor: pointer;
+}
+
+.btn-solicitudes {
+  padding: 3px;
+  height: 30px;
+  margin-top: 10px;
+  border-radius: 5px;
+  background-color: rgb(1, 92, 1);
+  cursor: pointer;
+}
