@@ -36,12 +36,12 @@ class OperacionesActivity : AppCompatActivity() {
         // ================= GUARDAR =================
         cardGuardar.setOnClickListener {
             when (modulo) {
-//                "Jugadores" -> startActivity(Intent(this, CrearJugadorActivity::class.java))
+                "Jugadores" -> startActivity(Intent(this, CrearJugadorActivity::class.java))
                 "Equipos" -> startActivity(Intent(this, CrearEquipoActivity::class.java))
                 //"Encuentros" -> startActivity(Intent(this, CrearEncuentroActivity::class.java))
                 // ✅ Agregado Resultados
                 "Usuarios" -> startActivity(Intent(this, CrearUsuarioActivity::class.java))
-                //"Torneos" -> startActivity(Intent(this, CrearTorneoActivity::class.java))
+                "Torneos" -> startActivity(Intent(this, CrearTorneoActivity::class.java))
                 else -> Toast.makeText(this, "Formulario no disponible", Toast.LENGTH_SHORT).show()
             }
         }
