@@ -89,6 +89,15 @@
         <activity android:name=".VerificarCodigoActivity"
                   android:exported="true"/>
 
+        <activity android:name=".OlvideContrasenaActivity"
+                  android:exported="true"/>
+
+        <activity android:name=".VerificarCodigoRecuperacionActivity"
+                  android:exported="true"/>
+
+        <activity android:name=".NuevaContrasenaActivity"
+                  android:exported="true"/>
+
         <activity
                 android:name=".loginActivity.LoginActivity2"
                 android:exported="true">

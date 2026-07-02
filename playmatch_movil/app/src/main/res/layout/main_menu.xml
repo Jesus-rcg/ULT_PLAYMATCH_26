@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#1A1A2E">
 
+    <!-- Círculos decorativos de fondo -->
     <View
             android:layout_width="260dp"
             android:layout_height="260dp"
@@ -32,18 +32,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginTop="45dp"
                 android:padding="18dp"
-                android:paddingTop="52dp"
-                android:paddingBottom="28dp">
+                android:paddingTop="60dp"
+                android:paddingBottom="28dp"
+                android:layout_marginTop="45dp">
 
+            <!-- Header -->
             <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:gravity="center"
-                    android:layout_marginBottom="28dp"
-                    >
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="28dp">
 
                 <TextView
                         android:layout_width="38dp"
@@ -52,11 +52,12 @@
                         android:text="⚽"
                         android:textSize="18sp"
                         android:background="@drawable/circulo_logo"
-                        android:layout_marginEnd="10dp"/>
+                        android:layout_marginEnd="10dp" />
 
                 <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
                         android:orientation="vertical">
 
                     <TextView
@@ -65,7 +66,7 @@
                             android:text="PlayMatch"
                             android:textSize="17sp"
                             android:textStyle="bold"
-                            android:textColor="#FFFFFF"/>
+                            android:textColor="#FFFFFF" />
 
                     <TextView
                             android:layout_width="wrap_content"
@@ -73,9 +74,41 @@
                             android:text="PANEL ADMINISTRATIVO"
                             android:textSize="10sp"
                             android:textColor="#62FFFFFF"
-                            android:letterSpacing="0.12"/>
+                            android:letterSpacing="0.12" />
+                </LinearLayout>
+
+                <!-- Botón cerrar sesión -->
+                <LinearLayout
+                        android:id="@+id/btnCerrarSesion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="48dp"
+                        android:orientation="horizontal"
+                        android:gravity="center_vertical"
+                        android:background="@drawable/campo_login"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
+                        android:clickable="true"
+                        android:focusable="true">
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="🚪"
+                            android:textSize="14sp"
+                            android:layout_marginEnd="4dp" />
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cerrar sesión"
+                            android:textSize="11sp"
+                            android:textColor="#80FFFFFF" />
                 </LinearLayout>
             </LinearLayout>
+
+            <!-- Label GESTIÓN -->
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -84,33 +117,39 @@
                     android:textColor="#52FFFFFF"
                     android:letterSpacing="0.15"
                     android:layout_marginBottom="10dp"
-                    android:layout_marginStart="2dp"/>
+                    android:layout_marginStart="2dp" />
 
+            <!-- Card Usuarios (ancho completo) -->
             <LinearLayout
                     android:id="@+id/cardUsuarios"
                     android:layout_width="match_parent"
-                    android:layout_height="120dp"
+                    android:layout_height="72dp"
                     android:orientation="horizontal"
-                    android:gravity="center"
+                    android:gravity="center_vertical"
                     android:background="@drawable/tarjeta_menu"
-                    android:padding="10dp"
-                    android:layout_marginBottom="10dp">
+                    android:padding="14dp"
+                    android:layout_marginBottom="10dp"
+                    android:clickable="true"
+                    android:focusable="true">
 
-                <ImageButton
+                <TextView
                         android:id="@+id/btnUser"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        app:srcCompat="@mipmap/usuarios"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:gravity="center"
+                        android:text="👤"
+                        android:textSize="20sp"
                         android:background="@drawable/icono_menu_bg"
-                        android:scaleType="fitCenter"
-                        android:contentDescription="Usuarios"
-                        android:padding="10dp"
-                        android:layout_marginEnd="14dp"/>
+                        android:layout_marginEnd="14dp"
+                        android:clickable="false"
+                        android:focusable="false" />
 
                 <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:clickable="false"
+                        android:focusable="false">
 
                     <TextView
                             android:layout_width="wrap_content"
@@ -118,15 +157,14 @@
                             android:text="Usuarios"
                             android:textSize="14sp"
                             android:textStyle="bold"
-                            android:textColor="#FFFFFF"/>
+                            android:textColor="#FFFFFF" />
 
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Gestionar cuentas de acceso"
                             android:textSize="11sp"
-                            android:textColor="#62FFFFFF"
-                            android:layout_marginTop="2dp"/>
+                            android:textColor="#62FFFFFF" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -135,74 +173,84 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
-                    android:layout_marginBottom="18dp">
+                    android:layout_marginBottom="10dp">
 
                 <LinearLayout
                         android:id="@+id/cardEquipos"
                         android:layout_width="0dp"
-                        android:layout_height="120dp"
+                        android:layout_height="110dp"
                         android:layout_weight="1"
                         android:orientation="vertical"
                         android:gravity="center"
                         android:background="@drawable/tarjeta_menu"
                         android:padding="10dp"
-                        android:layout_marginEnd="5dp">
+                        android:layout_marginEnd="5dp"
+                        android:clickable="true"
+                        android:focusable="true">
 
-                    <ImageButton
+                    <TextView
                             android:id="@+id/btnEquipos"
-                            android:layout_width="52dp"
-                            android:layout_height="52dp"
-                            app:srcCompat="@mipmap/equipos"
+                            android:layout_width="46dp"
+                            android:layout_height="46dp"
+                            android:gravity="center"
+                            android:text="🛡️"
+                            android:textSize="22sp"
                             android:background="@drawable/icono_menu_bg"
-                            android:scaleType="fitCenter"
-                            android:contentDescription="Equipos"
-                            android:padding="10dp"
-                            android:layout_marginBottom="10dp"/>
+                            android:layout_marginBottom="8dp"
+                            android:clickable="false"
+                            android:focusable="false" />
 
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Equipos"
-                            android:textSize="13sp"
+                            android:textSize="12sp"
                             android:textStyle="bold"
                             android:textColor="#FFFFFF"
-                            android:gravity="center"/>
+                            android:gravity="center"
+                            android:clickable="false"
+                            android:focusable="false" />
                 </LinearLayout>
 
                 <LinearLayout
                         android:id="@+id/cardJugadores"
                         android:layout_width="0dp"
-                        android:layout_height="120dp"
+                        android:layout_height="110dp"
                         android:layout_weight="1"
                         android:orientation="vertical"
                         android:gravity="center"
                         android:background="@drawable/tarjeta_menu"
                         android:padding="10dp"
-                        android:layout_marginStart="5dp">
+                        android:layout_marginStart="5dp"
+                        android:clickable="true"
+                        android:focusable="true">
 
-                    <ImageButton
+                    <TextView
                             android:id="@+id/btnJugadores"
-                            android:layout_width=" 48dp"
-                            android:layout_height="48dp"
-                            app:srcCompat="@mipmap/jugadores"
+                            android:layout_width="46dp"
+                            android:layout_height="46dp"
+                            android:gravity="center"
+                            android:text="🏃"
+                            android:textSize="22sp"
                             android:background="@drawable/icono_menu_bg"
-                            android:scaleType="fitCenter"
-                            android:contentDescription="Jugadores"
-                            android:padding="10dp"
-                            android:layout_marginBottom="10dp"/>
+                            android:layout_marginBottom="8dp"
+                            android:clickable="false"
+                            android:focusable="false" />
 
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Jugadores"
-                            android:textSize="13sp"
+                            android:textSize="12sp"
                             android:textStyle="bold"
                             android:textColor="#FFFFFF"
-                            android:gravity="center"/>
+                            android:gravity="center"
+                            android:clickable="false"
+                            android:focusable="false" />
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Label Competencia -->
+            <!-- Label COMPETENCIA -->
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -211,7 +259,7 @@
                     android:textColor="#52FFFFFF"
                     android:letterSpacing="0.15"
                     android:layout_marginBottom="10dp"
-                    android:layout_marginStart="2dp"/>
+                    android:layout_marginStart="2dp" />
 
             <!-- Torneos + Encuentros -->
             <LinearLayout
@@ -223,65 +271,75 @@
                 <LinearLayout
                         android:id="@+id/cardTorneos"
                         android:layout_width="0dp"
-                        android:layout_height="120dp"
+                        android:layout_height="110dp"
                         android:layout_weight="1"
                         android:orientation="vertical"
                         android:gravity="center"
                         android:background="@drawable/tarjeta_menu"
                         android:padding="10dp"
-                        android:layout_marginEnd="5dp">
+                        android:layout_marginEnd="5dp"
+                        android:clickable="true"
+                        android:focusable="true">
 
-                    <ImageButton
+                    <TextView
                             android:id="@+id/btnTorneo"
-                            android:layout_width="52dp"
-                            android:layout_height="52dp"
-                            app:srcCompat="@mipmap/torneo"
+                            android:layout_width="46dp"
+                            android:layout_height="46dp"
+                            android:gravity="center"
+                            android:text="🏆"
+                            android:textSize="22sp"
                             android:background="@drawable/icono_menu_bg"
-                            android:scaleType="fitCenter"
-                            android:contentDescription="Torneos"
-                            android:padding="10dp"
-                            android:layout_marginBottom="10dp"/>
+                            android:layout_marginBottom="8dp"
+                            android:clickable="false"
+                            android:focusable="false" />
 
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Torneos"
-                            android:textSize="13sp"
+                            android:textSize="12sp"
                             android:textStyle="bold"
                             android:textColor="#FFFFFF"
-                            android:gravity="center"/>
+                            android:gravity="center"
+                            android:clickable="false"
+                            android:focusable="false" />
                 </LinearLayout>
 
                 <LinearLayout
                         android:id="@+id/cardEncuentros"
                         android:layout_width="0dp"
-                        android:layout_height="120dp"
+                        android:layout_height="110dp"
                         android:layout_weight="1"
                         android:orientation="vertical"
                         android:gravity="center"
                         android:background="@drawable/tarjeta_menu"
                         android:padding="10dp"
-                        android:layout_marginStart="5dp">
+                        android:layout_marginStart="5dp"
+                        android:clickable="true"
+                        android:focusable="true">
 
-                    <ImageButton
+                    <TextView
                             android:id="@+id/btnVersus"
-                            android:layout_width="52dp"
-                            android:layout_height="52dp"
-                            app:srcCompat="@mipmap/versus"
+                            android:layout_width="46dp"
+                            android:layout_height="46dp"
+                            android:gravity="center"
+                            android:text="⚔️"
+                            android:textSize="22sp"
                             android:background="@drawable/icono_menu_bg"
-                            android:scaleType="fitCenter"
-                            android:contentDescription="Versus"
-                            android:padding="10dp"
-                            android:layout_marginBottom="10dp"/>
+                            android:layout_marginBottom="8dp"
+                            android:clickable="false"
+                            android:focusable="false" />
 
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Encuentros"
-                            android:textSize="13sp"
+                            android:textSize="12sp"
                             android:textStyle="bold"
                             android:textColor="#FFFFFF"
-                            android:gravity="center"/>
+                            android:gravity="center"
+                            android:clickable="false"
+                            android:focusable="false" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -295,94 +353,109 @@
                 <LinearLayout
                         android:id="@+id/cardPosiciones"
                         android:layout_width="0dp"
-                        android:layout_height="120dp"
+                        android:layout_height="110dp"
                         android:layout_weight="1"
                         android:orientation="vertical"
                         android:gravity="center"
                         android:background="@drawable/tarjeta_menu"
                         android:padding="10dp"
-                        android:layout_marginEnd="5dp">
+                        android:layout_marginEnd="5dp"
+                        android:clickable="true"
+                        android:focusable="true">
 
-                    <ImageButton
+                    <TextView
                             android:id="@+id/btnPosiciones"
-                            android:layout_width="52dp"
-                            android:layout_height="52dp"
-                            app:srcCompat="@mipmap/posiciones"
+                            android:layout_width="46dp"
+                            android:layout_height="46dp"
+                            android:gravity="center"
+                            android:text="📊"
+                            android:textSize="22sp"
                             android:background="@drawable/icono_menu_bg"
-                            android:scaleType="fitCenter"
-                            android:contentDescription="Posiciones"
-                            android:padding="10dp"
-                            android:layout_marginBottom="10dp"/>
+                            android:layout_marginBottom="8dp"
+                            android:clickable="false"
+                            android:focusable="false" />
 
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Posiciones"
-                            android:textSize="13sp"
+                            android:textSize="12sp"
                             android:textStyle="bold"
                             android:textColor="#FFFFFF"
-                            android:gravity="center"/>
+                            android:gravity="center"
+                            android:clickable="false"
+                            android:focusable="false" />
                 </LinearLayout>
 
                 <LinearLayout
                         android:id="@+id/cardResultados"
                         android:layout_width="0dp"
-                        android:layout_height="120dp"
+                        android:layout_height="110dp"
                         android:layout_weight="1"
                         android:orientation="vertical"
                         android:gravity="center"
                         android:background="@drawable/tarjeta_menu"
                         android:padding="10dp"
                         android:layout_marginStart="5dp"
-                >
+                        android:clickable="true"
+                        android:focusable="true">
 
-                    <ImageButton
+                    <TextView
                             android:id="@+id/btnResultados"
-                            android:layout_width="52dp"
-                            android:layout_height="52dp"
-                            app:srcCompat="@mipmap/resultados"
+                            android:layout_width="46dp"
+                            android:layout_height="46dp"
+                            android:gravity="center"
+                            android:text="📋"
+                            android:textSize="22sp"
                             android:background="@drawable/icono_menu_bg"
-                            android:scaleType="fitCenter"
-                            android:contentDescription="Resultados"
-                            android:padding="10dp"
-                            android:layout_marginBottom="10dp"/>
+                            android:layout_marginBottom="8dp"
+                            android:clickable="false"
+                            android:focusable="false" />
 
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Resultados"
-                            android:textSize="13sp"
+                            android:textSize="12sp"
                             android:textStyle="bold"
                             android:textColor="#FFFFFF"
-                            android:gravity="center"/>
+                            android:gravity="center"
+                            android:clickable="false"
+                            android:focusable="false" />
                 </LinearLayout>
             </LinearLayout>
 
+            <!-- Card Cronologías (ancho completo) -->
             <LinearLayout
                     android:id="@+id/cardCronologias"
                     android:layout_width="match_parent"
-                    android:layout_height="120dp"
+                    android:layout_height="72dp"
                     android:orientation="horizontal"
-                    android:gravity="center"
+                    android:gravity="center_vertical"
                     android:background="@drawable/tarjeta_menu"
-                    android:padding="10dp"
-                    android:layout_marginBottom="10dp">
+                    android:padding="14dp"
+                    android:layout_marginBottom="24dp"
+                    android:clickable="true"
+                    android:focusable="true">
 
-                <ImageButton
+                <TextView
                         android:id="@+id/btnCronologia"
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        app:srcCompat="@mipmap/cronologia"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:gravity="center"
+                        android:text="📅"
+                        android:textSize="20sp"
                         android:background="@drawable/icono_menu_bg"
-                        android:scaleType="fitCenter"
-                        android:contentDescription="Cronologia"
-                        android:padding="10dp"
-                        android:layout_marginEnd="14dp"/>
+                        android:layout_marginEnd="14dp"
+                        android:clickable="false"
+                        android:focusable="false" />
 
                 <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:clickable="false"
+                        android:focusable="false">
 
                     <TextView
                             android:layout_width="wrap_content"
@@ -390,16 +463,25 @@
                             android:text="Cronologías"
                             android:textSize="14sp"
                             android:textStyle="bold"
-                            android:textColor="#FFFFFF"/>
+                            android:textColor="#FFFFFF" />
 
                     <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Gestionar cronologías de partidos"
                             android:textSize="11sp"
-                            android:textColor="#62FFFFFF"/>
+                            android:textColor="#62FFFFFF" />
                 </LinearLayout>
             </LinearLayout>
+
+            <!-- Footer -->
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="PlayMatch © 2025 · v1.0"
+                    android:textSize="11sp"
+                    android:textColor="#40FFFFFF"
+                    android:gravity="center" />
 
         </LinearLayout>
     </ScrollView>

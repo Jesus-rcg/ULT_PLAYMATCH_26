@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#1A1A2E">
+
+    <!-- Círculo superior -->
+    <View
+            android:layout_width="280dp"
+            android:layout_height="280dp"
+            android:layout_marginTop="-80dp"
+            android:layout_marginStart="-60dp"
+            android:background="@drawable/circulo_morado_difuso"
+            android:alpha="0.18"/>
+
+    <!-- Círculo inferior -->
+    <View
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="60dp"
+            android:layout_marginEnd="-60dp"
+            android:background="@drawable/circulo_morado_difuso"
+            android:alpha="0.12"/>
+
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true">
+
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="24dp"
+                android:gravity="center_horizontal">
+
+            <ImageButton
+                    android:id="@+id/btnVolver"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="start"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:src="@android:drawable/ic_menu_revert"/>
+
+            <TextView
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:gravity="center"
+                    android:text="📧"
+                    android:textSize="32sp"
+                    android:background="@drawable/circulo_logo"
+                    android:layout_marginTop="20dp"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Verificar correo"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
+                    android:textSize="24sp"
+                    android:layout_marginTop="20dp"/>
+
+            <TextView
+                    android:id="@+id/txtCorreo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Enviamos un código a:"
+                    android:textColor="#BDBDBD"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:layout_marginTop="10dp"/>
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ingresa el código de 6 dígitos"
+                    android:textColor="#80FFFFFF"
+                    android:textSize="13sp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="10dp"/>
+
+            <EditText
+                    android:id="@+id/etCodigo"
+                    android:layout_width="220dp"
+                    android:layout_height="60dp"
+                    android:gravity="center"
+                    android:background="@drawable/campo_login"
+                    android:hint="000000"
+                    android:textColor="#FFFFFF"
+                    android:textColorHint="#66FFFFFF"
+                    android:textSize="26sp"
+                    android:letterSpacing="0.4"
+                    android:inputType="number"
+                    android:maxLength="6"/>
+
+            <Button
+                    android:id="@+id/btnVerificar"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="35dp"
+                    android:text="Verificar"
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF"
+                    android:backgroundTint="#534AB7"/>
+
+            <Button
+                    android:id="@+id/btnReenviar"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="12dp"
+                    android:text="Reenviar código"
+                    android:textColor="#AFA9EC"
+                    android:background="@drawable/boton_outline_morado"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</FrameLayout>

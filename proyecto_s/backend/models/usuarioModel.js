@@ -83,7 +83,7 @@ export const getAllUsuarios = async () => {
 
 //Actualizar usuario
 export const updateUsuarioModel = async (id, data) => {
-  const { nombre_usuario, apellido_usuario, telefono, email, password } = data;
+  const { nombre_usuario, apellido_usuario, telefono, email, password, id_rol } = data;
 
   const passwordHash = password ? await bcrypt.hash(password, 10) : null;
 
@@ -93,18 +93,20 @@ export const updateUsuarioModel = async (id, data) => {
          apellido_usuario = ?,
           telefono = ?,
           email = ?,
-          password = ?
+          password = ?,
+          id_rol = ?
      WHERE id_usuario = ?`
     : `UPDATE usuarios
       SET nombre_usuario = ?,
           apellido_usuario = ?,
           telefono = ?,
-          email = ?
+          email = ?,
+          id_rol = ?
       WHERE id_usuario = ?`;
 
   const params = passwordHash
-    ? [nombre_usuario, apellido_usuario, telefono, email, passwordHash, id]
-    : [nombre_usuario, apellido_usuario, telefono, email, id];
+    ? [nombre_usuario, apellido_usuario, telefono, email, passwordHash, id_rol, id]
+    : [nombre_usuario, apellido_usuario, telefono, email, id_rol, id];
 
   const [result] = await db.query(query, params);
 
@@ -146,3 +148,14 @@ export const registrarUsuarioModel = async (data) => {
 
   return result;
 }
+
+export const cambiarPasswordModel = async (email, password) => {
+  const passwordHash = await bcrypt.hash(password, 10);
+
+  return await db.query(
+    `UPDATE usuarios 
+     SET password = ?
+     WHERE email = ?`,
+    [passwordHash, email]
+  );
+};
