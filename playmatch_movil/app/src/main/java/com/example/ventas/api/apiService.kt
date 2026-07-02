@@ -78,6 +78,24 @@ interface ApiService {
         @Body request: EmailRequest
     ): Call<RegistroResponse>
 
+    // ================= RECUPERACION CONTRASEÑA =================
+
+    @POST("/api/usuarios/recuperar")
+    fun recuperarPassword(
+        @Body request: EmailRequest
+    ): Call<RegistroResponse>
+
+    @POST("/api/usuarios/verificar-recuperacion")
+    fun verificarCodigoRecuperacion(
+        @Body request: VerificarCodigoRequest
+    ): Call<RegistroResponse>
+
+    @POST("/api/usuarios/cambiar-password")
+    fun cambiarPassword(
+        @Body request: CambiarPasswordRequest
+    ): Call<RegistroResponse>
+
+
     // ================= JUGADORES =================
 
     @POST("api/jugadores")

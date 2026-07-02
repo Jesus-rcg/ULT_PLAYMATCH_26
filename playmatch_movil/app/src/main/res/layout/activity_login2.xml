@@ -189,9 +189,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:text="Registrarse"
-                    android:textColor="#80FFFFFF"
-                    android:textSize="13sp"
-                    android:background="@null"
+                    android:textColor="#FFFFFF"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:backgroundTint="#534AB7"
                     android:stateListAnimator="@null"
                     android:layout_marginBottom="12dp" />
 

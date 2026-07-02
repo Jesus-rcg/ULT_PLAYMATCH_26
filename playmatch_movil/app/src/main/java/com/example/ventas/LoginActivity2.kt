@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ventas.MenuActivity
+import com.example.ventas.OlvideContrasenaActivity
 import com.example.ventas.R
 import com.example.ventas.RegistrarseActivity
 import com.example.ventas.api.ApiClient
@@ -27,9 +28,14 @@ class LoginActivity2 : AppCompatActivity() {
         val btnLogin = findViewById<Button>(R.id.btnLogin)
         val message = findViewById<TextView>(R.id.message)
         val btnRegistrarse = findViewById<Button>(R.id.btnRegistrarse)
+        val btnOlvideContrasena = findViewById<Button>(R.id.btnOlvideContrasena)
 
         btnRegistrarse.setOnClickListener {
             startActivity(Intent(this, RegistrarseActivity::class.java))
+        }
+
+        btnOlvideContrasena.setOnClickListener {
+            startActivity(Intent(this, OlvideContrasenaActivity::class.java))
         }
 
         btnLogin.setOnClickListener {
@@ -48,36 +54,38 @@ class LoginActivity2 : AppCompatActivity() {
                         call: Call<LoginResponse>,
                         response: Response<LoginResponse>
                     ) {
-                        if (response.isSuccessful) {
-                            val body = response.body()
-                            val rol = body?.user?.rol
-
-
-                            if (rol != 1) {
-                                message.setTextColor(Color.RED)
-                                message.text = "No tienes permisos para acceder"
-                                return@onResponse
-                            }
-
                             val token = response.body()?.token
-
-
 
                             // ✅ guardar token
                             val prefs = getSharedPreferences("app", MODE_PRIVATE)
                             prefs.edit().putString("token", token).apply()
 
-                            message.setTextColor(Color.GREEN)
-                            message.text = "Ingreso con éxito"
+                            val body = response.body()
+                            val rol = body?.user?.rol
+                            when(rol){
 
-                            val intent = Intent(this@LoginActivity2, MenuActivity::class.java)
-                            startActivity(intent)
-                            finish()
+                                1 -> {
+                                    message.setTextColor(Color.GREEN)
+                                    message.text = "Bienvenido administrador"
 
-                        } else {
-                            message.setTextColor(Color.RED)
-                            message.text = "Credenciales incorrectas"
-                        }
+                                    startActivity(Intent(this@LoginActivity2, MenuActivity::class.java))
+                                    finish()
+                                }
+
+//                                3 -> {
+//                                    message.setTextColor(Color.GREEN)
+//                                    message.text = "Bienvenido"
+//
+//                                    startActivity(Intent(this@LoginActivity2, UserHomeActivity::class.java))
+//                                    finish()
+//                                }
+
+                                else -> {
+                                    message.setTextColor(Color.RED)
+                                    message.text = "Usuario no permitido"
+                                }
+
+                            }
                     }
 
                     override fun onFailure(call: Call<LoginResponse>, t: Throwable) {

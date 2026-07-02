@@ -105,6 +105,7 @@ class UsuariosActivity : AppCompatActivity() {
         intent.putExtra("APELLIDO", usuario.apellido_usuario)
         intent.putExtra("EMAIL", usuario.email)
         intent.putExtra("TELEFONO", usuario.telefono)
+        intent.putExtra("ID_ROL", usuario.id_rol ?: 1)
         startActivityForResult(intent, 100)
     }
     /*

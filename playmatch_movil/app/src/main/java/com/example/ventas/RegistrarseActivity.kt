@@ -14,6 +14,7 @@ import com.example.ventas.model.UsuarioResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import org.json.JSONObject
 
 class RegistrarseActivity : AppCompatActivity(){
 
@@ -142,11 +143,25 @@ class RegistrarseActivity : AppCompatActivity(){
 
                             finish()
                         } else {
-                            Toast.makeText(
-                                this@RegistrarseActivity,
-                                "Error al registrarse",
-                                Toast.LENGTH_LONG
-                            ).show()
+
+                            val error = response.errorBody()?.string()
+
+                            try {
+                                val json = JSONObject(error ?: "")
+
+                                Toast.makeText(
+                                    this@RegistrarseActivity,
+                                    json.getString("message"),
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            } catch (e : Exception){
+
+                                Toast.makeText(
+                                    this@RegistrarseActivity,
+                                    "Error ${response.code()}",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
                         }
                     }
 
