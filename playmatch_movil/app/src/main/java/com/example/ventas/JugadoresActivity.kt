@@ -45,9 +45,9 @@ class JugadoresActivity : AppCompatActivity() {
             finish()
         }
 
-//        fabAgregar.setOnClickListener {
-//            startActivity(Intent(this, CrearJugadorActivity::class.java))
-//        }
+        fabAgregar.setOnClickListener {
+            startActivity(Intent(this, CrearJugadorActivity::class.java))
+        }
 
         recycler.layoutManager = LinearLayoutManager(this)
 
