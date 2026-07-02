@@ -3,6 +3,7 @@ import {
   createJugadorService,
   updateJugadorService,
   deleteJugadorService,
+  getJugadorByIdService
   
 } from "../services/jugadoresService.js";
 
