@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
+import com.example.ventas.loginActivity.LoginActivity2
 import com.example.ventas.ui.equipos.ListaEquiposActivity
 import com.example.ventas.ui.encuentros.ListaEncuentrosActivity
 import com.example.ventas.ui.cronologias.ListaCronologiasActivity
@@ -12,6 +13,13 @@ class MenuActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_menu)
+
+        findViewById<LinearLayout>(R.id.btnCerrarSesion).setOnClickListener {
+            getSharedPreferences("app", MODE_PRIVATE).edit().clear().apply()
+            val intent = Intent(this, LoginActivity2::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+        }
 
         findViewById<LinearLayout>(R.id.cardUsuarios).setOnClickListener {
             abrirUsuarios("Usuarios")

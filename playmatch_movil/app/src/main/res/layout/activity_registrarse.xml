@@ -401,19 +401,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:text="Ya tengo una cuenta"
-                    android:textColor="#AFA9EC"
                     android:textSize="13sp"
-                    android:background="@null"
+                    android:textStyle="bold"
+                    android:textColor="#FFFFFF"
+                    android:backgroundTint="#534AB7"
                     android:stateListAnimator="@null"
                     android:layout_marginTop="8dp"/>
-
-            <TextView
-                    android:id="@+id/txtMensaje"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:textColor="#FFFFFF"
-                    android:gravity="center"
-                    android:layout_marginTop="16dp"/>
 
         </LinearLayout>
 

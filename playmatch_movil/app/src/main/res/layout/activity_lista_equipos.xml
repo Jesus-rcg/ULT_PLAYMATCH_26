@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Volver al menú"
-                android:textColor="#534AB7"
+                android:textColor="#FFFFFF"
                 android:textSize="13sp"
                 android:layout_marginStart="4dp"/>
 
@@ -63,7 +63,7 @@
                 android:text="Equipos"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:textColor="#1A1A2E"/>
+                android:textColor="#FFFFFF"/>
 
         <TextView
                 android:id="@+id/tvContador"
@@ -92,7 +92,7 @@
             android:drawableStart="@android:drawable/ic_menu_search"
             android:drawablePadding="8dp"
             android:inputType="text"
-            android:textColor="#000000"
+            android:textColor="#FFFFFF"
             android:textColorHint="#888780"
             android:layout_marginBottom="10dp"/>
 

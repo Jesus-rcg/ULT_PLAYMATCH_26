@@ -4,7 +4,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="#F5F5F5"
+        android:background="#1A1A2E"
         android:padding="20dp"
         android:paddingTop="50dp">
 
@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nueva Cronología"
-                android:textColor="#1A1A2E"
+                android:textColor="#FFFFFF"
                 android:textStyle="bold"
                 android:textSize="18sp"
                 android:layout_marginStart="8dp"/>
@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Encuentro"
-            android:textColor="#374151"
+            android:textColor="#FFFFFF"
             android:textStyle="bold"
             android:textSize="13sp"
             android:layout_marginBottom="4dp"/>
@@ -59,7 +59,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Jugador"
-            android:textColor="#374151"
+            android:textColor="#FFFFFF"
             android:textStyle="bold"
             android:textSize="13sp"
             android:layout_marginBottom="4dp"/>
@@ -77,7 +77,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Evento"
-            android:textColor="#374151"
+            android:textColor="#FFFFFF"
             android:textStyle="bold"
             android:textSize="13sp"
             android:layout_marginBottom="4dp"/>
@@ -95,7 +95,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Minuto"
-            android:textColor="#374151"
+            android:textColor="#FFFFFF"
             android:textStyle="bold"
             android:textSize="13sp"
             android:layout_marginBottom="4dp"/>
@@ -108,7 +108,7 @@
             android:background="@drawable/bg_busqueda"
             android:paddingStart="16dp"
             android:inputType="number"
-            android:textColor="#000000"
+            android:textColor="#FFFFFF"
             android:textColorHint="#888780"
             android:layout_marginBottom="24dp"/>
 

@@ -5,6 +5,7 @@ import {
   updateUsuarioModel,
   deleteUsuarioModel,
   registrarUsuarioModel,
+  cambiarPasswordModel
 } from "../models/usuarioModel.js";
 
 //Obtener todas
@@ -53,4 +54,15 @@ export const registrarUsuarioService = async (data) => {
     throw new Error("El email ya está registrado");
   }
   await registrarUsuarioModel(data);
+};
+
+export const cambiarPasswordService = async (email, password) => {
+  const usuario  = await findUsuarioByEmail(email);
+
+  if (!usuario) {
+    throw new Error("El correo no existe");
+  }
+  
+  await cambiarPasswordModel(email, password);
+
 };

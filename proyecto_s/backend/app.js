@@ -22,6 +22,11 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use((req, res, next) => {
+  console.log(`📢 Petición entrante: ${req.method} a la ruta: ${req.originalUrl}`);
+  next();
+});
+
 // CORS
 app.use(
   cors({

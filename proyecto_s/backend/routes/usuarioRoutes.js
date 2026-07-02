@@ -8,6 +8,9 @@ import {
   registrarUsuario,
   enviarCodigoRegistro,
   reenviarCodigoRegistro,
+  recuperarPassword,
+  verificarCodigoRecuperacion,
+  actualizarPassword,
 } from "../controllers/usuarioController.js";
 
 import { findUsuarioByEmail } from "../models/usuarioModel.js";
@@ -253,5 +256,8 @@ router.post("/enviar-codigo", enviarCodigoRegistro);
  *         description: Error interno del servidor.
  */
 router.post("/reenviar-codigo", reenviarCodigoRegistro);
+router.post("/recuperar", recuperarPassword);
+router.post("/verificar-recuperacion", verificarCodigoRecuperacion);
+router.post("/cambiar-password", actualizarPassword);
 
 export default router;

@@ -78,34 +78,53 @@ interface ApiService {
         @Body request: EmailRequest
     ): Call<RegistroResponse>
 
+    // ================= RECUPERACION CONTRASEÑA =================
+
+    @POST("/api/usuarios/recuperar")
+    fun recuperarPassword(
+        @Body request: EmailRequest
+    ): Call<RegistroResponse>
+
+    @POST("/api/usuarios/verificar-recuperacion")
+    fun verificarCodigoRecuperacion(
+        @Body request: VerificarCodigoRequest
+    ): Call<RegistroResponse>
+
+    @POST("/api/usuarios/cambiar-password")
+    fun cambiarPassword(
+        @Body request: CambiarPasswordRequest
+    ): Call<RegistroResponse>
+
+
     // ================= JUGADORES =================
 
-    @POST("/api/jugadores")
+    @POST("api/jugadores")
     fun createJugador(
         @Header("Authorization")
         token: String,
         @Body
-        jugador: Jugador
+        jugador: JugadorRequest
     ): Call<ApiResponse>
 
 
-        @GET("/api/jugadores")
+    @PUT("api/jugadores/{id}")
+    fun actualizarJugadores(
+        @Header("Authorization")
+        token: String,
+        @Path("id")
+        id: Int,
+        @Body
+        jugador: Jugador
+    ): Call<Void>
+
+        @GET("api/jugadores")
         fun getJugadores(
             @Header("Authorization")
             token: String
         ): Call<List<Jugador>>
 
-        @GET("/api/jugadores/buscar")
-        fun buscarJugador(
-            @Header("Authorization")
-            token: String,
 
-            @Query("buscar")
-            buscar: String
-
-        ): Call<Jugador>
-
-        @GET("/api/jugadores/{id}")
+        @GET("api/jugadores/{id}")
         fun getJugador(
             @Header("Authorization")
             token: String,
@@ -113,23 +132,7 @@ interface ApiService {
             id: Int
         ): Call<Jugador>
 
-        @GET("/api/jugadores/usuarios-disponibles")
-        fun getUsuariosDisponibles(
-            @Header("Authorization")
-            token: String
-        ): Call<UsuarioResponse>
-
-        @PUT("/api/jugadores/{id}")
-        fun actualizarJugadores(
-            @Header("Authorization")
-            token: String,
-            @Path("id")
-            id: Int,
-            @Body
-            jugador: Jugador
-        ): Call<Void>
-
-    @DELETE("/api/jugadores/{id}")
+    @DELETE("api/jugadores/{id}")
     fun eliminarJugador(
         @Header("Authorization")
         token: String,

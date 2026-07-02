@@ -21,6 +21,8 @@
 
         private lateinit var etNombreUsuario: EditText
 
+        private lateinit var etApellidoUsuario: EditText
+
         private lateinit var spPosicion: Spinner
         private lateinit var etNumero: EditText
         private lateinit var spActivo: Spinner
@@ -38,6 +40,7 @@
 
             etIdUsuario = findViewById(R.id.etIdUsuario)
             etNombreUsuario = findViewById(R.id.etNombre_usuario)
+            etApellidoUsuario = findViewById(R.id.etApellido_usuario)
             spPosicion = findViewById(R.id.spPosicion)
             etNumero = findViewById(R.id.etNumero)
             spActivo = findViewById(R.id.spActivo)
@@ -137,9 +140,12 @@
                                 jugador.id_usuario.toString()
                             )
 
-                            etNombreUsuario.setText(
-                                jugador.nombre_usuario
-                            )
+//                            etNombreUsuario.setText(
+//                                jugador.nombre_usuario
+//                            )
+//
+//                            etApellidoUsuario.setText(
+//                                jugador.apellido_usuario)
 
                             val posiciones = listOf(
                                 "Portero",
@@ -202,9 +208,9 @@
 
             if (
                 etNombreUsuario.text.isEmpty() ||
+                etApellidoUsuario.text.isEmpty() ||
                 etNumero.text.isEmpty()
             ) {
-
                 Toast.makeText(
                     this,
                     "Complete todos los campos",
@@ -214,27 +220,35 @@
                 return
             }
 
+            val numero = etNumero.text.toString().toIntOrNull()
+
+            if (numero == null) {
+                Toast.makeText(
+                    this,
+                    "Número de camiseta inválido",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return
+            }
+
             val activo =
                 if (spActivo.selectedItem.toString() == "Activo")
                     1
                 else
                     0
 
-
             val jugador = Jugador(
                 id_jugador = idJugador,
                 id_usuario = etIdUsuario.text.toString().toInt(),
-                nombre_usuario = etNombreUsuario.text.toString(),
+//                nombre_usuario = etNombreUsuario.text.toString(),
+//                apellido_usuario = etApellidoUsuario.text.toString(),
                 posicion = spPosicion.selectedItem.toString(),
-                numero_camiseta = etNumero.text.toString().toInt(),
+                numero_camiseta = numero,
                 activo = activo
             )
 
-            val prefs =
-                getSharedPreferences("app", MODE_PRIVATE)
-
-            val token =
-                prefs.getString("token", "") ?: ""
+            val prefs = getSharedPreferences("app", MODE_PRIVATE)
+            val token = prefs.getString("token", "") ?: ""
 
             ApiClient.instance.actualizarJugadores(
                 "Bearer $token",
@@ -259,17 +273,16 @@
 
                     } else {
 
+                        Log.e(
+                            "UPDATE_ERROR",
+                            response.errorBody()?.string() ?: "Error desconocido"
+                        )
+
                         Toast.makeText(
                             this@EditarJugadorActivity,
                             "Error ${response.code()}",
                             Toast.LENGTH_LONG
                         ).show()
-
-                        Log.e(
-                            "UPDATE_ERROR",
-                            response.errorBody()?.string()
-                                ?: "Error desconocido"
-                        )
                     }
                 }
 
@@ -278,16 +291,16 @@
                     t: Throwable
                 ) {
 
+                    Log.e(
+                        "UPDATE_ERROR",
+                        t.message ?: "Error"
+                    )
+
                     Toast.makeText(
                         this@EditarJugadorActivity,
                         t.message,
                         Toast.LENGTH_LONG
                     ).show()
-
-                    Log.e(
-                        "UPDATE_ERROR",
-                        t.message ?: "Error"
-                    )
                 }
             })
         }

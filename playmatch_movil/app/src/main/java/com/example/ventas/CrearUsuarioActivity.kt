@@ -97,6 +97,7 @@ class CrearUsuarioActivity : AppCompatActivity() {
             }
 
             val usuario = Usuario(
+
                 id_rol = rolesId[rolIndex],
                 nombre_usuario = nombre,
                 apellido_usuario = apellido,

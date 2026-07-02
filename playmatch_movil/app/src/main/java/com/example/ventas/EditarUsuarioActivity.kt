@@ -27,6 +27,7 @@ class EditarUsuarioActivity : AppCompatActivity() {
         val apellido = intent.getStringExtra("APELLIDO") ?: ""
         val email = intent.getStringExtra("EMAIL") ?: ""
         val telefono = intent.getStringExtra("TELEFONO") ?: ""
+        val idRol = intent.getIntExtra("ID_ROL", 1)
 
         findViewById<ImageButton>(R.id.btnVolver).setOnClickListener {
             finish()
@@ -37,6 +38,14 @@ class EditarUsuarioActivity : AppCompatActivity() {
         val etEmail = findViewById<EditText>(R.id.etEmail)
         val etTelefono = findViewById<EditText>(R.id.etTelefono)
         val etPassword = findViewById<EditText>(R.id.etPassword)
+        val spinnerRol = findViewById<Spinner>(R.id.seleccionRol)
+        val rolesTexto = listOf("Administrador", "Organizador", "Usuario")
+        val rolesId = listOf(1, 2, 3)
+
+        spinnerRol.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, rolesTexto)
+
+        val indexActual = rolesId.indexOf(idRol).takeIf { it>=0 } ?: 0
+        spinnerRol.setSelection(indexActual)
 
 
         //Carga los datos actuales del usuario.
@@ -87,6 +96,7 @@ class EditarUsuarioActivity : AppCompatActivity() {
                 apellido_usuario = nuevoApellido,
                 email = nuevoEmail,
                 telefono = nuevoTelefono,
+                id_rol = rolesId[spinnerRol.selectedItemPosition],
                 fecha_nacimiento = "",   // no se edita
                 password         = if (nuevoPassword.isEmpty()) null else nuevoPassword  // no se edita si el usuario no requiere editar
             )

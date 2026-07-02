@@ -64,7 +64,12 @@
                     android:padding="20dp">
 
                 <!-- ID USUARIO -->
-
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="ID usuario"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="5dp"/>
                 <EditText
                         android:id="@+id/etIdUsuario"
                         android:layout_width="match_parent"
@@ -72,27 +77,61 @@
                         android:hint="ID Usuario"
                         android:enabled="false"
                         android:layout_marginBottom="15dp"/>
-
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Nombre Usuario"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="5dp"/>
                 <EditText
                         android:id="@+id/etNombre_usuario"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:enabled="false"
                         android:hint="Nombre Usuario"
                         android:inputType="text"
                         android:layout_marginBottom="15dp"/>
 
-                <!-- NUMERO CAMISETA -->
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Apellido Usuario"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="5dp"/>
+                <EditText
+                        android:id="@+id/etApellido_usuario"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:hint="Apellido Usuario"
+                        android:inputType="text"
+                        android:layout_marginBottom="15dp"/>
 
+
+
+                <!-- NUMERO CAMISETA -->
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Numero camiseta"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="5dp"/>
                 <EditText
                         android:id="@+id/etNumero"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="Número Camiseta"
+                        android:maxLength="3"
                         android:inputType="number"
                         android:layout_marginBottom="15dp"/>
 
                 <!-- POSICION -->
-
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Posicion"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="5dp"/>
                 <Spinner
                         android:id="@+id/spPosicion"
                         android:layout_width="match_parent"
@@ -102,7 +141,12 @@
 
 
                 <!-- ACTIVO -->
-
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Estado"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="5dp"/>
                 <Spinner
                         android:id="@+id/spActivo"
                         android:layout_width="match_parent"

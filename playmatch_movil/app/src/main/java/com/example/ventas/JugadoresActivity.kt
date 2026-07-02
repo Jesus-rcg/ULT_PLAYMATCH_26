@@ -25,6 +25,8 @@ class JugadoresActivity : AppCompatActivity() {
     private lateinit var progressBar: ProgressBar
     private lateinit var edtBuscar: EditText
 
+    private var listaGlobal: List<Jugador> = emptyList()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_jugadores)
@@ -43,16 +45,28 @@ class JugadoresActivity : AppCompatActivity() {
             finish()
         }
 
-        fabAgregar.setOnClickListener {
-            startActivity(
-                Intent(
-                    this,
-                    CrearJugadorActivity::class.java
-                )
-            )
-        }
+//        fabAgregar.setOnClickListener {
+//            startActivity(Intent(this, CrearJugadorActivity::class.java))
+//        }
 
         recycler.layoutManager = LinearLayoutManager(this)
+
+        // 🔥 BUSCADOR (UNA SOLA VEZ)
+        edtBuscar.addTextChangedListener(object : TextWatcher {
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {}
+
+            override fun onTextChanged(
+                s: CharSequence?,
+                start: Int,
+                before: Int,
+                count: Int
+            ) {
+                filtrarJugadores(s.toString())
+            }
+        })
 
         cargarJugadores()
     }
@@ -80,95 +94,24 @@ class JugadoresActivity : AppCompatActivity() {
                     progressBar.visibility = View.GONE
 
                     if (!response.isSuccessful) {
-
                         Toast.makeText(
                             this@JugadoresActivity,
                             "Error ${response.code()}",
                             Toast.LENGTH_LONG
                         ).show()
 
-                        Log.e(
-                            "API_JUGADORES",
-                            response.errorBody()?.string() ?: ""
-                        )
-
+                        Log.e("API_JUGADORES", response.errorBody()?.string() ?: "")
                         return
                     }
 
-                    val lista = response.body() ?: emptyList()
+                    listaGlobal = response.body() ?: emptyList()
 
-                    txtContador.text =
-                        "${lista.size} registros"
+                    txtContador.text = "${listaGlobal.size} registros"
 
-                    recycler.adapter = JugadorAdapter(
-                        lista,
-                        onEditar = { jugador ->
-                            abrirEditar(jugador)
-                        },
-                        onEliminar = { jugador ->
-                            confirmarEliminar(jugador)
-                        }
-                    )
-
-                    edtBuscar.addTextChangedListener(object : TextWatcher {
-
-                        override fun beforeTextChanged(
-                            s: CharSequence?,
-                            start: Int,
-                            count: Int,
-                            after: Int
-                        ) {
-                        }
-
-                        override fun afterTextChanged(s: Editable?) {}
-
-                        override fun onTextChanged(
-                            s: CharSequence?,
-                            start: Int,
-                            before: Int,
-                            count: Int
-                        ) {
-
-                            val texto =
-                                s.toString().lowercase().trim()
-
-                            val filtrada =
-                                if (texto.isEmpty()) {
-                                    lista
-                                } else {
-                                    lista.filter {
-                                        it.posicion.lowercase()
-                                            .contains(texto) ||
-                                                it.activo
-                                                    .toString()
-                                                    .contains(texto) ||
-                                                it.numero_camiseta
-                                                    .toString()
-                                                        .contains(texto)
-
-                                    }
-                                }
-
-                            txtContador.text =
-                                "${filtrada.size} registros"
-
-                            recycler.adapter = JugadorAdapter(
-                                filtrada,
-                                onEditar = { jugador ->
-                                    abrirEditar(jugador)
-                                },
-                                onEliminar = { jugador ->
-                                    confirmarEliminar(jugador)
-                                }
-                            )
-                        }
-                    })
+                    mostrarLista(listaGlobal)
                 }
 
-                override fun onFailure(
-                    call: Call<List<Jugador>>,
-                    t: Throwable
-                ) {
+                override fun onFailure(call: Call<List<Jugador>>, t: Throwable) {
 
                     progressBar.visibility = View.GONE
 
@@ -178,19 +121,49 @@ class JugadoresActivity : AppCompatActivity() {
                         Toast.LENGTH_LONG
                     ).show()
 
-                    Log.e(
-                        "API_JUGADORES",
-                        t.message ?: "Error"
-                    )
+                    Log.e("API_JUGADORES", t.message ?: "Error")
                 }
             })
+    }
+
+    // 🔥 FILTRO CORRECTO
+    private fun filtrarJugadores(texto: String) {
+
+        val query = texto.lowercase()
+
+        val filtrada = if (query.isEmpty()) {
+            listaGlobal
+        } else {
+            listaGlobal.filter {
+                it.id_jugador.toString().contains(query) ||
+//                        it.nombre_usuario.lowercase().contains(query) ||
+//                        it.apellido_usuario.lowercase().contains(query) ||
+                        it.posicion.lowercase().contains(query) ||
+                        it.numero_camiseta.toString().contains(query) ||
+                        it.activo.toString().contains(query)
+            }
+        }
+
+        txtContador.text = "${filtrada.size} registros"
+
+        mostrarLista(filtrada)
+    }
+
+    // 🔥 EVITA REPETIR CÓDIGO
+    private fun mostrarLista(lista: List<Jugador>) {
+
+        recycler.adapter = JugadorAdapter(
+            lista,
+            onEditar = { jugador -> abrirEditar(jugador) },
+            onEliminar = { jugador -> confirmarEliminar(jugador) }
+        )
     }
 
     private fun confirmarEliminar(jugador: Jugador) {
 
         AlertDialog.Builder(this)
             .setTitle("Eliminar jugador")
-            .setMessage("¿Seguro que deseas eliminar a ${jugador.posicion}?")
+//            .setMessage("¿Seguro que deseas eliminar a ${jugador.nombre_usuario}?")
             .setPositiveButton("Eliminar") { _, _ ->
                 eliminarJugador(jugador.id_jugador ?: 0)
             }
@@ -203,62 +176,38 @@ class JugadoresActivity : AppCompatActivity() {
         val token = getSharedPreferences("app", MODE_PRIVATE)
             .getString("token", "") ?: ""
 
-        ApiClient.instance.eliminarJugador(
-            "Bearer $token",
-            id
-        ).enqueue(object : Callback<Void> {
+        ApiClient.instance.eliminarJugador("Bearer $token", id)
+            .enqueue(object : Callback<Void> {
 
-            override fun onResponse(
-                call: Call<Void>,
-                response: Response<Void>
-            ) {
+                override fun onResponse(call: Call<Void>, response: Response<Void>) {
 
-                if (response.isSuccessful) {
+                    if (response.isSuccessful) {
+                        Toast.makeText(
+                            this@JugadoresActivity,
+                            "Jugador eliminado",
+                            Toast.LENGTH_SHORT
+                        ).show()
 
-                    Toast.makeText(
-                        this@JugadoresActivity,
-                        "Jugador eliminado",
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                    cargarJugadores()
-                } else {
-
-                    Toast.makeText(
-                        this@JugadoresActivity,
-                        "Error al eliminar",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                        cargarJugadores()
+                    } else {
+                        Toast.makeText(
+                            this@JugadoresActivity,
+                            "Error al eliminar",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
-            }
 
-            override fun onFailure(
-                call: Call<Void>,
-                t: Throwable
-            ) {
-
-                Toast.makeText(
-                    this@JugadoresActivity,
-                    t.message,
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        })
+                override fun onFailure(call: Call<Void>, t: Throwable) {
+                    Toast.makeText(this@JugadoresActivity, t.message, Toast.LENGTH_SHORT).show()
+                }
+            })
     }
 
     private fun abrirEditar(jugador: Jugador) {
 
-        val intent =
-            Intent(
-                this,
-                EditarJugadorActivity::class.java
-            )
-
-        intent.putExtra(
-            "id_jugador",
-            jugador.id_jugador ?: 0
-        )
-
+        val intent = Intent(this, EditarJugadorActivity::class.java)
+        intent.putExtra("id_jugador", jugador.id_jugador ?: 0)
         startActivity(intent)
     }
 }
