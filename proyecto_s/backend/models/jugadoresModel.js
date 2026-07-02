@@ -43,18 +43,6 @@ export const getJugadorByIdModel = async (id) => {
   return rows[0];
 };
 
-export const existeJugadorPorUsuarioModel = async (id_usuario) => {
-  const [rows] = await pool.query(
-    `
-    SELECT id_jugador
-    FROM jugadores
-    WHERE id_usuario = ?
-    `,
-    [id_usuario]
-  );
-
-  return rows.length > 0;
-};
 
 export const createJugadorModel = async (jugador) => {
   const {
