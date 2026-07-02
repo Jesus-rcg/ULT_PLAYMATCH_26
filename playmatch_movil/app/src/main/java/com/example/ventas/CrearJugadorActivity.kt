@@ -297,6 +297,7 @@ import retrofit2.Response
 
 class CrearJugadorActivity : AppCompatActivity() {
 
+    private lateinit var spActivo: Spinner
     private lateinit var spUsuario: Spinner
     private lateinit var spPosicion: Spinner
 
@@ -372,6 +373,27 @@ class CrearJugadorActivity : AppCompatActivity() {
                 id_usuario = usuarioSeleccionado.id!!,
                 posicion = spPosicion.selectedItem.toString(),
                 numero_camiseta = numero
+            val activo =
+                if (spActivo.selectedItem.toString() == "Activo")
+                    1
+                else
+                    0
+
+            val jugador = Jugador(
+
+                id_jugador = 0,
+
+                id_usuario =
+                    usuarioSeleccionado.id!!,
+
+                posicion =
+                    spPosicion.selectedItem.toString(),
+
+                numero_camiseta =
+                    numero,
+
+                activo =
+                    activo
             )
 
             val prefs =
@@ -403,6 +425,7 @@ class CrearJugadorActivity : AppCompatActivity() {
                         spUsuario.setSelection(0)
                         spPosicion.setSelection(0)
 
+                        spActivo.setSelection(0)
 
                     } else {
 
@@ -457,6 +480,7 @@ class CrearJugadorActivity : AppCompatActivity() {
             android.R.layout.simple_spinner_dropdown_item
         )
 
+        spActivo.adapter = adapter
     }
 
     private fun cargarPosiciones() {
@@ -490,6 +514,7 @@ class CrearJugadorActivity : AppCompatActivity() {
             prefs.getString("token", "") ?: ""
 
         ApiClient.instance.getUsuariosDisponibles(
+        ApiClient.instance.getJugador(
             "Bearer $token"
         ).enqueue(object : Callback<UsuarioResponse> {
 
@@ -542,5 +567,4 @@ class CrearJugadorActivity : AppCompatActivity() {
             }
         })
     }
-}
->>>>>>> Stashed changes
+
