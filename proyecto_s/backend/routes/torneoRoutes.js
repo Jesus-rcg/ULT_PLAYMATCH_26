@@ -39,7 +39,6 @@ const router = express.Router();
  *       500:
  *         description: Error interno del servidor.
  */
-router.get("/disponibles", getUsuariosDisponibles);
 
 // Tipo Torneos
 router.get("/tipo-torneo", getTipoTorneoController);
