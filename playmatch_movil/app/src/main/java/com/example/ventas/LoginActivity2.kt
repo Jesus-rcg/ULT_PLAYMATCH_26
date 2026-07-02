@@ -6,16 +6,19 @@ import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ventas.MenuActivity
+<<<<<<< Updated upstream
 import com.example.ventas.OlvideContrasenaActivity
 import com.example.ventas.R
+=======
+>>>>>>> Stashed changes
 import com.example.ventas.RegistrarseActivity
 import com.example.ventas.api.ApiClient
-import com.example.ventas.api.ApiService
 import com.example.ventas.model.LoginRequest
 import com.example.ventas.model.LoginResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import com.example.ventas.R
 
 class LoginActivity2 : AppCompatActivity() {
 
@@ -54,19 +57,50 @@ class LoginActivity2 : AppCompatActivity() {
                         call: Call<LoginResponse>,
                         response: Response<LoginResponse>
                     ) {
+<<<<<<< Updated upstream
                             val token = response.body()?.token
 
                             // ✅ guardar token
+=======
+
+                        if (response.isSuccessful) {
+
+                            val body = response.body()
+
+                            val token = body?.token
+                            val user = body?.user
+                            val rol = user?.rol
+
+                            if (rol != 1) {
+                                message.setTextColor(Color.RED)
+                                message.text = "No tienes permisos para acceder"
+                                return
+                            }
+
+                            // 🔥 GUARDADO CORRECTO (token + id_usuario)
+>>>>>>> Stashed changes
                             val prefs = getSharedPreferences("app", MODE_PRIVATE)
-                            prefs.edit().putString("token", token).apply()
+                            prefs.edit()
+                                .putString("token", token)
+                                .putInt("id_usuario", user?.id_usuario ?: -1)
+                                .apply()
 
                             val body = response.body()
                             val rol = body?.user?.rol
                             when(rol){
 
+<<<<<<< Updated upstream
                                 1 -> {
                                     message.setTextColor(Color.GREEN)
                                     message.text = "Bienvenido administrador"
+=======
+                            val intent = Intent(
+                                this@LoginActivity2,
+                                MenuActivity::class.java
+                            )
+                            startActivity(intent)
+                            finish()
+>>>>>>> Stashed changes
 
                                     startActivity(Intent(this@LoginActivity2, MenuActivity::class.java))
                                     finish()

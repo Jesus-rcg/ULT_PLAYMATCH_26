@@ -140,12 +140,12 @@
                                 jugador.id_usuario.toString()
                             )
 
-//                            etNombreUsuario.setText(
-//                                jugador.nombre_usuario
-//                            )
-//
-//                            etApellidoUsuario.setText(
-//                                jugador.apellido_usuario)
+                            etNombreUsuario.setText(
+                                jugador.nombre_usuario
+                            )
+
+                            etApellidoUsuario.setText(
+                                jugador.apellido_usuario)
 
                             val posiciones = listOf(
                                 "Portero",
@@ -240,8 +240,8 @@
             val jugador = Jugador(
                 id_jugador = idJugador,
                 id_usuario = etIdUsuario.text.toString().toInt(),
-//                nombre_usuario = etNombreUsuario.text.toString(),
-//                apellido_usuario = etApellidoUsuario.text.toString(),
+                nombre_usuario = etNombreUsuario.text.toString(),
+                apellido_usuario = etApellidoUsuario.text.toString(),
                 posicion = spPosicion.selectedItem.toString(),
                 numero_camiseta = numero,
                 activo = activo

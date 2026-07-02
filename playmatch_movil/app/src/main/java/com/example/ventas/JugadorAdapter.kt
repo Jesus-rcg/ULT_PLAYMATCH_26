@@ -44,7 +44,7 @@ class JugadorAdapter(
         holder.txtNumero.text = "⚽ Camiseta #${jugador.numero_camiseta}"
         holder.txtPosicion.text = "📍 ${jugador.posicion}"
         holder.txtUsuario.text = "👤 Usuario ID: ${jugador.id_usuario}"
-//        holder.txtNombre.text = jugador.nombre_usuario + " " + jugador.apellido_usuario
+        holder.txtNombre.text = jugador.nombre_usuario + " " + jugador.apellido_usuario
         holder.txtId.text = "#${jugador.id_jugador}"
 
         holder.txtEstado.text =

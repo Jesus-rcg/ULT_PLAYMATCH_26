@@ -9,11 +9,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ventas.R
 import com.example.ventas.model.Torneo
-
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 class TorneoAdapter(
     private val lista: List<Torneo>,
     private val onEditar: (Torneo) -> Unit,
     private val onEliminar: (Torneo) -> Unit
+
 ) : RecyclerView.Adapter<TorneoAdapter.TorneoViewHolder>() {
 
     inner class TorneoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -30,7 +32,18 @@ class TorneoAdapter(
         val btnEditar = view.findViewById<Button>(R.id.btnEditar)
         val btnEliminar = view.findViewById<Button>(R.id.btnEliminar)
     }
+    private fun formatearFecha(fecha: String?): String {
+        return try {
+            if (fecha.isNullOrEmpty()) return "Sin fecha"
 
+            fecha.take(10).split("-").let {
+                "${it[2]}/${it[1]}/${it[0]}"
+            }
+
+        } catch (e: Exception) {
+            fecha ?: "Sin fecha"
+        }
+    }
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -53,10 +66,10 @@ class TorneoAdapter(
         holder.txtCategoria.text = "📂 ${torneo.categoria}"
         holder.txtTipo.text = "⚔️ ${torneo.tipo_torneo}"
         holder.txtCiudad.text = "📍 ${torneo.ciudad}"
-        holder.txtFechas.text = "📅 ${torneo.fecha_inicio} → ${torneo.fecha_fin}"
-        holder.txtUsuario.text = "👤 Usuario ID: ${torneo.id_usuario}"
-        holder.txtId.text = "#${torneo.id_torneo}"
-        holder.txtEstado.text = torneo.estado
+        holder.txtFechas.text =
+            "📅 ${formatearFecha(torneo.fecha_inicio)} → ${formatearFecha(torneo.fecha_fin)}"
+        holder.txtId.text = "ID Torneo: ${torneo.id_torneo}"
+        holder.txtEstado.text = "Estado del torneo: ${torneo.estado}"
 
         holder.btnEditar.setOnClickListener {
             onEditar(torneo)

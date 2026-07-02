@@ -6,12 +6,15 @@ import {
   updateTorneo,
   deleteTorneo,
   getTorneosByUsuario,
+  getTipoTorneoController,
+  getCategoriaController 
 } from "../controllers/torneoController.js";
 
 import { verificarToken } from "../middlewares/verificarToken.js";
 
 const router = express.Router();
 
+<<<<<<< Updated upstream
 /**
  * @swagger
  * tags:
@@ -36,6 +39,16 @@ const router = express.Router();
  *       500:
  *         description: Error interno del servidor.
  */
+
+// Tipo Torneos
+router.get("/tipo-torneo", getTipoTorneoController);
+
+// Categoria Torneo
+
+router.get("/categoria", getCategoriaController);
+
+// 🔥 PRIMERO rutas específicas
+
 router.get("/usuario/mios", verificarToken, getTorneosByUsuario);
 
 /**
@@ -53,6 +66,7 @@ router.get("/usuario/mios", verificarToken, getTorneosByUsuario);
  */
 router.get("/", getTorneos);
 
+<<<<<<< Updated upstream
 /**
  * @swagger
  * /api/torneos/{id}:
@@ -102,6 +116,15 @@ router.get("/:id", getTorneoById);
  *       500:
  *         description: Error interno del servidor.
  */
+=======
+
+// DESPUÉS rutas dinámicas
+router.get("/:id", getTorneoById);
+
+
+
+// CREAR
+>>>>>>> Stashed changes
 router.post("/", verificarToken, createTorneo);
 
 /**

@@ -1,121 +1,234 @@
 package com.example.ventas
 
-
-import android.annotation.SuppressLint
+import android.app.DatePickerDialog
 import android.os.Bundle
-import android.util.Log
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.Spinner
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.ventas.api.ApiClient
-import com.example.ventas.model.Torneo
+import com.example.ventas.model.CreateTorneoRequest
+import com.example.ventas.model.TipoTorneo
+import com.example.ventas.model.ApiResponse
+import com.example.ventas.model.CategoriaTorneo
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.Calendar
+import android.content.Intent
 
 class CrearTorneoActivity : AppCompatActivity() {
 
-    private lateinit var spEstados: Spinner
     private lateinit var spTipoTorneo: Spinner
     private lateinit var spCategoria: Spinner
 
-    @SuppressLint("MissingInflatedId")
+    private lateinit var etFechaInicio: EditText
+    private lateinit var etFechaFin: EditText
+
+    private var fechaInicioISO = ""
+    private var fechaFinISO = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_crear_torneo)
 
         findViewById<ImageButton>(R.id.btnVolver).setOnClickListener { finish() }
 
-        spEstados = findViewById(R.id.spEstados)
-        cargarEstados()
+        spTipoTorneo = findViewById(R.id.spTipoTorneo)
+        spCategoria = findViewById(R.id.spCategoria)
+
+        etFechaInicio = findViewById(R.id.etFechaInicio)
+        etFechaFin = findViewById(R.id.etFechaFin)
+
+        val prefs = getSharedPreferences("app", MODE_PRIVATE)
+        val token = prefs.getString("token", "") ?: ""
+
+        cargarTiposTorneo(token)
+        cargarCategoria(token)
 
         val txtNombre = findViewById<EditText>(R.id.txtNombreTorneo)
-        val txtFecha_inicio = findViewById<EditText>(R.id.txtFecha_inicio)
-        val txtFecha_fin = findViewById<EditText>(R.id.txtFecha_fin)
+        val txtCiudad = findViewById<EditText>(R.id.txtCiudad)
         val btnGuardarTorneo = findViewById<Button>(R.id.btnGuardarTorneo)
 
+        etFechaInicio.setOnClickListener { mostrarDatePicker(true) }
+        etFechaFin.setOnClickListener { mostrarDatePicker(false) }
+
         btnGuardarTorneo.setOnClickListener {
+
             val nombre = txtNombre.text.toString().trim()
-            val fecha_inicio = txtFecha_inicio.text.toString().trim()
-            val fecha_fin = txtFecha_fin.text.toString().trim()
-            val estado = spEstados.selectedItem.toString()
+            val ciudad = txtCiudad.text.toString().trim()
+            val categoria = spCategoria.selectedItem.toString()
+            val tipoTorneo = spTipoTorneo.selectedItem.toString()
 
-            if (nombre.isEmpty()) { txtNombre.error = "El nombre es obligatorio"; return@setOnClickListener }
-            if (fecha_inicio.isEmpty()) { txtFecha_inicio.error = "La fecha inicio es obligatoria"; return@setOnClickListener }
-            if (fecha_fin.isEmpty()) { txtFecha_fin.error = "La fecha fin es obligatoria"; return@setOnClickListener }
+            if (nombre.isEmpty()) {
+                txtNombre.error = "El nombre es obligatorio"
+                return@setOnClickListener
+            }
 
-            val prefs = getSharedPreferences("app", MODE_PRIVATE)
-            val token = prefs.getString("token", "") ?: ""
+            if (ciudad.isEmpty()) {
+                txtCiudad.error = "La ciudad es obligatoria"
+                return@setOnClickListener
+            }
+
+            if (fechaInicioISO.isEmpty()) {
+                etFechaInicio.error = "Selecciona fecha inicio"
+                return@setOnClickListener
+            }
+
+            if (fechaFinISO.isEmpty()) {
+                etFechaFin.error = "Selecciona fecha fin"
+                return@setOnClickListener
+            }
+
             val idUsuario = prefs.getInt("id_usuario", 0)
 
-            val torneo = Torneo(
-                id_torneo = null,
+            val torneo = CreateTorneoRequest(
                 id_usuario = idUsuario,
                 nombre_torneo = nombre,
-                categoria = "",
-                tipo_torneo = "",
-                ciudad = "",
-                fecha_inicio = fecha_inicio,
-                fecha_fin = fecha_fin,
-                estado = estado,
-                activo = 1
+                categoria = categoria,
+                tipo_torneo = tipoTorneo,
+                ciudad = ciudad,
+                fecha_inicio = fechaInicioISO,
+                fecha_fin = fechaFinISO
             )
 
-            ApiClient.instance.createTorneo(
-                "Bearer $token",
-                torneo
-            ).enqueue(object : Callback<Torneo> {
+            ApiClient.instance.createTorneo("Bearer $token", torneo)
+                .enqueue(object : Callback<ApiResponse> {
 
-                override fun onResponse(call: Call<Torneo>, response: Response<Torneo>) {
-                    if (response.isSuccessful) {
-                        Toast.makeText(
-                            this@CrearTorneoActivity,
-                            "✅ Torneo guardado correctamente",
-                            Toast.LENGTH_LONG
-                        ).show()
-                        txtNombre.text.clear()
-                        txtFecha_inicio.text.clear()
-                        txtFecha_fin.text.clear()
-                        spEstados.setSelection(0)
-                    } else {
-                        Toast.makeText(
-                            this@CrearTorneoActivity,
-                            "❌ Error ${response.code()}",
-                            Toast.LENGTH_LONG
-                        ).show()
-                        Log.e("API_ERROR", response.errorBody()?.string() ?: "Error desconocido")
+                    override fun onResponse(
+                        call: Call<ApiResponse>,
+                        response: Response<ApiResponse>
+                    ) {
+
+                        if (response.isSuccessful) {
+
+                            Toast.makeText(
+                                this@CrearTorneoActivity,
+                                " Torneo guardado correctamente",
+                                Toast.LENGTH_LONG
+                            ).show()
+
+                            val intent = Intent(this@CrearTorneoActivity, TorneosActivity::class.java)
+                            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+                            startActivity(intent)
+                            finish()
+
+                            txtNombre.text.clear()
+                            txtCiudad.text.clear()
+                            etFechaInicio.text.clear()
+                            etFechaFin.text.clear()
+
+                            fechaInicioISO = ""
+                            fechaFinISO = ""
+
+                        } else {
+
+                            Toast.makeText(
+                                this@CrearTorneoActivity,
+                                " Error ${response.code()}",
+                                Toast.LENGTH_LONG
+                            ).show()
+
+                        }
+
                     }
-                }
 
-                override fun onFailure(call: Call<Torneo>, t: Throwable) {
-                    Toast.makeText(
-                        this@CrearTorneoActivity,
-                        "❌ Error de conexión: ${t.message}",
-                        Toast.LENGTH_LONG
-                    ).show()
-                    Log.e("API_ERROR", t.message.toString())
-                }
-            })
+                    override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
+                        Toast.makeText(
+                            this@CrearTorneoActivity,
+                            " Error conexión",
+                            Toast.LENGTH_LONG
+                        ).show()
+
+
+                    }
+                })
         }
     }
 
-    private fun cargarEstados() {
-        val estados = listOf(
-            "Inscripciones Abiertas",
-            "Comenzo",
-            "Finalizado"
-        )
-        val adapter = ArrayAdapter(
+
+    private fun mostrarDatePicker(esInicio: Boolean) {
+
+        val calendario = Calendar.getInstance()
+
+        DatePickerDialog(
             this,
-            android.R.layout.simple_spinner_item,
-            estados
-        )
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spEstados.adapter = adapter
+            { _, year, month, day ->
+
+                val fechaISO = String.format("%04d-%02d-%02d", year, month + 1, day)
+
+                if (esInicio) {
+                    fechaInicioISO = fechaISO
+                    etFechaInicio.setText(fechaISO)
+                } else {
+                    fechaFinISO = fechaISO
+                    etFechaFin.setText(fechaISO)
+                }
+
+            },
+            calendario.get(Calendar.YEAR),
+            calendario.get(Calendar.MONTH),
+            calendario.get(Calendar.DAY_OF_MONTH)
+        ).show()
+    }
+
+
+    private fun cargarCategoria(token: String) {
+
+        ApiClient.instance.getCategoria("Bearer $token")
+            .enqueue(object : Callback<List<CategoriaTorneo>> {
+
+                override fun onResponse(
+                    call: Call<List<CategoriaTorneo>>,
+                    response: Response<List<CategoriaTorneo>>
+                ) {
+
+                    if (response.isSuccessful) {
+
+                        val lista = response.body() ?: emptyList()
+                        val categorias = lista.map { it.categoria }
+
+                        val adapter = ArrayAdapter(
+                            this@CrearTorneoActivity,
+                            android.R.layout.simple_spinner_item,
+                            categorias
+                        )
+
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                        spCategoria.adapter = adapter
+                    }
+                }
+
+                override fun onFailure(call: Call<List<CategoriaTorneo>>, t: Throwable) {}
+            })
+    }
+
+    // ================= TIPOS =================
+    private fun cargarTiposTorneo(token: String) {
+
+        ApiClient.instance.getTipoTorneo("Bearer $token")
+            .enqueue(object : Callback<List<TipoTorneo>> {
+
+                override fun onResponse(
+                    call: Call<List<TipoTorneo>>,
+                    response: Response<List<TipoTorneo>>
+                ) {
+
+                    if (response.isSuccessful) {
+
+                        val lista = response.body() ?: emptyList()
+                        val tipos = lista.map { it.tipo_torneo }
+
+                        val adapter = ArrayAdapter(
+                            this@CrearTorneoActivity,
+                            android.R.layout.simple_spinner_item,
+                            tipos
+                        )
+
+                        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                        spTipoTorneo.adapter = adapter
+                    }
+                }
+
+                override fun onFailure(call: Call<List<TipoTorneo>>, t: Throwable) {}
+            })
     }
 }
-

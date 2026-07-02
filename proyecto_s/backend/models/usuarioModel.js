@@ -1,5 +1,6 @@
 import db from "../config/db.js";
 import bcrypt from "bcrypt";
+import pool from "../config/db.js";
 
 //Crear usario
 export const createUsuario = async (data) => {
@@ -15,7 +16,7 @@ export const createUsuario = async (data) => {
 
   const passwordHash = await bcrypt.hash(password, 10);
 
-  return await db.query(
+  return await pool.query(
     `INSERT INTO usuarios 
     (id_rol, nombre_usuario, apellido_usuario, fecha_nacimiento, telefono, email, password)
     VALUES (?, ?, ?, ?, ?, ?, ?)`,
@@ -81,6 +82,19 @@ export const getAllUsuarios = async () => {
   return rows;
 };
 
+export const getUsuariosDisponiblesModel = async () => {
+
+  const [rows] = await db.query(`
+    SELECT u.*
+    FROM usuarios u
+    WHERE u.id_usuario NOT IN (
+        SELECT j.id_usuario
+        FROM jugadores j
+    )
+  `);
+
+  return rows;
+};
 //Actualizar usuario
 export const updateUsuarioModel = async (id, data) => {
   const { nombre_usuario, apellido_usuario, telefono, email, password, id_rol } = data;

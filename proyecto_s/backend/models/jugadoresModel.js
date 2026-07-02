@@ -43,6 +43,19 @@ export const getJugadorByIdModel = async (id) => {
   return rows[0];
 };
 
+export const existeJugadorPorUsuarioModel = async (id_usuario) => {
+  const [rows] = await pool.query(
+    `
+    SELECT id_jugador
+    FROM jugadores
+    WHERE id_usuario = ?
+    `,
+    [id_usuario]
+  );
+
+  return rows.length > 0;
+};
+
 export const createJugadorModel = async (jugador) => {
   const {
     id_usuario,
@@ -50,6 +63,15 @@ export const createJugadorModel = async (jugador) => {
     numero_camiseta
   } = jugador;
 
+  const [check] = await pool.query(
+    `SELECT id_jugador FROM jugadores WHERE id_usuario = ?`,
+    [id_usuario]
+  );
+
+  if (check.length > 0) {
+    throw new Error("Este usuario ya tiene jugador");
+  }
+  
   const [result] = await pool.query(
     `
     INSERT INTO jugadores
@@ -71,27 +93,11 @@ export const createJugadorModel = async (jugador) => {
 export const updateJugadorModel = async (id, jugador) => {
   const {
     id_usuario,
-    nombre_usuario,
-    apellido_usuario,
     posicion,
     numero_camiseta,
     activo
   } = jugador;
 
- await pool.query(
-  `
-  UPDATE usuarios
-  SET
-    nombre_usuario = ?,
-    apellido_usuario = ?
-  WHERE id_usuario = ?
-  `,
-[
-  nombre_usuario,
-  apellido_usuario,
-  id_usuario
-]
-);
 
   const [result] = await pool.query(
     `
@@ -114,22 +120,7 @@ export const updateJugadorModel = async (id, jugador) => {
 
   return result;
 };
-export const getUsuariosDisponiblesModel = async () => {
-  const [rows] = await pool.query(`
-    SELECT
-        u.id_usuario,
-        u.nombre_usuario,
-        u.apellido_usuario
-    FROM usuarios u
-    LEFT JOIN jugadores j
-        ON u.id_usuario = j.id_usuario
-    WHERE j.id_usuario IS NULL
-      AND u.activo = 1
-    ORDER BY u.nombre_usuario
-  `);
 
-  return rows;
-};
 // Eliminar jugador (borrado lógico)
 export const deleteJugadorModel = async (id) => {
   const [result] = await pool.query(

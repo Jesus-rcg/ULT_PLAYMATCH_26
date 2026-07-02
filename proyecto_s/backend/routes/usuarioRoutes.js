@@ -14,6 +14,7 @@ import {
 } from "../controllers/usuarioController.js";
 
 import { findUsuarioByEmail } from "../models/usuarioModel.js";
+import {getUsuariosDisponibles} from "../controllers/usuarioController.js";
 
 const router = express.Router();
 
@@ -87,6 +88,17 @@ router.get("/email/:email", async (req, res) => {
  *         description: Error interno del servidor.
  */
 router.post("/", createUsuario);
+<<<<<<< Updated upstream
+=======
+router.get("/", getUsuarios);
+router.get("/disponibles", getUsuariosDisponibles);
+router.get("/:id", getUsuarioById);
+router.put("/:id", updateUsuario);
+router.delete("/:id", deleteUsuario);
+router.post("/registrar", registrarUsuario);
+router.post("/enviar-codigo", enviarCodigoRegistro);
+router.post("/reenviar-codigo", reenviarCodigoRegistro);
+>>>>>>> Stashed changes
 
 /**
  * @swagger

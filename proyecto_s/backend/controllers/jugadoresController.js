@@ -7,7 +7,6 @@ import {
   
 } from "../services/jugadoresService.js";
 
-import { getUsuariosDisponiblesModel } from "../models/jugadoresModel.js";
 
 // Obtener todos los jugadores
 export const getJugadores = async (req, res) => {
@@ -47,23 +46,35 @@ export const getJugadorById = async (req, res) => {
   }
 };
 
+
 // Crear jugador
 export const createJugador = async (req, res) => {
   console.log("¡SÍ! ENTRÓ AL CONTROLADOR DE CREAR JUGADOR (POSTTTT)");
   console.log("Datos recibidos:", req.body);
+
   try {
+
     const result = await createJugadorService(req.body);
 
     res.status(201).json({
       msg: "Jugador creado correctamente",
       id: result.insertId,
     });
+
   } catch (error) {
+
     console.error(error);
 
+    if (error.message === "USUARIO_YA_TIENE_JUGADOR") {
+      return res.status(409).json({
+        msg: "El usuario ya tiene un jugador asociado."
+      });
+    }
+
     res.status(500).json({
-      msg: "Error al crear jugador",
+      msg: "Error al crear jugador"
     });
+
   }
 };
 
@@ -91,30 +102,6 @@ export const updateJugador = async (req, res) => {
       msg: "Error al actualizar jugador",
     });
   }
-};
-export const getUsuariosDisponibles = async (req, res) => {
-  console.log("¡SÍ! Entró al controlador correcto de JUGADORES");
-
-    try {
-
-        const usuarios = await getUsuariosDisponiblesModel();
-
-        res.json({
-            success: true,
-            data: usuarios
-        });
-
-    } catch (error) {
-
-        console.log(error);
-
-        res.status(500).json({
-            success: false,
-            message: "Error interno"
-        });
-
-    }
-
 };
 
 // Eliminar jugador

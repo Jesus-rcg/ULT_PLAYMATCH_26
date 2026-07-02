@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#F5F5F5"
+            android:background="#1A1A2E"
             android:fillViewport="true">
 
     <LinearLayout
@@ -39,73 +40,110 @@
         <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:text="Crear Torneo"
-                android:textSize="26sp"
                 android:textStyle="bold"
-                android:textColor="#1A1A2E"
+                android:textSize="28sp"
+                android:textColor="#FFF"
                 android:layout_marginBottom="20dp"/>
 
-        <EditText
-                android:id="@+id/txtIdUsuario"
+        <androidx.cardview.widget.CardView
+                android:id="@+id/cardTorneo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="ID Usuario"
-                android:inputType="number"
-                android:layout_marginBottom="12dp"/>
+                app:cardCornerRadius="20dp"
+                app:cardElevation="8dp">
 
-        <EditText
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nombre torneo"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="5dp"/>
+
+            <EditText
                 android:id="@+id/txtNombreTorneo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Nombre del torneo"
                 android:layout_marginBottom="12dp"/>
 
-        <Spinner
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Categoria"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="5dp"/>
+            <Spinner
                 android:id="@+id/spCategoria"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"/>
 
-        <Spinner
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tipo torneo"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="12dp"/>
+
+            <Spinner
                 android:id="@+id/spTipoTorneo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"/>
 
-        <EditText
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ciudad"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="5dp"/>
+
+            <EditText
                 android:id="@+id/txtCiudad"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Ciudad"
-                android:layout_marginBottom="12dp"/>
+                android:layout_marginBottom="10dp"/>
 
-        <EditText
-                android:id="@+id/txtFecha_inicio"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Fecha inicio (YYYY-MM-DD)"
-                android:layout_marginBottom="12dp"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fecha Inicio"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="12dp"/>
 
-        <EditText
-                android:id="@+id/txtFecha_fin"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Fecha fin (YYYY-MM-DD)"
-                android:layout_marginBottom="12dp"/>
+            <EditText
+                    android:id="@+id/etFechaInicio"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Fecha inicio"
+                    android:focusable="false"
+                    android:clickable="true"/>
 
-        <Spinner
-                android:id="@+id/spEstados"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="12dp"/>
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fecha fin"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="5dp"/>
 
-        <Spinner
-                android:id="@+id/spActivo"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"/>
+            <EditText
+                    android:id="@+id/etFechaFin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Fecha Fin"
+                    android:focusable="false"
+                    android:clickable="true"/>
 
-        <Button
+            <Button
                 android:id="@+id/btnGuardarTorneo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -113,6 +151,10 @@
                 android:textStyle="bold"
                 android:textColor="#FFFFFF"
                 android:backgroundTint="#534AB7"/>
+
+        </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
 
     </LinearLayout>
 

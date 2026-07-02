@@ -7,6 +7,10 @@ import {
   getTorneosByUsuarioService,
 } from "../services/torneoService.js";
 
+import {getTipoTorneoService,} from "../services/torneoService.js";
+import {getCategoriaService,} from "../services/torneoService.js";
+
+
 // Obtener todos los torneos
 export const getTorneos = async (req, res) => {
   try {
@@ -17,6 +21,33 @@ export const getTorneos = async (req, res) => {
       message: error.message,
     });
   }
+};
+export const getTipoTorneoController = async (req, res) => {
+  try {
+    const data = await getTipoTorneoService();
+    return res.json(data);
+  } catch (error) {
+  console.error(error);
+
+  return res.status(500).json({
+    message: error.message,
+    error,
+  });
+}
+};
+
+export const getCategoriaController = async (req, res) => {
+  try {
+    const data = await getCategoriaService();
+    return res.json(data);
+  } catch (error) {
+  console.error(error);
+
+  return res.status(500).json({
+    message: error.message,
+    error,
+  });
+}
 };
 
 export const getTorneosByUsuario = async (req, res) => {
@@ -58,6 +89,7 @@ export const getTorneoById = async (req, res) => {
 
 // Crear torneo
 export const createTorneo = async (req, res) => {
+  console.log("📩 BODY RECIBIDO:", req.body);
   try {
     const user = req.user;
 

@@ -4,6 +4,7 @@ import {
   createJugadorModel,
   updateJugadorModel,
   deleteJugadorModel,
+  existeJugadorPorUsuarioModel
 } from "../models/jugadoresModel.js";
 
 //Obtener todas
@@ -16,10 +17,19 @@ export const getJugadorByIdService = async (id) => {
   return await getJugadorByIdModel(id);
 };
 
-//Crear jugador
+
+// Crear jugador
 export const createJugadorService = async (jugador) => {
+
+  const existe = await existeJugadorPorUsuarioModel(jugador.id_usuario);
+
+  if (existe) {
+    throw new Error("USUARIO_YA_TIENE_JUGADOR");
+  }
+
   return await createJugadorModel(jugador);
 };
+
 
 //Actualizar
 export const updateJugadorService = async (id, jugador) => {
