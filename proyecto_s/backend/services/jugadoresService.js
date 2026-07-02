@@ -19,7 +19,16 @@ export const getJugadorByIdService = async (id) => {
 
 
 // Crear jugador
+export const createJugadorService = async (jugador) => {
 
+  const existe = await existeJugadorPorUsuarioModel(jugador.id_usuario);
+
+  if (existe) {
+    throw new Error("USUARIO_YA_TIENE_JUGADOR");
+  }
+
+  return await createJugadorModel(jugador);
+};
 
 
 //Actualizar
