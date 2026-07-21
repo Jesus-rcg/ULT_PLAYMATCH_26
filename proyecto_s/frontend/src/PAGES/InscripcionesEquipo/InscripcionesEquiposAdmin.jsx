@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "../../STILO/estilosPages/inscripcionEquipo/inscripcionEquipo.css";
+import Pagination from "../../COMPONENTES/Pagination";
 
 const API = import.meta.env.VITE_API_URL + "/inscripcionEquipos";
 
@@ -8,6 +9,8 @@ export default function InscripcionEquipos() {
   const [inscripciones, setInscripciones] = useState([]);
   const [search, setSearch] = useState("");
   const [error, setError] = useState("");
+  const [paginaActual, setPaginaActual] = useState(1);
+  const registrosPorPagina = 7;
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -76,6 +79,14 @@ export default function InscripcionEquipos() {
     );
   });
 
+  const ultimoRegistro = paginaActual * registrosPorPagina;
+  const primerRegistro = ultimoRegistro - registrosPorPagina;
+
+  const inscripcionesPaginadas = filtrados.slice(
+    primerRegistro,
+    ultimoRegistro
+  );
+
   return (
     <div className="usuarios-container">
       <div className="tabla-container">
@@ -106,7 +117,7 @@ export default function InscripcionEquipos() {
 
           <tbody>
             {filtrados.length > 0 ? (
-              filtrados.map((i) => (
+              inscripcionesPaginadas.map((i) => (
                 <tr key={i.id_inscripcion_e}>
                   <td>{i.id_inscripcion_e}</td>
                   <td>{i.nombre_torneo}</td>
@@ -148,6 +159,12 @@ export default function InscripcionEquipos() {
             )}
           </tbody>
         </table>
+        <Pagination
+          totalRegistros={filtrados.length}
+          registrosPorPagina={registrosPorPagina}
+          paginaActual={paginaActual}
+          setPaginaActual={setPaginaActual}
+        />
       </div>
     </div>
   );

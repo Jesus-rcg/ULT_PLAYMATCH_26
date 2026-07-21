@@ -1,14 +1,8 @@
 body {
   margin: 0;
-  padding-top: 40px;
-  background: linear-gradient(
-    20deg,
-    rgb(8, 160, 8),
-    rgb(27, 27, 242),
-    rgb(8, 160, 8)
-  );
+  padding-top: 0;
+  background: #534AB7;
   background-attachment: fixed;
-  animation: gradientMove 1s ease infinite;
   font-family: "Segoe UI", sans-serif;
   color: #ffffff;
   overflow-x: hidden;

@@ -35,6 +35,7 @@ export const loginUsuario = async (req, res) => {
       user: data.user,
     });
   } catch (err) {
+    
     return res.status(401).json({
       success: false,
       message: err.message,

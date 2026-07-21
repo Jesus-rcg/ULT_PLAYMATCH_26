@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getResultados } from "../../SERVICE/resultadosService";
+import Pagination from "../../COMPONENTES/Pagination";
 
 export default function Resultados() {
   const navigate = useNavigate();
+  const [paginaActual, setPaginaActual] = useState(1);
+  const registrosPorPagina = 7;
 
   const [resultados, setResultados] = useState([]);
 
@@ -20,6 +23,14 @@ export default function Resultados() {
   useEffect(() => {
     cargarResultados();
   }, []);
+
+  const ultimoRegistro = paginaActual * registrosPorPagina;
+  const primerRegistro = ultimoRegistro - registrosPorPagina;
+
+  const resultadosPaginados = resultados.slice(
+    primerRegistro,
+    ultimoRegistro
+  );
 
   return (
     <div className="usuarios-container">
@@ -49,7 +60,7 @@ export default function Resultados() {
 
           <tbody>
             {resultados.length > 0 ? (
-              resultados.map((r) => (
+              resultadosPaginados.map((r) => (
                 <tr key={r.id_resultado}>
                   <td>{r.id_resultado}</td>
                   <td>{r.id_encuentro}</td>
@@ -90,6 +101,12 @@ export default function Resultados() {
             )}
           </tbody>
         </table>
+        <Pagination
+          totalRegistros={resultados.length}
+          registrosPorPagina={registrosPorPagina}
+          paginaActual={paginaActual}
+          setPaginaActual={setPaginaActual}
+        />
       </div>
     </div>
   );

@@ -2,9 +2,12 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getCronologias } from "../../SERVICE/cronologiasService";
 import "../../STILO/estilosPages/cronologias/cronologias.css";
+import Pagination from "../../COMPONENTES/Pagination";
 
 export default function Cronologias() {
   const navigate = useNavigate();
+  const [paginaActual, setPaginaActual] = useState(1);
+  const registrosPorPagina = 7;
 
   const [cronologias, setCronologias] = useState([]);
 
@@ -20,6 +23,14 @@ export default function Cronologias() {
   useEffect(() => {
     cargarCronologias();
   }, []);
+
+  const ultimoRegistro = paginaActual * registrosPorPagina;
+  const primerRegistro = ultimoRegistro - registrosPorPagina;
+
+  const cronologiasPaginadas = cronologias.slice(
+    primerRegistro,
+    ultimoRegistro
+  );
 
   return (
     <div className="usuarios-container">
@@ -51,7 +62,7 @@ export default function Cronologias() {
 
           <tbody>
             {cronologias.length > 0 ? (
-              cronologias.map((c) => (
+              cronologiasPaginadas.map((c) => (
                 <tr key={c.id_cronologia}>
                   <td>{c.id_cronologia}</td>
                   <td>{c.id_encuentro}</td>
@@ -96,6 +107,14 @@ export default function Cronologias() {
             )}
           </tbody>
         </table>
+
+        <Pagination
+          totalRegistros={cronologias.length}
+          registrosPorPagina={registrosPorPagina}
+          paginaActual={paginaActual}
+          setPaginaActual={setPaginaActual}
+        />
+
       </div>
     </div>
   );

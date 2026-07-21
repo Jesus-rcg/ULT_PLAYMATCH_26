@@ -1,199 +1,172 @@
+/* ─── Navbar ─────────────────────────────────────────── */
 .navbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 95px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 24px;
+  background: rgba(0, 0, 0, 0.25);
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.12);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(8px);
+}
+
+/* Logo */
+.logoName {
+  display: flex;
+  align-items: center;
   gap: 10px;
-  padding: 10px;
-  box-sizing: border-box;
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
-  color: white;
-  z-index: 1000;
-  overflow: hidden;
-  isolation: isolate;
+  text-decoration: none;
 }
 
-.navbar::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-
-  background: linear-gradient(
-    120deg,
-    rgba(255, 255, 255, 0.18),
-    rgba(255, 255, 255, 0.02)
-  );
+.logo {
+  width: 36px;
+  height: 36px;
+  object-fit: contain;
 }
 
+.titulo-logo {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.play {
+  font-size: 13px;
+  font-weight: 700;
+  color: #FFFFFF;
+  letter-spacing: 1px;
+}
+
+.match {
+  font-size: 13px;
+  font-weight: 700;
+  color: #C5C0F0;
+  letter-spacing: 1px;
+}
+
+/* Buscador */
 .navbar-search {
   flex: 1;
-  display: flex;
-  justify-content: center;
+  max-width: 360px;
 }
 
 .navbar-search input {
   width: 100%;
-  height: 39px;
-  max-width: 420px;
-  padding: 8px 15px;
-  font-size: 17px;
-  border-radius: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(8px);
-  color: black;
+  background: rgba(255, 255, 255, 0.1);
+  border: 0.5px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 13px;
+  color: #FFFFFF;
   outline: none;
-  transition: 0.3s;
+  transition: border-color 0.2s;
 }
 
 .navbar-search input::placeholder {
-  color: black;
+  color: rgba(255, 255, 255, 0.4);
 }
 
 .navbar-search input:focus {
-  background: rgba(255, 255, 255, 0.25);
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+/* Bloque derecho */
+.block-2 {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .navbar-menu {
   list-style: none;
   display: flex;
-  margin-right: 20px;
-  padding-top: 15px;
-}
-
-.navbar-link {
-  text-decoration: none;
-  color: white;
-  font-weight: 500;
-  transition: 0.3s;
-  margin-top: 10px;
-}
-
-.navbar-login,
-.navbar-registrar {
-  text-align: center;
-  width: 75px;
-  height: 30px;
-  padding: 3px;
-  text-decoration: none;
-  color: white;
-  font-weight: 500;
-  transition: 0.3s;
-  border-radius: 5px;
-}
-
-.navbar-login:hover,
-.navbar-registrar:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 8px rgb(0, 0, 0);
-}
-
-.navbar-registrar {
-  background-color: rgb(3, 106, 3);
-}
-
-.navbar-login {
-  background-color: rgb(38, 0, 255);
-}
-
-.navbar-link:hover {
-  color: #8fd3c1;
-}
-
-.icon-link {
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  gap: 4px;
-  text-decoration: none;
-  color: white;
-  font-size: 14px;
-}
-
-.icon-link svg {
-  font-size: 22px;
-}
-
-.navbar-actions {
-  display: flex;
-  gap: 10px;
-  flex-shrink: 0;
-}
-
-.navbar-button:hover {
-  background-color: rgba(193, 18, 31, 1);
-}
-
-.navbar-user,
-.action-btn {
-  display: flex;
-  flex-direction: column;
   gap: 8px;
-  align-items: flex-start;
 }
 
-/**boton de cerrar sesion*/
-.logout-btn {
-  background-color: rgb(147, 0, 0);
-  padding: 5px;
-  height: 35px;
-  border-radius: 7px;
-  cursor: pointer;
+.navbar-menu li {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.08);
+  border: 0.5px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  padding: 4px 10px;
+}
 
-  text-align: center;
-  text-decoration: none;
-  color: white;
+/* Usuario */
+.navbar-user {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-name {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.8);
+  line-height: 1.5;
+  margin-left: 8px;
+  max-width: 200px;      
+  white-space: nowrap;   
+  overflow: hidden;      
+  text-overflow: ellipsis; 
+}
+
+
+/* Botones */
+.logout-btn {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.1);
+  border: 0.5px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: background 0.2s;
 }
 
 .logout-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 180, 216, 0.35);
+  background: rgba(255, 255, 255, 0.18);
+  color: #FFFFFF;
 }
 
-/**bloke de iconos de sesion iniciada*/
-.block-2 {
+.action-btn {
   display: flex;
-  flex-direction: row;
-  gap: 30px;
+  gap: 8px;
+  align-items: center;
 }
 
-/**contenedor del icono y el titulo*/
-.logoName {
-  display: flex;
-  font-family: "Courier New", Courier, monospace;
-  flex-direction: row;
+.navbar-registrar {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.1);
+  border: 0.5px solid rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+  padding: 6px 12px;
+  text-decoration: none;
+  transition: background 0.2s;
 }
 
-/**icono del logo*/
-.logo {
-  width: 70px;
-  height: 70px;
-  margin-bottom: -5px;
+.navbar-login {
+  font-size: 12px;
+  color: #1A1A2E;
+  background: #FFFFFF;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 14px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.2s;
 }
 
-/** letras del titulo*/
-.titulo-logo {
-  font-weight: 600;
-  font-size: 36px;
-  position: absolute;
-  margin-left: 70px;
-  margin-top: 10px;
-  color: white;
+.navbar-login:hover {
+  opacity: 0.88;
 }
 
-.play {
-  color: rgb(0, 0, 196);
-}
-
-.match {
-  color: rgb(177, 0, 0);
+.navbar-registrar:hover {
+  background: rgba(255, 255, 255, 0.18);
+  color: #FFFFFF;
 }

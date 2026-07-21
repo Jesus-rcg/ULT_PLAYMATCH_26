@@ -5,6 +5,15 @@
   align-items: center;
 }
 
+.tabla-container {
+  margin-bottom: 150px;
+  height: calc(85vh - 140px);
+  width: 90%;
+  padding: 20px;
+  border-radius: 20px;
+  background: rgba(157, 19, 249, 0.133);
+}
+
 .card-box-usuario {
   width: 100%;
   height: auto;
@@ -20,7 +29,7 @@
 /* TITULO */
 .titulo {
   text-align: center;
-  color: #222;
+  color: #ffffff;
 }
 
 /* FORM */
@@ -62,16 +71,20 @@
 }
 
 .tabla-usuarios th {
-  background: #111827;
-  color: white;
+  background: #020202;
+  color: rgb(255, 255, 255);
   padding: 10px;
 }
 
 .tabla-usuarios td {
+  background: #e5d9f872;
   padding: 10px;
   color: black;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #000000;
   text-align: center;
+  text-shadow: 0px 0px 1px #000000;
+  font-style: italic;
+  font-family: "Segoe UI", sans-serif;
 }
 
 .btn {
@@ -85,6 +98,7 @@
 .editar {
   background: #f59e0b;
   color: white;
+  margin-right: 5px;
 }
 
 .editar:hover {

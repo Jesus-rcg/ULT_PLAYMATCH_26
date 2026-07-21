@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "../../STILO/estilosPages/torneos/torneo.css";
+import Pagination from "../../COMPONENTES/Pagination";
 
 const API = import.meta.env.VITE_API_URL + "/torneos";
 
 export default function Torneos() {
   const [torneos, setTorneos] = useState([]);
   const [search, setSearch] = useState("");
+  const [paginaActual, setPaginaActual] = useState(1);
+  const registrosPorPagina = 7;
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -67,6 +70,14 @@ export default function Torneos() {
       (t.estado || "").toLowerCase().includes(search.toLowerCase()),
   );
 
+  const ultimoRegistro = paginaActual * registrosPorPagina;
+  const primerRegistro = ultimoRegistro - registrosPorPagina;
+
+  const torneosPaginados = filtrados.slice(
+    primerRegistro,
+    ultimoRegistro
+  );
+
   return (
     <div className="usuarios-container">
       <div className="tabla-container">
@@ -101,7 +112,7 @@ export default function Torneos() {
 
           <tbody>
             {filtrados.length > 0 ? (
-              filtrados.map((t) => (
+              torneosPaginados.map((t) => (
                 <tr key={t.id_torneo}>
                   <td>{t.id_torneo}</td>
                   <td>
@@ -144,6 +155,12 @@ export default function Torneos() {
             )}
           </tbody>
         </table>
+        <Pagination
+          totalRegistros={filtrados.length}
+          registrosPorPagina={registrosPorPagina}
+          paginaActual={paginaActual}
+          setPaginaActual={setPaginaActual}
+        />
       </div>
     </div>
   );

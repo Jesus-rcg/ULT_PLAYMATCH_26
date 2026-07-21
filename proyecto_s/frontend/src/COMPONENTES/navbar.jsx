@@ -48,10 +48,9 @@ export default function Navbar() {
       {/* LOGO */}
       <div>
         <div className="logoName">
-          <img src={logo} alt="Logo" className="logo" />
+          
           <div className="titulo-logo">
-            <span className="play">PLAY</span>
-            <span className="match">MATCH</span>
+            <span className="play">⚽ PLAY MATCH</span>
           </div>
         </div>
       </div>
@@ -89,9 +88,7 @@ export default function Navbar() {
           ) : (
             <div className="navbar-user">
               <div className="user-name">
-                <span>{user.nombre_usuario}</span>
-                <br />
-                <span>{user.apellido_usuario}</span>
+                <p>{user.nombre_usuario} {user.apellido_usuario}</p>
               </div>
 
               <button className="logout-btn" onClick={handleLogout}>

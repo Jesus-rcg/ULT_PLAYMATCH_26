@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 
 import { useNavigate } from "react-router-dom";
+import Pagination from "../../COMPONENTES/Pagination";
 
 import {
   getEncuentros,
@@ -11,6 +12,8 @@ import "../../STILO/estilosPages/usuarios/usuario.css";
 
 export default function EncuentrosAdmin() {
   const navigate = useNavigate();
+  const [paginaActual, setPaginaActual] = useState(1);
+  const registrosPorPagina = 7;
 
   const [encuentros, setEncuentros] = useState([]);
 
@@ -57,6 +60,14 @@ export default function EncuentrosAdmin() {
       setLoading(false);
     }
   };
+
+  const ultimoRegistro = paginaActual * registrosPorPagina;
+  const primerRegistro = ultimoRegistro - registrosPorPagina;
+
+  const encuentrosPaginados = encuentros.slice(
+    primerRegistro,
+    ultimoRegistro
+  );
 
   return (
     <div className="usuarios-container">
@@ -109,7 +120,7 @@ export default function EncuentrosAdmin() {
 
           <tbody>
             {encuentros.length > 0 ? (
-              encuentros.map((e) => (
+              encuentrosPaginados.map((e) => (
                 <tr key={e.id_encuentro}>
                   <td>{e.id_encuentro}</td>
 
@@ -159,6 +170,12 @@ export default function EncuentrosAdmin() {
             )}
           </tbody>
         </table>
+        <Pagination
+          totalRegistros={encuentros.length}
+          registrosPorPagina={registrosPorPagina}
+          paginaActual={paginaActual}
+          setPaginaActual={setPaginaActual}
+        />
       </div>
     </div>
   );
