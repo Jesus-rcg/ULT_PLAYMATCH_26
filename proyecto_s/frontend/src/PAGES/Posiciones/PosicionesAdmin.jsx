@@ -3,11 +3,14 @@ import { useEffect, useState } from "react";
 import { getTablaPosiciones } from "../../SERVICE/posicionesService";
 
 import "../../STILO/estilosPages/encuentros/encuentros.css";
+import Pagination from "../../COMPONENTES/Pagination";
 
 export default function Posiciones() {
   const [posiciones, setPosiciones] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const [paginaActual, setPaginaActual] = useState(1);
+  const registrosPorPagina = 7;
+  
   const id_torneo = 2;
 
   // ======================================================
@@ -32,6 +35,13 @@ export default function Posiciones() {
     cargarPosiciones();
   }, []);
 
+  const ultimoRegistro = paginaActual * registrosPorPagina;
+  const primerRegistro = ultimoRegistro - registrosPorPagina;
+
+  const posicionesPaginadas = posiciones.slice(
+    primerRegistro,
+    ultimoRegistro
+  );
   return (
     <div className="usuarios-container">
       <div className="tabla-container">
@@ -76,7 +86,7 @@ export default function Posiciones() {
 
           <tbody>
             {posiciones.length > 0 ? (
-              posiciones.map((e, index) => (
+              posicionesPaginadas.map((e, index) => (
                 <tr key={e.id_equipo}>
                   <td>{index + 1}</td>
 
@@ -108,6 +118,12 @@ export default function Posiciones() {
             )}
           </tbody>
         </table>
+        <Pagination
+          totalRegistros={posiciones.length}
+          registrosPorPagina={registrosPorPagina}
+          paginaActual={paginaActual}
+          setPaginaActual={setPaginaActual}
+        />
       </div>
     </div>
   );

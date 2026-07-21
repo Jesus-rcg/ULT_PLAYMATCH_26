@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "../../STILO/estilosPages/usuarios/usuario.css";
+import Pagination from "../../COMPONENTES/Pagination";
 
 const API = import.meta.env.VITE_API_URL + "/usuarios";
 
 export default function Usuarios() {
   const [usuarios, setUsuarios] = useState([]);
   const [search, setSearch] = useState("");
+  const [paginaActual, setPaginaActual] = useState(1);
+  const registrosPorPagina = 7;
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -53,10 +56,24 @@ export default function Usuarios() {
       (u.email || "").toLowerCase().includes(search.toLowerCase()),
   );
 
+  const ultimoRegistro = paginaActual * registrosPorPagina;
+  const primerRegistro = ultimoRegistro - registrosPorPagina;
+
+  const usuariosPaginados = filtrados.slice(
+    primerRegistro,
+    ultimoRegistro
+  );
+
   return (
     <div className="usuarios-container">
       <div className="tabla-container">
         <h2 className="titulo">Gestión de Usuarios</h2>
+         <button
+            className="btn crear"
+            onClick={() => navigate("/usuarios/crear")}
+          >
+            Crear
+        </button>
         <table className="tabla-usuarios">
           <thead>
             <tr>
@@ -68,20 +85,12 @@ export default function Usuarios() {
               <th>Teléfono</th>
               <th>Email</th>
               <th>Acciones</th>
-              <th>
-                <button
-                  className="btn crear"
-                  onClick={() => navigate("/usuarios/crear")}
-                >
-                  Crear
-                </button>
-              </th>
             </tr>
           </thead>
 
           <tbody>
             {filtrados.length > 0 ? (
-              filtrados.map((u) => (
+              usuariosPaginados.map((u) => (
                 <tr key={u.id}>
                   <td>{u.id}</td>
                   <td>{u.nombre_rol}</td>
@@ -98,14 +107,13 @@ export default function Usuarios() {
                     >
                       Editar
                     </button>
-                  </td>
-                  <td>
                     <button
                       className="btn eliminar"
                       onClick={() => navigate(`/usuarios/eliminar/${u.id}`)}
                     >
                       Eliminar
                     </button>
+                    
                   </td>
                 </tr>
               ))
@@ -116,6 +124,12 @@ export default function Usuarios() {
             )}
           </tbody>
         </table>
+        <Pagination
+          totalRegistros={filtrados.length}
+          registrosPorPagina={registrosPorPagina}
+          paginaActual={paginaActual}
+          setPaginaActual={setPaginaActual}
+        />
       </div>
     </div>
   );

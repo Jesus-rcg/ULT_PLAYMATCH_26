@@ -18,3 +18,4 @@ playmatch_movil/local.properties
 proyecto_s/backend/.env
 proyecto_s/backend/routes/usuarioRoutes.js
 proyecto_s/backend/routes/torneoRoutes.js
+playmatch_movil/local.properties

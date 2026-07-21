@@ -9,12 +9,14 @@ export default function PrivateLayout() {
   const { isAuthenticated } = useContext(AuthContext);
 
   return (
-    <>
-      {isAuthenticated && <Sidebar />}
-
-      <main className={isAuthenticated ? "main-content" : ""}>
-        <Outlet />
-      </main>
-    </>
+    <div className="private-wrapper">
+      <Navbar />
+      <div className="private-body">
+        {isAuthenticated && <Sidebar />}
+        <main className="main-content">
+          <Outlet />
+        </main>
+      </div>
+    </div>
   );
 }

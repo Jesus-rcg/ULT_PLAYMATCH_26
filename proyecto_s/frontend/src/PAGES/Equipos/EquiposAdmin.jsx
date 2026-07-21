@@ -2,9 +2,12 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getEquipos } from "../../SERVICE/equiposService";
 import "../../STILO/estilosPages/equipos/equipos.css";
+import Pagination from "../../COMPONENTES/Pagination";
 
 export default function Equipos() {
   const navigate = useNavigate();
+  const [paginaActual, setPaginaActual] = useState(1);
+  const registrosPorPagina = 7;
 
   const [equipos, setEquipos] = useState([]);
 
@@ -20,6 +23,14 @@ export default function Equipos() {
   useEffect(() => {
     cargarEquipos();
   }, []);
+
+  const ultimoRegistro = paginaActual * registrosPorPagina;
+  const primerRegistro = ultimoRegistro - registrosPorPagina;
+
+  const equiposPaginados = equipos.slice(
+    primerRegistro,
+    ultimoRegistro
+  );
 
   return (
     <div className="usuarios-container">
@@ -48,7 +59,7 @@ export default function Equipos() {
 
           <tbody>
             {equipos.length > 0 ? (
-              equipos.map((e) => (
+              equiposPaginados.map((e) => (
                 <tr key={e.id_equipo}>
                   <td>{e.id_equipo}</td>
 
@@ -86,6 +97,12 @@ export default function Equipos() {
             )}
           </tbody>
         </table>
+        <Pagination
+          totalRegistros={equipos.length}
+          registrosPorPagina={registrosPorPagina}
+          paginaActual={paginaActual}
+          setPaginaActual={setPaginaActual}
+        />
       </div>
     </div>
   );

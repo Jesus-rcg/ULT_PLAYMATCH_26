@@ -2,9 +2,12 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getJugadores } from "../../SERVICE/jugadoresService";
 import "../../STILO/estilosPages/jugadores/jugadores.css";
+import Pagination from "../../COMPONENTES/Pagination";
 
 export default function Jugadores() {
   const navigate = useNavigate();
+  const [paginaActual, setPaginaActual] = useState(1);
+  const registrosPorPagina = 7;
 
   const [jugadores, setJugadores] = useState([]);
 
@@ -20,6 +23,14 @@ export default function Jugadores() {
   useEffect(() => {
     cargarJugadores();
   }, []);
+
+  const ultimoRegistro = paginaActual * registrosPorPagina;
+  const primerRegistro = ultimoRegistro - registrosPorPagina;
+
+  const jugadoresPaginados = jugadores.slice(
+    primerRegistro,
+    ultimoRegistro
+  );
 
   return (
     <div className="usuarios-container">
@@ -48,7 +59,7 @@ export default function Jugadores() {
 
           <tbody>
             {jugadores.length > 0 ? (
-              jugadores.map((j) => (
+              jugadoresPaginados.map((j) => (
                 <tr key={j.id_jugador}>
                   <td>{j.id_jugador}</td>
 
@@ -86,6 +97,12 @@ export default function Jugadores() {
             )}
           </tbody>
         </table>
+        <Pagination
+          totalRegistros={jugadores.length}
+          registrosPorPagina={registrosPorPagina}
+          paginaActual={paginaActual}
+          setPaginaActual={setPaginaActual}
+        />
       </div>
     </div>
   );

@@ -9,19 +9,21 @@ export default function PublicLayout() {
 
   return (
     <div style={{ width: "100%" }}>
-      {/* 🔐 Sidebar SOLO si está logueado */}
-      {isAuthenticated && <Sidebar />}
+      <Navbar /> 
 
-      {/* 📄 Contenido */}
-      <main
-        style={{
-          padding: "20px",
-          marginTop: "60px",
-          marginLeft: isAuthenticated ? "220px" : "0", // 👈 para que no se encime
-        }}
-      >
-        <Outlet />
-      </main>
+      <div style={{ display: "flex" }}>
+        {isAuthenticated && <Sidebar />}
+
+        <main
+          style={{
+            flex: 1,
+            padding: "20px",
+            marginLeft: isAuthenticated ? "0" : "0",
+          }}
+        >
+          <Outlet />
+        </main>
+      </div>
     </div>
   );
 }
