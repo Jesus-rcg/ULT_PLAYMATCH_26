@@ -20,8 +20,6 @@ export default function TorneoCard({ torneo }) {
             <p>
               <strong>Torneo:</strong> {torneo.tipo_torneo}
               <br />
-              <strong>Categoría:</strong> {torneo.categoria}
-              <br />
               <strong>Ciudad:</strong> {torneo.ciudad}
               <br />
               <strong>Inicia:</strong>{" "}

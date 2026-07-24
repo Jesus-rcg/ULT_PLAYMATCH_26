@@ -14,7 +14,6 @@ export default function TorneoEditar() {
 
   const [form, setForm] = useState({
     nombre_torneo: "",
-    categoria: "",
     tipo_torneo: "",
     ciudad: "",
     fecha_inicio: "",
@@ -39,7 +38,6 @@ export default function TorneoEditar() {
 
       setForm({
         nombre_torneo: torneo.nombre_torneo || "",
-        categoria: torneo.categoria || "",
         tipo_torneo: torneo.tipo_torneo || "",
         ciudad: torneo.ciudad || "",
         fecha_inicio: formatDate(torneo.fecha_inicio),
@@ -104,21 +102,6 @@ export default function TorneoEditar() {
             onChange={handleChange}
             placeholder="Nombre"
           />
-
-          <select
-            className="opciones_rol"
-            name="categoria"
-            value={form.categoria}
-            onChange={handleChange}
-          >
-            <option value="Amateur">Amateur</option>
-            <option value="Profesional">Profesional</option>
-            <option value="Semiprofesional">Semiprofesional</option>
-            <option value="Sub 20">Sub 20</option>
-            <option value="Sub 17">Sub 17</option>
-            <option value="Sub 15">Sub 15</option>
-            <option value="Pony">Pony</option>
-          </select>
 
           <select
             className="opciones_rol"

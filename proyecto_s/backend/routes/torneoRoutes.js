@@ -7,7 +7,6 @@ import {
   deleteTorneo,
   getTorneosByUsuario,
   getTipoTorneoController,
-  getCategoriaController 
 } from "../controllers/torneoController.js";
 
 import { verificarToken } from "../middlewares/verificarToken.js";
@@ -42,10 +41,6 @@ const router = express.Router();
 
 // Tipo Torneos
 router.get("/tipo-torneo", getTipoTorneoController);
-
-// Categoria Torneo
-
-router.get("/categoria", getCategoriaController);
 
 // 🔥 PRIMERO rutas específicas
 

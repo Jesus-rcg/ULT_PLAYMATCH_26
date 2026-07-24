@@ -1,5 +1,7 @@
 export const ROLES = {
+  INVITADO: 0,
   ADMINISTRADOR: 1,
   ORGANIZADOR: 2,
-  USUARIO: 3,
+  JUGADOR: 3,
+  ENTRENADOR: 5,
 };

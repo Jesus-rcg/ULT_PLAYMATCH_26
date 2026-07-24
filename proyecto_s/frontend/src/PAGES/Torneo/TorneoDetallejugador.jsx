@@ -61,11 +61,6 @@ export default function TorneoDetalleJugador() {
 
           <div className="info">
             <p>
-              <span className="torneo-subtitulo">Categoría:</span>{" "}
-              {torneo.categoria}
-            </p>
-
-            <p>
               <span className="torneo-subtitulo">Tipo de torneo:</span>{" "}
               {torneo.tipo_torneo}
             </p>

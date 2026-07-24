@@ -12,7 +12,6 @@ export default function TorneoEliminar() {
 
   const [torneo, setTorneo] = useState({
     nombre_torneo: "",
-    categoria: "",
     tipo_torneo: "",
     ciudad: "",
   });
@@ -32,7 +31,6 @@ export default function TorneoEliminar() {
       setTorneo({
         nombre_torneo: data?.nombre_torneo || "",
         ciudad: data?.ciudad || "",
-        categoria: data?.categoria || "",
         tipo_torneo: data?.tipo_torneo || "",
       });
     } catch (err) {
@@ -75,7 +73,6 @@ export default function TorneoEliminar() {
         <form className="form-usuarios">
           <input type="text" value={torneo.nombre_torneo} disabled />
           <input type="text" value={torneo.tipo_torneo} disabled />
-          <input type="text" value={torneo.categoria} disabled />
           <input type="text" value={torneo.ciudad} disabled />
 
           <p style={{ color: "white", textAlign: "center" }}>

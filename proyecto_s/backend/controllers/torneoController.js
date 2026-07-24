@@ -8,7 +8,6 @@ import {
 } from "../services/torneoService.js";
 
 import {getTipoTorneoService,} from "../services/torneoService.js";
-import {getCategoriaService,} from "../services/torneoService.js";
 
 
 // Obtener todos los torneos
@@ -36,19 +35,6 @@ export const getTipoTorneoController = async (req, res) => {
 }
 };
 
-export const getCategoriaController = async (req, res) => {
-  try {
-    const data = await getCategoriaService();
-    return res.json(data);
-  } catch (error) {
-  console.error(error);
-
-  return res.status(500).json({
-    message: error.message,
-    error,
-  });
-}
-};
 
 export const getTorneosByUsuario = async (req, res) => {
   try {
@@ -109,7 +95,6 @@ export const createTorneo = async (req, res) => {
 
     const {
       nombre_torneo,
-      categoria,
       tipo_torneo,
       ciudad,
       fecha_inicio,
@@ -118,7 +103,6 @@ export const createTorneo = async (req, res) => {
 
     const data = {
       nombre_torneo,
-      categoria,
       tipo_torneo,
       ciudad,
       fecha_inicio,
