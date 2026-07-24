@@ -78,9 +78,6 @@ import ResultadosCrear from "../PAGES/Resultados/ResultadosCrear";
 import ResultadosEditar from "../PAGES/Resultados/ResultadosEditar";
 import ResultadosEliminar from "../PAGES/Resultados/ResultadosEliminar";
 
-//Alineaciones
-import Alineaciones from "../PAGES/Alineacion/Alineaciones";
-
 //Posiciones
 import Posiciones from "../PAGES/Posiciones/Posiciones";
 
@@ -252,8 +249,6 @@ export default function AppRoutes() {
               path="/resultados/Eliminar/:id"
               element={<ResultadosEliminar />}
             />
-            //---------------------------Alineacion----------------------------------------
-            <Route path="/alineacion/:id" element={<Alineaciones />} />
             //-------------------------Posiciones------------------------------------------
             <Route path="/posiciones" element={<Posiciones />} />
           </Route>

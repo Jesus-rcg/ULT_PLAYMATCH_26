@@ -45,8 +45,6 @@ export default function TorneosJugador() {
 
                 <div className="data-torneo">
                   <p>
-                    <strong>Categoría:</strong> {t.categoria}
-                    <br />
                     <strong>Tipo:</strong> {t.tipo_torneo}
                     <br />
                     <strong>Ciudad:</strong> {t.ciudad}

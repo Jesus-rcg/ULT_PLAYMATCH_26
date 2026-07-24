@@ -62,10 +62,6 @@ export default function TorneoDetalleOrganizador() {
           </div>
           <div className="info">
             <p>
-              <span className="torneo-subtitulo">Categoria:</span>{" "}
-              {torneo.categoria}
-            </p>
-            <p>
               <span className="torneo-subtitulo">Tipo De Torneo:</span>{" "}
               {torneo.tipo_torneo}
             </p>

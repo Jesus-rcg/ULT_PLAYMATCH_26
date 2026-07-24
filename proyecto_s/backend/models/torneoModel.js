@@ -9,7 +9,6 @@ export const getTorneosModel = async () => {
       u.nombre_usuario,
       u.apellido_usuario,
       t.nombre_torneo,
-      t.categoria,
       t.tipo_torneo,
       t.ciudad,
       t.fecha_inicio,
@@ -35,7 +34,6 @@ export const getTorneosByUsuarioModel = async (id_usuario) => {
       u.nombre_usuario,
       u.apellido_usuario,
       t.nombre_torneo,
-      t.categoria,
       t.tipo_torneo,
       t.ciudad,
       t.fecha_inicio,
@@ -66,16 +64,6 @@ export const getTipoTorneoModel = async () => {
   return rows;
 };
 
-export const getCategoriaModel = async () => {
-  const [rows] = await pool.query(`
-    SELECT DISTINCT categoria
-    FROM torneos
-    WHERE categoria IS NOT NULL
-    ORDER BY categoria
-  `);
-
-  return rows;
-};
 
 
 //Crear torneo
@@ -83,7 +71,6 @@ export const createTorneoModel = async (torneo) => {
   const {
     id_usuario,
     nombre_torneo,
-    categoria,
     tipo_torneo,
     ciudad,
     fecha_inicio,
@@ -107,7 +94,6 @@ export const createTorneoModel = async (torneo) => {
     (
       id_usuario,
       nombre_torneo,
-      categoria,
       tipo_torneo,
       ciudad,
       fecha_inicio,
@@ -118,7 +104,6 @@ export const createTorneoModel = async (torneo) => {
     [
       id_usuario,
       nombre_torneo,
-      categoria,
       tipo_torneo,
       ciudad,
       fecha_inicio,
@@ -164,7 +149,6 @@ export const getTorneoByIdModel = async (id) => {
       id_torneo,
       id_usuario,
       nombre_torneo,
-      categoria,
       tipo_torneo,
       ciudad,
       fecha_inicio,
@@ -201,7 +185,6 @@ export const actualizarEstadoTorneoModel = async (id) => {
 export const updateTorneoModel = async (id, torneo) => {
   const {
     nombre_torneo,
-    categoria,
     tipo_torneo,
     ciudad,
     fecha_inicio,
@@ -211,7 +194,6 @@ export const updateTorneoModel = async (id, torneo) => {
   await pool.query(
     `UPDATE torneos 
      SET nombre_torneo = ?, 
-         categoria = ?, 
          tipo_torneo = ?, 
          ciudad = ?, 
          fecha_inicio = ?, 
@@ -219,7 +201,6 @@ export const updateTorneoModel = async (id, torneo) => {
      WHERE id_torneo = ?`,
     [
       nombre_torneo,
-      categoria,
       tipo_torneo,
       ciudad,
       fecha_inicio,

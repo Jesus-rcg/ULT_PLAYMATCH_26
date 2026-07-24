@@ -62,7 +62,6 @@ export default function Torneos() {
       (t.nombre_torneo || "").toLowerCase().includes(search.toLowerCase()) ||
       (t.nombre_usuario || "").toLowerCase().includes(search.toLowerCase()) ||
       (t.apellido_usuario || "").toLowerCase().includes(search.toLowerCase()) ||
-      (t.categoria || "").toLowerCase().includes(search.toLowerCase()) ||
       (t.tipo_torneo || "").toLowerCase().includes(search.toLowerCase()) ||
       (t.ciudad || "").toLowerCase().includes(search.toLowerCase()) ||
       (t.fecha_inicio || "").toLowerCase().includes(search.toLowerCase()) ||
@@ -100,7 +99,6 @@ export default function Torneos() {
               <th>ID</th>
               <th>Usuario</th>
               <th>Nombre Del Torneo</th>
-              <th>Categoría</th>
               <th>Tipo</th>
               <th>Ciudad</th>
               <th>Fecha De Inicio</th>
@@ -120,7 +118,6 @@ export default function Torneos() {
                     {t.apellido_usuario}
                   </td>
                   <td>{t.nombre_torneo}</td>
-                  <td>{t.categoria}</td>
                   <td>{t.tipo_torneo}</td>
                   <td>{t.ciudad}</td>
                   <td>{t.fecha_inicio?.split("T")[0] || ""}</td>

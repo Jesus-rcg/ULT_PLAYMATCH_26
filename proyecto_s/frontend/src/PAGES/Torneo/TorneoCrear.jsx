@@ -13,7 +13,6 @@ export default function TorneoCrear() {
 
   const [form, setForm] = useState({
     nombre_torneo: "",
-    categoria: "Amateur",
     tipo_torneo: "Liga",
     ciudad: "",
     fecha_inicio: "",
@@ -97,22 +96,6 @@ export default function TorneoCrear() {
             value={form.nombre_torneo}
             onChange={handleChange}
           />
-
-          <label className="form-label">Categoria</label>
-          <select
-            className="opciones_rol"
-            name="categoria"
-            value={form.categoria}
-            onChange={handleChange}
-          >
-            <option value="Amateur">Amateur</option>
-            <option value="Profesional">Profesional</option>
-            <option value="Semiprofesional">Semiprofesional</option>
-            <option value="Sub 20">Sub 20</option>
-            <option value="Sub 17">Sub 17</option>
-            <option value="Sub 15">Sub 15</option>
-            <option value="Pony">Pony</option>
-          </select>
 
           <label className="form-label">Tipo De Torneo</label>
           <select

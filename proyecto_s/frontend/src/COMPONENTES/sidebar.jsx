@@ -8,12 +8,13 @@ export default function Sidebar() {
   const { user } = useContext(AuthContext);
   const location = useLocation();
 
-  const rolActual = Number(user?.rol);
+  const rolActual = user ? Number(user.rol) : ROLES.INVITADO; // Asignar INVITADO si user o user.rol es undefined
 
   const rolNombre = {
+    0: "Invitado",
     1: "Administrador",
     2: "Organizador",
-    3: "Usuario",
+    3: "Jugador",
   };
 
   // Menú agrupado por secciones
@@ -22,7 +23,7 @@ export default function Sidebar() {
       label: "General",
       items: [
         {
-          roles: [ROLES.ADMINISTRADOR, ROLES.ORGANIZADOR, ROLES.USUARIO],
+          roles: [ROLES.INVITADO, ROLES.ADMINISTRADOR, ROLES.ORGANIZADOR, ROLES.JUGADOR],
           label: "Inicio",
           path: "/home",
           icon: "🏠",
@@ -39,31 +40,31 @@ export default function Sidebar() {
       label: "Torneos y Equipos",
       items: [
         {
-          roles: [ROLES.ADMINISTRADOR, ROLES.ORGANIZADOR, ROLES.USUARIO],
+          roles: [ROLES.ADMINISTRADOR],
           label: "Torneos",
           path: "/torneos",
           icon: "🏆",
         },
         {
-          roles: [ROLES.ADMINISTRADOR, ROLES.ORGANIZADOR, ROLES.USUARIO],
+          roles: [ROLES.ADMINISTRADOR],
           label: "Equipos",
           path: "/equipos",
           icon: "🛡️",
         },
         {
-          roles: [ROLES.ADMINISTRADOR, ROLES.ORGANIZADOR, ROLES.USUARIO],
+          roles: [ROLES.ADMINISTRADOR],
           label: "Jugadores",
           path: "/jugadores",
           icon: "🏃",
         },
         {
-          roles: [ROLES.ADMINISTRADOR, ROLES.ORGANIZADOR],
+          roles: [ROLES.ADMINISTRADOR],
           label: "Inscripción de Equipos",
           path: "/inscripcionEquipos",
           icon: "📋",
         },
         {
-          roles: [ROLES.ADMINISTRADOR, ROLES.ORGANIZADOR],
+          roles: [ROLES.ADMINISTRADOR],
           label: "Inscripción de Jugadores",
           path: "/inscripcionJugadores",
           icon: "📝",
@@ -74,25 +75,25 @@ export default function Sidebar() {
       label: "Competencia",
       items: [
         {
-          roles: [ROLES.ADMINISTRADOR, ROLES.ORGANIZADOR, ROLES.USUARIO],
+          roles: [ROLES.ADMINISTRADOR],
           label: "Encuentros",
           path: "/encuentros",
           icon: "⚔️",
         },
         {
-          roles: [ROLES.ADMINISTRADOR, ROLES.ORGANIZADOR, ROLES.USUARIO],
+          roles: [ROLES.ADMINISTRADOR],
           label: "Resultados",
           path: "/resultados",
           icon: "📊",
         },
         {
-          roles: [ROLES.ADMINISTRADOR, ROLES.ORGANIZADOR, ROLES.USUARIO],
+          roles: [ROLES.ADMINISTRADOR],
           label: "Posiciones",
           path: "/posiciones",
           icon: "📈",
         },
         {
-          roles: [ROLES.ADMINISTRADOR, ROLES.ORGANIZADOR],
+          roles: [ROLES.ADMINISTRADOR],
           label: "Cronologías",
           path: "/cronologias",
           icon: "📅",

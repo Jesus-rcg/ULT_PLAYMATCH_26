@@ -6,8 +6,8 @@
 }
 
 .tabla-container {
-  margin-bottom: 150px;
-  height: calc(85vh - 140px);
+  margin-bottom: 15%;
+  height: calc(70vh - 140px);
   width: 90%;
   padding: 20px;
   border-radius: 20px;
@@ -30,6 +30,8 @@
 .titulo {
   text-align: center;
   color: #ffffff;
+  font-style: italic;
+  font-family: "Segoe UI", sans-serif;
 }
 
 /* FORM */
@@ -96,9 +98,11 @@
 }
 
 .editar {
-  background: #f59e0b;
+  background: #db8617b8;
   color: white;
   margin-right: 5px;
+  font-style: italic;
+  font-family: "Segoe UI", sans-serif;
 }
 
 .editar:hover {
@@ -108,6 +112,8 @@
 .eliminar {
   background: #ef4444;
   color: white;
+  font-style: italic;
+  font-family: "Segoe UI", sans-serif;
 }
 
 .eliminar:hover {

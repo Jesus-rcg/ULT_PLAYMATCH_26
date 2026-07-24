@@ -9,8 +9,6 @@ import {
 
 import { getTipoTorneoModel } from "../models/torneoModel.js";
 
-import { getCategoriaModel } from "../models/torneoModel.js";
-
 
 // =========================
 // OBTENER TODOS
@@ -24,12 +22,6 @@ export const getTorneosService = async () => {
 // =========================
 export const getTipoTorneoService = async () => {
   return await getTipoTorneoModel();
-};
-// =========================
-// OBTENER Categoria
-// =========================
-export const getCategoriaService = async () => {
-  return await getCategoriaModel();
 };
 
 // =========================
@@ -54,24 +46,11 @@ export const getTorneoByIdService = async (id) => {
 // CREAR TORNEO
 // =========================
 export const createTorneoService = async (data) => {
-  const categorias = [
-    "Amateur",
-    "Profesional",
-    "Semiprofesional",
-    "Sub 20",
-    "Sub 17",
-    "Sub 15",
-    "Pony",
-  ];
 
   const tipos = ["Liga", "Grupos", "Eliminacion Directa"];
 
   if (!data.nombre_torneo || !data.ciudad) {
     throw new Error("Faltan campos obligatorios");
-  }
-
-  if (!categorias.includes(data.categoria)) {
-    throw new Error("Categoría inválida");
   }
 
   if (!tipos.includes(data.tipo_torneo)) {
@@ -128,21 +107,8 @@ export const updateTorneoService = async (id, data) => {
     throw new Error("Faltan campos obligatorios");
   }
 
-  const categorias = [
-    "Amateur",
-    "Profesional",
-    "Semiprofesional",
-    "Sub 20",
-    "Sub 17",
-    "Sub 15",
-    "Pony",
-  ];
 
   const tipos = ["Liga", "Grupos", "Eliminacion Directa"];
-
-  if (!categorias.includes(data.categoria)) {
-    throw new Error("Categoría inválida");
-  }
 
   if (!tipos.includes(data.tipo_torneo)) {
     throw new Error("Tipo de torneo inválido");

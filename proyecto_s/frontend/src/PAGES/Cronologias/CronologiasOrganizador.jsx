@@ -1,17 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
-  getAlineacionesEquipoRequest,
-  getAlineacionRequest,
-} from "../../SERVICE/alineacionService";
-import {
   getEncuentroDetalle,
   createCronologia,
   updateCronologia,
   getCronologias,
 } from "../../SERVICE/cronologiasService";
 import { getResultadoByEncuentro } from "../../SERVICE/resultadosService";
-import PosicionCampo from "../Alineacion/PosicionCampo";
 import "../../STILO/estilosPages/cronologias/cronologias.css";
 
 import escudoA from "../../ASSETS/escudo.jpg";
@@ -165,74 +160,11 @@ export default function CronologiasOrganizador() {
     }
   };
 
-  const cargarAlineaciones = async () => {
-    try {
-      const idLocal = encuentro?.id_equipo_local;
-      const idVisitante = encuentro?.id_equipo_visitante;
-
-      if (!idLocal || !idVisitante) return;
-
-      // Obtener lista de alineaciones
-      const local = await getAlineacionesEquipoRequest(idLocal);
-      const visitante = await getAlineacionesEquipoRequest(idVisitante);
-
-      // Buscar la activa
-      const alineacionLocal = local.find((a) => a.activa === 1);
-      const alineacionVisitante = visitante.find((a) => a.activa === 1);
-
-      let nuevasPosiciones = {};
-
-      // Obtener detalle de la alineación local
-      if (alineacionLocal) {
-        const detalleLocal = await getAlineacionRequest(
-          alineacionLocal.id_alineacion,
-        );
-
-        detalleLocal.jugadores.forEach((j) => {
-          nuevasPosiciones[j.posicion] = {
-            id_jugador: j.id_jugador,
-            nombre_usuario: j.nombre_usuario,
-            apellido_usuario: j.apellido_usuario,
-            numero_camiseta: j.numero_camiseta,
-            equipo: "A",
-          };
-        });
-      }
-
-      // Obtener detalle de la alineación visitante
-      if (alineacionVisitante) {
-        const detalleVisitante = await getAlineacionRequest(
-          alineacionVisitante.id_alineacion,
-        );
-
-        detalleVisitante.jugadores.forEach((j) => {
-          nuevasPosiciones[j.posicion] = {
-            id_jugador: j.id_jugador,
-            nombre_usuario: j.nombre_usuario,
-            apellido_usuario: j.apellido_usuario,
-            numero_camiseta: j.numero_camiseta,
-            equipo: "B",
-          };
-        });
-      }
-
-      setPosiciones(nuevasPosiciones);
-    } catch (error) {
-      console.error("Error cargando alineaciones:", error);
-    }
-  };
-
   useEffect(() => {
     if (id) {
       cargarEncuentro();
     }
   }, [id]);
-
-  useEffect(() => {
-    if (encuentro) {
-      cargarAlineaciones();
-    }
-  }, [encuentro]);
 
   useEffect(() => {
     cargarCronologias();
