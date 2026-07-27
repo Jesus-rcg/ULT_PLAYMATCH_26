@@ -24,7 +24,7 @@ body::before {
   right: -100px;
   opacity: 0.4;
   pointer-events: none;
-  z-index: 3;
+  z-index: 1;
 }
 
 body::after {
@@ -57,6 +57,6 @@ body::after {
 
 .main-content {
   flex: 1;
-  padding: 24px;
+  padding: 25px;
   overflow-y: auto;
 }

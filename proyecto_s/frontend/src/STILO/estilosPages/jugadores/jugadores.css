@@ -1,5 +1,5 @@
 .usuarios-container {
-  height: 100vh;
+  height: 795px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -7,7 +7,7 @@
 
 .tabla-container {
   margin-bottom: 15%;
-  height: calc(70vh - 140px);
+  height: calc(75vh - 100px);
   width: 90%;
   padding: 20px;
   border-radius: 20px;
@@ -54,15 +54,7 @@
   font-size: 18px;
 }
 
-.form-usuarios button {
-  grid-column: span 4;
-  padding: 10px;
-  background: #2563eb;
-  color: rgba(249, 246, 246, 0.619);
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-}
+
 
 .tabla-usuarios {
   width: 100%;
@@ -92,7 +84,7 @@
 .btn {
   padding: 5px 10px;
   border: none;
-  border-radius: 5px;
+  border-radius: 50px;
   cursor: pointer;
   font-size: 12px;
 }
