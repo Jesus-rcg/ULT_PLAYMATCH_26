@@ -3,6 +3,8 @@ import db from "../config/db.js";
 //Crear usario
 export const createUsuario = async (data) => {
   const {
+    id_usuario,
+    id_documento,
     id_rol,
     nombre_usuario,
     apellido_usuario,
@@ -14,9 +16,11 @@ export const createUsuario = async (data) => {
 
   return await db.query(
     `INSERT INTO usuarios 
-    (id_rol, nombre_usuario, apellido_usuario, fecha_nacimiento, telefono, email, password)
-    VALUES (?, ?, ?, ?, ?, ?, ?)`,
+    (id_usuario, id_documento, id_rol, nombre_usuario, apellido_usuario, fecha_nacimiento, telefono, email, password)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
     [
+      id_usuario,
+      id_documento,
       id_rol,
       nombre_usuario,
       apellido_usuario,
@@ -33,6 +37,8 @@ export const findUsuarioByEmail = async (email) => {
   const [rows] = await db.query(
     `SELECT 
       id_usuario,
+      id_documento,
+      id_rol,
       nombre_usuario,
       apellido_usuario,
       email,

@@ -40,7 +40,7 @@ export default function Sidebar() {
       label: "Torneos y Equipos",
       items: [
         {
-          roles: [ROLES.ADMINISTRADOR],
+          roles: [ROLES.ADMINISTRADOR, ROLES.INVITADO, ROLES.ORGANIZADOR],
           label: "Torneos",
           path: "/torneos",
           icon: "🏆",

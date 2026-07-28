@@ -13,6 +13,7 @@
 }
 
 /* Logo */
+
 .logoName {
   display: flex;
   align-items: center;
@@ -20,30 +21,21 @@
   text-decoration: none;
 }
 
-.logo {
-  width: 36px;
-  height: 36px;
-  object-fit: contain;
+.logo-link {
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  align-items: center;
+}
+
+.logo-link:hover {
+  cursor: pointer;
 }
 
 .titulo-logo {
   display: flex;
   flex-direction: column;
   line-height: 1;
-}
-
-.play {
-  font-size: 13px;
-  font-weight: 700;
-  color: #FFFFFF;
-  letter-spacing: 1px;
-}
-
-.match {
-  font-size: 13px;
-  font-weight: 700;
-  color: #C5C0F0;
-  letter-spacing: 1px;
 }
 
 /* Buscador */

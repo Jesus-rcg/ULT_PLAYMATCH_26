@@ -46,13 +46,12 @@ export default function Navbar() {
   return (
     <nav className="navbar">
       {/* LOGO */}
-      <div>
-        <div className="logoName">
-          
+      <div className="logoName">
+        <Link to="/home" className="logo-link">
           <div className="titulo-logo">
-            <span className="play">⚽ PLAY MATCH</span>
+            <span className="play">⚽ PLAYMATCH</span>
           </div>
-        </div>
+        </Link>
       </div>
 
       {/* BUSCADOR */}
@@ -82,7 +81,7 @@ export default function Navbar() {
                 Registrar
               </Link>
               <Link to="/login" className="navbar-login">
-                Login
+                Iniciar sesión
               </Link>
             </div>
           ) : (

@@ -4,7 +4,8 @@ import {
   getTorneoByIdModel,
   deleteTorneoModel,
   updateTorneoModel,
-  actualizarEstadoTorneoModel
+  actualizarEstadoTorneoModel,
+  getTorneosByUsuarioModel,
 } from "../models/torneoModel.js";
 
 import { getTipoTorneoModel } from "../models/torneoModel.js";

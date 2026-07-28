@@ -1,0 +1,261 @@
+/* ===========================
+   CONTENEDOR
+=========================== */
+
+.registro-container{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:50px;
+
+    background:
+        radial-gradient(circle at top right,#7b2ff71e,transparent 35%),
+        radial-gradient(circle at bottom left,#3f8cff1c,transparent 30%),
+        #090012f5;
+}
+
+/* ===========================
+   TARJETA
+=========================== */
+
+.card-registrar{
+
+    width:100%;
+    max-width:700px;
+    padding:40px;
+
+    border-radius:22px;
+
+    background:rgba(255,255,255,.06);
+
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+
+    border:1px solid rgba(255,255,255,.12);
+
+    box-shadow:
+        0 0 35px rgba(123,47,247,.18);
+
+    animation:aparecer .5s ease;
+    font-style: italic;
+    font-family: "Segoe UI", sans-serif;
+    font-size: 3rem;
+}
+
+.card-registrar h3{
+
+    color:white;
+    text-align:center;
+
+    font-size:2rem;
+
+    margin-bottom:35px;
+}
+
+/* ===========================
+   LABELS
+=========================== */
+
+.form-label{
+
+    display:block;
+
+    color:#D8D8D8;
+
+    margin-top:15px;
+    margin-bottom:8px;
+
+    font-size:.95rem;
+
+    
+}
+
+/* ===========================
+   INPUTS
+=========================== */
+
+.form-control,
+.opciones_documento,
+.opciones_rol{
+
+    width:100%;
+
+    padding:14px 16px;
+
+    border-radius:12px;
+
+    border:1px solid rgba(255,255,255,.15);
+
+    background:rgba(255,255,255,.07);
+
+    color:white;
+
+    outline:none;
+
+    transition:.25s;
+
+    font-size:15px;
+}
+
+.form-control::placeholder{
+
+    color:#bdbdbd;
+}
+
+.form-control:focus,
+.opciones_documento:focus,
+.opciones_rol:focus{
+
+    border-color:#7B2FF7;
+
+    box-shadow:
+        0 0 15px rgba(123,47,247,.45);
+
+    background:rgba(255,255,255,.10);
+}
+
+/* ===========================
+   SELECT
+=========================== */
+
+.opciones_documento option,
+.opciones_rol option{
+
+    background:#16102a;
+    color:white;
+}
+
+/* ===========================
+   BOTON
+=========================== */
+
+.btn-main{
+
+    width:100%;
+
+    margin-top:30px;
+
+    padding:15px;
+
+    border:none;
+
+    border-radius:14px;
+
+    cursor:pointer;
+
+    color:white;
+
+    font-size:16px;
+    font-weight:600;
+
+    background:linear-gradient(
+        135deg,
+        #7B2FF7,
+        #3F8CFF
+    );
+
+    transition:.25s;
+}
+
+.btn-main:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 0 25px rgba(123,47,247,.45);
+}
+
+/* ===========================
+   LINK LOGIN
+=========================== */
+
+.link-text{
+
+    text-align:center;
+
+    margin-top:22px;
+
+    color:#cfcfcf;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+.link-text:hover{
+
+    color:#9B5CFF;
+}
+
+/* ===========================
+   ERROR
+=========================== */
+
+.error{
+
+    color:#ff7c7c;
+
+    margin-top:8px;
+
+    font-size:.9rem;
+}
+
+/* ===========================
+   ANIMACION
+=========================== */
+
+@keyframes aparecer{
+
+    from{
+
+        opacity:0;
+        transform:translateY(30px);
+
+    }
+
+    to{
+
+        opacity:1;
+        transform:translateY(0);
+
+    }
+
+}
+
+.subtitle{
+
+    text-align:center;
+
+    color:#cfcfcf;
+
+    margin-bottom:35px;
+
+    line-height:1.7;
+
+    font-size:15px;
+}
+
+.form-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(2,1fr);
+
+    gap:18px;
+}
+
+.form-group{
+
+    display:flex;
+
+    flex-direction:column;
+}
+
+.form-group-full{
+
+    margin-top:18px;
+
+    display:flex;
+
+    flex-direction:column;
+}
