@@ -12,10 +12,9 @@ export default function Torneos() {
     return <TorneoDetalleOrganizador />;
   }
 
-  if (user?.rol === ROLES.USUARIO) {
+  if (user?.rol === ROLES.INVITADO) {
     return <TorneoDetalleUsuario />;
   }
-
   // fallback seguro
   return <p>No tienes acceso a esta sección</p>;
 }

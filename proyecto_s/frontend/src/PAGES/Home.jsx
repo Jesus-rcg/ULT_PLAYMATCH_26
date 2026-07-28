@@ -118,23 +118,6 @@ export default function Home() {
           </ul>
         </div>
       </section>
-
-      {/* FOOTER */}
-      <section className="about">
-        <h2>¿Por qué PlayMatch?</h2>
-
-        <p>
-          PlayMatch centraliza toda la gestión de un torneo de fútbol en una
-          sola plataforma, ofreciendo una experiencia organizada, sencilla y
-          eficiente para todos sus participantes.
-        </p>
-
-        <p className="start">
-          Utiliza el menú lateral para acceder a los módulos de
-          Torneos, Equipos, Jugadores, Encuentros y demás funcionalidades de la
-          plataforma.
-        </p>
-      </section>
     </div>
   );
 }

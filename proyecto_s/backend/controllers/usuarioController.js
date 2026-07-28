@@ -156,7 +156,7 @@ export const registrarUsuario = async (req, res) => {
         success: false,
         message: "Código incorrecto",
       });
-    }
+    } 
 
     await registrarUsuarioService(registro.datosUsuario);
 

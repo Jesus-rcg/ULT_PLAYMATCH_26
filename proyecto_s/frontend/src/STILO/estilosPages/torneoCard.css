@@ -13,7 +13,6 @@ h1 {
 .torneo-card {
   background: #c796ff00;
   box-shadow: inset 0 0 40px rgba(231, 232, 232, 0);
-  border-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   color: white;
   border-radius: 12px;
   padding: 20px;
