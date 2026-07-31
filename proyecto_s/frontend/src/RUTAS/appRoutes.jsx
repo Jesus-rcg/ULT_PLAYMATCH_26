@@ -8,6 +8,7 @@ import TorneoDetalle from "../PAGES/Torneo/TorneoDetalle";
 //Login
 import Login from "../PAGES/Login/login";
 import Registrar from "../PAGES/Login/Registrar";
+import CodigoRegistro from "../PAGES/Login/codigoRegistro";
 import ForgotPassword from "../PAGES/Login/ForgotPassword";
 import ResetPassword from "../PAGES/Login/ResetPassword";
 
@@ -91,6 +92,7 @@ export default function AppRoutes() {
 
         <Route path="/login" element={<Login />} />
         <Route path="/registro" element={<Registrar />} />
+        <Route path="/codigo-registro" element={<CodigoRegistro />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
       </Route>

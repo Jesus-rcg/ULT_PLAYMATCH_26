@@ -110,7 +110,7 @@ const Registrar = () => {
     }
 
     try {
-      const response = await fetch(`${API}/auth/registrar`, {
+      const response = await fetch(`${API}/auth/enviar-codigo`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(usuario),
@@ -119,8 +119,6 @@ const Registrar = () => {
       const data = await response.json();
 
       if (data.success) {
-        alert("Usuario registrado correctamente");
-
         setUsuario({
           id_usuario: "",
           id_documento: "", 
@@ -134,7 +132,12 @@ const Registrar = () => {
           confirmarPassword: "",
         });
 
-        navigate("/login");
+        navigate("/codigo-registro",{
+          state:{
+            email: usuario.email,
+          },
+        });
+
       } else {
         alert("Error: " + data.message);
       }
