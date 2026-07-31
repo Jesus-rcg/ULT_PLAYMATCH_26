@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../../STILO/estilosPages/registrarse.css";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Registrar = () => {
   const navigate = useNavigate();
@@ -16,10 +17,15 @@ const Registrar = () => {
     telefono: "",
     email: "",
     password: "",
+    confirmarPassword: "",
     id_rol:""
   });
 
   const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [mostrarRequisitos, setMostrarRequisitos] = useState(false);
+  const [mostrarPassword, setMostrarPassword] = useState(false)
+  const [mostrarConfirmarPassword, setMostrarConfirmarPassword] = useState(false)
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -46,7 +52,25 @@ const Registrar = () => {
     } catch (error) {
       console.error(error);
     }
-  };
+  };  
+
+    const requisitos = {
+    longitud: usuario.password.length >= 8 &&
+              usuario.password.length <= 16,
+    mayuscula: /[A-Z]/.test(usuario.password),
+    minuscula: /[a-z]/.test(usuario.password),
+    numero: /\d/.test(usuario.password),
+    especial: /[!@#$%^&*(),.":|<>]/.test(usuario.password),
+
+    }
+    
+    const validacionContraseña =
+    requisitos.longitud &&
+    requisitos.especial &&
+    requisitos.minuscula &&
+    requisitos.mayuscula &&
+    requisitos.numero;
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -60,7 +84,8 @@ const Registrar = () => {
       !usuario.nombre_usuario ||
       !usuario.apellido_usuario ||
       !usuario.email ||
-      !usuario.password
+      !usuario.password ||
+      !usuario.confirmarPassword
     ) {
       alert("Completa todos los campos");
       return;
@@ -69,6 +94,19 @@ const Registrar = () => {
     if (emailError) {
       alert("Corrige el correo");
       return;
+    } 
+
+    if(!validacionContraseña){
+      setPasswordError(
+        "La contraseña no cumple con los requisitos de seguridad"
+      );
+      return;
+    }
+    
+    if(usuario.password !== usuario.confirmarPassword){ 
+      setPasswordError("Las contraseñas no coinciden");
+      return;
+
     }
 
     try {
@@ -93,6 +131,7 @@ const Registrar = () => {
           email: "",
           password: "",
           id_rol: "",
+          confirmarPassword: "",
         });
 
         navigate("/login");
@@ -104,6 +143,7 @@ const Registrar = () => {
       alert("Error conectando con el servidor");
     }
   };
+
 
   return (
     <div className="registro-container">
@@ -230,15 +270,97 @@ const Registrar = () => {
 
             <div className="form-group-full">
 
-                <label className="form-label">Contraseña</label>
+                <div className="password-wrapper">
 
-                <input
-                    className="form-control"
-                    type="password"
-                    name="password"
-                    value={usuario.password}
-                    onChange={handleChange}
-                />
+                  <label className="form-label">Contraseña</label>
+
+                  <div className="password-input">
+                    <input
+                      className="form-control password-control"
+                      type={mostrarPassword ? "text" : "password"}
+                      name="password"
+                      placeholder="Contraseña"
+                      value={usuario.password}
+                      onChange={handleChange}
+                      onFocus={() => setMostrarRequisitos(true)}
+                      onBlur={() => setMostrarRequisitos(false)}
+                      required
+                    />
+
+                    <button
+                      type="button"
+                      className="toggle-password"
+                      onClick={() => setMostrarPassword(!mostrarPassword)}
+                    >
+                      {mostrarPassword ? <FaEyeSlash /> : <FaEye />}
+                    </button>
+
+                  </div>
+
+                  {mostrarRequisitos && (
+                    <div className="password-card">
+
+                      <h4>La contraseña debe contener:</h4>
+
+                      <p className={requisitos.longitud ? "ok" : "bad"}>
+                        {requisitos.longitud ? "✔" : "✖"} Entre 8 y 16 caracteres
+                      </p>
+
+                      <p className={requisitos.mayuscula ? "ok" : "bad"}>
+                        {requisitos.mayuscula ? "✔" : "✖"} Una letra mayúscula
+                      </p>
+
+                      <p className={requisitos.minuscula ? "ok" : "bad"}>
+                        {requisitos.minuscula ? "✔" : "✖"} Una letra minúscula
+                      </p>
+
+                      <p className={requisitos.numero ? "ok" : "bad"}>
+                        {requisitos.numero ? "✔" : "✖"} Un número
+                      </p>
+
+                      <p className={requisitos.especial ? "ok" : "bad"}>
+                        {requisitos.especial ? "✔" : "✖"} Un carácter especial
+                      </p>
+
+                    </div>
+                  )}
+
+                </div>
+
+
+            </div>
+
+            <div className="form-group-full">
+
+                <label className="form-label">Confirmar contraseña</label>
+                <div className="password-input">
+                  <input
+                      className="form-control password-control"
+                      type={mostrarConfirmarPassword ? "text" : "password"}
+                      name="confirmarPassword"
+                      placeholder="Contraseña"
+                      value={usuario.confirmarPassword}
+                      onChange={handleChange}
+                      required
+          
+                  />
+
+                  <button
+                    type="button"
+                    className="toggle-password"
+                    onClick={() => setMostrarConfirmarPassword(!mostrarConfirmarPassword)}
+                  >
+                    {mostrarConfirmarPassword ? <FaEyeSlash /> : <FaEye />}
+                  </button>
+
+                </div>
+                  
+                  {passwordError && (
+                    <p className="password-error">
+                      {passwordError}
+                    </p>
+                  )}
+                
 
             </div>
 
