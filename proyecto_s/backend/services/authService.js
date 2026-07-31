@@ -1,32 +1,31 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import {
-  createUsuario,
   findUsuarioByEmail,
-  updatePasswordModel,
+  registrarUsuarioModel,
+  cambiarPasswordModel
 } from "../models/authModel.js";
 
 /* REGISTRO */
+//Registrar usuario
 export const registrarUsuarioService = async (data) => {
-  const {
-    nombre_usuario,
-    apellido_usuario,
-    fecha_nacimiento,
-    telefono,
-    email,
-    password,
-  } = data;
+  const usuario = await findUsuarioByEmail(data.email);
 
-  const existing = await findUsuarioByEmail(email);
-  if (existing) throw new Error("El email ya está registrado");
+  if (usuario) {
+    throw new Error("El email ya está registrado");
+  }
+  await registrarUsuarioModel(data);
+};
 
-  const hashedPassword = await bcrypt.hash(password, 10);
+export const cambiarPasswordService = async (email, password) => {
+  const usuario  = await findUsuarioByEmail(email);
 
+  if (!usuario) {
+    throw new Error("El correo no existe");
+  }
+  
+  await cambiarPasswordModel(email, password);
 
-  await createUsuario({
-    ...data,
-    password: hashedPassword,
-  });
 };
 
 /* LOGIN */

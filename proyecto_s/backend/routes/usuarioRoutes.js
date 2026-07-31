@@ -5,12 +5,7 @@ import {
   updateUsuario,
   deleteUsuario,
   createUsuario,
-  registrarUsuario,
-  enviarCodigoRegistro,
-  reenviarCodigoRegistro,
-  recuperarPassword,
-  verificarCodigoRecuperacion,
-  actualizarPassword,
+
 } from "../controllers/usuarioController.js";
 
 import { findUsuarioByEmail } from "../models/usuarioModel.js";
@@ -92,10 +87,6 @@ router.get("/", getUsuarios);
 router.get("/disponibles", getUsuariosDisponibles);
 router.get("/:id", getUsuarioById);
 router.put("/:id", updateUsuario);
-router.delete("/:id", deleteUsuario);
-router.post("/registrar", registrarUsuario);
-router.post("/enviar-codigo", enviarCodigoRegistro);
-router.post("/reenviar-codigo", reenviarCodigoRegistro);
 
 /**
  * @swagger
@@ -218,55 +209,6 @@ router.delete("/:id", deleteUsuario);
  *       500:
  *         description: Error interno del servidor.
  */
-router.post("/registrar", registrarUsuario);
 
-/**
- * @swagger
- * /api/usuarios/enviar-codigo:
- *   post:
- *     summary: Enviar código de verificación
- *     description: Envía un código al correo para completar el registro.
- *     tags: [Usuarios]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/UsuarioRegistro'
- *     responses:
- *       200:
- *         description: Código enviado correctamente.
- *       409:
- *         description: El correo ya se encuentra registrado.
- *       500:
- *         description: Error interno del servidor.
- */
-router.post("/enviar-codigo", enviarCodigoRegistro);
-
-/**
- * @swagger
- * /api/usuarios/reenviar-codigo:
- *   post:
- *     summary: Reenviar código de verificación
- *     description: Reenvía un nuevo código al correo del usuario.
- *     tags: [Usuarios]
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/ReenviarCodigo'
- *     responses:
- *       200:
- *         description: Código reenviado correctamente.
- *       400:
- *         description: No existe un registro pendiente.
- *       500:
- *         description: Error interno del servidor.
- */
-router.post("/reenviar-codigo", reenviarCodigoRegistro);
-router.post("/recuperar", recuperarPassword);
-router.post("/verificar-recuperacion", verificarCodigoRecuperacion);
-router.post("/cambiar-password", actualizarPassword);
 
 export default router;

@@ -1,23 +1,68 @@
 import {
   registrarUsuarioService,
   loginUsuarioService,
-  forgotPasswordService,
-  resetPasswordService,
+  cambiarPasswordService,
 } from "../services/authService.js";
+
+
+
+import codigos from "../utils/codigosVerificacion.js";
+import { enviarCodigo } from "../utils/email.js";
+
+import { createUsuario as createUsuarioModel, findUsuarioByEmail } from "../models/usuarioModel.js";
 
 /* REGISTRO */
 export const registrarUsuario = async (req, res) => {
   try {
-    await registrarUsuarioService(req.body);
+    const {
+      email, codigo
+    } = req.body;
+
+    if (!email || !codigo) {
+      return res.status(400).json({
+        success: false,
+        message: "Email y código son requeridos",
+      });
+    }
+
+    const registro = codigos.get(email);
+    if (!registro) {
+      return res.status(400).json({
+        success: false,
+        message: "No se ha enviado un código a este email",
+      });
+    }
+
+    if (Date.now() > registro.expira) {
+      codigos.delete(email);
+      return res.status(400).json({
+        success: false,
+        message: "El código ha expirado",
+      });
+    }
+
+    if (registro.codigo !== codigo) {
+      return res.status(400).json({
+        success: false,
+        message: "Código incorrecto",
+      });
+    } 
+
+    await registrarUsuarioService(registro.datosUsuario);
+
+    codigos.delete(email);
 
     return res.status(201).json({
       success: true,
       message: "Usuario registrado correctamente",
     });
+  
+  
   } catch (err) {
-    return res.status(400).json({
+    console.error(err);
+    return res.status(500).json({
       success: false,
-      message: err.message,
+      message: "Error al registrar el usuario",
     });
   }
 };
@@ -43,38 +88,211 @@ export const loginUsuario = async (req, res) => {
   }
 };
 
-/* FORGOT PASSWORD */
-export const forgotPassword = async (req, res) => {
+export const enviarCodigoRegistro = async (req, res) => {
   try {
-    await forgotPasswordService(req.body.email);
+    
+    const datos = req.body;
+
+    const usuarioExistente = await findUsuarioByEmail(datos.email);
+
+    if (usuarioExistente) {
+      return res.status(409).json({
+        success: false,
+        message: "El correo ya se encuentra registrado"
+      });
+    }
+
+    const codigo = Math.floor(100000 + Math.random() * 900000).toString();
+
+    codigos.set(datos.email, {
+      codigo,
+      datosUsuario: datos,
+      expira: Date.now() + 10 * 60 * 1000
+    });
+
+    await enviarCodigo(datos.email, codigo);
+
+    return res.status(200).json({
+      success: true,
+      message: "Código enviado correctamente",
+    });
+  }catch (err) {
+    console.error(err);
+    return res.status(500).json({
+      success: false,
+      message: "Error al enviar el código",
+    });
+  }
+}
+
+export const reenviarCodigoRegistro = async (req, res) => {
+  try {
+
+    const { email } = req.body;
+
+    const registro = codigos.get(email);
+
+    if (!registro) {
+      return res.status(400).json({
+        success: false,
+        message: "No existe un registro pendiente"
+      });
+    }
+
+    const nuevoCodigo = Math.floor(100000 + Math.random() * 900000).toString();
+
+    registro.codigo = nuevoCodigo;
+    registro.expira = Date.now() + 10 * 60 * 1000;
+
+    codigos.set(email, registro);
+
+    await enviarCodigo(email, nuevoCodigo);
 
     return res.json({
       success: true,
-      message: "Link de recuperación generado",
+      message: "Código reenviado"
     });
+
   } catch (err) {
-    return res.status(404).json({
+
+    console.error(err);
+
+    return res.status(500).json({
+      success: false,
+      message: "Error al reenviar código"
+    });
+
+  }
+};
+
+
+export const recuperarPassword = async (req, res) => {
+  try { 
+
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({
+        success: false,
+        message: "Email es requerido",
+      });
+    }
+
+    const usuario = await findUsuarioByEmail(email);
+
+    if (!usuario) {
+      return res.status(404).json({
+        success: false,
+        message: "No existe una cuenta con este email",
+      });
+    }
+
+    const codigo = Math.floor(100000 + Math.random() * 900000).toString();
+
+    codigos.set(email, {
+      codigo,
+      expira: Date.now() + 10 * 60 * 1000
+    });
+
+    await enviarCodigo(email, codigo);
+
+    return res.status(200).json({
+      success: true,
+      message: "Código de recuperación enviado",
+    });
+
+  }catch (err) {
+    console.error(err);
+    return res.status(500).json({
+      success: false,
+      message: "Error al enviar el código de recuperación",
+    });
+  }
+}
+
+export const verificarCodigoRecuperacion = async (req, res) => {
+
+  try {
+    const { email, codigo } = req.body; 
+    const registro = codigos.get(email);
+
+    if (!registro) {
+      return res.status(400).json({
+        success: false,
+        message: "No se ha enviado un código a este email",
+      });
+    }
+
+    if (Date.now() > registro.expira) {
+      codigos.delete(email);
+      return res.status(400).json({
+        success: false,
+        message: "El código ha expirado",
+      });
+    }
+
+    if (registro.codigo !== codigo) {
+      return res.status(400).json({
+        success: false,
+        message: "Código incorrecto",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Código verificado correctamente",
+    });
+
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({
       success: false,
       message: err.message,
     });
   }
 };
 
-/* RESET PASSWORD */
-export const resetPassword = async (req, res) => {
+export const actualizarPassword = async (req, res) => {
   try {
-    const { token, password } = req.body;
+    const { email, codigo, password } = req.body;
 
-    await resetPasswordService(token, password);
+    const registro = codigos.get(email);
 
-    return res.json({
+    if (!registro) {
+      return res.status(400).json({
+        success: false,
+        message: "No se ha enviado un código a este email",
+      });
+    }
+
+    if (Date.now() > registro.expira) {
+      codigos.delete(email);
+      return res.status(400).json({
+        success: false,
+        message: "El código ha expirado",
+      });
+    }
+
+    if (registro.codigo !== codigo) {
+      return res.status(400).json({
+        success: false,
+        message: "Código incorrecto",
+      });
+    }
+
+    await cambiarPasswordService(email, password);
+
+    codigos.delete(email);
+
+    return res.status(200).json({
       success: true,
       message: "Contraseña actualizada correctamente",
     });
   } catch (err) {
-    return res.status(400).json({
+    console.error(err);
+    return res.status(500).json({
       success: false,
-      message: "Token inválido o expirado",
+      message: err.message,
     });
   }
 };
