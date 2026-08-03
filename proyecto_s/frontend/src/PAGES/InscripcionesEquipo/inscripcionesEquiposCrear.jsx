@@ -1,101 +1,105 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "../../STILO/estilosPages/inscripcionEquipo/inscripcionEquipo.css";
+/**
+ * ==========================================================
+ * INSCRIBIR EQUIPO A TORNEO
+ * 
+ *
+ * DESCRIPCIÓN:
+ * El DT llega aquí desde "Mis Inscripciones" con el ID de
+ * SU equipo ya en la URL. Aquí elige a qué torneo (con
+ * inscripciones abiertas) quiere inscribirlo.
+ * ==========================================================
+ */
 
-const API = import.meta.env.VITE_API_URL;
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { createInscripcion } from "../../SERVICE/inscripcionesEquipoService.js";
+import { getTorneos } from "../../SERVICE/torneoService.js";
+import "../../STILO/estilosPages/inscripcionEquipo/inscripcionCrear.css";
 
-export default function InscripcionEquipoCrear() {
+export default function InscripcionesEquiposCrear() {
+  const { idEquipo } = useParams();
   const navigate = useNavigate();
 
-  const [torneos, setTorneos] = useState([]);
-  const [equipos, setEquipos] = useState([]);
+  const [torneosAbiertos, setTorneosAbiertos] = useState([]);
+  const [idTorneoSeleccionado, setIdTorneoSeleccionado] = useState("");
+
+  const [cargando, setCargando] = useState(true);
+  const [enviando, setEnviando] = useState(false);
   const [error, setError] = useState("");
 
-  const [form, setForm] = useState({
-    id_torneo: "",
-    id_equipo: "",
-  });
-
-  // TORNEOS
-  const getTorneos = async () => {
-    try {
-      const res = await fetch(`${API}/torneos`);
-      const data = await res.json();
-      setTorneos(data || []);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  // EQUIPOS
-  const getEquipos = async () => {
-    try {
-      const res = await fetch(`${API}/equipos`);
-      const data = await res.json();
-      setEquipos(data || []);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
+  // Cargamos los torneos y filtramos solo los que están
+  // en estado "Inscripciones Abiertas" 
   useEffect(() => {
-    getTorneos();
-    getEquipos();
+    const cargarTorneos = async () => {
+      try {
+        const todos = await getTorneos();
+        const abiertos = todos.filter(
+          (t) => t.estado === "Inscripciones Abiertas"
+        );
+        setTorneosAbiertos(abiertos);
+      } catch (err) {
+        setError("No se pudieron cargar los torneos disponibles.");
+      } finally {
+        setCargando(false);
+      }
+    };
+
+    cargarTorneos();
   }, []);
 
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = async (e) => {
+  const manejarEnvio = async (e) => {
     e.preventDefault();
     setError("");
 
+    if (!idTorneoSeleccionado) {
+      setError("Debe seleccionar un torneo.");
+      return;
+    }
+
     try {
-      const res = await fetch(`${API}/inscripcionEquipos`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form), // SOLO torneo + equipo
+      setEnviando(true);
+
+      await createInscripcion({
+        id_torneo: idTorneoSeleccionado,
+        id_equipo: idEquipo,
       });
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        setError(data.message || "Error al crear inscripción");
-        return;
-      }
-
+      alert("Solicitud de inscripción enviada.");
       navigate("/inscripcionEquipos");
-    } catch (error) {
-      console.error(error);
-      setError("Error del servidor");
+
+    } catch (err) {
+      // Mensajes que puede devolver el backend:
+      // "El equipo ya está inscrito en este torneo."
+      // "El torneo no admite nuevas inscripciones."
+      // "No tiene permisos sobre este equipo."
+      const mensaje =
+        err.response?.data?.message || "No se pudo enviar la inscripción.";
+      setError(mensaje);
+
+    } finally {
+      setEnviando(false);
     }
   };
 
+  if (cargando) return <p>Cargando torneos disponibles...</p>;
+
   return (
-    <div className="usuarios-container">
-      <div className="form-container">
-        <h2 className="titulo">Crear Inscripción de Equipo</h2>
+    <div className="inscripcion-crear-page">
+      <h1>Inscribir Equipo a Torneo</h1>
 
-        {error && <p className="error-text">{error}</p>}
-
-        <form onSubmit={handleSubmit} className="formulario">
-          {/* TORNEO */}
-          <div className="grupo-form">
-            <label>Torneo</label>
+      {torneosAbiertos.length === 0 ? (
+        <p>No hay torneos con inscripciones abiertas en este momento.</p>
+      ) : (
+        <form onSubmit={manejarEnvio}>
+          <div className="campo">
+            <label htmlFor="torneo">Selecciona un torneo</label>
             <select
-              name="id_torneo"
-              value={form.id_torneo}
-              onChange={handleChange}
-              required
+              id="torneo"
+              value={idTorneoSeleccionado}
+              onChange={(e) => setIdTorneoSeleccionado(e.target.value)}
             >
-              <option value="">Seleccione un torneo</option>
-              {torneos.map((t) => (
+              <option value="">-- Seleccione --</option>
+              {torneosAbiertos.map((t) => (
                 <option key={t.id_torneo} value={t.id_torneo}>
                   {t.nombre_torneo}
                 </option>
@@ -103,40 +107,13 @@ export default function InscripcionEquipoCrear() {
             </select>
           </div>
 
-          {/* EQUIPO */}
-          <div className="grupo-form">
-            <label>Equipo</label>
-            <select
-              name="id_equipo"
-              value={form.id_equipo}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Seleccione un equipo</option>
-              {equipos.map((e) => (
-                <option key={e.id_equipo} value={e.id_equipo}>
-                  {e.nombre_equipo}
-                </option>
-              ))}
-            </select>
-          </div>
+          {error && <p className="error">{error}</p>}
 
-          {/* BOTONES */}
-          <div className="acciones-form">
-            <button type="submit" className="btn crear">
-              Guardar
-            </button>
-
-            <button
-              type="button"
-              className="btn cancelar"
-              onClick={() => navigate("/inscripcionEquipos")}
-            >
-              Cancelar
-            </button>
-          </div>
+          <button type="submit" disabled={enviando}>
+            {enviando ? "Enviando..." : "Confirmar Inscripción"}
+          </button>
         </form>
-      </div>
+      )}
     </div>
   );
 }

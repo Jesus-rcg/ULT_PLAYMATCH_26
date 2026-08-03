@@ -54,7 +54,11 @@ export default function Login() {
         return;
       }
 
-      if (userData.rol === ROLES.USUARIO) {
+      // Entrenador (Director Técnico) y Jugador van a la vista de Equipos
+      if (
+        userData.rol === ROLES.ENTRENADOR ||
+        userData.rol === ROLES.JUGADOR
+      ) {
         navigate("/equipos");
         return;
       }

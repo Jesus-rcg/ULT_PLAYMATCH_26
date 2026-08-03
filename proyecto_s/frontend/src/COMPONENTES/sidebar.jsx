@@ -8,13 +8,14 @@ export default function Sidebar() {
   const { user } = useContext(AuthContext);
   const location = useLocation();
 
-  const rolActual = user ? Number(user.rol) : ROLES.INVITADO; // Asignar INVITADO si user o user.rol es undefined
+  const rolActual = user ? Number(user.rol) : ROLES.INVITADO; // Asignar INVITADO si user o user.rol es indefinido 
 
   const rolNombre = {
     0: "Invitado",
     1: "Administrador",
     2: "Organizador",
     3: "Jugador",
+    5: "Entrenador",
   };
 
   // Menú agrupado por secciones

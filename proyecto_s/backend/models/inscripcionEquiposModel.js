@@ -1,188 +1,303 @@
-import db from "../config/db.js";
+/**
+ * ==========================================================
+ * MÓDULO: INSCRIPCIÓN DE EQUIPOS
+ 
+ * ==========================================================
+ */
 
-//Obtener todas
-export const getAllInscripciones = async () => {
-  const [rows] = await db.query(`
-    SELECT 
-      i.id_inscripcion_e,
-      i.id_torneo,
+import pool from "../config/db.js";
+
+/**
+ * ==========================================================
+ * OBTENER TODAS LAS INSCRIPCIONES
+ * ==========================================================
+ */
+export const obtenerInscripcionesModel = async () => {
+  const [rows] = await pool.query(`
+    SELECT
+      ie.id_inscripcion_e,
+      ie.id_torneo,
       t.nombre_torneo,
-      i.id_equipo,
+      ie.id_equipo,
       e.nombre_equipo,
-      i.fecha_ins_equipo,
-
-      -- ESTADO REAL
-      CASE 
-        WHEN e.activo = 0 THEN 'Cancelado'
-        ELSE i.estado
-      END AS estado,
-
-      i.activo
-    FROM inscripcionesequipos i
-    INNER JOIN torneos t ON i.id_torneo = t.id_torneo
-    INNER JOIN equipos e ON i.id_equipo = e.id_equipo
-    WHERE i.activo = 1
-    ORDER BY i.id_inscripcion_e ASC
+      ie.fecha_ins_equipo,
+      ie.estado,
+      ie.activo
+    FROM inscripcionesequipos ie
+    INNER JOIN torneos t
+      ON ie.id_torneo = t.id_torneo
+    INNER JOIN equipos e
+      ON ie.id_equipo = e.id_equipo
+    WHERE ie.activo = 1
+    ORDER BY ie.id_inscripcion_e DESC
   `);
 
   return rows;
 };
 
-//Obtener por torneo
-export const getByTorneo = async (id_torneo) => {
-  const [rows] = await db.query(
-    `SELECT * FROM inscripcionesequipos WHERE id_torneo = ?`,
-    [id_torneo],
-  );
-
-  return rows;
-};
-
-//Obtener por ID
-export const getInscripcionById = async (id) => {
-  const [rows] = await db.query(
+/**
+ * ==========================================================
+ * OBTENER INSCRIPCIÓN POR ID
+ * ==========================================================
+ */
+export const obtenerInscripcionPorIdModel = async (id) => {
+  const [rows] = await pool.query(
     `
-    SELECT 
-      i.id_inscripcion_e,
-      i.id_torneo,
+    SELECT
+      ie.id_inscripcion_e,
+      ie.id_torneo,
       t.nombre_torneo,
-      i.id_equipo,
+      ie.id_equipo,
       e.nombre_equipo,
-      i.fecha_ins_equipo,
-      i.estado,
-      i.activo
-    FROM inscripcionesequipos i
-    INNER JOIN torneos t ON i.id_torneo = t.id_torneo
-    INNER JOIN equipos e ON i.id_equipo = e.id_equipo
-    WHERE i.id_inscripcion_e = ?
-    LIMIT 1
+      ie.fecha_ins_equipo,
+      ie.estado,
+      ie.activo
+    FROM inscripcionesequipos ie
+    INNER JOIN torneos t
+      ON ie.id_torneo = t.id_torneo
+    INNER JOIN equipos e
+      ON ie.id_equipo = e.id_equipo
+    WHERE ie.id_inscripcion_e = ?
     `,
-    [id],
+    [id]
   );
 
   return rows[0];
 };
 
-//Crear inscripcion
-// Crear inscripción
-export const createInscripcion = async (id_torneo, id_equipo, estado) => {
-  const [exist] = await db.query(
+/**
+ * ==========================================================
+ * OBTENER INSCRIPCIONES POR TORNEO
+ * ==========================================================
+ */
+export const obtenerInscripcionesPorTorneoModel = async (id_torneo) => {
+  const [rows] = await pool.query(
     `
-    SELECT *
-    FROM inscripcionesequipos
-    WHERE id_torneo = ? AND id_equipo = ?
+    SELECT
+      ie.id_inscripcion_e,
+      e.nombre_equipo,
+      ie.estado,
+      ie.fecha_ins_equipo
+    FROM inscripcionesequipos ie
+    INNER JOIN equipos e
+      ON ie.id_equipo = e.id_equipo
+    WHERE ie.id_torneo = ?
+      AND ie.activo = 1
+    ORDER BY ie.fecha_ins_equipo DESC
     `,
-    [id_torneo, id_equipo],
+    [id_torneo]
   );
 
-  // Ya existe una inscripción
-  if (exist.length > 0) {
-    const inscripcion = exist[0];
+  return rows;
+};
 
-    // Si está activa, no permitir otra
-    if (inscripcion.activo === 1) {
-      throw new Error("Este equipo ya está inscrito en este torneo");
-    }
+/**
+ * ==========================================================
+ * OBTENER INSCRIPCIONES POR EQUIPO
+ * ==========================================================
+ */
+export const obtenerInscripcionesPorEquipoModel = async (id_equipo) => {
+  const [rows] = await pool.query(
+    `
+    SELECT
+      ie.id_inscripcion_e,
+      t.nombre_torneo,
+      ie.estado,
+      ie.fecha_ins_equipo
+    FROM inscripcionesequipos ie
+    INNER JOIN torneos t
+      ON ie.id_torneo = t.id_torneo
+    WHERE ie.id_equipo = ?
+      AND ie.activo = 1
+    ORDER BY ie.fecha_ins_equipo DESC
+    `,
+    [id_equipo]
+  );
 
-    // Si estaba inactiva, reactivarla
-    const [result] = await db.query(
-      `
-      UPDATE inscripcionesequipos
-      SET
-        activo = 1,
-        estado = ?,
-        fecha_ins_equipo = NOW()
-      WHERE id_inscripcion_e = ?
-      `,
-      [estado, inscripcion.id_inscripcion_e],
-    );
+  return rows;
+};
 
-    return result;
-  }
+/**
+ * ==========================================================
+ * VALIDAR SI EL EQUIPO PERTENECE AL DT
+ * ==========================================================
+ */
+export const validarEquipoUsuarioModel = async (
+  id_equipo,
+  id_usuario
+) => {
+  const [rows] = await pool.query(
+    `
+    SELECT id_equipo
+    FROM equipos
+    WHERE id_equipo = ?
+      AND id_usuario = ?
+      AND activo = 1
+    `,
+    [id_equipo, id_usuario]
+  );
 
-  // No existe: crear una nueva
-  const [result] = await db.query(
+  return rows.length > 0;
+};
+
+/**
+ * ==========================================================
+ * VALIDAR QUE EL TORNEO ESTÉ ABIERTO
+ * ==========================================================
+ */
+export const validarTorneoAbiertoModel = async (id_torneo) => {
+  const [rows] = await pool.query(
+    `
+    SELECT id_torneo
+    FROM torneos
+    WHERE id_torneo = ?
+      AND estado = 'Inscripciones Abiertas'
+      AND activo = 1
+    `,
+    [id_torneo]
+  );
+
+  return rows.length > 0;
+}; 
+/**
+ * ==========================================================
+ * VALIDAR INSCRIPCIÓN DUPLICADA
+ * Un equipo no puede inscribirse dos veces
+ * al mismo torneo.
+ * ==========================================================
+ */
+export const validarInscripcionDuplicadaModel = async (
+  id_torneo,
+  id_equipo
+) => {
+  const [rows] = await pool.query(
+    `
+    SELECT id_inscripcion_e
+    FROM inscripcionesequipos
+    WHERE id_torneo = ?
+      AND id_equipo = ?
+      AND activo = 1
+    `,
+    [id_torneo, id_equipo]
+  );
+
+  return rows.length > 0;
+};
+
+/**
+ * ==========================================================
+ * CREAR INSCRIPCIÓN
+ * Estado inicial: Pendiente
+ * ==========================================================
+ */
+export const crearInscripcionModel = async (inscripcion) => {
+
+  const {
+    id_torneo,
+    id_equipo,
+  } = inscripcion;
+
+  const [result] = await pool.query(
     `
     INSERT INTO inscripcionesequipos
-      (id_torneo, id_equipo, estado, activo)
+    (
+      id_torneo,
+      id_equipo,
+      estado
+    )
     VALUES
-      (?, ?, ?, 1)
+    (
+      ?,
+      ?,
+      'Pendiente'
+    )
     `,
-    [id_torneo, id_equipo, estado],
+    [
+      id_torneo,
+      id_equipo,
+    ]
   );
 
-  return result;
+  return result.insertId;
 };
 
-//Cambiar estado
-//Cambiar estado
-export const updateEstado = async (id_inscripcion_e, estado) => {
-  let query = "";
-  let params = [];
+/**
+ * ==========================================================
+ * ACTUALIZAR ESTADO DE INSCRIPCIÓN
+ * Solo permite:
+ * Pendiente -> Inscrito
+ * Pendiente -> Cancelado
+ * ==========================================================
+ */
+export const actualizarEstadoInscripcionModel = async (
+  id_inscripcion,
+  estado
+) => {
 
-  if (estado === "Cancelado") {
-    query = `
-      UPDATE inscripcionesequipos i
-      JOIN equipos e ON i.id_equipo = e.id_equipo
-      SET
-        i.estado = 'Cancelado',
-        i.activo = 0
-      WHERE i.id_inscripcion_e = ?
-    `;
+  await pool.query(
+    `
+    UPDATE inscripcionesequipos
+    SET estado = ?
+    WHERE id_inscripcion_e = ?
+    `,
+    [
+      estado,
+      id_inscripcion,
+    ]
+  );
 
-    params = [id_inscripcion_e];
-  } else {
-    query = `
-      UPDATE inscripcionesequipos i
-      JOIN equipos e ON i.id_equipo = e.id_equipo
-      SET
-        i.estado = CASE
-          WHEN e.activo = 1 THEN ?
-          ELSE 'Cancelado'
-        END,
-        i.activo = 1
-      WHERE i.id_inscripcion_e = ?
-    `;
+  return {
+    message: "Estado actualizado correctamente."
+  };
 
-    params = [estado, id_inscripcion_e];
-  }
-
-  const [result] = await db.query(query, params);
-
-  return result;
 };
 
-//Cambiar estado de equipo
-export const cambiarEstadoEquipo = async (id_equipo, activo) => {
-  // 1. actualizar equipo
-  await db.query(`UPDATE equipos SET activo = ? WHERE id_equipo = ?`, [
-    activo,
-    id_equipo,
-  ]);
+/**
+ * ==========================================================
+ * DESACTIVAR INSCRIPCIÓN
+ * Eliminación lógica
+ * ==========================================================
+ */
+export const desactivarInscripcionModel = async (
+  id_inscripcion
+) => {
 
-  // 2. si se Elimina se cambia automaticamente el estado a cancelar inscripciones
-  if (activo == 0) {
-    await db.query(
-      `
-      UPDATE inscripcionesequipos
-      SET estado = 'Cancelado'
-      WHERE id_equipo = ?
-      `,
-      [id_equipo],
-    );
-  }
-};
-
-//Eliminar
-export const deleteInscripcion = async (id_inscripcion_e) => {
-  const [result] = await db.query(
+  await pool.query(
     `
     UPDATE inscripcionesequipos
     SET activo = 0
     WHERE id_inscripcion_e = ?
     `,
-    [id_inscripcion_e],
+    [
+      id_inscripcion,
+    ]
   );
 
-  return result;
+  return {
+    message: "Inscripción eliminada correctamente."
+  };
+
+};
+/**
+ * ==========================================================
+ * VALIDAR SI EL USUARIO ES EL ORGANIZADOR DEL TORNEO
+ *  Solo el organizador del torneo puede aprobar
+ * o cancelar una inscripción.
+ * ==========================================================
+ */
+export const validarOrganizadorTorneoModel = async (
+  id_torneo,
+  id_usuario
+) => {
+  const [rows] = await pool.query(
+    `
+    SELECT id_torneo
+    FROM torneos
+    WHERE id_torneo = ?
+      AND id_usuario = ?
+    `,
+    [id_torneo, id_usuario]
+  );
+
+  return rows.length > 0;
 };

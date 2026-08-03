@@ -1,74 +1,234 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+// ===================================================================
+// JugadorCrear.jsx
+// Formulario para que el DT registre un jugador nuevo dentro de
+// UNO de sus equipos 
+//
+// El jugador SIEMPRE debe ser un usuario ya existente en el sistema
+//  "un usuario, un jugador"). Para que sea fácil encontrarlo
+// entre muchos usuarios, aquí hay un buscador con autocompletado en
+// vez de un <select> gigante con todos los usuarios.
+// ===================================================================
 
-import { createJugador } from "../../SERVICE/jugadoresService.js";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+
+// Trae la lista de usuarios DISPONIBLES para ser jugadores
+import { getUsuariosDisponibles } from "../../SERVICE/usuariosService";
+
+// Crea el jugador en el backend
+import { createJugador } from "../../SERVICE/jugadoresService";
+
+// Para mostrar el nombre del equipo en el título
+import { getEquipoById } from "../../SERVICE/equiposService";
+
+import { AuthContext } from "../../CONTEXT/AuthContext";
+
+import "../../STILO/estilosPages/jugadores/Jugadores.css";
 
 export default function JugadorCrear() {
+  // idEquipo viene de la URL: /jugadores/crear/:idEquipo
+  const { idEquipo } = useParams();
   const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
 
-  const [form, setForm] = useState({
-    id_usuario: "",
-    posicion: "",
-    numero_camiseta: "",
+  // ----------------------------
+  // ESTADOS
+  // ----------------------------
+  const [equipo, setEquipo] = useState(null);
+  const [usuarios, setUsuarios] = useState([]); // lista completa de usuarios disponibles
+
+  // Texto que el DT escribe en el buscador
+  const [busqueda, setBusqueda] = useState("");
+
+  // Usuario que el DT ya seleccionó de la lista de sugerencias
+  const [usuarioSeleccionado, setUsuarioSeleccionado] = useState(null);
+
+  // Controla si mostramos o no la lista de sugerencias desplegable
+  const [mostrarSugerencias, setMostrarSugerencias] = useState(false);
+
+  const [numeroCamiseta, setNumeroCamiseta] = useState("");
+
+  const [cargando, setCargando] = useState(true);
+  const [enviando, setEnviando] = useState(false);
+  const [mensajeExito, setMensajeExito] = useState("");
+  const [mensajeError, setMensajeError] = useState("");
+
+  // ----------------------------
+  // CARGA INICIAL: traemos el equipo y la lista de usuarios
+  // disponibles para ser registrados como jugadores
+  // ----------------------------
+  useEffect(() => {
+    const cargarDatos = async () => {
+      try {
+        setCargando(true);
+
+        const equipoData = await getEquipoById(idEquipo);
+        setEquipo(equipoData);
+
+        const usuariosData = await getUsuariosDisponibles();
+        setUsuarios(usuariosData || []);
+      } catch (err) {
+        console.error(err);
+        setMensajeError("No se pudo cargar la información necesaria.");
+      } finally {
+        setCargando(false);
+      }
+    };
+
+    if (idEquipo) {
+      cargarDatos();
+    }
+  }, [idEquipo]);
+
+  // ----------------------------
+  // Filtramos la lista de usuarios según lo que el DT va escribiendo
+  // (comparamos nombre y apellido, sin importar mayúsculas/minúsculas)
+  // ----------------------------
+  const usuariosFiltrados = usuarios.filter((u) => {
+    const nombreCompleto =
+      `${u.nombre_usuario} ${u.apellido_usuario}`.toLowerCase();
+    return nombreCompleto.includes(busqueda.toLowerCase());
   });
 
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
+  // Se ejecuta cuando el DT escribe en el buscador
+  const manejarCambioBusqueda = (e) => {
+    setBusqueda(e.target.value);
+    setUsuarioSeleccionado(null); // si escribe, invalidamos la selección anterior
+    setMostrarSugerencias(true);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // Se ejecuta cuando el DT hace clic en un nombre de la lista
+  const seleccionarUsuario = (u) => {
+    setUsuarioSeleccionado(u);
+    setBusqueda(`${u.nombre_usuario} ${u.apellido_usuario}`);
+    setMostrarSugerencias(false);
+  };
+
+  // ----------------------------
+  // FUNCIÓN: manejarEnvio
+  // Se ejecuta cuando el DT le da clic a "Registrar Jugador"
+  // ----------------------------
+  const manejarEnvio = async (evento) => {
+    evento.preventDefault();
+
+    setMensajeExito("");
+    setMensajeError("");
+
+    // Validación: el DT debe haber elegido un usuario de la lista,
+    if (!usuarioSeleccionado) {
+      setMensajeError("Debes buscar y seleccionar un jugador de la lista.");
+      return;
+    }
+    if (!numeroCamiseta) {
+      setMensajeError("Debes escribir el número de camiseta.");
+      return;
+    }
 
     try {
-      await createJugador(form);
+      setEnviando(true);
 
-      navigate(-1);
-    } catch (error) {
-      console.error(error);
+      const nuevoJugador = {
+        id_usuario: usuarioSeleccionado.id_usuario,
+        id_equipo: idEquipo,
+        numero_camiseta: numeroCamiseta,
+      };
+
+      await createJugador(nuevoJugador);
+
+      setMensajeExito("Jugador registrado exitosamente.");
+
+      setTimeout(() => {
+        navigate(`/jugadoresEquipo/${idEquipo}`);
+      }, 1500);
+    } catch (err) {
+      console.error(err);
+      const mensajeBackend =
+        err.response?.data?.msg || "Ocurrió un error al registrar el jugador.";
+      setMensajeError(mensajeBackend);
+    } finally {
+      setEnviando(false);
     }
   };
 
+  // ----------------------------
+  // RENDERIZADO CONDICIONAL
+  // ----------------------------
+  if (cargando) return <p>Cargando...</p>;
+  if (!equipo) return <p>Equipo no encontrado.</p>;
+
+  // ----------------------------
+  // RENDERIZADO PRINCIPAL: el formulario
+  // ----------------------------
   return (
-    <div className="form-container">
-      <h2>Crear Jugador</h2>
+    <div className="detalle-container">
+      <header className="detalle-header-1">
+        <h1>Registrar Jugador - {equipo.nombre_equipo}</h1>
+      </header>
 
-      <form onSubmit={handleSubmit}>
-        <input
-          type="number"
-          name="id_usuario"
-          placeholder="ID Usuario"
-          value={form.id_usuario}
-          onChange={handleChange}
-          required
-        />
+      <main className="detalle-main">
+        <form onSubmit={manejarEnvio} className="form-jugador">
+          {mensajeExito && <p className="mensaje-exito">{mensajeExito}</p>}
+          {mensajeError && <p className="mensaje-error">{mensajeError}</p>}
 
-        <select
-          name="posicion"
-          value={form.posicion}
-          onChange={handleChange}
-          required
-        >
-          <option value="">Seleccione posición</option>
-          <option value="Portero">Portero</option>
-          <option value="Defensa">Defensa</option>
-          <option value="Centrocampista">Centrocampista</option>
-          <option value="Delantero">Delantero</option>
-        </select>
+          {/* Buscador de jugador, con lista de sugerencias */}
+          <label htmlFor="buscador">Buscar jugador por nombre:</label>
+          <div className="buscador-jugador">
+            <input
+              id="buscador"
+              type="text"
+              placeholder="Escribe el nombre o apellido..."
+              value={busqueda}
+              onChange={manejarCambioBusqueda}
+              onFocus={() => setMostrarSugerencias(true)}
+              autoComplete="off"
+            />
 
-        <input
-          type="number"
-          name="numero_camiseta"
-          placeholder="Número Camiseta"
-          value={form.numero_camiseta}
-          onChange={handleChange}
-          required
-        />
+            {/* Lista de sugerencias, solo se muestra mientras se escribe */}
+            {mostrarSugerencias && busqueda && !usuarioSeleccionado && (
+              <ul className="lista-sugerencias">
+                {usuariosFiltrados.length === 0 ? (
+                  <li className="sugerencia-vacia">
+                    No se encontraron usuarios.
+                  </li>
+                ) : (
+                  usuariosFiltrados.map((u) => (
+                    <li
+                      key={u.id_usuario}
+                      onClick={() => seleccionarUsuario(u)}
+                    >
+                      {u.nombre_usuario} {u.apellido_usuario}
+                    </li>
+                  ))
+                )}
+              </ul>
+            )}
+          </div>
 
-        <button type="submit">Guardar</button>
-      </form>
+          {/* Número de camiseta */}
+          <label htmlFor="camiseta">Número de camiseta:</label>
+          <input
+            id="camiseta"
+            type="number"
+            min="1"
+            value={numeroCamiseta}
+            onChange={(e) => setNumeroCamiseta(e.target.value)}
+          />
+
+          {/* Botones */}
+          <div className="form-botones">
+            <button type="submit" className="btn-inscribir-equipo" disabled={enviando}>
+              {enviando ? "Guardando..." : "Registrar Jugador"}
+            </button>
+            <button
+              type="button"
+              className="btn-desactivar-jugador"
+              onClick={() => navigate(`/jugadoresEquipo/${idEquipo}`)}
+            >
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </main>
     </div>
   );
 }

@@ -1,66 +1,20 @@
-import * as InscripcionService from "../services/inscripcionEquiposService.js";
+import {
+  obtenerInscripcionesService,
+  obtenerInscripcionPorIdService,
+  obtenerInscripcionesPorTorneoService,
+  obtenerInscripcionesPorEquipoService,
+  crearInscripcionService,
+  actualizarEstadoInscripcionService,
+  desactivarInscripcionService,
+} from "../services/inscripcionEquiposService.js";
 
-//Obtenero todas
-export const getInscripciones = async (req, res) => {
+// ========================================
+// OBTENER TODAS LAS INSCRIPCIONES
+// ========================================
+export const obtenerInscripciones = async (req, res) => {
   try {
-    const data = await InscripcionService.getInscripciones();
+    const data = await obtenerInscripcionesService();
     res.json(data);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Error al obtener inscripciones" });
-  }
-};
-
-//Obtener por torneo
-export const getByTorneo = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    if (!id) {
-      return res.status(400).json({ message: "ID de torneo requerido" });
-    }
-
-    const data = await InscripcionService.getInscripcionesByTorneo(id);
-    res.json(data);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Error al obtener por torneo" });
-  }
-};
-
-//Obtener por ID
-export const getInscripcionById = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    const data = await InscripcionService.getInscripcionById(id);
-
-    if (!data) {
-      return res.status(404).json({ message: "Inscripción no encontrada" });
-    }
-
-    res.json(data);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Error al obtener inscripción" });
-  }
-};
-
-//Crear inscripcion
-export const createInscripcion = async (req, res) => {
-  try {
-    const { id_torneo, id_equipo, estado } = req.body;
-
-    const result = await InscripcionService.crearInscripcion(
-      id_torneo,
-      id_equipo,
-      estado,
-    );
-
-    res.status(201).json({
-      message: "Inscripción creada",
-      id: result.insertId,
-    });
   } catch (error) {
     res.status(500).json({
       message: error.message,
@@ -68,46 +22,126 @@ export const createInscripcion = async (req, res) => {
   }
 };
 
-//Actualizar estado de equipo
-export const updateEstado = async (req, res) => {
+// ========================================
+// OBTENER INSCRIPCIÓN POR ID
+// ========================================
+export const obtenerInscripcionPorId = async (req, res) => {
   try {
     const { id } = req.params;
-    const { estado } = req.body;
 
-    if (!id || !estado) {
-      return res.status(400).json({
-        message: "Datos incompletos",
+    const data = await obtenerInscripcionPorIdService(id);
+
+    if (!data) {
+      return res.status(404).json({
+        message: "Inscripción no encontrada.",
       });
     }
 
-    const result = await InscripcionService.cambiarEstado(id, estado);
-
-    res.json({
-      message: "Estado actualizado",
-      result,
-    });
+    res.json(data);
   } catch (error) {
-    console.error(error);
     res.status(500).json({
-      message: error.message || "Error al actualizar estado",
+      message: error.message,
     });
   }
 };
 
-//ELiminar
-export const deleteInscripcion = async (req, res) => {
+// ========================================
+// OBTENER INSCRIPCIONES POR TORNEO
+// ========================================
+export const obtenerInscripcionesPorTorneo = async (req, res) => {
   try {
+    const { id_torneo } = req.params;
+
+    const data = await obtenerInscripcionesPorTorneoService(id_torneo);
+
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+// ========================================
+// OBTENER INSCRIPCIONES POR EQUIPO
+// ========================================
+export const obtenerInscripcionesPorEquipo = async (req, res) => {
+  try {
+    const { id_equipo } = req.params;
+
+    const data = await obtenerInscripcionesPorEquipoService(id_equipo);
+
+    res.json(data);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
+};
+
+// ========================================
+// CREAR INSCRIPCIÓN
+// ========================================
+export const crearInscripcion = async (req, res) => {
+  try {
+    const id_usuario = req.user.id_usuario;
+
+    const data = await crearInscripcionService(
+      id_usuario,
+      req.body
+    );
+
+    res.status(201).json(data);
+
+  } catch (error) {
+    res.status(400).json({
+      message: error.message,
+    });
+  }
+};
+
+// ========================================
+// ACTUALIZAR ESTADO
+// RN-004: Solo el organizador del torneo
+// puede aprobar o cancelar una inscripción.
+// ========================================
+export const actualizarEstadoInscripcion = async (req, res) => {
+  try {
+
+    const { id } = req.params;
+    const { estado } = req.body;
+    const id_usuario = req.user.id_usuario;
+
+    const data = await actualizarEstadoInscripcionService(
+      id,
+      estado,
+      id_usuario
+    );
+
+    res.json(data);
+
+  } catch (error) {
+    res.status(400).json({
+      message: error.message,
+    });
+  }
+};
+
+// ========================================
+// ELIMINAR INSCRIPCIÓN
+// ========================================
+export const eliminarInscripcion = async (req, res) => {
+  try {
+
     const { id } = req.params;
 
-    if (!id) {
-      return res.status(400).json({ message: "ID requerido" });
-    }
+    const data = await desactivarInscripcionService(id);
 
-    await InscripcionService.eliminarInscripcion(id);
+    res.json(data);
 
-    res.json({ message: "Inscripción eliminada" });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Error al eliminar inscripción" });
+    res.status(400).json({
+      message: error.message,
+    });
   }
 };

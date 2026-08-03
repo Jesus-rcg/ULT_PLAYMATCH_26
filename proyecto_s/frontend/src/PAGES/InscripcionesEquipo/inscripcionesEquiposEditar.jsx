@@ -1,174 +1,153 @@
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import "../../STILO/estilosPages/inscripcionEquipo/inscripcionEquipo.css";
+/**
+ * ==========================================================
+ *  GESTIONAR ESTADO DE INSCRIPCIÓN
+ * DESCRIPCIÓN:
+ * El organizador del torneo aprueba (Inscrito) o cancela
+ *  una inscripción que está en estado Pendiente.
+ * ==========================================================
+ */
 
-const API = import.meta.env.VITE_API_URL;
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import {
+  getInscripcionById,
+  updateInscripcion,
+} from "../../SERVICE/inscripcionesEquipoService.js";
+import "../../STILO/estilosPages/inscripcionEquipo/inscripcionEditar.css";
 
-export default function InscripcionEquipoEditar() {
+export default function InscripcionesEquiposEditar() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const [torneos, setTorneos] = useState([]);
-  const [equipos, setEquipos] = useState([]);
+  // Datos de la inscripción que se está gestionando
+  const [inscripcion, setInscripcion] = useState(null);
+
+  // Controla el mensaje de "cargando..." mientras llega la info
+  const [cargando, setCargando] = useState(true);
+
+  // Controla que los botones se deshabiliten mientras se envía la petición
+  const [procesando, setProcesando] = useState(false);
+
+  // Guarda mensajes de error (de carga o de actualización)
   const [error, setError] = useState("");
 
-  const [form, setForm] = useState({
-    id_torneo: "",
-    id_equipo: "",
-    estado: "Pendiente",
-  });
+  // Guarda el mensaje de éxito que se muestra en la propia página
+  const [mensajeExito, setMensajeExito] = useState("");
 
-  // 🔹 Cargar inscripción por ID
-  const getInscripcion = async () => {
-    try {
-      const res = await fetch(`${API}/inscripcionEquipos/${id}`);
-
-      if (!res.ok) throw new Error("Error al cargar inscripción");
-
-      const data = await res.json();
-
-      setForm({
-        id_torneo: data.id_torneo || "",
-        id_equipo: data.id_equipo || "",
-        estado: data.estado || "Pendiente",
-      });
-    } catch (error) {
-      console.error(error);
-      setError("Error al cargar inscripción");
-    }
-  };
-
-  // 🔹 Torneos
-  const getTorneos = async () => {
-    try {
-      const res = await fetch(`${API}/torneos`);
-      const data = await res.json();
-      setTorneos(data || []);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  // 🔹 Equipos
-  const getEquipos = async () => {
-    try {
-      const res = await fetch(`${API}/equipos`);
-      const data = await res.json();
-      setEquipos(data || []);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
+  // Carga la inscripción apenas se entra a la página
   useEffect(() => {
-    getInscripcion();
-    getTorneos();
-    getEquipos();
+    const cargar = async () => {
+      try {
+        const data = await getInscripcionById(id);
+        setInscripcion(data);
+      } catch (err) {
+        setError("No se pudo cargar la inscripción.");
+      } finally {
+        setCargando(false);
+      }
+    };
+    cargar();
   }, [id]);
 
-  const handleChange = (e) => {
-    setForm({
-      ...form,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError("");
-
+  // Cambia el estado de la inscripción a "Inscrito" o "Cancelado"
+  const cambiarEstado = async (nuevoEstado) => {
     try {
-      const res = await fetch(`${API}/inscripcionEquipos/${id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
-      });
+      setProcesando(true);
+      setError("");
 
-      const data = await res.json();
+      await updateInscripcion(id, { estado: nuevoEstado });
 
-      if (!res.ok) {
-        setError(data.message || "Error al actualizar inscripción");
-        return;
-      }
+      // Mensaje de éxito exacto según 
+      setMensajeExito("Inscripción actualizada correctamente.");
 
-      navigate("/inscripcionEquipos");
-    } catch (error) {
-      console.error(error);
-      setError("Error del servidor");
+      // Actualizamos el estado local para que se oculten los botones
+      setInscripcion((prev) => ({ ...prev, estado: nuevoEstado }));
+
+      // Esperamos un momento para que el usuario alcance a leer el mensaje
+      // antes de devolverlo a la lista de inscripciones del torneo
+      setTimeout(() => {
+        navigate(`/inscripcionEquipos/torneo/${inscripcion.id_torneo}`);
+      }, 2000);
+
+    } catch (err) {
+      const mensaje =
+        err.response?.data?.message || "No se pudo actualizar la inscripción.";
+      setError(mensaje);
+      setProcesando(false);
     }
   };
 
+  // Mientras carga la información de la inscripción
+  if (cargando) {
+    return (
+      <div className="inscripcion-editar-page">
+        <p className="ie-cargando">Cargando...</p>
+      </div>
+    );
+  }
+
+  // Si hubo un error cargando y no se pudo obtener la inscripción
+  if (error && !inscripcion) {
+    return (
+      <div className="inscripcion-editar-page">
+        <p className="ie-error">{error}</p>
+      </div>
+    );
+  }
+
   return (
-    <div className="usuarios-container">
-      <div className="form-container">
-        <h2 className="titulo">Editar Inscripción</h2>
+    <div className="inscripcion-editar-page">
+      <div className="inscripcion-editar-tarjeta">
+        <h1>Gestionar Inscripción</h1>
 
-        {error && <p className="error-text">{error}</p>}
+        <div className="ie-datos">
+          <p>
+            <span className="ie-etiqueta">Equipo:</span>{" "}
+            <strong>{inscripcion.nombre_equipo}</strong>
+          </p>
+          <p>
+            <span className="ie-etiqueta">Torneo:</span>{" "}
+            <strong>{inscripcion.nombre_torneo}</strong>
+          </p>
+          <p>
+            <span className="ie-etiqueta">Estado actual:</span>{" "}
+            <strong className={`ie-badge ie-badge-${inscripcion.estado.toLowerCase()}`}>
+              {inscripcion.estado}
+            </strong>
+          </p>
+        </div>
 
-        <form onSubmit={handleSubmit} className="formulario">
-          {/* TORNEO */}
-          <div className="grupo-form">
-            <label>Torneo</label>
-            <select
-              name="id_torneo"
-              value={form.id_torneo}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Seleccione un torneo</option>
-              {torneos.map((t) => (
-                <option key={t.id_torneo} value={t.id_torneo}>
-                  {t.nombre_torneo}
-                </option>
-              ))}
-            </select>
-          </div>
+        {/* Mensaje de error, si algo falló al actualizar */}
+        {error && <p className="ie-error">{error}</p>}
 
-          {/* EQUIPO */}
-          <div className="grupo-form">
-            <label>Equipo</label>
-            <select
-              name="id_equipo"
-              value={form.id_equipo}
-              onChange={handleChange}
-              required
-            >
-              <option value="">Seleccione un equipo</option>
-              {equipos.map((e) => (
-                <option key={e.id_equipo} value={e.id_equipo}>
-                  {e.nombre_equipo}
-                </option>
-              ))}
-            </select>
-          </div>
+        {/* Mensaje de éxito, reemplaza al alert() */}
+        {mensajeExito && <p className="ie-exito">{mensajeExito}</p>}
 
-          {/* ESTADO */}
-          <div className="grupo-form">
-            <label>Estado</label>
-            <select name="estado" value={form.estado} onChange={handleChange}>
-              <option value="Pendiente">Pendiente</option>
-              <option value="Inscrito">Inscrito</option>
-              <option value="Cancelado">Cancelado</option>
-            </select>
-          </div>
-
-          {/* BOTONES */}
-          <div className="acciones-form">
-            <button type="submit" className="btn crear">
-              Actualizar
-            </button>
-
+        {/* Solo mostramos los botones si sigue Pendiente y no hay mensaje de éxito aún */}
+        {inscripcion.estado === "Pendiente" && !mensajeExito ? (
+          <div className="ie-acciones">
             <button
-              type="button"
-              className="btn cancelar"
-              onClick={() => navigate("/inscripcionEquipos")}
+              className="btn-aprobar"
+              onClick={() => cambiarEstado("Inscrito")}
+              disabled={procesando}
             >
-              Cancelar
+              ✅ Aprobar
+            </button>
+            <button
+              className="btn-cancelar-inscripcion"
+              onClick={() => cambiarEstado("Cancelado")}
+              disabled={procesando}
+            >
+              ❌ Cancelar
             </button>
           </div>
-        </form>
+        ) : (
+          !mensajeExito && (
+            <p className="ie-ya-gestionada">
+              Esta inscripción ya fue gestionada anteriormente.
+            </p>
+          )
+        )}
       </div>
     </div>
   );
