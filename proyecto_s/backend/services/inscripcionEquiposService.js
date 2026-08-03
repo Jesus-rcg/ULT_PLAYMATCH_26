@@ -1,52 +1,163 @@
-import * as InscripcionModel from "../models/inscripcionEquiposModel.js";
+import {
+  obtenerInscripcionesModel,
+  obtenerInscripcionPorIdModel,
+  obtenerInscripcionesPorTorneoModel,
+  obtenerInscripcionesPorEquipoModel,
+  validarEquipoUsuarioModel,
+  validarTorneoAbiertoModel,
+  validarInscripcionDuplicadaModel,
+  validarOrganizadorTorneoModel,
+  crearInscripcionModel,
+  actualizarEstadoInscripcionModel,
+  desactivarInscripcionModel,
+} from "../models/inscripcionEquiposModel.js";
 
-// Obtener todas
-export const getInscripciones = async () => {
-  return await InscripcionModel.getAllInscripciones();
+// =======================================
+// OBTENER TODAS LAS INSCRIPCIONES
+// =======================================
+export const obtenerInscripcionesService = async () => {
+  return await obtenerInscripcionesModel();
 };
 
-// Obtener por torneo
-export const getInscripcionesByTorneo = async (id_torneo) => {
-  return await InscripcionModel.getByTorneo(id_torneo);
+// =======================================
+// OBTENER INSCRIPCIÓN POR ID
+// =======================================
+export const obtenerInscripcionPorIdService = async (id) => {
+  return await obtenerInscripcionPorIdModel(id);
 };
 
-// Obtener por ID
-export const getInscripcionById = async (id) => {
-  return await InscripcionModel.getInscripcionById(id);
+// =======================================
+// OBTENER INSCRIPCIONES POR TORNEO
+// =======================================
+export const obtenerInscripcionesPorTorneoService = async (id_torneo) => {
+  return await obtenerInscripcionesPorTorneoModel(id_torneo);
 };
 
-// Crear inscripción
-export const crearInscripcion = async (id_torneo, id_equipo, estado) => {
-  if (!id_torneo || !id_equipo) {
-    throw new Error("Datos incompletos");
-  }
+// =======================================
+// OBTENER INSCRIPCIONES POR EQUIPO
+// =======================================
+export const obtenerInscripcionesPorEquipoService = async (id_equipo) => {
+  return await obtenerInscripcionesPorEquipoModel(id_equipo);
+};
 
-  return await InscripcionModel.createInscripcion(
+// =======================================
+// CREAR INSCRIPCIÓN
+// =======================================
+export const crearInscripcionService = async (
+  id_usuario,
+  data
+) => {
+
+  const {
     id_torneo,
     id_equipo,
-    estado || "Pendiente",
-  );
-};
+  } = data;
 
-// Cambiar estado
-export const cambiarEstado = async (id_inscripcion_e, estado, activo) => {
-  const estadosValidos = ["Pendiente", "Inscrito", "Cancelado"];
+  // Validar torneo abierto
+  const torneoAbierto = await validarTorneoAbiertoModel(id_torneo);
 
-  if (!estadosValidos.includes(estado)) {
-    throw new Error("Estado no válido");
+  if (!torneoAbierto) {
+    throw new Error("El torneo no admite nuevas inscripciones.");
   }
 
-  const inscripcion =
-    await InscripcionModel.getInscripcionById(id_inscripcion_e);
+  // Validar que el equipo sea del DT
+  const equipoPropio = await validarEquipoUsuarioModel(
+    id_equipo,
+    id_usuario
+  );
+
+  if (!equipoPropio) {
+    throw new Error("No tiene permisos sobre este equipo.");
+  }
+
+  // Validar inscripción duplicada
+  const duplicada = await validarInscripcionDuplicadaModel(
+    id_torneo,
+    id_equipo
+  );
+
+  if (duplicada) {
+    throw new Error("El equipo ya está inscrito en este torneo.");
+  }
+
+  const id = await crearInscripcionModel({
+    id_torneo,
+    id_equipo,
+  });
+
+  return {
+    id,
+    message: "Solicitud de inscripción enviada."
+  };
+};
+
+// =======================================
+// ACTUALIZAR ESTADO
+//  Solo el organizador del torneo
+// puede aprobar o cancelar una inscripción.
+// =======================================
+export const actualizarEstadoInscripcionService = async (
+  id,
+  estado,
+  id_usuario
+) => {
+
+  const estados = [
+    "Pendiente",
+    "Inscrito",
+    "Cancelado",
+  ];
+
+  if (!estados.includes(estado)) {
+    throw new Error("Estado inválido.");
+  }
+
+  // 1. Buscamos la inscripción para saber a qué torneo pertenece
+  const inscripcion = await obtenerInscripcionPorIdModel(id);
 
   if (!inscripcion) {
-    throw new Error("Inscripción no encontrada");
+    throw new Error("La inscripción no existe.");
   }
 
-  return await InscripcionModel.updateEstado(id_inscripcion_e, estado, activo);
+  // 2. Validamos que el usuario logueado sea el organizador
+  //    del torneo al que pertenece esta inscripción
+  const esOrganizador = await validarOrganizadorTorneoModel(
+    inscripcion.id_torneo,
+    id_usuario
+  );
+
+  if (!esOrganizador) {
+    throw new Error(
+      "No tiene permisos para gestionar esta inscripción."
+    );
+  }
+
+  // 3. Solo si pasó la validación, se actualiza el estado
+  await actualizarEstadoInscripcionModel(
+    id,
+    estado
+  );
+
+  return {
+    message: "Inscripción actualizada correctamente."
+  };
 };
 
-// Eliminar
-export const eliminarInscripcion = async (id_inscripcion_e) => {
-  return await InscripcionModel.deleteInscripcion(id_inscripcion_e);
+// =======================================
+// ELIMINAR INSCRIPCIÓN
+// =======================================
+export const desactivarInscripcionService = async (id) => {
+
+  const inscripcion = await obtenerInscripcionPorIdModel(id);
+
+  if (!inscripcion) {
+    throw new Error("La inscripción no existe.");
+  }
+
+  await desactivarInscripcionModel(id);
+
+  return {
+    message: "Inscripción eliminada correctamente."
+  };
+
 };

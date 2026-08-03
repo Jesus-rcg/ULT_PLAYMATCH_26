@@ -1,104 +1,81 @@
-import { useEffect, useState, useContext } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { AuthContext } from "../../CONTEXT/AuthContext";
-import "../../STILO/estilosPages/inscripcionEquipo/inscripcionEquipo.css";
+/**
+ * ==========================================================
+ *  RETIRAR INSCRIPCIÓN (DT)
+ * 
+ *
+ * DESCRIPCIÓN:
+ * El DT puede retirar (eliminar lógicamente) una solicitud
+ * de inscripción, normalmente mientras está en Pendiente.
+ * ==========================================================
+ */
 
-const API = import.meta.env.VITE_API_URL + "/inscripcionEquipos";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import {
+  getInscripcionById,
+  deleteInscripcion,
+} from "../../SERVICE/inscripcionesEquipoService.js";
+import "../../STILO/estilosPages/inscripcionEquipo/inscripcionEliminar.css";
 
-export default function InscripcionEquipoEliminar() {
+export default function InscripcionesEquiposEliminar() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { token } = useContext(AuthContext);
 
-  const [inscripcion, setInscripcion] = useState({
-    nombre_torneo: "",
-    nombre_equipo: "",
-    estado: "",
-  });
-
-  // GET INSCRIPCIÓN
-  const getInscripcion = async () => {
-    try {
-      const res = await fetch(`${API}/${id}`);
-      const data = await res.json();
-
-      if (!res.ok) {
-        console.error("ERROR BACKEND:", data?.message);
-        return;
-      }
-
-      setInscripcion({
-        nombre_torneo: data?.nombre_torneo || "",
-        nombre_equipo: data?.nombre_equipo || "",
-        estado: data?.estado || "",
-      });
-    } catch (err) {
-      console.error("ERROR:", err.message);
-    }
-  };
+  const [inscripcion, setInscripcion] = useState(null);
+  const [cargando, setCargando] = useState(true);
+  const [procesando, setProcesando] = useState(false);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    if (id) getInscripcion();
+    const cargar = async () => {
+      try {
+        const data = await getInscripcionById(id);
+        setInscripcion(data);
+      } catch (err) {
+        setError("No se pudo cargar la inscripción.");
+      } finally {
+        setCargando(false);
+      }
+    };
+    cargar();
   }, [id]);
 
-  // DELETE (SOFT DELETE)
-  const eliminarInscripcion = async () => {
+  const confirmarRetiro = async () => {
     try {
-      if (!token) {
-        alert("No autorizado");
-        return;
-      }
-
-      const res = await fetch(`${API}/${id}`, {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data?.message || "Error eliminando inscripción");
-      }
-
+      setProcesando(true);
+      await deleteInscripcion(id);
+      alert("Solicitud de inscripción retirada.");
       navigate("/inscripcionEquipos");
     } catch (err) {
-      console.error(err.message);
-      alert(err.message);
+      const mensaje =
+        err.response?.data?.message || "No se pudo retirar la inscripción.";
+      setError(mensaje);
+      setProcesando(false);
     }
   };
 
+  if (cargando) return <p>Cargando...</p>;
+  if (error && !inscripcion) return <p className="error">{error}</p>;
+
   return (
-    <div className="usuarios-container">
-      <div className="card-box-usuario">
-        <h2 className="titulo">Eliminar Inscripción</h2>
+    <div className="inscripcion-eliminar-page">
+      <h1>Retirar Solicitud de Inscripción</h1>
 
-        <form className="form-usuarios">
-          <input type="text" value={inscripcion.nombre_torneo} disabled />
-          <input type="text" value={inscripcion.nombre_equipo} disabled />
-          <input type="text" value={inscripcion.estado} disabled />
+      <p>
+        ¿Está seguro de que desea retirar la solicitud de inscripción de{" "}
+        <strong>{inscripcion.nombre_equipo}</strong> al torneo{" "}
+        <strong>{inscripcion.nombre_torneo}</strong>?
+      </p>
 
-          <p style={{ color: "white", textAlign: "center" }}>
-            ¿Deseas desactivar esta inscripción?
-          </p>
+      {error && <p className="error">{error}</p>}
 
-          <button
-            type="button"
-            className="btn eliminar"
-            onClick={eliminarInscripcion}
-          >
-            Sí, Eliminar
-          </button>
-
-          <button
-            type="button"
-            className="btn editar"
-            onClick={() => navigate("/inscripcionEquipos")}
-          >
-            Cancelar
-          </button>
-        </form>
+      <div className="acciones">
+        <button onClick={confirmarRetiro} disabled={procesando}>
+          {procesando ? "Procesando..." : "Sí, retirar"}
+        </button>
+        <button onClick={() => navigate("/inscripcionEquipos")} disabled={procesando}>
+          Cancelar
+        </button>
       </div>
     </div>
   );

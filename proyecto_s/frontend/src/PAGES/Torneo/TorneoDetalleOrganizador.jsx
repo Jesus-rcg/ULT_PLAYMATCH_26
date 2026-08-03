@@ -6,7 +6,7 @@ import { getTorneoById } from "../../SERVICE/torneoService";
 import Posiciones from "../Posiciones/Posiciones";
 import Resultados from "../Resultados/Resultados";
 import Equipos from "../Equipos/Equipos";
-import InscripcionesEquipos from "../InscripcionesEquipo/inscripcionesEquipos";
+import InscripcionesEquiposOrganizador from "../InscripcionesEquipo/InscripcionesEquiposOrganizador";
 import Encuentros from "../Encuentros/Encuentros";
 
 import trofeo from "../../ASSETS/trofeo.jpg";
@@ -123,7 +123,9 @@ export default function TorneoDetalleOrganizador() {
 
         {tab === "equipos" && <Equipos id_torneo={id} />}
 
-        {tab === "inscripciones" && <InscripcionesEquipos id_torneo={id} />}
+        {tab === "inscripciones" && (
+          <InscripcionesEquiposOrganizador idTorneoProp={id} />
+        )}
       </main>
     </div>
   );

@@ -1,119 +1,197 @@
+/**
+ * ==========================================================
+ * MÓDULO: EQUIPOS
+ *
+ * Controlador encargado de recibir las peticiones HTTP
+ * relacionadas con los equipos.
+ * ==========================================================
+ */
+
 import {
-  getEquiposService,
-  getEquipoByIdService,
-  getEquiposByTorneoService,
-  getEquipoJugadorByUsuarioService,
-  createEquipoService,
-  updateEquipoService,
-  deleteEquipoService,
+  obtenerEquiposService,
+  obtenerEquiposPorUsuarioService,
+  obtenerEquipoPorIdService,
+  crearEquipoService,
+  actualizarEquipoService,
+  desactivarEquipoService,
 } from "../services/equiposService.js";
 
-// Obtener todos los equipos
-export const getEquipos = async (req, res) => {
+/**
+ * ==========================================================
+ * Obtener todos los equipos
+ * ==========================================================
+ */
+export const obtenerEquipos = async (req, res) => {
   try {
-    const equipos = await getEquiposService();
-    res.json(equipos);
+
+    const equipos = await obtenerEquiposService();
+
+    return res.json(equipos);
+
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ msg: "Error al obtener equipos" });
-  }
-};
 
-// Obtener equipo por ID
-export const getEquipoById = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    const equipo = await getEquipoByIdService(id);
-
-    if (!equipo) {
-      return res.status(404).json({ msg: "Equipo no encontrado" });
-    }
-
-    res.json(equipo);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ msg: "Error al obtener equipo" });
-  }
-};
-
-// Crear equipo
-export const createEquipo = async (req, res) => {
-  try {
-    const result = await createEquipoService(req.body);
-
-    res.status(201).json({
-      msg: "Equipo creado correctamente",
-      id: result.insertId,
+    return res.status(500).json({
+      message: error.message,
     });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ msg: "Error al crear equipo" });
+
   }
 };
 
-// Actualizar equipo
-export const updateEquipo = async (req, res) => {
+/**
+ * ==========================================================
+ * Obtener equipos del usuario autenticado
+ * ==========================================================
+ */
+export const obtenerEquiposPorUsuario = async (req, res) => {
+
   try {
-    const { id } = req.params;
 
-    await updateEquipoService(id, req.body);
+    const id_usuario = req.user?.id_usuario;
 
-    res.json({ msg: "Equipo actualizado correctamente" });
+    const equipos = await obtenerEquiposPorUsuarioService(id_usuario);
+
+    return res.json(equipos);
+
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ msg: "Error al actualizar equipo" });
-  }
-};
 
-// Eliminar equipo
-export const deleteEquipo = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    await deleteEquipoService(id);
-
-    res.json({ msg: "Equipo eliminado correctamente" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ msg: "Error al eliminar equipo" });
-  }
-};
-
-// 🔥 EQUIPOS POR TORNEO (CORREGIDO)
-export const getEquiposByTorneo = async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    const equipos = await getEquiposByTorneoService(id);
-
-    res.json(equipos);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      message: "Error al obtener los equipos del torneo",
+    return res.status(500).json({
+      message: error.message,
     });
+
   }
+
 };
 
-export const getEquipoJugadorByUsuario = async (req, res) => {
+/**
+ * ==========================================================
+ * Obtener equipo por ID
+ * ==========================================================
+ */
+export const obtenerEquipoPorId = async (req, res) => {
+
   try {
-    const { id_usuario } = req.params;
 
-    const equipo = await getEquipoJugadorByUsuarioService(id_usuario);
+    const { id } = req.params;
 
-    if (!equipo) {
-      return res.status(404).json({
-        msg: "El jugador no pertenece a ningún equipo",
+    const equipo = await obtenerEquipoPorIdService(id);
+
+    return res.json(equipo);
+
+  } catch (error) {
+
+    return res.status(404).json({
+      message: error.message,
+    });
+
+  }
+
+};
+
+/**
+ * ==========================================================
+ * Registrar equipo
+ * ==========================================================
+ */
+export const crearEquipo = async (req, res) => {
+
+  try {
+
+    const user = req.user;
+
+    if (!user) {
+      return res.status(401).json({
+        message: "No autenticado",
       });
     }
 
-    res.json(equipo);
-  } catch (error) {
-    console.error(error);
+    const data = {
 
-    res.status(500).json({
-      msg: "Error al obtener el equipo del jugador",
+      id_usuario: user.id_usuario,
+
+      nombre_equipo: req.body.nombre_equipo,
+
+      escudo: req.body.escudo,
+
+    };
+
+    const equipo = await crearEquipoService(data);
+
+    return res.status(201).json({
+
+      message: "Equipo registrado correctamente.",
+
+      equipo,
+
     });
+
+  } catch (error) {
+
+    return res.status(400).json({
+
+      message: error.message,
+
+    });
+
   }
+
+};
+
+/**
+ * ==========================================================
+ * Actualizar equipo
+ * ==========================================================
+ */
+export const actualizarEquipo = async (req, res) => {
+
+  try {
+
+    const { id } = req.params;
+
+    const equipo = await actualizarEquipoService(
+
+      id,
+
+      req.body
+
+    );
+
+    return res.json(equipo);
+
+  } catch (error) {
+
+    return res.status(400).json({
+
+      message: error.message,
+
+    });
+
+  }
+
+};
+
+/**
+ * ==========================================================
+ * Desactivar equipo
+ * ==========================================================
+ */
+export const desactivarEquipo = async (req, res) => {
+
+  try {
+
+    const { id } = req.params;
+
+    const equipo = await desactivarEquipoService(id);
+
+    return res.json(equipo);
+
+  } catch (error) {
+
+    return res.status(400).json({
+
+      message: error.message,
+
+    });
+
+  }
+
 };

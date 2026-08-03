@@ -7,7 +7,7 @@ import { AuthContext } from "../CONTEXT/AuthContext";
 export default function PublicLayout() {
   const location = useLocation();
 
-  const mostrarSidebar = location.pathname === "/home";
+  const mostrarSidebar = ["/home", "/equipos"].includes(location.pathname);
 
   return (
     <div style={{ width: "100%" }}>

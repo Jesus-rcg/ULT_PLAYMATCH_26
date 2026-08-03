@@ -1,195 +1,101 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+/**
+ * ==========================================================
+ *  INSCRIPCIONES DE UN TORNEO vista organizador 
+ * ==========================================================
+ */
 
-import "../../STILO/estilosPages/encuentros/encuentros.css";
+import { useEffect, useState, useContext } from "react";
+import { useParams, Link } from "react-router-dom";
+import { getInscripcionesPorTorneo } from "../../SERVICE/inscripcionesEquipoService.js";
+import { AuthContext } from "../../CONTEXT/AuthContext.jsx";
+import { ROLES } from "../../CONSTANTES/roles.js";
+import "../../STILO/estilosPages/inscripcionEquipo/inscripcionesOrganizador.css";
 
-const API = import.meta.env.VITE_API_URL + "/inscripcionEquipos";
+export default function InscripcionesEquiposOrganizador({ idTorneoProp }) {
+  const { id_torneo } = useParams();
+  const { user } = useContext(AuthContext);
 
-export default function InscripcionesEquiposOrganizador({ id_torneo }) {
+  const idTorneoFinal = idTorneoProp || id_torneo;
+
   const [inscripciones, setInscripciones] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState("");
 
-  const [filtro, setFiltro] = useState("Pendiente");
-
-  const navigate = useNavigate();
-
-  const getInscripciones = async () => {
+  const cargar = async () => {
     try {
-      setLoading(true);
-
-      const res = await fetch(API);
-      const data = await res.json();
-
-      setInscripciones(Array.isArray(data) ? data : []);
-    } catch (error) {
-      console.error(error);
+      setCargando(true);
+      const data = await getInscripcionesPorTorneo(idTorneoFinal);
+      setInscripciones(data);
+    } catch (err) {
+      setError("No se pudieron cargar las inscripciones del torneo.");
     } finally {
-      setLoading(false);
+      setCargando(false);
     }
   };
 
   useEffect(() => {
-    getInscripciones();
-  }, []);
-
-  const actualizarEstado = async (id_inscripcion_e, estado, activo) => {
-    try {
-      const res = await fetch(`${API}/${id_inscripcion_e}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          estado,
-          activo,
-        }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        alert(data.message);
-        return;
-      }
-
-      setInscripciones((prev) =>
-        prev.map((ins) =>
-          ins.id_inscripcion_e === id_inscripcion_e
-            ? { ...ins, estado, activo }
-            : ins,
-        ),
-      );
-    } catch (error) {
-      console.error(error);
+    if (idTorneoFinal) {
+      cargar();
     }
+  }, [idTorneoFinal]);
+
+  // Solo Organizador o Administrador deberían ver los botones de gestión
+  const puedeGestionar =
+    user?.rol === ROLES.ORGANIZADOR || user?.rol === ROLES.ADMINISTRADOR;
+
+  const claseEstado = (estado) => {
+    if (estado === "Inscrito") return "estado-inscrito";
+    if (estado === "Cancelado") return "estado-cancelado";
+    return "estado-pendiente";
   };
 
-  const filtrados = inscripciones.filter((i) => {
-    return String(i.id_torneo) === String(id_torneo) && i.estado === filtro;
-  });
+  if (cargando) return <p>Cargando inscripciones...</p>;
+  if (error) return <p className="error">{error}</p>;
 
   return (
-    <div>
-      {/* HEADER */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "20px",
-        }}
-      >
-        <h2>Inscripciones del torneo</h2>
-      </div>
+    <div className="inscripciones-organizador-page">
+      <h1>Equipos inscritos al torneo</h1>
 
-      {/* BOTONES FILTRO */}
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          gap: "10px",
-          marginBottom: "20px",
-        }}
-      >
-        <button
-          className={
-            filtro === "Pendiente" ? "btn-inscritos" : "btn-pendientes-i"
-          }
-          onClick={() => setFiltro("Pendiente")}
-        >
-          Pendientes
-        </button>
+      {inscripciones.length === 0 && <p>Aún no hay equipos inscritos.</p>}
 
-        <button
-          className={
-            filtro === "Inscrito" ? "btn-inscritos" : "btn-pendientes-i"
-          }
-          onClick={() => setFiltro("Inscrito")}
-        >
-          Equipos Inscritos
-        </button>
-      </div>
+      {inscripciones.length > 0 && (
+        <table className="tabla-inscripciones">
+          <thead>
+            <tr>
+              <th>Equipo</th>
+              <th>Fecha de solicitud</th>
+              <th>Estado</th>
+              {puedeGestionar && <th>Acciones</th>}
+            </tr>
+          </thead>
+          <tbody>
+            {inscripciones.map((ins) => (
+              <tr key={ins.id_inscripcion_e}>
+                <td>{ins.nombre_equipo}</td>
+                <td>{new Date(ins.fecha_ins_equipo).toLocaleDateString()}</td>
+                <td>
+                  <span className={claseEstado(ins.estado)}>{ins.estado}</span>
+                </td>
 
-      {loading && <p>Cargando...</p>}
-
-      {!loading && filtrados.length === 0 && (
-        <p>No hay inscripciones para este filtro</p>
+                {/* Solo se puede gestionar mientras está Pendiente */}
+                {puedeGestionar && (
+                  <td>
+                    {ins.estado === "Pendiente" ? (
+                      <Link
+                        to={`/inscripcionEquipos/editar/${ins.id_inscripcion_e}`}
+                      >
+                        Gestionar
+                      </Link>
+                    ) : (
+                      "—"
+                    )}
+                  </td>
+                )}
+              </tr>
+            ))}
+          </tbody>
+        </table>
       )}
-
-      {/* CARDS */}
-      {filtrados.map((inscripcion) => (
-        <div
-          key={inscripcion.id_inscripcion_e}
-          className="encuentro-card"
-          style={{ marginBottom: "15px" }}
-        >
-          <div className="partido">
-            <span className="equipo-e">{inscripcion.nombre_torneo}</span>
-
-            <span className="equipo-e">{inscripcion.nombre_equipo}</span>
-
-            <div className="tiempo-partido">Estado</div>
-
-            <div className="equipo-e">{inscripcion.estado}</div>
-          </div>
-
-          <div className="lugar-e">
-            Fecha inscripción:{" "}
-            {new Date(inscripcion.fecha_ins_equipo).toLocaleDateString("es-CO")}
-          </div>
-
-          {/* ACCIONES */}
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              gap: "10px",
-              marginTop: "15px",
-            }}
-          >
-            {inscripcion.estado === "Pendiente" && (
-              <>
-                <button
-                  className="btn-aceptar-i"
-                  onClick={() =>
-                    actualizarEstado(
-                      inscripcion.id_inscripcion_e,
-                      "Inscrito",
-                      1,
-                    )
-                  }
-                >
-                  Aceptar
-                </button>
-
-                <button
-                  className="btn-rechazar-i"
-                  onClick={() =>
-                    actualizarEstado(
-                      inscripcion.id_inscripcion_e,
-                      "Cancelado",
-                      0,
-                    )
-                  }
-                >
-                  Rechazar
-                </button>
-              </>
-            )}
-
-            {inscripcion.estado === "Inscrito" && (
-              <button
-                className="btn-pendiente"
-                onClick={() =>
-                  actualizarEstado(inscripcion.id_inscripcion_e, "Pendiente", 1)
-                }
-              >
-                Eliminar
-              </button>
-            )}
-          </div>
-        </div>
-      ))}
     </div>
   );
 }

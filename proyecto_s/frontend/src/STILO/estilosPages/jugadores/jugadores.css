@@ -1,113 +1,312 @@
-.usuarios-container {
-  height: 795px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+/* ===================================================================
+   Jugadores.css
+   Estilos de la pantalla "Plantilla del equipo" (JugadoresEquipo.jsx)
+   y de los formularios de Jugadores (Crear/Editar/Eliminar)
+  
+=================================================================== */
 
-.tabla-container {
-  margin-bottom: 15%;
-  height: calc(75vh - 100px);
-  width: 90%;
-  padding: 20px;
-  border-radius: 20px;
-  background: rgba(157, 19, 249, 0.133);
-}
-
-.card-box-usuario {
-  width: 100%;
-  height: auto;
-  max-width: 350px;
-  padding: 25px;
-  border-radius: 20px;
-  background: rgba(0, 0, 0, 0.25);
-  backdrop-filter: blur(12px);
-  box-shadow: 0 0 30px rgba(0, 0, 0, 0.35);
-  color: white;
-}
-
-/* TITULO */
-.titulo {
-  text-align: center;
+/* ---------- CONTENEDOR GENERAL DE LA PÁGINA ---------- */
+.detalle-container {
+  padding: 30px;
   color: #ffffff;
-  font-style: italic;
   font-family: "Segoe UI", sans-serif;
 }
 
-/* FORM */
-.form-usuarios {
-  margin-top: 15px;
+/* ---------- ENCABEZADO: escudo,nombre,datos del equipo ---------- */
+.detalle-header-1 {
+  background: #22223a !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  border: 1px solid #3a3a55;
+  border-radius: 12px;
+  padding: 20px 25px;
+  margin-bottom: 25px;
+}
+/* Título del equipo con línea decorativa debajo, 
+   del proyecto */
+.detalle-header-1 h1 {
+  margin: 0 0 15px 0;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #5a9bd8;
+  color: #ffffff;
+}
+
+/* Fila con el escudo a la izquierda y la info a la derecha */
+.data-detalle {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.data-detalle img {
+  width: 90px;
+  height: 90px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid #3a3a55;
+}
+
+.info {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
+}
+
+.info p {
+  margin: 0;
+  color: #d0d0e0;
+}
+
+/* Etiquetas como "Capitán:", "Jugadores registrados:" */
+.torneo-subtitulo {
+  color: #5a9bd8;
+  font-weight: bold;
+}
+
+/* ---------- CONTENIDO PRINCIPAL ---------- */
+.detalle-main {
+  background: #22223a !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  border: 1px solid #3a3a55;
+  border-radius: 12px;
+  padding: 20px 25px;
+}
+
+/* Barra con el título "Plantilla del equipo" y el botón de registrar */
+.jugadores-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-bottom: 20px;
 }
 
-.form-usuarios input {
-  width: auto;
-  padding: 10px;
+.jugadores-toolbar h2 {
+  margin: 0;
+  color: #ffffff;
+}
+
+/* Botón dorado de acción "positiva" (Registrar Jugador) */
+.btn-inscribir-equipo {
+  background: linear-gradient(135deg, #d8b25a, #e0c07a) !important;
+  color: #1a1a2e !important;
+  border: none !important;
+  border-radius: 8px !important;
+  padding: 10px 18px !important;
+  font-weight: bold !important;
+  cursor: pointer !important;
+  transition: opacity 0.2s;
+}
+
+.btn-inscribir-equipo:hover {
+  opacity: 0.85;
+}
+
+/* ---------- GRID DE TARJETAS DE JUGADORES ---------- */
+.contenedor-jugadores-card {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 15px;
+}
+
+/* Tarjeta individual de un jugador */
+.jugador-card {
+  background: #1a1a2e;
+  border: 1px solid #3a3a55;
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(48, 47, 47, 0.1);
-  transition: 0.3s;
-  color: rgb(250, 249, 249);
-  font-size: 18px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 
+/* Círculo con el número de camiseta */
+.jugador-camiseta {
+  min-width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background: #366091;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  flex-shrink: 0;
+}
 
+/* Nombre, goles y tarjetas del jugador */
+.jugador-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex-grow: 1;
+}
 
-.tabla-usuarios {
-  width: 100%;
-  border-collapse: collapse;
-  background: rgb(253, 252, 252);
+.jugador-nombre {
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.jugador-dato {
+  color: #a0a0c0;
+  font-size: 13px;
+}
+
+/* Botones de Editar / Desactivar */
+.jugador-acciones {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.btn-editar-jugador {
+  background: #5a9bd8 !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 6px !important;
+  padding: 6px 12px !important;
+  font-size: 12px !important;
+  cursor: pointer !important;
+}
+
+.btn-editar-jugador:hover {
+  background: #366091 !important;
+}
+
+.btn-desactivar-jugador {
+  background: #a13a3a !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 6px !important;
+  padding: 6px 12px !important;
+  font-size: 12px !important;
+  cursor: pointer !important;
+}
+
+.btn-desactivar-jugador:hover {
+  background: #ff8787 !important;
+  color: #1a1a2e !important;
+}
+
+/* ===================================================================
+   FORMULARIOS DE JUGADORES (Crear / Editar / Eliminar)
+=================================================================== */
+
+/* Contenedor del formulario: cada campo apilado, con espacio */
+.form-jugador {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-jugador label {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: #7d9bc4;
+  margin-top: 14px;
+}
+
+.form-jugador input[type="text"],
+.form-jugador input[type="number"],
+.form-jugador select {
+  padding: 12px 14px;
   border-radius: 8px;
-  overflow: hidden;
+  border: 1.5px solid #3a3a55;
+  background-color: #171727;
+  color: #ffffff;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s ease;
 }
 
-.tabla-usuarios th {
-  background: #020202;
-  color: rgb(255, 255, 255);
-  padding: 10px;
+.form-jugador input[type="text"]:focus,
+.form-jugador input[type="number"]:focus,
+.form-jugador select:focus {
+  border-color: #5a9bd8;
 }
 
-.tabla-usuarios td {
-  background: #e5d9f872;
-  padding: 10px;
-  color: black;
-  border-bottom: 1px solid #000000;
-  text-align: center;
-  text-shadow: 0px 0px 1px #000000;
-  font-style: italic;
-  font-family: "Segoe UI", sans-serif;
+/* Mensajes de éxito y error dentro del formulario */
+.mensaje-exito {
+  background-color: rgba(90, 200, 130, 0.12);
+  border: 1px solid rgba(90, 200, 130, 0.4);
+  color: #7ad8a0;
+  font-size: 13px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 10px;
 }
 
-.btn {
-  padding: 5px 10px;
-  border: none;
-  border-radius: 50px;
+.mensaje-error {
+  background-color: rgba(255, 107, 107, 0.1);
+  border: 1px solid rgba(255, 107, 107, 0.4);
+  color: #ff8787;
+  font-size: 13px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+/* Fila de botones al final del formulario */
+.form-botones {
+  display: flex;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.form-botones button {
+  flex: 1;
+}
+
+/* ---------- BUSCADOR DE JUGADOR ---------- */
+
+/* Contenedor relativo: necesario para que la lista de sugerencias
+   se posicione justo debajo del input */
+.buscador-jugador {
+  position: relative;
+}
+
+.buscador-jugador input[type="text"] {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Lista desplegable de sugerencias */
+.lista-sugerencias {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background-color: #171727;
+  border: 1.5px solid #3a3a55;
+  border-radius: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 6px 0;
+  max-height: 220px;
+  overflow-y: auto;
+  z-index: 10;
+}
+
+.lista-sugerencias li {
+  padding: 10px 14px;
+  font-size: 14px;
+  color: #e0e0f0;
   cursor: pointer;
-  font-size: 12px;
+  transition: background-color 0.15s ease;
 }
 
-.editar {
-  background: #db8617b8;
-  color: white;
-  margin-right: 5px;
+.lista-sugerencias li:hover {
+  background-color: rgba(90, 155, 216, 0.15);
+}
+
+.lista-sugerencias li.sugerencia-vacia {
+  color: #9a9ab5;
   font-style: italic;
-  font-family: "Segoe UI", sans-serif;
+  cursor: default;
 }
 
-.editar:hover {
-  background: #d97706;
-}
-
-.eliminar {
-  background: #ef4444;
-  color: white;
-  font-style: italic;
-  font-family: "Segoe UI", sans-serif;
-}
-
-.eliminar:hover {
-  background: #b91c1c;
+.lista-sugerencias li.sugerencia-vacia:hover {
+  background-color: transparent;
 }

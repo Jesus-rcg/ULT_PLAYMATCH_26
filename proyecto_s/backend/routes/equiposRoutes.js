@@ -1,176 +1,53 @@
-import { Router } from "express";
+import express from "express";
 
 import {
-  getEquipos,
-  getEquipoById,
-  getEquipoJugadorByUsuario,
-  getEquiposByTorneo,
-  createEquipo,
-  updateEquipo,
-  deleteEquipo,
+  obtenerEquipos,
+  obtenerEquiposPorUsuario,
+  obtenerEquipoPorId,
+  crearEquipo,
+  actualizarEquipo,
+  desactivarEquipo,
 } from "../controllers/equiposController.js";
 
-const router = Router();
+import { verificarToken } from "../middlewares/verificarToken.js";
+
+const router = express.Router();
 
 /**
- * @swagger
- * tags:
- *   name: Equipos
- *   description: Gestión de equipos
+ * ==========================================================
+ * RUTAS DEL MÓDULO EQUIPOS
+ * PROYECTO: PLAYMATCH
+ * ==========================================================
  */
 
 /**
- * @swagger
- * /api/equipos/torneo/{id}:
- *   get:
- *     summary: Obtener equipos de un torneo
- *     tags: [Equipos]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: integer
- *         description: ID del torneo
- *     responses:
- *       200:
- *         description: Lista de equipos del torneo.
- *       404:
- *         description: Torneo no encontrado.
+ * Obtener todos los equipos activos
  */
-router.get("/torneo/:id", getEquiposByTorneo);
+router.get("/", obtenerEquipos);
 
 /**
- * @swagger
- * /api/equipos/jugador/usuario/{id_usuario}:
- *   get:
- *     summary: Obtener el equipo al que pertenece un usuario
- *     tags: [Equipos]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id_usuario
- *         required: true
- *         schema:
- *           type: integer
- *         description: ID del usuario.
- *     responses:
- *       200:
- *         description: Equipo encontrado.
- *       404:
- *         description: El usuario no pertenece a ningún equipo.
+ * Obtener los equipos del usuario autenticado
  */
-router.get("/jugador/usuario/:id_usuario", getEquipoJugadorByUsuario);
+router.get("/usuario/mios", verificarToken, obtenerEquiposPorUsuario);
 
 /**
- * @swagger
- * /api/equipos:
- *   get:
- *     summary: Obtener todos los equipos
- *     tags: [Equipos]
- *     security:
- *       - bearerAuth: []
- *     responses:
- *       200:
- *         description: Lista de equipos.
+ * Obtener un equipo por ID
  */
-router.get("/", getEquipos);
+router.get("/:id", obtenerEquipoPorId);
 
 /**
- * @swagger
- * /api/equipos/{id}:
- *   get:
- *     summary: Obtener un equipo por ID
- *     tags: [Equipos]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: integer
- *     responses:
- *       200:
- *         description: Equipo encontrado.
- *       404:
- *         description: Equipo no encontrado.
+ * Registrar un nuevo equipo
  */
-router.get("/:id", getEquipoById);
+router.post("/", verificarToken, crearEquipo);
 
 /**
- * @swagger
- * /api/equipos:
- *   post:
- *     summary: Crear un equipo
- *     tags: [Equipos]
- *     security:
- *       - bearerAuth: []
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/Equipo'
- *     responses:
- *       201:
- *         description: Equipo creado correctamente.
- *       400:
- *         description: Datos inválidos.
+ * Actualizar un equipo
  */
-router.post("/", createEquipo);
+router.put("/:id", verificarToken, actualizarEquipo);
 
 /**
- * @swagger
- * /api/equipos/{id}:
- *   put:
- *     summary: Actualizar un equipo
- *     tags: [Equipos]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: integer
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/Equipo'
- *     responses:
- *       200:
- *         description: Equipo actualizado correctamente.
- *       404:
- *         description: Equipo no encontrado.
+ * Desactivar un equipo (eliminación lógica)
  */
-router.put("/:id", updateEquipo);
-
-/**
- * @swagger
- * /api/equipos/{id}:
- *   delete:
- *     summary: Eliminar un equipo
- *     tags: [Equipos]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - in: path
- *         name: id
- *         required: true
- *         schema:
- *           type: integer
- *     responses:
- *       200:
- *         description: Equipo eliminado correctamente.
- *       404:
- *         description: Equipo no encontrado.
- */
-router.delete("/:id", deleteEquipo);
+router.delete("/:id", verificarToken, desactivarEquipo);
 
 export default router;
